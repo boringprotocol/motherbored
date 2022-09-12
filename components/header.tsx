@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { getCsrfToken, signIn, signOut, useSession } from "next-auth/react";
-import styles from "./header.module.css";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { SigninMessage } from "../utils/SigninMessage";
@@ -26,7 +25,7 @@ export default function Header() {
       const message = new SigninMessage({
         domain: window.location.host,
         publicKey: wallet.publicKey?.toBase58(),
-        statement: `Sign this message to sign in to the Motherbored.`,
+        statement: `Yeeehaw mother fucker Sign this message to sign in to the app brospeh yeeehaw.`,
         nonce: csrf,
       });
 
@@ -55,20 +54,18 @@ export default function Header() {
       <noscript>
         <style>{`.nojs-show { opacity: 1; top: 0; }`}</style>
       </noscript>
-      <div className={styles.signedInStatus}>
+      <div className="">
         <p
-          className={`nojs-show ${
-            !session && loading ? styles.loading : styles.loaded
-          }`}
+          className=""
         >
           {!session && (
             <>
-              <span className={styles.notSignedInText}>
-                You are not signed in to motherbored 
-              </span>
-              <span className={styles.buttonPrimary} onClick={handleSignIn}>
+              <p className="">
+                You are not signed in to the Motherbored 
+              </p>
+              <a className="bg-black white pa3 br2 fr dib link dim grow" onClick={handleSignIn}>
                 Connect Wallet 
-              </span>
+              </a>
             </>
           )}
           {session?.user && (
@@ -76,17 +73,17 @@ export default function Header() {
               {session.user.image && (
                 <span
                   style={{ backgroundImage: `url('${session.user.image}')` }}
-                  className={styles.avatar}
+                  className="fl w2 h2 cover"
                 />
               )}
-              <span className={styles.signedInText}>
+              <span className="">
                 <small>Signed in as</small>
                 <br />
                 <strong>{session.user.email ?? session.user.name}</strong>
               </span>
               <a
                 href={`/api/auth/signout`}
-                className={styles.button}
+                className="fr black"
                 onClick={(e) => {
                   e.preventDefault();
                   signOut();
@@ -99,18 +96,13 @@ export default function Header() {
         </p>
       </div>
       <nav>
-        <ul className={styles.navItems}>
-          <li className={styles.navItem}>
+        <ul>
+          <li>
             <Link href="/">
               <a>Home</a>
             </Link>
           </li>
-          <li className={styles.navItem}>
-            <Link href="/api/examples/protected">
-              <a>Protected API Route</a>
-            </Link>
-          </li>
-          <li className={styles.navItem}>
+          <li>
             <Link href="/me">
               <a>Me</a>
             </Link>

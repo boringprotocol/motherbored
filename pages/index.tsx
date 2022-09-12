@@ -1,8 +1,8 @@
-import { getSession, useSession } from "next-auth/react"
+import { getSession, useSession } from "next-auth/react";
 import Layout from "../components/layout";
-import React from "react"
-import { GetServerSideProps } from "next"
-import Peer, { PeerProps } from "../components/Peer"
+import React from "react";
+import { GetServerSideProps } from "next";
+import Peer, { PeerProps } from "../components/Peer";
 import prisma from "../lib/prisma";
 import Link from "next/link";
 
@@ -48,17 +48,18 @@ const IndexPage: React.FC<Props> = (props) => {
   if (!session) {
     return (
       <Layout>
-        yo brosephs, check out this webpage. try to connect with phantom and once connected, go to each page and back and then even try to refresh the browser and see if the wallet connection persists. it should. you'll need to approve twice in phantom. also phantom should pop up autmoatically when you hit the site for the first time. let me know if all this crap works.
+        Hello please login
       </Layout>
     );
   }
   return (
     <Layout>
-      yo brosephs, you're logged in so go ahead and twiddle your peers
-      <h1>Peers</h1>
+      <div className="bt b--black-10">
+      you are in so go ahead and twiddle your peers
+      <h1 className="ttu fw1">Peers</h1>
       <div>
         <Link href="/newpeer">
-          <button>
+          <button className="bg-black white pv3 ph3 br2 bn">
             <a>New peer</a>
           </button>
         </Link>
@@ -69,6 +70,8 @@ const IndexPage: React.FC<Props> = (props) => {
           <Peer peer={peer} />
         </div>
       ))}
+
+    </div>
     </Layout>
   );
 }
