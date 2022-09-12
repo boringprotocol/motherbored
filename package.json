@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@prisma/client": "^4.3.1",
     "@solana-mobile/wallet-adapter-mobile": "^0.0.1-alpha.5",
     "@solana/wallet-adapter-base": "^0.9.9",
     "@solana/wallet-adapter-react": "^0.15.8",
@@ -14,7 +15,7 @@
     "@solana/web3.js": "^1.48.0",
     "bs58": "^5.0.0",
     "next": "latest",
-    "next-auth": "latest",
+    "next-auth": "^4.10.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tweetnacl": "^1.0.3"
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@types/node": "^17",
     "@types/react": "^18.0.15",
+    "prisma": "^4.3.1",
     "typescript": "^4"
   }
 }
