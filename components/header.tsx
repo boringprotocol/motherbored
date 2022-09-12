@@ -26,7 +26,7 @@ export default function Header() {
       const message = new SigninMessage({
         domain: window.location.host,
         publicKey: wallet.publicKey?.toBase58(),
-        statement: `Yeeehaw mother fucker Sign this message to sign in to the app brospeh yeeehaw.`,
+        statement: `Sign this message to sign in to the Motherbored.`,
         nonce: csrf,
       });
 
