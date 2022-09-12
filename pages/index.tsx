@@ -9,20 +9,19 @@ import Link from "next/link";
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
   const session = await getSession({ req });
-  if (!session) {
+  if (!session || !session.user || !session.user.name) {
     res.statusCode = 403;
     return { props: { peers: [] } }
   }
 
-
   const user = await prisma.user.findFirst({
-    where: { wallet: session.user?.name }
+    where: { wallet: session.user.name }
   })
 
 
   if (user == null) {
-    if (session.user?.name) {
-      const sessionUser = session.user?.name
+    if (session.user.name) {
+      const sessionUser = session.user.name
       const user = await prisma.user.create({
         data: {
           wallet: sessionUser,
