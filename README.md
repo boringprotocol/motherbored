@@ -5,7 +5,7 @@ In the file .npmrc, `engine-strict=true` is enforcing in package.json:
   },`
  
 Package manager:
-`yarn run install` -
+`yarn install` -
 
 ESLint:
 `yarn run lint` -
