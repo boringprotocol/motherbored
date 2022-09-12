@@ -2,6 +2,7 @@ import { getSession } from "next-auth/react";
 import prisma from "../../../lib/prisma";
 
 // PUT /api/peer/:id
+/*
 export default async function handle(req, res) {
     const peerId = req.query.id;
     const { name, setupkey, kind } = req.query
@@ -19,3 +20,4 @@ export default async function handle(req, res) {
     });
     res.json(peer);
 }
+*/

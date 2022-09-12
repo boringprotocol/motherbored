@@ -3,13 +3,12 @@ import Router from "next/router";
 
 export type PeerProps = {
     id: string;
-    name: string;
-    setupkey: string;
-    kind: string;
+    name: string | null;
+    setupkey: string | null;
+    kind: string | null;
 };
 
 const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
-    const peerName = peer.name ? peer.id : "Unknown peer name";
     return (
         <div onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
             <ul>

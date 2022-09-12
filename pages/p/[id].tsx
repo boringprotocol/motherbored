@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import prisma from "../../lib/prisma";
 import Layout from "../../components/layout";
 
+/*
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const peer = await prisma.peer.findUnique({
         where: {
@@ -16,13 +17,15 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         props: peer,
     };
 };
+*/
 
+/*
 async function publishPeer(id: string): Promise<void> {
     await fetch(`/api/peer/${id}`, {
         method: "PUT",
     });
     await Router.push("/");
-}
+}*/
 
 const Peer: React.FC<PeerProps> = (props) => {
     const { data: session, status } = useSession();
@@ -34,7 +37,6 @@ const Peer: React.FC<PeerProps> = (props) => {
 
     return (
         <Layout>
-            This is where you edit a peer..
             <div>
                 <li>Name: {props.name}</li>
                 <li>Id: {props.id}</li>
