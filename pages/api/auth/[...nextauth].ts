@@ -3,6 +3,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getCsrfToken } from "next-auth/react";
 import { SigninMessage } from "../../../utils/SigninMessage";
+import prisma from '../../../lib/prisma';
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   const providers = [
@@ -70,6 +71,8 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
           session.user.name = token.sub;
           session.user.image = `https://source.boringavatars.com/marble/40/${token.sub}`;
         }
+
+
         return session;
       },
     },
