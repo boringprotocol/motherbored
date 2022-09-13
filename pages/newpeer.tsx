@@ -24,8 +24,46 @@ const Peer: React.FC = () => {
     return (
         <Layout>
             <div>
+            
+            <div className="w/50">
+            <div>
+                <label htmlFor="mode" className="block text-sm font-medium">
+                    Mode
+                </label>
+                <select
+                    id="mode"
+                    name="mode"
+                    className="mt-1 block w-full rounded-md border-gray-light py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    defaultValue="provider"
+                >
+                    <option value="consumer">Consumer</option>
+                    <option value="provider">Provider</option>
+                    
+                </select>
+            </div>
+
+            <div>
+                <label htmlFor="setupkey" className="block text-sm font-medium">
+                    SetUp Key
+                </label>
+                <div className="mt-1">
+                    <input
+                    type="text"
+                    name="text"
+                    id="setupkey"
+                    defaultValue="5e244a99-56b6-4d19-a39b-0a1cb97121c1" // set up key from pi goes here
+                    disabled
+                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 sm:text-sm"
+                    placeholder="5e244a99-56b6-4d19-a39b-0a1cb97121c1"
+                    />
+                    </div>
+            </div>
+            </div>
+
                 <form onSubmit={submitData}>
                     <h1>New Peer</h1>
+
+                    
                     <input
                         autoFocus
                         onChange={(e) => setName(e.target.value)}

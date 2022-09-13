@@ -60,10 +60,7 @@ export default function Header() {
         >
           {!session && (
             <>
-              <p className="">
-                You are not signed in to the Motherbored 
-              </p>
-              <a className="bg-black white pa3 br2 fr dib link dim grow" onClick={handleSignIn}>
+              <a href="#" className="mt-8 inline-flex items-center rounded-sm border border-transparent bg-white px-5 py-3  font-medium text-indigo-600 shadow hover:bg-indigo-50" onClick={handleSignIn}>
                 Connect Wallet 
               </a>
             </>
@@ -77,13 +74,11 @@ export default function Header() {
                 />
               )}
               <span className="">
-                <small>Signed in as</small>
-                <br />
                 <strong>{session.user.email ?? session.user.name}</strong>
               </span>
               <a
                 href={`/api/auth/signout`}
-                className="fr black"
+                className="ml-6 mt-2 inline-flex items-center rounded-sm border border-transparent bg-white px-5 py-3  font-medium text-indigo-600 shadow hover:bg-indigo-50"
                 onClick={(e) => {
                   e.preventDefault();
                   signOut();
@@ -95,20 +90,7 @@ export default function Header() {
           )}
         </p>
       </div>
-      <nav>
-        <ul>
-          <li>
-            <Link href="/">
-              <a>Home</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/me">
-              <a>Me</a>
-            </Link>
-          </li>
-        </ul>
-      </nav>
+      
     </header>
   );
 }

@@ -1,3 +1,4 @@
+import '../styles/global.css';
 import { SessionProvider } from "next-auth/react";
 import React, { FC, useMemo } from "react";
 import {
