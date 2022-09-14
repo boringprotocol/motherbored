@@ -2,25 +2,72 @@ import React from "react";
 import { GetServerSideProps } from "next";
 import Router from "next/router";
 import { PeerProps } from "../../components/Peer";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import Layout from "../../components/layout";
-import { PaperClipIcon } from '@heroicons/react/20/solid'
 import prisma from "../../lib/prisma";
 
 // error in this code when run
 // clues: https://bobbyhadz.com/blog/javascript-syntaxerror-cannot-use-import-statement-outside-module
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+    /*
+    const session = await getSession({ req });
+    if (!session || !session.user || !session.user.name) {
+        res.statusCode = 403;
+        return { props: { peers: [] } }
+    }
+
+    const user = await prisma.user.findFirst({
+        where: { wallet: session.user.name }
+    })
+
+
+    if (user == null) {
+        if (session.user.name) {
+            const sessionUser = session.user.name
+            const user = await prisma.user.create({
+                data: {
+                    wallet: sessionUser,
+                },
+            })
+        }
+    }
+    */
+
+
+    if (params == null || params.id == null) {
+        return { props: { peer: {}, target: "" } }
+    }
+
     const peer = await prisma.peer.findUnique({
         where: {
-            id: String(params?.id),
+            id: String(params.id),
         },
     });
+
+    if (peer == null || peer.id == null) {
+        return { props: { peer: {}, target: "" } }
+    }
+
+    const targetPeer = await prisma.peer.findUnique({
+        where: {
+            id: String(peer.target),
+        },
+    });
+
+    if (targetPeer == null || targetPeer.name == null) {
+        return { props: { peer: peer, target: "" } }
+    }
+
     return {
-        props: peer,
+        props: { peer: peer, target: targetPeer.name },
     };
 };
 
+type Props = {
+    peer: PeerProps,
+    target: string,
+}
 
 /*
 async function publishPeer(id: string): Promise<void> {
@@ -30,22 +77,17 @@ async function publishPeer(id: string): Promise<void> {
     await Router.push("/");
 }*/
 
-const ShowPeer: React.FC<PeerProps> = (props) => {
+const ShowPeer: React.FC<Props> = (props) => {
     const { data: session, status } = useSession();
-    if (status === "loading") {
-        return <div className="text-green">Authenticating ...</div>;
-    }
-    const userHasValidSession = Boolean(session);
-    let title = props.name;
 
     return (
         <Layout>
             <div>
-                <h1 className="text-xl uppercase">Name: {props.name}</h1>
-                <li key={props.id}>Id: {props.id}</li>
-                <li key={props.setupkey}>boring setupkey: {props.setupkey}</li>
-                <li key={props.kind}>kind: {props.kind}</li>
-                {props.target && (<li key={props.target}>target: {props.target}</li>)}
+                <h1 className="text-xl uppercase">Name: {props.peer.name}</h1>
+                <li key={props.peer.id}>Id: {props.peer.id}</li>
+                <li key={props.peer.setupkey}>boring setupkey: {props.peer.setupkey}</li>
+                <li key={props.peer.kind}>kind: {props.peer.kind}</li>
+                <li key={props.peer.target}>target: {props.target}</li>
             </div>
         </Layout>
     );
