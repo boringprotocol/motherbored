@@ -7,10 +7,6 @@ import Layout from "../../components/layout";
 import { PaperClipIcon } from '@heroicons/react/20/solid'
 import prisma from "../../lib/prisma";
 
-
-
-// import prisma from "../../lib/prisma";
-
 // error in this code when run
 // clues: https://bobbyhadz.com/blog/javascript-syntaxerror-cannot-use-import-statement-outside-module
 
@@ -34,7 +30,7 @@ async function publishPeer(id: string): Promise<void> {
     await Router.push("/");
 }*/
 
-const Peer: React.FC<PeerProps> = (props) => {
+const ShowPeer: React.FC<PeerProps> = (props) => {
     const { data: session, status } = useSession();
     if (status === "loading") {
         return <div className="text-green">Authenticating ...</div>;
@@ -46,12 +42,13 @@ const Peer: React.FC<PeerProps> = (props) => {
         <Layout>
             <div>
                 <h1 className="text-xl uppercase">Name: {props.name}</h1>
-                <li>Id: {props.id}</li>
-                <li>boring setupkey: {props.setupkey}</li>
-                <li>kind: {props.kind}</li>
+                <li key={props.id}>Id: {props.id}</li>
+                <li key={props.setupkey}>boring setupkey: {props.setupkey}</li>
+                <li key={props.kind}>kind: {props.kind}</li>
+                {props.target && (<li key={props.target}>target: {props.target}</li>)}
             </div>
         </Layout>
     );
 };
 
-export default Peer;
+export default ShowPeer;
