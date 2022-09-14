@@ -29,7 +29,7 @@ const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     }
 
     const peers = await prisma.peer.findMany({
-        where: { kind: "provider" },
+        where: { kind: "provider", pubkey: { not: null } },
     })
 
     return {

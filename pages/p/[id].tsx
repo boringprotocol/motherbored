@@ -2,39 +2,11 @@ import React from "react";
 import { GetServerSideProps } from "next";
 import Router from "next/router";
 import { PeerProps } from "../../components/Peer";
-import { getSession, useSession } from "next-auth/react";
 import Layout from "../../components/layout";
 import prisma from "../../lib/prisma";
-
-// error in this code when run
-// clues: https://bobbyhadz.com/blog/javascript-syntaxerror-cannot-use-import-statement-outside-module
+import { useSession } from "next-auth/react";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-    /*
-    const session = await getSession({ req });
-    if (!session || !session.user || !session.user.name) {
-        res.statusCode = 403;
-        return { props: { peers: [] } }
-    }
-
-    const user = await prisma.user.findFirst({
-        where: { wallet: session.user.name }
-    })
-
-
-    if (user == null) {
-        if (session.user.name) {
-            const sessionUser = session.user.name
-            const user = await prisma.user.create({
-                data: {
-                    wallet: sessionUser,
-                },
-            })
-        }
-    }
-    */
-
-
     if (params == null || params.id == null) {
         return { props: { peer: {}, target: "" } }
     }
@@ -69,16 +41,30 @@ type Props = {
     target: string,
 }
 
-/*
-async function publishPeer(id: string): Promise<void> {
-    await fetch(`/api/peer/${id}`, {
+async function activatePeer(id: string): Promise<void> {
+    await fetch(`/api/activate/${id}`, {
         method: "PUT",
     });
-    await Router.push("/");
-}*/
+    await Router.push(`/p/${id}`);
+}
 
 const ShowPeer: React.FC<Props> = (props) => {
     const { data: session, status } = useSession();
+    if (status === "loading") {
+        return <div>Authenticating ...</div>;
+    }
+
+    let providerActive = false
+    if (props.peer.pubkey != null) {
+        providerActive = true
+    }
+
+    let isProvider = false
+    if (props.peer.kind == "provider") {
+        isProvider = true
+    }
+
+    const userHasValidSession = Boolean(session);
 
     return (
         <Layout>
@@ -88,6 +74,17 @@ const ShowPeer: React.FC<Props> = (props) => {
                 <li key={props.peer.setupkey}>boring setupkey: {props.peer.setupkey}</li>
                 <li key={props.peer.kind}>kind: {props.peer.kind}</li>
                 <li key={props.peer.target}>target: {props.target}</li>
+                {isProvider && !providerActive && (
+                    <div>
+                        <h1>This provider is inactive, you must activate it after configuring the motherbored.</h1>
+                        <button onClick={() => activatePeer(props.peer.id)}>Activate</button>
+                    </div>
+                )}
+                {isProvider && providerActive && (
+                    <div>
+                        <h1>This provider is active!</h1>
+                    </div>
+                )}
             </div>
         </Layout>
     );
