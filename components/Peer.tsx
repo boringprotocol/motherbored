@@ -14,6 +14,7 @@ export type PeerProps = {
 };
 
 const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
+  const peerAvatar = "https://source.boringavatars.com/marble/80/" + peer.name
   return (
     <div>
 
@@ -30,7 +31,7 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
               <p className="mt-1  text-sm text-gray-500">Provided by: {peer.target}</p>
               <p className="mt-1  text-sm text-gray-500">NFT License: MBV1-1000</p>
             </div>
-            <img className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src="https://source.boringavatars.com/marble/80/{peer.name}" alt="" />
+            <img className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src={peerAvatar} alt="" />
           </div>
           <div className="px-6  text-xs text-gray-dark">
             <span className="float-left mr-2"><IoIosKey /></span>
