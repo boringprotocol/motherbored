@@ -23,7 +23,7 @@ const userNavigation = [
   { name: 'Sign out', href: '#' },
 ]
 
-function classNames(...classes) {
+function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
@@ -33,9 +33,9 @@ interface Props {
 }
 
 export default function Layout({ children }: Props) {
-  
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  
+
   return (
 
     <>
@@ -52,28 +52,28 @@ export default function Layout({ children }: Props) {
         <div className="hidden w-22 overflow-y-auto md:block border-r border-gray-light">
           <div className="flex w-full flex-col items-center py-6">
             <div className="flex flex-shrink-0 items-center">
-            <Link href="/">
-              <img
-                className="h-16 w-auto"
-                src="/img/logo/mark.svg"
-                alt="Your Boring Protocol"
-              />
-            </Link>
+              <Link href="/">
+                <img
+                  className="h-16 w-auto"
+                  src="/img/logo/mark.svg"
+                  alt="Your Boring Protocol"
+                />
+              </Link>
             </div>
             <div className="mt-6 w-full flex-1 space-y-1">
-            <Link href="/me">
-              <a className="group w-full p-3 flex flex-col items-center text-xl font-small"><VscSettingsGear /></a>
-            </Link>
-            <Link href="/">
-              <a className="hover:bg-gray-light group w-full py-3  flex flex-col items-center"><VscMail className="w-5 h-5" /></a>
-            </Link>
+              <Link href="/me">
+                <a className="group w-full p-3 flex flex-col items-center text-xl font-small"><VscSettingsGear /></a>
+              </Link>
+              <Link href="/">
+                <a className="hover:bg-gray-light group w-full py-3  flex flex-col items-center"><VscMail className="w-5 h-5" /></a>
+              </Link>
             </div>
             <div className="hidden lg:sticky lg:top-0 lg:flex lg:w-16 lg:flex-none lg:items-center lg:whitespace-nowrap lg:py-12 lg:text-md lg:leading-7 lg:[writing-mode:vertical-rl]">
-          <span className="text-slate-500 uppercase">Motherbored</span>
-          <span className="mt-6 flex gap-6 font-bold">
-            BORING PROTOCOL
-          </span>
-        </div>
+              <span className="text-slate-500 uppercase">Motherbored</span>
+              <span className="mt-6 flex gap-6 font-bold">
+                BORING PROTOCOL
+              </span>
+            </div>
           </div>
         </div>
 
@@ -222,26 +222,26 @@ export default function Layout({ children }: Props) {
                   Photos
                 </h1>
                 <div>
-      
-      
-                <main className='px-14 pt-24'>
-                {children}</main>
-    </div>
+
+
+                  <main className='px-14 pt-24'>
+                    {children}</main>
+                </div>
               </section>
             </main>
 
             {/* Secondary column (hidden on smaller screens) */}
             <aside className="hidden w-96 overflow-y-auto border-l border-gray-light bg-white lg:block">
               {/* Your content */}
-             
+
             </aside>
           </div>
         </div>
       </div>
     </>
-    
 
-             
-    
+
+
+
   );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import Router from "next/router";
 import { IoIosKey } from 'react-icons/io';
+import Image from 'next/image';
 
 
 export type PeerProps = {

@@ -1,6 +1,7 @@
 // next.config.js
 module.exports = {
-    images: {
-      domains: ['source.boringavatars.com'],
-    },
-  }
+  images: {
+    dangerouslyAllowSVG: true,
+    domains: ['source.boringavatars.com'],
+  },
+}
