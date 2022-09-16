@@ -1,3 +1,4 @@
+import '../styles/global.css';
 import { SessionProvider } from "next-auth/react";
 import React, { FC, useMemo } from "react";
 import {
@@ -7,13 +8,7 @@ import {
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
   CoinbaseWalletAdapter,
-  GlowWalletAdapter,
   PhantomWalletAdapter,
-  SlopeWalletAdapter,
-  SolflareWalletAdapter,
-  SolletExtensionWalletAdapter,
-  SolletWalletAdapter,
-  TorusWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 import {
   WalletModalProvider,
@@ -27,15 +22,11 @@ import {
 } from "@solana-mobile/wallet-adapter-mobile";
 import type { AppProps } from "next/app";
 
-// Default styles that can be overridden by your app
-require("@solana/wallet-adapter-react-ui/styles.css");
-import "./styles.css";
-
 // Use of the <SessionProvider> is mandatory to allow components that call
 // `useSession()` anywhere in your application to access the `session` object.
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps: { session, ...pageProps } }: any) {
   // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
-  const network = WalletAdapterNetwork.Devnet;
+  const network = WalletAdapterNetwork.Mainnet;
 
   // You can also provide a custom RPC endpoint.
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
@@ -45,18 +36,17 @@ export default function App({ Component, pageProps }: AppProps) {
   // of wallets that your users connect to will be loaded.
   const wallets = useMemo(
     () => [
-      new SolanaMobileWalletAdapter({
-        appIdentity: { name: "Solana Wallet Adapter App" },
-        authorizationResultCache: createDefaultAuthorizationResultCache(),
-      }),
+      //new SolanaMobileWalletAdapter({
+      //  appIdentity: { name: "Solana Wallet Adapter App" },
+      // authorizationResultCache: createDefaultAuthorizationResultCache(),
+      //}),
+
+      // need to update this to pass the proper args for solana mobile wallet to work
+      //new SolanaMobileWalletAdapter(),
       new CoinbaseWalletAdapter(),
       new PhantomWalletAdapter(),
-      new GlowWalletAdapter(),
-      new SlopeWalletAdapter(),
-      new SolflareWalletAdapter({ network }),
-      new TorusWalletAdapter(),
     ],
-    [network]
+    []
   );
 
   return (
