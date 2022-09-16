@@ -35,7 +35,7 @@ export default function Header() {
 
       signIn("credentials", {
         message: JSON.stringify(message),
-        redirect: false,
+        redirect: true,
         signature: serializedSignature,
       });
     } catch (error) {
@@ -61,7 +61,7 @@ export default function Header() {
           {!session && (
             <>
               <a href="#" className="mt-8 inline-flex items-center rounded-sm border border-transparent bg-white px-5 py-3  font-medium text-indigo-600 shadow hover:bg-indigo-50" onClick={handleSignIn}>
-                Connect Wallet 
+                Connect Wallet
               </a>
             </>
           )}
@@ -90,7 +90,7 @@ export default function Header() {
           )}
         </p>
       </div>
-      
+
     </header>
   );
 }
