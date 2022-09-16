@@ -48,6 +48,13 @@ async function activatePeer(id: string): Promise<void> {
     await Router.push(`/p/${id}`);
 }
 
+async function downloadPeerConfig(id: string): Promise<void> {
+    //await fetch(`/api/config/${id}`, {
+    //    method: "GET",
+    //});
+    await Router.push(`/api/config/${id}`);
+}
+
 const ShowPeer: React.FC<Props> = (props) => {
     const { data: session, status } = useSession();
     if (status === "loading") {
@@ -74,6 +81,8 @@ const ShowPeer: React.FC<Props> = (props) => {
                 <li key={props.peer.setupkey}>boring setupkey: {props.peer.setupkey}</li>
                 <li key={props.peer.kind}>kind: {props.peer.kind}</li>
                 <li key={props.peer.target}>target: {props.target}</li>
+                {props.peer.pubkey && (<li key={props.peer.pubkey}>pubkey: {props.peer.pubkey}</li>)}
+                <button onClick={() => downloadPeerConfig(props.peer.id)}>Download boring config</button>
                 {isProvider && !providerActive && (
                     <div>
                         <h1>This provider is inactive, you must activate it after configuring the motherbored.</h1>
