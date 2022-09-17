@@ -5,6 +5,7 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../lib/prisma";
 import Peer, { PeerProps } from "../components/Peer";
+import { json } from "stream/consumers";
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req });
@@ -57,12 +58,19 @@ const NewPeer: React.FC<Props> = (props) => {
         e.preventDefault();
         try {
             const body = { name: name, kind: kind, target: target };
-            await fetch("/api/peer", {
+            const response = await fetch("/api/peer", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
             });
-            await Router.push("/");
+            const resultData = await (response.json()) as any;
+            console.log(resultData);
+            if (response.ok) {
+                await Router.push(`/p/${resultData.id}`);
+
+            } else {
+                await Router.push("/")
+            }
         } catch (error) {
             console.error(error);
         }
