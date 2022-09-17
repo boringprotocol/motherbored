@@ -24,8 +24,6 @@ export async function GetFalconToken() {
             }
         });
         let tokendata = await (tokenresponse.json()) as any;
-        console.log(JSON.stringify(tokenbody));
-        console.log(tokendata);
         return ("Bearer " + tokendata.access_token);
     } else {
         return ""
