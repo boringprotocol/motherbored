@@ -1,0 +1,35 @@
+
+// PAGES
+// /pages/index.tsx
+// /pages/newpeer.tsx
+// /pages/p/[id].txs
+// /me 
+
+
+// LAYOUTS
+// /components/layout.tsx
+
+// if authencticated 
+
+// AUTHENTICATED - WALLET CONNECTED 🐈
+// <Navigaton /> - /components/authenicated/navigation.tsx
+// <Header /> - /components/authenicated/header.tsx
+// <Aside /> - /components/authenicated/aside.tsx
+// <Main /> - /components/authenicated/main.tsx
+// - <Peers />
+
+// else
+
+// NO ACCESS - PLEASE LOGIN IN 🐈
+// <Navigaton /> - /components/
+// <Header /> - /components/
+// <Aside /> - /components/
+// <Main /> - /components/
+
+
+
+
+
+
+// <Navigaton />
+// <Navigaton />

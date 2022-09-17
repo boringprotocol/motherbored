@@ -9,6 +9,13 @@ import Head from 'next/head';
 import Image from 'next/image';
 
 
+const stats = [
+  { name: 'Consumers', stat: '54' },
+  { name: 'Providers', stat: '32' },
+  { name: 'Connections', stat: '48' },
+]
+
+
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
   const session = await getSession({ req });
@@ -47,10 +54,12 @@ type Props = {
 
 const IndexPage: React.FC<Props> = (props) => {
 
-  const { data } = useSession();
+  // const { data } = useSession(); // do we need this? 
   const { data: session, status } = useSession();
   if (!session) {
     return (
+
+      // NOT AUTHENTICATED - Home Page Main Panel 🐈
 
       <Layout>
         <Head>
@@ -58,41 +67,74 @@ const IndexPage: React.FC<Props> = (props) => {
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         </Head>
 
-        <div className="bg-white font-jetbrains">
-          <div className="mx-auto max-w-7xl py-16 px-4 sm:px-6 lg:px-8">
-            <div className="overflow-hidden rounded-lg bg-indigo-700 shadow-xl lg:grid lg:grid-cols-2 lg:gap-4">
-              <div className="px-6 pt-10 pb-12 sm:px-16 sm:pt-16 lg:py-16 lg:pr-0 xl:py-20 xl:px-20">
-                <div className="lg:self-center">
-                  <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                    <span className="block">Ready to go?</span>
-                    <span className="block">Let&apos;s connect your Motherbored.</span>
-                  </h2>
-                  <p className="font-jetbrains mt-4 text-lg leading-6 text-indigo-200">
-                    Click &ldquo;Add Peer&rdquo; to add your Motherbored to the Boring Protocol Network. We&apos;ll see you online in just a few minutes.
-                  </p>
-                  <a
-                    href="#"
-                    className="mt-8 inline-flex items-center rounded-sm border border-transparent bg-white px-5 py-3  font-medium text-indigo-600 shadow hover:bg-indigo-50"
-                  >
-                    Add Peer
-                  </a>
-                </div>
-              </div>
-              <div className="aspect-w-5 aspect-h-3 -mt-6 md:aspect-w-2 md:aspect-h-1">
-                <img
-                  className="translate-x-6 translate-y-6 transform rounded-md object-cover object-left-top sm:translate-x-16 lg:translate-y-20"
-                  src="https://tailwindui.com/img/component-images/full-width-with-sidebar.jpg"
-                  alt="App screenshot"
-                />
-              </div>
-            </div>
+        <div className="bg-boring-white dark:bg-boring-black font-jetbrains">
+
+      <div className="pb-12">
+      <h3 className="text-lg font-medium leading-6 text-gray dark:text-boring-white uppercase">Network</h3>
+      <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        {stats.map((item) => (
+          <div key={item.name} className="overflow-hidden rounded-sm text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black px-4 py-5 shadow sm:p-6">
+            <dt className="truncate text-sm font-medium text-gray-500">{item.name}</dt>
+            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{item.stat}</dd>
           </div>
+        ))}
+      </dl>
+      </div>  
+
+      <div className="pb-12">
+      
+        <button
+      type="button"
+      className="relative block w-full rounded-lg text-boring-black dark:text-boring-white border-2 border-dotted border-gray-light p-12 text-center hover:border-gray-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+    >
+      <svg
+        className="mx-auto h-12 w-12 text-gray-400"
+        xmlns="http://www.w3.org/2000/svg"
+        stroke="currentColor"
+        fill="none"
+        viewBox="0 0 48 48"
+        aria-hidden="true"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6"
+        />
+      </svg>
+      <span className="mt-2 block text-sm font-medium text-gray-900">Add a motherbored</span>
+        </button>
+      </div>
+      
+        <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      
+        <li className="col-span-1 rounded-sm text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black  shadow">
+          <div className="flex w-full items-center justify-between space-x-6 p-6">
+            <div className="flex-1 truncate">
+              <div className="flex items-center space-x-3">
+                <h3 className="truncate text-sm font-medium text-gray-900">name</h3>
+                <span className="inline-block flex-shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">
+                  role
+                </span>
+              </div>
+              <p className="mt-1 truncate text-sm text-gray-500">title</p>
+            </div>
+            <img className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src="https://source.boringavatars.com/marble/80/" alt="" />
+          </div>
+          <div>
+          </div>
+        </li>  
+          
+        </ul>   
+
         </div>
 
       </Layout>
     );
   }
   return (
+
+    // AUTHENTICATED - Home Page Main Panel 🐈
     <Layout>
       <Head>
         <title>Motherbored</title>
@@ -105,6 +147,7 @@ const IndexPage: React.FC<Props> = (props) => {
           <div key={peer.id} className="peer">
             <Peer peer={peer} />
           </div>
+
         ))}
       </div>
     </Layout>
