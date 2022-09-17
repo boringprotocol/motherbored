@@ -41,7 +41,7 @@ export default function Layout({ children }: Props) {
     <>
       <div className="flex h-full text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
         {/* Narrow sidebar */}
-        <div className="hidden w-22 overflow-y-auto md:block border-r border-gray-light">
+        <div className="hidden w-22 overflow-y-auto md:block border-r border-gray-light dark:border-gray-dark">
           <div className="flex w-full flex-col items-center py-2">
             <div className="flex flex-shrink-0 items-center">
               <Link href="/">
@@ -136,10 +136,10 @@ export default function Layout({ children }: Props) {
         {/* Content area */}
         <div className="flex flex-1 flex-col overflow-hidden">
           <header className="w-full">
-            <div className="relative z-10 flex h-16 flex-shrink-0 border-b border-gray-light text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black  shadow-sm">
+            <div className="relative z-10 flex h-16 flex-shrink-0 border-b border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black  shadow-sm">
               <button
                 type="button"
-                className="border-r border-gray-light px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+                className="border-r border-gray-light dark:border-gray-dark px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
                 onClick={() => setMobileMenuOpen(true)}
               >
                 <span className="sr-only">Open sidebar</span>
@@ -213,7 +213,7 @@ export default function Layout({ children }: Props) {
             </main>
 
             {/* Secondary column (hidden on smaller screens) */}
-            <aside className="hidden w-96 overflow-y-auto border-l border-gray-light bg-white lg:block">
+            <aside className="hidden w-96 overflow-y-auto border-l border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black lg:block">
 
               <ThemeChanger />
                                   
