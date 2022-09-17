@@ -25,7 +25,7 @@ export default function Header() {
       const message = new SigninMessage({
         domain: window.location.host,
         publicKey: wallet.publicKey?.toBase58(),
-        statement: `Yeeehaw mother fucker Sign this message to sign in to the app brospeh yeeehaw.`,
+        statement: `Sign this message.`,
         nonce: csrf,
       });
 
@@ -59,10 +59,12 @@ export default function Header() {
           className=""
         >
           {!session && (
+            
             <>
-              <a href="#" className="mt-8 inline-flex items-center rounded-sm border border-transparent bg-white px-5 py-3  font-medium text-indigo-600 shadow hover:bg-indigo-50" onClick={handleSignIn}>
-                Connect Wallet
-              </a>
+
+      
+
+       
             </>
           )}
           {session?.user && (

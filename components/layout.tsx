@@ -1,32 +1,32 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
-import {
-  Bars3BottomLeftIcon,
-  CogIcon,
-  HomeIcon,
-  PhotoIcon,
-  PlusIcon,
-  RectangleStackIcon,
-  Squares2X2Icon,
-  UserGroupIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline'
-import { VscBug, VscSettingsGear, VscMail } from 'react-icons/vsc';
-import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import Header from "./header";
-import Link from 'next/link';
+import { Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import Header from "./header"
+import Link from 'next/link'
 
-import { BuildingOfficeIcon, CreditCardIcon, UserIcon, UsersIcon } from '@heroicons/react/20/solid'
+
+import { useTheme } from 'next-themes'
+
+const ThemeChanger = () => {
+  const { theme, setTheme } = useTheme()
+
+  return (
+    <div>
+      The current theme is: {theme}
+      <button onClick={() => setTheme('light')}>Light Mode</button>
+      <button onClick={() => setTheme('dark')}>Dark Mode</button>
+    </div>
+  )
+}
 
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
+  { name: 'Your Account', href: '/me' },
   { name: 'Sign out', href: '#' },
 ]
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
-
 
 interface Props {
   children: React.ReactNode;
@@ -39,39 +39,26 @@ export default function Layout({ children }: Props) {
   return (
 
     <>
-      {/*
-        update the html and body tags for this shit to totally work:
-
-        ```
-        <html class="h-full bg-gray-50">
-        <body class="h-full overflow-hidden">
-        ```
-      */}
-      <div className="flex h-full">
+      <div className="flex h-full text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
         {/* Narrow sidebar */}
         <div className="hidden w-22 overflow-y-auto md:block border-r border-gray-light">
-          <div className="flex w-full flex-col items-center py-6">
+          <div className="flex w-full flex-col items-center py-2">
             <div className="flex flex-shrink-0 items-center">
               <Link href="/">
                 <img
-                  className="h-16 w-auto"
+                  className="h-14 w-auto"
                   src="/img/logo/mark.svg"
                   alt="Your Boring Protocol"
                 />
               </Link>
             </div>
-            <div className="mt-6 w-full flex-1 space-y-1">
-              <Link href="/me">
-                <a className="group w-full p-3 flex flex-col items-center text-xl font-small"><VscSettingsGear /></a>
-              </Link>
-              <Link href="/">
-                <a className="hover:bg-gray-light group w-full py-3  flex flex-col items-center"><VscMail className="w-5 h-5" /></a>
-              </Link>
-            </div>
             <div className="hidden lg:sticky lg:top-0 lg:flex lg:w-16 lg:flex-none lg:items-center lg:whitespace-nowrap lg:py-12 lg:text-md lg:leading-7 lg:[writing-mode:vertical-rl]">
-              <span className="text-slate-500 uppercase">Motherbored</span>
-              <span className="mt-6 flex gap-6 font-bold">
-                BORING PROTOCOL
+              <span className="font-jetbrains text-slate-500 uppercase">Motherbored</span>
+              <span className="font-jetbrains mt-6 flex gap-6 uppercase">
+                &middot;
+              </span>
+              <span className="font-jetbrains mt-6 flex gap-6 uppercase">
+                Boring A Private Path
               </span>
             </div>
           </div>
@@ -133,7 +120,7 @@ export default function Layout({ children }: Props) {
                   <div className="mt-5 h-0 flex-1 overflow-y-auto px-2">
                     <nav className="flex h-full flex-col">
                       <div className="space-y-1">
-                        mobile nav
+                        nothing to see here
                       </div>
                     </nav>
                   </div>
@@ -149,7 +136,7 @@ export default function Layout({ children }: Props) {
         {/* Content area */}
         <div className="flex flex-1 flex-col overflow-hidden">
           <header className="w-full">
-            <div className="relative z-10 flex h-16 flex-shrink-0 border-b border-gray-light bg-white shadow-sm">
+            <div className="relative z-10 flex h-16 flex-shrink-0 border-b border-gray-light text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black  shadow-sm">
               <button
                 type="button"
                 className="border-r border-gray-light px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
@@ -162,7 +149,7 @@ export default function Layout({ children }: Props) {
                 <div className="flex flex-1">
                   <Header />
                 </div>
-                <div className="ml-2 flex items-center space-x-4 sm:ml-6 sm:space-x-6">
+                <div className="ml-2 flex items-center space-x-4 sm:ml-6 sm:space-x-6 ">
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative flex-shrink-0">
                     <div>
@@ -203,11 +190,6 @@ export default function Layout({ children }: Props) {
                       </Menu.Items>
                     </Transition>
                   </Menu>
-
-                  <Link href="/newpeer">
-                    <a className="group w-full p-3 flex flex-col items-center text-xl font-small"><PlusIcon className="h-6 w-6" aria-hidden="true" /></a>
-                  </Link>
-                  <span className="sr-only">Add Peer</span>
                 </div>
               </div>
             </div>
@@ -232,9 +214,13 @@ export default function Layout({ children }: Props) {
 
             {/* Secondary column (hidden on smaller screens) */}
             <aside className="hidden w-96 overflow-y-auto border-l border-gray-light bg-white lg:block">
-              {/* Your content */}
+
+              <ThemeChanger />
+                                  
 
             </aside>
+
+
           </div>
         </div>
       </div>
