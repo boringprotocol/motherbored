@@ -32,7 +32,6 @@ const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     where: { wallet: session.user.name }
   })
 
-
   if (user == null) {
     if (session.user.name) {
       const sessionUser = session.user.name
@@ -146,7 +145,11 @@ const IndexPage: React.FC<Props> = (props) => {
               </div>
               <p className="mt-1 truncate text-sm text-gray-500">title</p>
             </div>
-            <img className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src="https://source.boringavatars.com/marble/80/" alt="" />
+            <Image 
+            src="https://source.boringavatars.com/marble/80/"
+            alt="user image"
+            />
+            {/* <img className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src="https://source.boringavatars.com/marble/80/" alt="" /> */}
           </div>
           <div>
           </div>
@@ -192,11 +195,11 @@ const IndexPage: React.FC<Props> = (props) => {
       </div>
 
         
-      <ul role="list" className="pb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
+      {/* <ul role="list" className="pb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
         {props.peers.map((peer) => (
             <Peer peer={peer} />
         ))}
-      </ul>
+      </ul> */}
 
     <div className="pb-12">
       
