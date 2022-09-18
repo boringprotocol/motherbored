@@ -6,6 +6,7 @@ import Layout from "../../components/layout";
 import prisma from "../../lib/prisma";
 import { useSession } from "next-auth/react";
 import { IoDownloadOutline, IoWifiOutline } from "react-icons/io5"
+import Image from 'next/image';
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     if (params == null || params.id == null) {
@@ -80,6 +81,10 @@ const ShowPeer: React.FC<Props> = (props) => {
         <Layout>
             <div>
 
+
+
+            <div className="grid grid-cols-2 gap-4">
+            <div>
                 <form className="w-1/2">
                     <div className="text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                     {/* <label htmlFor="name" className="block text-xs font-medium text-gray-900">
@@ -130,6 +135,13 @@ const ShowPeer: React.FC<Props> = (props) => {
                 </button>
 
                 </form>
+
+            </div>
+
+            <div><Image src="https://source.boringavatars.com/pixel/o9k7o789n6o7" alt="" width="148" height="148" /></div>
+
+
+            </div>
 
 
                 <hr className="bt-1 border-gray-dark m-12"/>
