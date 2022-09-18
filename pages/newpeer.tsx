@@ -115,6 +115,7 @@ const NewPeer: React.FC<Props> = (props) => {
 
                     {kind == "consumer" && (
                         <div>
+                            {/* https://tailwindui.com/components/application-ui/forms/select-menus#component-71d9116be789a254c260369f03472985 */}
                             <label htmlFor="target" className="block text-sm font-medium">
                                 Select an available vpn provider:
                             </label>
@@ -131,7 +132,7 @@ const NewPeer: React.FC<Props> = (props) => {
                         </div>
                     )}
 
-                    <input className="ml-0 mt-6 flex justify-center rounded-md border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40" type="submit" value="Create" />
+                    <input className=" mt-6 flex justify-center rounded-md border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40" type="submit" value="Create" />
                     <a className="back" href="#" onClick={() => Router.push("/")}>
                         or Cancel
                     </a>
