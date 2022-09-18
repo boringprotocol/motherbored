@@ -15,7 +15,6 @@ export type PeerProps = {
 
 const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
   const peerAvatar = "https://source.boringavatars.com/marble/" + peer.name + "?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
-  const peerName = peer.name 
   
   return (
     
@@ -27,7 +26,7 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
             <div className="flex-1 truncate">
             
               <div className="flex items-center space-x-3">
-                <h3 title={peerName} className="font-jetbrains truncate text-lg text-boring-black dark:text-boring-white">{peer.name}</h3>
+                <h3 className="font-jetbrains truncate text-lg text-boring-black dark:text-boring-white">{peer.name}</h3>
               </div>
               <p className="font-jetbrains mt-1 truncate text-xs text-gray-500">{peer.kind}</p>
             </div>
