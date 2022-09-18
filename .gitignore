@@ -111,3 +111,4 @@ dist
 .env.local
 
 .DS_Store
+yarn.lock
