@@ -3,16 +3,14 @@ import { Dialog, Menu, Transition } from '@headlessui/react'
 import { Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Header from "./header"
 import Link from 'next/link'
-
-
 import { useTheme } from 'next-themes'
 
 const ThemeChanger = () => {
   const { theme, setTheme } = useTheme()
 
   return (
-    <div>
-      The current theme is: {theme}
+    <div className="font-jetbrains text-xs p-12">
+      The current theme is: {theme}<br />
       <button onClick={() => setTheme('light')}>Light Mode</button>
       <button onClick={() => setTheme('dark')}>Dark Mode</button>
     </div>
@@ -52,21 +50,21 @@ export default function Layout({ children }: Props) {
                 />
               </Link>
             </div>
-            <div className="hidden lg:sticky lg:top-0 lg:flex lg:w-16 lg:flex-none lg:items-center lg:whitespace-nowrap lg:py-12 lg:text-md lg:leading-7 lg:[writing-mode:vertical-rl]">
-              <span className="font-jetbrains text-slate-500 uppercase">Motherbored</span>
+            <div className="hidden md:sticky lg:top-0 lg:flex lg:w-16 lg:flex-none lg:items-center lg:whitespace-nowrap lg:py-12 lg:text-md lg:leading-7 lg:[writing-mode:vertical-rl]">
+              {/* <span className="font-jetbrains text-slate-500 uppercase">Motherbored</span>
               <span className="font-jetbrains mt-6 flex gap-6 uppercase">
                 &middot;
               </span>
               <span className="font-jetbrains mt-6 flex gap-6 uppercase">
                 Boring A Private Path
-              </span>
+              </span> */}
             </div>
           </div>
         </div>
 
         {/* Mobile menu */}
         <Transition.Root show={mobileMenuOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-20 md:hidden" onClose={setMobileMenuOpen}>
+          <Dialog as="div" className="relative z-20 md:hidden " onClose={setMobileMenuOpen}>
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -76,7 +74,7 @@ export default function Layout({ children }: Props) {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="fixed inset-0 bg-gray-600 bg-opacity-75" />
+              <div className="fixed inset-0 bg-gray bg-opacity-5" />
             </Transition.Child>
 
             <div className="fixed inset-0 z-40 flex">
@@ -89,7 +87,7 @@ export default function Layout({ children }: Props) {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-indigo-700 pt-5 pb-4">
+                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-indigo-700 pt-5 pb-4 bg-boring-black border-r border-gray-dark">
                   <Transition.Child
                     as={Fragment}
                     enter="ease-in-out duration-300"
@@ -99,14 +97,13 @@ export default function Layout({ children }: Props) {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                   >
-                    <div className="absolute top-1 right-0 -mr-14 p-1">
+                    <div className="absolute top-1 right-0 -mr-14 p-1 bg-black">
                       <button
                         type="button"
                         className="flex h-12 w-12 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-white"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
-                        <span className="sr-only">Close sidebar</span>
                       </button>
                     </div>
                   </Transition.Child>
@@ -120,7 +117,7 @@ export default function Layout({ children }: Props) {
                   <div className="mt-5 h-0 flex-1 overflow-y-auto px-2">
                     <nav className="flex h-full flex-col">
                       <div className="space-y-1">
-                        nothing to see here
+                        nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here 
                       </div>
                     </nav>
                   </div>
@@ -134,9 +131,11 @@ export default function Layout({ children }: Props) {
         </Transition.Root>
 
         {/* Content area */}
-        <div className="flex flex-1 flex-col overflow-hidden">
+        <div className="font-jetbrains flex flex-1 flex-col overflow-hidden dark:bg-boring-black">
           <header className="w-full">
             <div className="relative z-10 flex h-16 flex-shrink-0 border-b border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black  shadow-sm">
+
+            {/* <pre className="font-jetbrains text-xs p-2">layout.tsx header</pre> */}
               <button
                 type="button"
                 className="border-r border-gray-light dark:border-gray-dark px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
@@ -157,7 +156,7 @@ export default function Layout({ children }: Props) {
                         <span className="sr-only">Open user menu</span>
                         <img
                           className="h-8 w-8 rounded-full"
-                          src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
+                          src="https://source.boringavatars.com/pixel/"
                           alt=""
                         />
                       </Menu.Button>
@@ -171,7 +170,7 @@ export default function Layout({ children }: Props) {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-boring-black py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         {userNavigation.map((item) => (
                           <Menu.Item key={item.name}>
                             {({ active }) => (
@@ -201,7 +200,7 @@ export default function Layout({ children }: Props) {
               {/* Primary column */}
               <section aria-labelledby="primary-heading" className="flex h-full min-w-0 flex-1 flex-col lg:order-last">
                 <h1 id="primary-heading" className="sr-only">
-                  Photos
+                sr-only
                 </h1>
                 <div>
 
@@ -214,8 +213,15 @@ export default function Layout({ children }: Props) {
 
             {/* Secondary column (hidden on smaller screens) */}
             <aside className="hidden w-96 overflow-y-auto border-l border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black lg:block">
+            
+            <pre className="font-jetbrains text-xs p-2">layout.tsx aside</pre>
+
 
               <ThemeChanger />
+
+              <div className="p-12">
+              ...              
+              </div>                                  
                                   
 
             </aside>
