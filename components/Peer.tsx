@@ -21,7 +21,7 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
 
       <a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
        
-       <li className="col-span-1 rounded-sm border border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
+       <li key={peer.name} className="col-span-1 rounded-sm border border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
             <div className="flex w-full items-center justify-between space-x-6 p-6">
             <div className="flex-1 truncate">
             
@@ -30,7 +30,8 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
               </div>
               <p className="font-jetbrains mt-1 truncate text-xs text-gray-500">{peer.kind}</p>
             </div>
-            <img className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src={peerAvatar} alt="" />
+            <Image src={peerAvatar} alt="" />
+            {/* <img className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src={peerAvatar} alt="" /> */}
           </div>
           </li>
 {/* 
