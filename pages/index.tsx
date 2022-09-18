@@ -1,4 +1,4 @@
-import { getSession, signOut, useSession } from "next-auth/react"
+import { getSession, useSession } from "next-auth/react"
 import Router from "next/router"
 import Layout from "../components/layout"
 import React from "react"
@@ -8,6 +8,8 @@ import prisma from "../lib/prisma"
 import Head from 'next/head';
 import Image from 'next/image';
 import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/20/solid'
+import { IoWarningOutline } from 'react-icons/io5';
+
 
 // Placeholder data for peer stats
 const stats = [
@@ -170,12 +172,35 @@ const IndexPage: React.FC<Props> = (props) => {
       <div className="main">
 
         {/* ALERT */}
+        {/* Success */}
         <div className="flex border rounded-sm border-gray-light dark:border-gray-dark p-4 mb-12">
           <div className="flex-shrink-0">
             <CheckCircleIcon className="h-5 w-5 text-boring-black dark:text-boring-white" aria-hidden="true" />
           </div>
           <div className="ml-3">
             <p className="font-jetbrains text-sm font-medium text-boring-black dark:text-boring-white">Successfully did something</p>
+          </div>
+          <div className="ml-auto pl-3">
+            <div className="-mx-1.5 -my-1.5">
+              <button
+                type="button"
+                className="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
+              >
+                <span className="sr-only">Dismiss</span>
+                <XMarkIcon className="h-5 w-5" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Failure */}
+        <div className="flex border rounded-sm border-gray-light dark:border-gray-dark p-4 mb-12">
+          <div className="flex-shrink-0">
+            {/* <CheckCircleIcon className="h-5 w-5 text-boring-black dark:text-boring-white" aria-hidden="true" /> */}
+            <IoWarningOutline className="h-5 w-5 text-boring-black dark:text-boring-white" aria-hidden="true" />
+          </div>
+          <div className="ml-3">
+            <p className="font-jetbrains text-sm font-medium text-boring-black dark:text-boring-white">Oh dang that sucks</p>
           </div>
           <div className="ml-auto pl-3">
             <div className="-mx-1.5 -my-1.5">
