@@ -5,6 +5,7 @@ import { PeerProps } from "../../components/Peer";
 import Layout from "../../components/layout";
 import prisma from "../../lib/prisma";
 import { useSession } from "next-auth/react";
+import { IoDownloadOutline, IoWifiOutline } from "react-icons/io5"
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     if (params == null || params.id == null) {
@@ -56,6 +57,8 @@ async function downloadPeerConfig(id: string): Promise<void> {
 }
 
 const ShowPeer: React.FC<Props> = (props) => {
+    // 
+
     const { data: session, status } = useSession();
     if (status === "loading") {
         return <div>Authenticating ...</div>;
@@ -77,14 +80,83 @@ const ShowPeer: React.FC<Props> = (props) => {
         <Layout>
             <div>
 
-                <h1 className="text-xl uppercase">Name: {props.peer.name}</h1>
+                <form className="w-1/2">
+                    <div className="text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                    {/* <label htmlFor="name" className="block text-xs font-medium text-gray-900">
+                    Name
+                    </label> */}
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        className="bg-boring-black block w-full border-0 p-0 text-boring-white placeholder-boring-white focus:ring-0 text-4xl"
+                        placeholder="broken-fish-5824"
+                        disabled
+                    />
+                    </div>
+                    <div className="text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                    <label htmlFor="name" className="block text-xs font-medium text-gray-900">
+                    Label
+                    </label>
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        className="bg-boring-black block w-full border-0 p-0 text-boring-white placeholder-boring-white focus:ring-0 text-lg"
+                        placeholder="Jim's House"
+                    />
+                    </div>
+
+                    {/* if consumer */}
+                    <div className="text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                    <label htmlFor="name" className="block text-xs font-medium text-gray-900">
+                    <IoWifiOutline className="float-left mr-2" /> SSID
+                    </label>
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        className="bg-boring-black block w-full border-0 p-0 text-boring-white placeholder-boring-white focus:ring-0 text-lg"
+                        placeholder="Nerd Cave"
+                    />
+                    </div>
+
+                    <button
+                  type="submit"
+                  className="ml-4 mt-6 flex justify-center rounded-md border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
+                  disabled
+                >
+                  Save Changes
+                </button>
+
+                </form>
+
+
+                <hr className="bt-1 border-gray-dark m-12"/>
+
+                <p className="font-jetbrains text-xs">These list items are just here for reference. I need to figure out how to pass these values into the form attributes above. I know they are not meant to be editable but if ALL items per peer live in one form we can just disable the fixed values. The submit button should be disabled/muted until a form value has changed. </p>
+                <li>Name: {props.peer.name}</li>
                 <li key={props.peer.id}>Id: {props.peer.id}</li>
+                <li key={props.peer.kind}>kind: {props.peer.kind}</li>
+
+                <hr className="bt-1 border-gray-dark m-12"/>
+
+
+                <p className="font-jetbrains text-xs">These list items are also for reference. We can look at adding columns to the peer table to prepare for the future implimentation.</p>
+
+
                 <li>SSID:</li>
                 <li key={props.peer.setupkey}>boring setupkey: {props.peer.setupkey}</li>
-                <li key={props.peer.kind}>kind: {props.peer.kind}</li>
                 <li key={props.peer.target}>target: {props.target}</li>
+
+                <hr className="bt-1 border-gray-dark m-12"/>
+
+
+                <p className="font-jetbrains text-xs">Manual setup buttons</p>
+
+
                 {props.peer.pubkey && (<li key={props.peer.pubkey}>pubkey: {props.peer.pubkey}</li>)}
-                <button className="mt-8 inline-flex items-center rounded-sm border border-transparent bg-white px-3 py-2 font-medium text-boring-black shadow hover:bg-boring-white" onClick={() => downloadPeerConfig(props.peer.id)}>Download boring config</button>
+                <button className="mt-8 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2"/> boring.env</button>
                 {isProvider && !providerActive && (
                     <div>
                         <button className="mt-8 inline-flex items-center rounded-sm border border-transparent bg-white px-3 py-1 text-boring-black shadow hover:bg-gray-lightest" onClick={() => activatePeer(props.peer.id)}>Activate</button>
@@ -95,6 +167,11 @@ const ShowPeer: React.FC<Props> = (props) => {
                         <h1>This provider is active!</h1>
                     </div>
                 )}
+
+
+<hr className="bt-1 border-gray-dark m-12"/>
+
+<p className="font-jetbrains text-xs">This might be a good place to put the are-your-sure kill/reset button. </p>
 
 <div className="bg-boring-white dark:bg-boring-black border border-gray-dark shadow sm:rounded-lg mt-12">
       <div className="px-4 py-5 sm:p-6">
@@ -109,13 +186,6 @@ const ShowPeer: React.FC<Props> = (props) => {
           >
             Reset peer
           </button>
-
-          <button type="button" className="bg-black" disabled>
-  <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">kjhlkjh
-  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
-  </svg>
-  Processing...
-</button>
 
         </div>
       </div>
