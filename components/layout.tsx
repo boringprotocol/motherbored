@@ -212,7 +212,7 @@ export default function Layout({ children }: Props) {
               <ThemeChanger />
 
               <div className="p-12">
-              ...              
+              
               </div>                                  
                                   
 
