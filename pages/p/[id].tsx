@@ -77,10 +77,6 @@ const ShowPeer: React.FC<Props> = (props) => {
         <Layout>
             <div>
 
-
-            <form action="#" method="POST">
-            </form>
-            <img className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src="https://source.boringavatars.com/marble/80/" alt="" />
                 <h1 className="text-xl uppercase">Name: {props.peer.name}</h1>
                 <li key={props.peer.id}>Id: {props.peer.id}</li>
                 <li>SSID:</li>
