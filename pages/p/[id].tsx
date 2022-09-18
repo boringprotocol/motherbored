@@ -76,17 +76,22 @@ const ShowPeer: React.FC<Props> = (props) => {
     return (
         <Layout>
             <div>
+
+
+            <form action="#" method="POST">
+            </form>
+            <img className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src="https://source.boringavatars.com/marble/80/" alt="" />
                 <h1 className="text-xl uppercase">Name: {props.peer.name}</h1>
                 <li key={props.peer.id}>Id: {props.peer.id}</li>
+                <li>SSID:</li>
                 <li key={props.peer.setupkey}>boring setupkey: {props.peer.setupkey}</li>
                 <li key={props.peer.kind}>kind: {props.peer.kind}</li>
                 <li key={props.peer.target}>target: {props.target}</li>
                 {props.peer.pubkey && (<li key={props.peer.pubkey}>pubkey: {props.peer.pubkey}</li>)}
-                <button onClick={() => downloadPeerConfig(props.peer.id)}>Download boring config</button>
+                <button className="mt-8 inline-flex items-center rounded-sm border border-transparent bg-white px-3 py-2 font-medium text-boring-black shadow hover:bg-boring-white" onClick={() => downloadPeerConfig(props.peer.id)}>Download boring config</button>
                 {isProvider && !providerActive && (
                     <div>
-                        <h1>This provider is inactive, you must activate it after configuring the motherbored.</h1>
-                        <button onClick={() => activatePeer(props.peer.id)}>Activate</button>
+                        <button className="mt-8 inline-flex items-center rounded-sm border border-transparent bg-white px-3 py-2 font-medium text-boring-black shadow hover:bg-boring-white" onClick={() => activatePeer(props.peer.id)}>Activate</button>
                     </div>
                 )}
                 {isProvider && providerActive && (
@@ -94,6 +99,25 @@ const ShowPeer: React.FC<Props> = (props) => {
                         <h1>This provider is active!</h1>
                     </div>
                 )}
+
+<div className="bg-boring-white dark:bg-boring-black border border-gray-dark shadow sm:rounded-lg mt-12">
+      <div className="px-4 py-5 sm:p-6">
+        <h3 className="text-lg font-medium leading-6 text-boring-white">Reset Peer</h3>
+        <div className="mt-2 max-w-xl text-sm text-boring-white">
+          <p>Once you reset your peer, all data associated with it goes away , "factory reset", ... </p>
+        </div>
+        <div className="mt-5">
+          <button
+            type="button"
+            className="focus:bg-blue focus:shadow-lg focus:outline-none focus:ring-0 active:bg-black active:shadow-lg inline-flex items-center justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 font-medium text-boring-white hover:bg-boring-white hover:text-boring-black focus:ring-red-500 focus:ring-offset-2 sm:text-sm"
+          >
+            Reset peer
+          </button>
+        </div>
+      </div>
+    </div>
+
+
             </div>
         </Layout>
     );
