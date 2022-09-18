@@ -29,6 +29,14 @@ export default async function handle(req: any, res: any) {
         fileContents += "SETUP_KEY="
         fileContents += peer.setupkey
         fileContents += "\n"
+        fileContents += "BORING_NAME="
+        fileContents += peer.name
+        fileContents += "\n"
+        fileContents += "BORING_ID="
+        fileContents += peer.id
+        fileContents += "\n"
+        fileContents += "UPDATE=true"
+        fileContents += "\n"
     } else {
         //consumer
         const targetPeer = await prisma.peer.findUnique({
@@ -44,6 +52,13 @@ export default async function handle(req: any, res: any) {
         fileContents += "PUBLIC_PEER_IP_LIST=18.118.130.170,3.144.33.182\n"
         fileContents += "PROVIDER_PUBKEY="
         fileContents += targetPeer?.pubkey
+        fileContents += "\n"
+        fileContents += "BORING_NAME="
+        fileContents += peer.name
+        fileContents += "\n"
+        fileContents += "BORING_ID="
+        fileContents += peer.id
+        fileContents += "UPDATE=true"
         fileContents += "\n"
     }
     res.statusCode = 200;
