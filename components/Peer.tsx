@@ -14,14 +14,13 @@ export type PeerProps = {
 };
 
 const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
-  const peerAvatar = "https://source.boringavatars.com/marble/" + peer.name + "?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
+  const peerAvatar = "https://source.boringavatars.com/sunset/" + peer.name + "?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
   
   return (
     
 
       <a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
        
-       <li key={peer.name} className="col-span-1 rounded-sm border border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
             <div className="flex w-full items-center justify-between space-x-6 p-6">
             <div className="flex-1 truncate">
             
@@ -30,9 +29,9 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
               </div>
               <p className="font-jetbrains mt-1 truncate text-xs text-gray-500">{peer.kind}</p>
             </div>
-            <Image src={peerAvatar} alt="" width="20" height="20" />
+            <Image src={peerAvatar} alt="" width="48" height="48" />
           </div>
-          </li>
+
 {/* 
         <div key={peer.name} className="font-jetbrains rounded-lg-gray pb-10">
           <div className="flex w-full items-center justify-between space-x-6 p-6">
