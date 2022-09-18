@@ -10,8 +10,8 @@ const ThemeChanger = () => {
 
   return (
     <div className="font-jetbrains text-xs p-12">
-      The current theme is: <span className="capitalize">{theme}</span><br />
-      <button className='p-1 bg-white text-black' onClick={() => setTheme('light')}>Light Mode</button>
+      The current theme is: <span className="capitalize">{theme}</span><br /><br />
+      <button className='p-1 mr-3 bg-white text-black' onClick={() => setTheme('light')}>Light Mode</button>
       <button className='p-1 bg-white text-black' onClick={() => setTheme('dark')}>Dark Mode</button>
     </div>
   )
@@ -211,8 +211,8 @@ export default function Layout({ children }: Props) {
 
               <ThemeChanger />
 
-              <div className="p-12">
-              
+              <div className="font-jetbrains text-xs p-12">
+              Bring User and Peer props into this content block.
               </div>                                  
                                   
 
