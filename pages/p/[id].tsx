@@ -89,12 +89,12 @@ const ShowPeer: React.FC<Props> = (props) => {
                         type="text"
                         name="name"
                         id="name"
-                        className="bg-boring-black block w-full border-0 p-0 text-boring-white placeholder-boring-white focus:ring-0 text-4xl"
+                        className="cursor-not-allowed bg-boring-black block w-full border-0 p-0 text-boring-white placeholder-boring-white focus:ring-0 text-4xl"
                         placeholder="broken-fish-5824"
                         disabled
                     />
                     </div>
-                    <div className="text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                    <div className="text-boring-white border border-gray-dark rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                     <label htmlFor="name" className="block text-xs font-medium text-gray-900">
                     Label
                     </label>
@@ -108,7 +108,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                     </div>
 
                     {/* if consumer */}
-                    <div className="text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                    <div className="mt-6 text-boring-white border border-gray-dark rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                     <label htmlFor="name" className="block text-xs font-medium text-gray-900">
                     <IoWifiOutline className="float-left mr-2" /> SSID
                     </label>
@@ -123,7 +123,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                     <button
                   type="submit"
-                  className="ml-4 mt-6 flex justify-center rounded-md border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
+                  className="mt-6 flex justify-center rounded-md border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
                   disabled
                 >
                   Save Changes
