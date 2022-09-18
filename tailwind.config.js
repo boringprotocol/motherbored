@@ -18,11 +18,14 @@ module.exports = {
       'pink': '#ff49db',
       'orange': '#ff7849',
       'green': '#13ce66',
+      'red': 'red',
       'gray-dark': '#262729',
       'gray': '#8492a6',
       'gray-light': '#d3dce6',
+      'gray-lightest': '#d3dce6',
+      'black': '#000000',
       'boring-black': '#1A1B1E',
-      'boring-white': '#E5E4E1'
+      'boring-white': '#FDFDFD'
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
