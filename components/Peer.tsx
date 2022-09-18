@@ -14,12 +14,27 @@ export type PeerProps = {
 };
 
 const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
-  const peerAvatar = "https://source.boringavatars.com/marble/80/" + peer.name
+  const peerAvatar = "https://source.boringavatars.com/marble/" + peer.name + "?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
+  const peerName = peer.name 
+  
   return (
-    <div>
+    
 
-      <a className="mt-3 w-1/3 items-center rounded-sm border hover:bg-gray-light border-gray-light float-left" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
-
+      <a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
+       
+       <li className="col-span-1 rounded-sm border border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
+            <div className="flex w-full items-center justify-between space-x-6 p-6">
+            <div className="flex-1 truncate">
+            
+              <div className="flex items-center space-x-3">
+                <h3 title={peerName} className="font-jetbrains truncate text-lg text-boring-black dark:text-boring-white">{peer.name}</h3>
+              </div>
+              <p className="font-jetbrains mt-1 truncate text-xs text-gray-500">{peer.kind}</p>
+            </div>
+            <img className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src={peerAvatar} alt="" />
+          </div>
+          </li>
+{/* 
         <div key={peer.name} className="font-jetbrains rounded-lg-gray pb-10">
           <div className="flex w-full items-center justify-between space-x-6 p-6">
             <div className="flex-1 truncate">
@@ -39,12 +54,12 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
           </div>
           <div>
           </div>
-        </div>
+        </div> */}
 
 
       </a>
 
-    </div>
+    
   );
 };
 
