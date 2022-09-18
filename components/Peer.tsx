@@ -31,7 +31,6 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
               <p className="font-jetbrains mt-1 truncate text-xs text-gray-500">{peer.kind}</p>
             </div>
             <Image src={peerAvatar} alt="" width="20" height="20" />
-            {/* <img className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src={peerAvatar} alt="" /> */}
           </div>
           </li>
 {/* 
