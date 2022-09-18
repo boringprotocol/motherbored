@@ -79,33 +79,39 @@ const NewPeer: React.FC<Props> = (props) => {
     return (
         <Layout>
             <div>
-                <form onSubmit={submitData}>
-                    <h1>New Peer</h1>
+                <form className="w-1/2" onSubmit={submitData}>
+                    <h1 className="uppercase mb-6">New Peer</h1>
+                    <div className="border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                    <label htmlFor="name" className="block text-xs text-gray">
+                    Name your peer
+                    </label>
                     <input
-                        className="text-black"
-                        id="name"
-                        name="name"
-                        autoFocus
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Name"
                         type="text"
+                        name="name"
+                        id="name"
+                        onChange={(e) => setName(e.target.value)}
+                        className="bg-boring-black block w-full border-0 p-0 text-gray-lightest placeholder-boring-white focus:ring-0 text-lg"
+                        placeholder=""
                         value={name}
-                        required
                     />
-                    <label htmlFor="mode" className="block text-sm font-medium">
+                    </div>
+
+                    <div className="mt-6 border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                    <label htmlFor="mode" className="block text-xs text-gray">
                         Mode
                     </label>
                     <select
                         onChange={(e) => handleChangeKind(e.target.value)}
                         id="kind"
                         name="kind"
-                        className="mt-1 block w-full rounded-md border-gray-light py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        className="bg-boring-black block w-full border-0 p-0 text-gray-lightest placeholder-boring-white focus:ring-0 text-lg"
                         defaultValue="provider"
                     >
                         <option key="consumer" value="consumer">Consumer</option>
                         <option key="provider" value="provider">Provider</option>
                         required
                     </select>
+                    </div>
 
                     {kind == "consumer" && (
                         <div>
@@ -125,7 +131,7 @@ const NewPeer: React.FC<Props> = (props) => {
                         </div>
                     )}
 
-                    <input type="submit" value="Create" />
+                    <input className="ml-0 mt-6 flex justify-center rounded-md border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40" type="submit" value="Create" />
                     <a className="back" href="#" onClick={() => Router.push("/")}>
                         or Cancel
                     </a>
