@@ -100,7 +100,7 @@ const ShowPeer: React.FC<Props> = (props) => {
       <div className="px-4 py-5 sm:p-6">
         <h3 className="text-lg font-medium leading-6 text-boring-white">Reset Peer</h3>
         <div className="mt-2 max-w-xl text-sm text-boring-white">
-          <p>Once you reset your peer, all data associated with it goes away , "factory reset", ... </p>
+          <p>Once you reset your peer, all data associated with it goes away , factory reset, ... </p>
         </div>
         <div className="mt-5">
           <button
