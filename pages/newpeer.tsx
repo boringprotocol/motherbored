@@ -82,6 +82,7 @@ const NewPeer: React.FC<Props> = (props) => {
                 <form onSubmit={submitData}>
                     <h1>New Peer</h1>
                     <input
+                        className="text-black"
                         id="name"
                         name="name"
                         autoFocus
