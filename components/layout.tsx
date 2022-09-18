@@ -10,9 +10,9 @@ const ThemeChanger = () => {
 
   return (
     <div className="font-jetbrains text-xs p-12">
-      The current theme is: {theme}<br />
-      <button onClick={() => setTheme('light')}>Light Mode</button>
-      <button onClick={() => setTheme('dark')}>Dark Mode</button>
+      The current theme is: <span className="capitalize">{theme}</span><br />
+      <button className='p-1 bg-white text-black' onClick={() => setTheme('light')}>Light Mode</button>
+      <button className='p-1 bg-white text-black' onClick={() => setTheme('dark')}>Dark Mode</button>
     </div>
   )
 }
@@ -38,6 +38,7 @@ export default function Layout({ children }: Props) {
 
     <>
       <div className="flex h-full text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
+        
         {/* Narrow sidebar */}
         <div className="hidden w-22 overflow-y-auto md:block border-r border-gray-light dark:border-gray-dark">
           <div className="flex w-full flex-col items-center py-2">
@@ -46,18 +47,9 @@ export default function Layout({ children }: Props) {
                 <img
                   className="h-14 w-auto"
                   src="/img/logo/mark.svg"
-                  alt="Your Boring Protocol"
+                  alt="Boring Protocol"
                 />
               </Link>
-            </div>
-            <div className="hidden md:sticky lg:top-0 lg:flex lg:w-16 lg:flex-none lg:items-center lg:whitespace-nowrap lg:py-12 lg:text-md lg:leading-7 lg:[writing-mode:vertical-rl]">
-              {/* <span className="font-jetbrains text-slate-500 uppercase">Motherbored</span>
-              <span className="font-jetbrains mt-6 flex gap-6 uppercase">
-                &middot;
-              </span>
-              <span className="font-jetbrains mt-6 flex gap-6 uppercase">
-                Boring A Private Path
-              </span> */}
             </div>
           </div>
         </div>
@@ -116,8 +108,8 @@ export default function Layout({ children }: Props) {
                   </div>
                   <div className="mt-5 h-0 flex-1 overflow-y-auto px-2">
                     <nav className="flex h-full flex-col">
-                      <div className="space-y-1">
-                        nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here 
+                      <div className="font-jetbrains space-y-1">
+                        nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here nothing to see here YET
                       </div>
                     </nav>
                   </div>
@@ -214,7 +206,7 @@ export default function Layout({ children }: Props) {
             {/* Secondary column (hidden on smaller screens) */}
             <aside className="hidden w-96 overflow-y-auto border-l border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black lg:block">
             
-            <pre className="font-jetbrains text-xs p-2">layout.tsx aside</pre>
+            <pre className="font-jetbrains text-xs p-2 text-gray">layout.tsx aside</pre>
 
 
               <ThemeChanger />
