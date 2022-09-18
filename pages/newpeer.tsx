@@ -130,24 +130,7 @@ const NewPeer: React.FC<Props> = (props) => {
                     </a>
                 </form>
             </div>
-            <style jsx>{`
-        .page {
-          background: white;
-          padding: 3rem;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        input[type="text"],
-        input[type="submit"] {
-          background: #ececec;
-          border: 0;
-          padding: 1rem 2rem;
-        }
-        .back {
-          margin-left: 1rem;
-        }
-      `}</style>
+            
         </Layout >
     );
 };
