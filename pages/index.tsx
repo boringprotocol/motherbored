@@ -171,9 +171,10 @@ const IndexPage: React.FC<Props> = (props) => {
 
       <div className="main">
 
-        {/* ALERT */}
+        {/* ALERT
+        https://www.creative-tim.com/learning-lab/tailwind/nextjs/alerts/notus */}
         {/* Success */}
-        <div className="flex border rounded-sm border-gray-light dark:border-gray-dark p-4 mb-12">
+        <div className="animate-pulse flex border rounded-sm border-gray-light dark:border-gray-dark p-4 mb-4">
           <div className="flex-shrink-0">
             <CheckCircleIcon className="h-5 w-5 text-boring-black dark:text-boring-white" aria-hidden="true" />
           </div>
@@ -219,9 +220,10 @@ const IndexPage: React.FC<Props> = (props) => {
         {/* key={peer.name} has to be on the imideiate child element within a loop
         https://adhithiravi.medium.com/why-do-i-need-keys-in-react-lists-dbb522188bbb
         https://stackoverflow.com/questions/54401481/eslint-missing-key-prop-for-element-in-iterator-react-jsx-key */}
+        <h2 className="font-jetbrains uppercase mb-4">Peers</h2>
         <ul role="list" className="pb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
           {props.peers.map((peer) => (
-            <li key={peer.name} className="col-span-1 rounded-sm border border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
+            <li key={peer.name} className="col-span-1 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
               <Peer peer={peer} />
             </li>
           ))}
@@ -233,7 +235,7 @@ const IndexPage: React.FC<Props> = (props) => {
           <button
         type="button"
         onClick={() => Router.push("/newpeer")}
-        className="relative block w-full rounded-lg text-boring-black dark:text-boring-white border-2 border-dotted border-gray-light dark:border-gray-dark p-12 text-center hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        className="relative block w-full rounded-lg text-boring-black dark:text-boring-white border-2 border-dotted border-gray-light dark:border-gray-dark p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
       >
         <svg
           className="mx-auto h-12 w-12 text-gray-400"
