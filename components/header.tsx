@@ -25,7 +25,7 @@ export default function Header() {
       const message = new SigninMessage({
         domain: window.location.host,
         publicKey: wallet.publicKey?.toBase58(),
-        statement: `Yeeehaw mother fucker Sign this message to sign in to the app brospeh yeeehaw.`,
+        statement: `Sign this message.`,
         nonce: csrf,
       });
 
@@ -73,12 +73,12 @@ export default function Header() {
                   className="fl w2 h2 cover"
                 />
               )}
-              <span className="">
-                <strong>{session.user.email ?? session.user.name}</strong>
+              <span className="font-jetbrains text-sm">
+                {session.user.email ?? session.user.name}
               </span>
               <a
                 href={`/api/auth/signout`}
-                className="ml-6 mt-2 inline-flex items-center rounded-sm border border-transparent bg-white px-5 py-3  font-medium text-indigo-600 shadow hover:bg-indigo-50"
+                className="ml-6 mt-2 inline-flex items-center rounded-sm text-boring-black dark:text-boring-white bg-white dark:bg-black px-3 py-1  font-medium text-indigo-600 shadow hover:bg-indigo-50"
                 onClick={(e) => {
                   e.preventDefault();
                   signOut();
