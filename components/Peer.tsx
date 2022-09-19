@@ -11,6 +11,8 @@ export type PeerProps = {
   kind: string | null;
   target: string | null;
   pubkey: string | null;
+  label: string | null;
+  ssid: string | null;
 };
 
 const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {

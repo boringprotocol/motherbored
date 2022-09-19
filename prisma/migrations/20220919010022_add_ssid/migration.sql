@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Peer` ADD COLUMN `ssid` VARCHAR(191) NULL;
