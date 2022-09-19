@@ -20,6 +20,7 @@ const ThemeChanger = () => {
 const userNavigation = [
   { name: 'Your Account', href: '/me' },
   { name: 'Sign out', href: '#' },
+  { name: 'Add Peer', href: '/newpeer' },
 ]
 
 function classNames(...classes: any) {
@@ -169,7 +170,7 @@ export default function Layout({ children }: Props) {
                               <a
                                 href={item.href}
                                 className={classNames(
-                                  active ? 'bg-gray-100' : '',
+                                  active ? 'bg-gray-lightest dark:bg-gray-dark' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
                                 )}
                               >
@@ -203,17 +204,10 @@ export default function Layout({ children }: Props) {
 
             {/* Secondary column (hidden on smaller screens) */}
             <aside className="hidden w-96 overflow-y-auto border-l border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black lg:block">
-            
-            <pre className="font-jetbrains text-xs p-2 text-gray">layout.tsx aside</pre>
-
 
               <ThemeChanger />
-
-              <div className="font-jetbrains text-xs p-12">
-              Bring User and Peer props into this content block.
-              </div>                                  
                                   
-              <div className="font-jetbrains text-xs p-12">
+              <div className="font-jetbrains text-xs p-12 border-t border-gray-light dark:border-gray-dark">
                 <h2 className="text-lg">Next Features</h2>
               <ul className="list-disc ml-4">
                 <li>Add country code to provider peer</li>
@@ -224,9 +218,15 @@ export default function Layout({ children }: Props) {
                 <li>Up/Down per peer</li>
                 <li>Up/Down all peer</li>
                 <li>Hook up node count</li>
+                <li>Hook Konomi code duh</li>
                 
               </ul>
-              </div>                     
+              </div>                 
+
+              <div className="font-jetbrains text-xs p-12 border-t border-gray-light dark:border-gray-dark">
+              <h3>BORING ASTEROIDS</h3>
+              <p>↑ ↑ ↓ ↓ ← → ← → b a enter</p>    
+    </div>
 
             </aside>
 

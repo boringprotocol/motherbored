@@ -87,6 +87,8 @@ const IndexPage: React.FC<Props> = (props) => {
 
       <div className="main">
 
+
+      <div className="px-14 pt-8">
         {/* ALERT
         https://www.creative-tim.com/learning-lab/tailwind/nextjs/alerts/notus */}
         {/* Success */}
@@ -131,11 +133,13 @@ const IndexPage: React.FC<Props> = (props) => {
             </div>
           </div>
         </div>
+      </div>  
           
         {/* PEERS */}
         {/* key={peer.name} has to be on the imideiate child element within a loop
         https://adhithiravi.medium.com/why-do-i-need-keys-in-react-lists-dbb522188bbb
         https://stackoverflow.com/questions/54401481/eslint-missing-key-prop-for-element-in-iterator-react-jsx-key */}
+        <div className="px-14 pb-16">
         <h2 className="font-jetbrains uppercase mb-4">Peers</h2>
         <ul role="list" className="pb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
           {props.peers.map((peer) => (
@@ -144,9 +148,9 @@ const IndexPage: React.FC<Props> = (props) => {
             </li>
           ))}
         </ul>
-      
-        {/* ADD PEER */}
-        <div className="pb-12">
+
+                {/* ADD PEER */}
+                <div className="pb-12">
           
           <button
         type="button"
@@ -172,9 +176,15 @@ const IndexPage: React.FC<Props> = (props) => {
         
           </button>
         </div>
+        </div>
+      
 
+
+        
+        
+        
         {/* NETWORK STATISTICS */}
-        <div className="pb-12">
+        <div className="px-14 py-16 border-t border-gray-light dark:border-gray-dark">
         <h3 className="font-jetbrains text-lg font-medium leading-6 text-gray dark:text-boring-white uppercase">Network</h3>
         <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
           {stats.map((item) => (
