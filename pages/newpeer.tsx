@@ -7,6 +7,8 @@ import prisma from "../lib/prisma";
 import Peer, { PeerProps } from "../components/Peer";
 import { json } from "stream/consumers";
 
+var generate = require('boring-name-generator');
+
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req });
     if (!session || !session.user || !session.user.name) {
@@ -43,7 +45,7 @@ type Props = {
 }
 
 const NewPeer: React.FC<Props> = (props) => {
-    const [name, setName] = useState("");
+    const [name, setName] = useState(generate({ number: true }).dashed);
     const [kind, setKind] = useState("provider");
     const [target, setTarget] = useState("");
 
@@ -85,6 +87,7 @@ const NewPeer: React.FC<Props> = (props) => {
                     <label htmlFor="name" className="block text-xs text-gray">
                     Name your peer
                     </label>
+                    <a onClick={(e) => setName(generate({ number: true }).dashed)}><span className="float-left mr-3">r</span></a>
                     <input
                         type="text"
                         name="name"
@@ -115,6 +118,8 @@ const NewPeer: React.FC<Props> = (props) => {
 
                     {kind == "consumer" && (
                         <div>
+
+                            
                             {/* https://tailwindui.com/components/application-ui/forms/select-menus#component-71d9116be789a254c260369f03472985 */}
                             <label htmlFor="target" className="block text-sm font-medium">
                                 Select an available vpn provider:
