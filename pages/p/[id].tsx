@@ -107,6 +107,8 @@ const ShowPeer: React.FC<Props> = (props) => {
 
     const userHasValidSession = Boolean(session);
 
+    //setName (props.peer.name)
+
     return (
         <Layout>
             <div>
@@ -126,7 +128,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                         id="name"
                         onChange={(e) => setName(e.target.value)}
                         className="cursor-not-allowed bg-boring-black block w-full border-0 p-0 text-boring-white placeholder-boring-white focus:ring-0 text-4xl"
-                        placeholder={name}
+                        placeholder={name || ""}
                         disabled
                     />
                     </div>
@@ -141,7 +143,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                         id="label"
                         onChange={(e) => setLabel(e.target.value)}
                         className="bg-boring-black block w-full border-0 p-0 text-boring-white placeholder-boring-white focus:ring-0 text-lg"
-                        placeholder={label}
+                        placeholder={label || ""}
                     />
                     </div>
 
@@ -155,7 +157,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                         id="ssid"
                         onChange={(e) => setSSID(e.target.value)}
                         className="bg-boring-black block w-full border-0 p-0 text-boring-white placeholder-boring-white focus:ring-0 text-lg"
-                        placeholder={ssid}
+                        placeholder={ssid || ""}
                     />
                     </div>
 
