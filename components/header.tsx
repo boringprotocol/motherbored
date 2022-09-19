@@ -1,10 +1,9 @@
-import Link from "next/link";
-import { getCsrfToken, signIn, signOut, useSession } from "next-auth/react";
-import { useWalletModal } from "@solana/wallet-adapter-react-ui";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { SigninMessage } from "../utils/SigninMessage";
-import bs58 from "bs58";
-import { useEffect } from "react";
+import { getCsrfToken, signIn, signOut, useSession } from "next-auth/react"
+import { useWalletModal } from "@solana/wallet-adapter-react-ui"
+import { useWallet } from "@solana/wallet-adapter-react"
+import { SigninMessage } from "../utils/SigninMessage"
+import bs58 from "bs58"
+import { useEffect } from "react"
 
 export default function Header() {
   const { data: session, status } = useSession();
@@ -47,7 +46,7 @@ export default function Header() {
     if (wallet.connected && status === "unauthenticated") {
       handleSignIn();
     }
-  }, [wallet.connected]);
+  }, [wallet.connected, status]);
 
   return (
     <header>
