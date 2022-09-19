@@ -11,7 +11,7 @@ const ThemeChanger = () => {
   return (
     <div className="font-jetbrains text-xs p-12">
       The current theme is: <span className="capitalize">{theme}</span><br /><br />
-      <button className='p-1 mr-3 bg-white text-black' onClick={() => setTheme('light')}>Light Mode</button>
+      <button className='p-1 mr-3 bg-black dark:bg-boring-black text-boring-white dark:text-boring-white' onClick={() => setTheme('light')}>Light Mode</button>
       <button className='p-1 bg-white text-black' onClick={() => setTheme('dark')}>Dark Mode</button>
     </div>
   )
@@ -195,9 +195,7 @@ export default function Layout({ children }: Props) {
                 sr-only
                 </h1>
                 <div>
-
-
-                  <main className='px-14 pt-24'>
+                  <main className=''>
                     {children}</main>
                 </div>
               </section>
@@ -215,6 +213,20 @@ export default function Layout({ children }: Props) {
               Bring User and Peer props into this content block.
               </div>                                  
                                   
+              <div className="font-jetbrains text-xs p-12">
+                <h2 className="text-lg">Next Features</h2>
+              <ul className="list-disc ml-4">
+                <li>Add country code to provider peer</li>
+                <li>Add tags to provider peer</li>
+                <li>Sort peers to consume by country or tag</li>
+                <li>Hook up destroy peer button</li>
+                <li>Remote set-up / Off network</li>
+                <li>Up/Down per peer</li>
+                <li>Up/Down all peer</li>
+                <li>Hook up node count</li>
+                
+              </ul>
+              </div>                     
 
             </aside>
 

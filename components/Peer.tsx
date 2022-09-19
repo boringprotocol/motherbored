@@ -25,14 +25,18 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
        
             <div className="flex w-full items-center justify-between space-x-6 p-6">
             <div className="flex-1 truncate">
-            
+
               <div className="flex items-center space-x-3">
                 <h3 className="font-jetbrains truncate text-lg text-boring-black dark:text-boring-white">{peer.name}</h3>
               </div>
               <p className="font-jetbrains mt-1 truncate text-xs text-gray-500">{peer.kind}</p>
-              <p className="text-xs mt-6 pt-2 border-t border-gray-dark"><IoWifiOutline className="float-left mr-3 text-xs"/>{peer.ssid} &middot; {peer.label}</p>
-              
-
+              <p className="text-xs mt-6 pt-2 border-t border-gray-lightest dark:border-gray-dark"><IoWifiOutline className="float-left mr-3 text-xs"/>{peer.ssid} &middot; {peer.label}</p>
+              {/* <div className="h-6 w-6">
+              <span className="flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+              </span>
+              </div> */}
             </div>
             <Image src={peerAvatar} alt="" width="48" height="48" />
           </div>

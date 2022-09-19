@@ -113,10 +113,16 @@ const ShowPeer: React.FC<Props> = (props) => {
         <Layout>
             <div>
 
-            <div className="grid grid-cols-2 gap-4">
+            {/* <div className="flex">
+  <div className="w-1/2 outline ">w-1/2</div>
+  <div className="w-1/2 outline ">w-1/2</div>
+</div> */}
+
+            {/* The Current Peer */}
+            <div className="grid grid-cols-2 gap-4 px-14 py-24 border-b border-gray-light dark:border-gray-dark">
             <div className="w-3/4">
 
-                <form className="" onSubmit={submitData}>
+                <form className="w-full" onSubmit={submitData}>
 
                     <div className="text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                     {/* <label htmlFor="name" className="block text-xs font-medium text-gray-900">
@@ -127,13 +133,13 @@ const ShowPeer: React.FC<Props> = (props) => {
                         name="name"
                         id="name"
                         onChange={(e) => setName(e.target.value)}
-                        className="cursor-not-allowed bg-boring-black block w-full border-0 p-0 text-boring-white placeholder-boring-white focus:ring-0 text-4xl"
+                        className="cursor-not-allowed block w-full border-0 p-0 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white focus:ring-0 text-4xl"
                         placeholder={name || ""}
                         disabled
                     />
                     </div>
 
-                    <div className="text-boring-white border border-gray-dark rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                    <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                     <label htmlFor="name" className="block text-xs font-medium text-gray-900">
                     Label
                     </label>
@@ -142,12 +148,12 @@ const ShowPeer: React.FC<Props> = (props) => {
                         name="label"
                         id="label"
                         onChange={(e) => setLabel(e.target.value)}
-                        className="bg-boring-black block w-full border-0 p-0 text-boring-white placeholder-boring-white focus:ring-0 text-lg"
+                        className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white block w-full border-0 p-0 focus:ring-0 text-lg"
                         placeholder={label || ""}
                     />
                     </div>
 
-                    <div className="mt-6 text-boring-white border border-gray-dark rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                    <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
                     <label htmlFor="name" className="block text-xs font-medium text-gray-900">
                     <IoWifiOutline className="float-left mr-2" /> SSID
                     </label>
@@ -156,14 +162,14 @@ const ShowPeer: React.FC<Props> = (props) => {
                         name="ssid"
                         id="ssid"
                         onChange={(e) => setSSID(e.target.value)}
-                        className="bg-boring-black block w-full border-0 p-0 text-boring-white placeholder-boring-white focus:ring-0 text-lg"
+                        className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white block w-full border-0 p-0 focus:ring-0 text-lg"
                         placeholder={ssid || ""}
                     />
                     </div>
 
                     <button
                         type="submit"
-                        className="mt-6 flex justify-center rounded-md border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
+                        className="mt-6 flex justify-center rounded-sm border text-boring-black dark:text-boring-white border-boring-black dark:border-boring-white  py-2 px-4 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
                         onClick={() => Router.push("/")}
                         >
                         Save Changes
@@ -174,68 +180,77 @@ const ShowPeer: React.FC<Props> = (props) => {
             </div>
 
             <div className="w-1/4">
-                <Image src="https://source.boringavatars.com/pixel/o9k7o789n6o7" alt="" width="148" height="148" /></div>
+                <Image src={"https://source.boringavatars.com/sunset/" + name || "" + "?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"} alt="" width="48" height="48" /></div>
+                <p>You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode and are connected to <span className="text-gray underline">{props.target}</span></p>
             </div>
 
 
-                <hr className="bt-1 border-gray-dark m-12"/>
+                {/* Advanced Configuration / Settings */}
+                <div className="px-14 py-16 border-b border-gray-light dark:border-gray-dark">
+                <h1 className="font-jetbrains text-2xl">Advanced Configuration</h1>
+                <p className="text-sm">For peers that are not on your local network. </p>
 
-                <p className="font-jetbrains text-xs">These list items are just here for reference. I need to figure out how to pass these values into the form attributes above. I know they are not meant to be editable but if ALL items per peer live in one form we can just disable the fixed values. The submit button should be disabled/muted until a form value has changed. </p>
-                <li>Name: {props.peer.name}</li>
-                <li key={props.peer.id}>Id: {props.peer.id}</li>
-                <li key={props.peer.kind}>kind: {props.peer.kind}</li>
+                <div className="flex">
+                    
+                    <div className="w-1/2  ">
+                    <ul className="mt-6 text-xs">
+                        <li>Name: {props.peer.name}</li>
+                        <li key={props.peer.id}>Id: {props.peer.id}</li>
+                        <li key={props.peer.kind}>kind: {props.peer.kind}</li>
+                        <li>SSID:</li>
+                        <li key={props.peer.setupkey}>boring setupkey: {props.peer.setupkey}</li>
+                        <li key={props.peer.target}>target: {props.target}</li>
+                    </ul>
+                    </div>
 
-                <hr className="bt-1 border-gray-dark m-12"/>
-
-
-                <p className="font-jetbrains text-xs">These list items are also for reference. We can look at adding columns to the peer table to prepare for the future implimentation.</p>
-
-
-                <li>SSID:</li>
-                <li key={props.peer.setupkey}>boring setupkey: {props.peer.setupkey}</li>
-                <li key={props.peer.target}>target: {props.target}</li>
-
-                <hr className="bt-1 border-gray-dark m-12"/>
-
-
-                <p className="font-jetbrains text-xs">Manual setup buttons</p>
-
-
-                {props.peer.pubkey && (<li key={props.peer.pubkey}>pubkey: {props.peer.pubkey}</li>)}
-                <button className="mt-8 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2"/> boring.env</button>
-                {isProvider && !providerActive && (
+                    <div className="w-1/2  ">
+                    <pre className="mt-6 text-sm">ssh 10.0.0.XX:XXXX</pre>
+                    <ul className="mt-6 text-xs">
+                        {props.peer.pubkey && (<li key={props.peer.pubkey}>pubkey: {props.peer.pubkey}</li>)}
+                    </ul>
+                    <button className="mt-8 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2"/> boring.env</button>
+                    {isProvider && !providerActive && (
                     <div>
                         <button className="mt-8 inline-flex items-center rounded-sm border border-transparent bg-white px-3 py-1 text-boring-black shadow hover:bg-gray-lightest" onClick={() => activatePeer(props.peer.id)}>Activate</button>
                     </div>
                 )}
                 {isProvider && providerActive && (
                     <div>
-                        <h1>This provider is active!</h1>
+                        <h1>This provider is active and available to the network!</h1>
                     </div>
                 )}
+                    </div>
+                </div>
+
+                </div>
 
 
-<hr className="bt-1 border-gray-dark m-12"/>
 
-<p className="font-jetbrains text-xs">This might be a good place to put the are-your-sure kill/reset button. </p>
 
-<div className="bg-boring-white dark:bg-boring-black border border-gray-dark shadow sm:rounded-lg mt-12">
+
+                {/* Advanced Configuration / Settings */}
+                <div className="px-14 py-16 border-b border-gray-light dark:border-gray-dark">
+                
+<h1 className="font-jetbrains text-2xl mt-24">Danger Zone</h1>
+
+    <div className="text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black border border-gray-lightest shadow sm:rounded-lg mt-6">
       <div className="px-4 py-5 sm:p-6">
-        <h3 className="text-lg font-medium leading-6 text-boring-white">Reset Peer</h3>
-        <div className="mt-2 max-w-xl text-sm text-boring-white">
-          <p>Once you reset your peer, all data associated with it goes away , factory reset, ... </p>
+        <h3 className="text-lg font-medium ">Destroy Peer</h3>
+        <div className="mt-2 max-w-xl text-sm ">
+          <p>Once you reset your peer, all data associated with it goes away, forever.</p>
         </div>
         <div className="mt-5">
           <button
             type="button"
-            className="focus:bg-blue focus:shadow-lg focus:outline-none focus:ring-0 active:bg-black active:shadow-lg inline-flex items-center justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 font-medium text-boring-white hover:bg-boring-white hover:text-boring-black focus:ring-red-500 focus:ring-offset-2 sm:text-sm"
+            className="mt-6 flex justify-center rounded-sm border text-boring-black dark:text-boring-white border-boring-black dark:border-boring-white  py-2 px-4 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
           >
             Reset peer
           </button>
 
         </div>
-      </div>
-    </div>
+        </div>
+        </div>
+    </div>    
 
 
             </div>

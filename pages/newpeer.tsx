@@ -147,7 +147,7 @@ const NewPeer: React.FC<Props> = (props) => {
                     )}
 
                     <input className="float-left  mt-6 flex justify-center rounded-md border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40" type="submit" value="Create" />
-                    <a className="back" href="" onClick={() => Router.push("/")}>
+                    <a className="back" onClick={() => Router.push("/")}>
                         <span className="text-xs float-left ml-6 mt-8">or Cancel</span>
                     </a>
                 </form>
