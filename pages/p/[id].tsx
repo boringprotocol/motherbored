@@ -164,6 +164,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                     <button
                         type="submit"
                         className="mt-6 flex justify-center rounded-md border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
+                        onClick={() => Router.push("/")}
                         >
                         Save Changes
                     </button>
