@@ -30,7 +30,9 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
                 <h3 className="font-jetbrains truncate text-lg text-boring-black dark:text-boring-white">{peer.name}</h3>
               </div>
               <p className="font-jetbrains mt-1 truncate text-xs text-gray-500">{peer.kind}</p>
-              <p className="text-xs mt-6 pt-2 border-t border-gray-dark"><IoWifiOutline className="float-left mr-3 text-xs"/>{peer.ssid}</p>
+              <p className="text-xs mt-6 pt-2 border-t border-gray-dark"><IoWifiOutline className="float-left mr-3 text-xs"/>{peer.ssid} &middot; {peer.label}</p>
+              
+
             </div>
             <Image src={peerAvatar} alt="" width="48" height="48" />
           </div>
