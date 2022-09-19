@@ -6,6 +6,7 @@ import { getSession } from "next-auth/react";
 import prisma from "../lib/prisma";
 import Peer, { PeerProps } from "../components/Peer";
 import { json } from "stream/consumers";
+import { IoRefreshOutline } from "react-icons/io5"
 
 var generate = require('boring-name-generator');
 
@@ -82,21 +83,29 @@ const NewPeer: React.FC<Props> = (props) => {
         <Layout>
             <div>
                 <form className="w-1/2" onSubmit={submitData}>
+                
                     <h1 className="uppercase mb-6">New Peer</h1>
+                    
+                    
                     <div className="border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                     <label htmlFor="name" className="block text-xs text-gray">
-                    Name your peer
+                    Peer Name
                     </label>
-                    <a onClick={(e) => setName(generate({ number: true }).dashed)}><span className="float-left mr-3">r</span></a>
+
+
                     <input
                         type="text"
                         name="name"
                         id="name"
                         onChange={(e) => setName(e.target.value)}
-                        className="bg-boring-black block w-full border-0 p-0 text-gray-lightest placeholder-boring-white focus:ring-0 text-lg"
+                        className="cursor-not-allowed bg-boring-black block w-full border-0 p-0 text-gray-lightest placeholder-boring-white focus:ring-0 text-lg"
                         placeholder=""
                         value={name}
+                        disabled
                     />
+                    </div>
+                    <div className="m-4 hover:text-gray active:text-gray-dark">
+                    <a  onClick={(e) => setName(generate({ number: true }).dashed)}><span className=""><IoRefreshOutline /></span></a>
                     </div>
 
                     <div className="mt-6 border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
@@ -137,9 +146,9 @@ const NewPeer: React.FC<Props> = (props) => {
                         </div>
                     )}
 
-                    <input className=" mt-6 flex justify-center rounded-md border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40" type="submit" value="Create" />
+                    <input className="float-left  mt-6 flex justify-center rounded-md border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40" type="submit" value="Create" />
                     <a className="back" href="#" onClick={() => Router.push("/")}>
-                        or Cancel
+                        <span className="text-xs float-left ml-6 mt-8">or Cancel</span>
                     </a>
                 </form>
             </div>
