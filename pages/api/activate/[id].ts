@@ -31,13 +31,13 @@ export default async function handle(req: any, res: any) {
         return "already active"
     }
 
-    let accesstoken = await GetFalconToken();
+    const accesstoken = await GetFalconToken();
     console.log(accesstoken)
-    
+
     if (!accesstoken || accesstoken != null || accesstoken == "") {
         console.log("it is going in")
         res.statusCode = 500;
-        res.json({thing: "eworu"})
+        res.json({ thing: "josh was here" })
         return "could not get accesstoken"
     }
     if (peer.kind == "provider") {
