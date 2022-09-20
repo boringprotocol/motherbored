@@ -34,12 +34,13 @@ export default async function handle(req: any, res: any) {
     const accesstoken = await GetFalconToken();
     console.log(accesstoken)
 
-    if (!accesstoken || accesstoken != null || accesstoken == "") {
+    if (accesstoken == null || accesstoken == "") {
         console.log("it is going in")
         res.statusCode = 500;
         res.json({ thing: "josh was here" })
         return "could not get accesstoken"
     }
+
     if (peer.kind == "provider") {
         const result = await FalconGetPeers(peerId, accesstoken);
         if (result) {
