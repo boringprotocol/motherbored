@@ -1,12 +1,60 @@
-import React, { useState } from "react";
-import { GetServerSideProps } from "next";
-import Router from "next/router";
-import { PeerProps } from "../../components/Peer";
-import Layout from "../../components/layout";
-import prisma from "../../lib/prisma";
-import { useSession } from "next-auth/react";
+import React, { useState } from "react"
+import { GetServerSideProps } from "next"
+import Router from "next/router"
+import Peer, { PeerProps } from "../../components/Peer"
+import Layout from "../../components/layout"
+import prisma from "../../lib/prisma"
+import { useSession } from "next-auth/react"
 import { IoDownloadOutline, IoWifiOutline } from "react-icons/io5"
-import Image from 'next/image';
+import Image from 'next/image'
+// import { toNamespacedPath } from "path"
+import toast, { Toaster } from 'react-hot-toast'
+
+
+// Success: Node created, Node deleted, node modified, activated(provider), /configured
+// Error: timeout, form contents are gross don't type that way... that name already exists / conflicts 
+
+// Toast Shit - later move to a file of its own
+const notify = (message: string) =>
+toast.custom((t) => (
+    <div
+      className={`${
+        t.visible ? 'animate-enter' : 'animate-leave'
+      } max-w-md w-full bg-boring-black shadow-lg border-green rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+    >
+      <div className="flex-1 w-0 p-4">
+        <div className="flex items-start">
+          <div className="flex-shrink-0 pt-0.5">
+            <img
+              className="h-10 w-10 rounded-full"
+              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixqx=6GHAjsWpt9&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
+              alt=""
+            />
+          </div>
+          <div className="ml-3 flex-1">
+            <p className="text-sm font-medium text-gray-900">
+              {message}
+            </p>
+            <p className="mt-1 text-sm text-gray-500">
+              Sure! 8:30pm works great!
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="flex border-l border-gray-200">
+        <button
+          onClick={() => toast.dismiss(t.id)}
+          className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  ))
+// End Toast Shit
+
+
+
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     if (params == null || params.id == null) {
@@ -44,9 +92,14 @@ type Props = {
 }
 
 async function activatePeer(id: string): Promise<void> {
-    await fetch(`/api/activate/${id}`, {
+    const result = await fetch(`/api/activate/${id}`, {
         method: "PUT",
     });
+    if (result.ok) {
+        toast.success("success bro")
+
+    } else { notify("your funds have been drained idiot")}
+     
     await Router.push(`/p/${id}`);
 }
 
@@ -95,6 +148,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
             });
+            if (response.ok) {notify ("hey faggot")}
             const resultData = await (response.json()) as any;
             console.log(resultData);
             if (response.ok) {
@@ -136,9 +190,10 @@ const ShowPeer: React.FC<Props> = (props) => {
   <div className="w-1/2 outline ">w-1/2</div>
 </div> */}
 
-                {/* The Current Peer */}
-                <div className="grid grid-cols-2 gap-4 px-14 py-24 border-b border-gray-light dark:border-gray-dark">
-                    <div className="w-3/4">
+            {/* The Current Peer */}
+
+            <div className="grid grid-cols-2 gap-4 px-14 py-24 border-b border-gray-light dark:border-gray-dark">
+            <div className="w-3/4">
 
                         <form className="w-full" onSubmit={submitData}>
 
@@ -185,22 +240,28 @@ const ShowPeer: React.FC<Props> = (props) => {
                                 />
                             </div>
 
-                            <button
-                                type="submit"
-                                className="mt-6 flex justify-center rounded-sm border text-boring-black dark:text-boring-white border-boring-black dark:border-boring-white  py-2 px-4 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
-                                onClick={() => Router.push("/")}
-                            >
-                                Save Changes
-                            </button>
+               
 
-                        </form>
+                        
 
-                    </div>
 
-                    <div className="w-1/4">
-                        <Image src={"https://source.boringavatars.com/sunset/" + name || "" + "?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"} alt="" width="48" height="48" /></div>
-                    <p>You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode and are connected to <span className="text-gray underline">{props.target}</span></p>
-                </div>
+
+                    <button
+                        type="submit"
+                        className="mt-6 flex justify-center rounded-sm border text-boring-black dark:text-boring-white border-boring-black dark:border-boring-white  py-2 px-4 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
+                        >
+                        Save Changes
+                    </button>
+                                        
+
+                </form>
+
+            </div>
+
+            <div className="w-1/4">
+                <Image src={"https://source.boringavatars.com/sunset/" + name || "" + "?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"} alt="" width="48" height="48" /></div>
+                <p className="text-xs" >You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode and are connected to <span className="text-gray underline">{props.target}</span></p>
+            </div>
 
 
                 {/* Advanced Configuration / Settings */}

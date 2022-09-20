@@ -4,6 +4,7 @@ import { Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Header from "./header"
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
+import { Switch } from '@headlessui/react'
 
 const ThemeChanger = () => {
   const { theme, setTheme } = useTheme()
@@ -34,6 +35,9 @@ interface Props {
 export default function Layout({ children }: Props) {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const [enabled, setEnabled] = useState(false)
+
 
   return (
 
@@ -80,7 +84,7 @@ export default function Layout({ children }: Props) {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-indigo-700 pt-5 pb-4 bg-boring-black border-r border-gray-dark">
+                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-gray pt-5 pb-4 bg-boring-black border-r border-gray-dark">
                   <Transition.Child
                     as={Fragment}
                     enter="ease-in-out duration-300"
@@ -131,7 +135,7 @@ export default function Layout({ children }: Props) {
             {/* <pre className="font-jetbrains text-xs p-2">layout.tsx header</pre> */}
               <button
                 type="button"
-                className="border-r border-gray-light dark:border-gray-dark px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+                className="border-r border-gray-light dark:border-gray-dark px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500 md:hidden"
                 onClick={() => setMobileMenuOpen(true)}
               >
                 <span className="sr-only">Open sidebar</span>
@@ -145,7 +149,7 @@ export default function Layout({ children }: Props) {
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative flex-shrink-0">
                     <div>
-                      <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                      <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                         <span className="sr-only">Open user menu</span>
                         <img
                           className="h-8 w-8 rounded-full"
@@ -206,7 +210,54 @@ export default function Layout({ children }: Props) {
             <aside className="hidden w-96 overflow-y-auto border-l border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black lg:block">
 
               <ThemeChanger />
-                                  
+              <div className="font-jetbrains text-xs p-12 border-t border-gray-light dark:border-gray-dark">                                  
+              <Switch
+      checked={enabled}
+      onChange={setEnabled}
+      className={classNames(
+        enabled ? 'bg-gray-600' : 'bg-gray-200',
+        'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
+      )}
+    >
+      <span className="sr-only">Use setting</span>
+      <span
+        className={classNames(
+          enabled ? 'translate-x-5' : 'translate-x-0',
+          'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out'
+        )}
+      >
+        <span
+          className={classNames(
+            enabled ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200',
+            'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity'
+          )}
+          aria-hidden="true"
+        >
+          <svg className="h-3 w-3 text-gray-400" fill="none" viewBox="0 0 12 12">
+            <path
+              d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+        <span
+          className={classNames(
+            enabled ? 'opacity-100 ease-in duration-200' : 'opacity-0 ease-out duration-100',
+            'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity'
+          )}
+          aria-hidden="true"
+        >
+          <svg className="h-3 w-3 text-gray-600" fill="currentColor" viewBox="0 0 12 12">
+            <path d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+          </svg>
+        </span>
+      </span>
+              </Switch>
+              </div>                    
+
               <div className="font-jetbrains text-xs p-12 border-t border-gray-light dark:border-gray-dark">
                 <h2 className="text-lg">Next Features</h2>
               <ul className="list-disc ml-4">

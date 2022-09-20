@@ -119,7 +119,7 @@ const IndexPage: React.FC<Props> = (props) => {
             <IoWarningOutline className="h-5 w-5 text-boring-black dark:text-boring-white" aria-hidden="true" />
           </div>
           <div className="ml-3">
-            <p className="font-jetbrains text-sm font-medium text-boring-black dark:text-boring-white">Oh dang that sucks</p>
+            <p className="font-jetbrains text-sm font-medium text-boring-black dark:text-boring-white">Oh dang all your funds have been drained idiot</p>
           </div>
           <div className="ml-auto pl-3">
             <div className="-mx-1.5 -my-1.5">

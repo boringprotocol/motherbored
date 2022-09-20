@@ -32,8 +32,12 @@ export default async function handle(req: any, res: any) {
     }
 
     let accesstoken = await GetFalconToken();
-    if (accesstoken == null) {
+    console.log(accesstoken)
+    
+    if (!accesstoken || accesstoken != null || accesstoken == "") {
+        console.log("it is going in")
         res.statusCode = 500;
+        res.json({thing: "eworu"})
         return "could not get accesstoken"
     }
     if (peer.kind == "provider") {
@@ -42,9 +46,9 @@ export default async function handle(req: any, res: any) {
             res.json(peer);
             res.statusCode = 200;
         } else {
-            // inactive, motherboard not booted or no peers
+            // inactive, motherbored not booted or no peers
             res.statusCode = 400;
-            res.json({ error: "motherboard not booted yet, download config and try again" })
+            res.json({ error: "motherbored not booted yet, download config and try again" })
         }
         return peerId;
     } else {
