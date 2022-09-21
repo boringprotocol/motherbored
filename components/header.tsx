@@ -59,7 +59,7 @@ export default function Header() {
         >
           {!session && (
             <>
-              <a href="#" className="mt-8 inline-flex items-center rounded-sm border border-transparent bg-white px-3 py-2 font-medium text-indigo-600 shadow hover:bg-boring-white" onClick={handleSignIn}>
+              <a href="#" className="mt-3 inline-flex items-center rounded-sm border border-transparent bg-white dark:text-black px-3  font-medium text-indigo-600 shadow hover:bg-boring-white" onClick={handleSignIn}>
                 Connect Wallet
               </a>
             </>

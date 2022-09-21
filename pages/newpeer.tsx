@@ -5,10 +5,11 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../lib/prisma";
 import Peer, { PeerProps } from "../components/Peer";
-import { json } from "stream/consumers";
 import { IoRefreshOutline } from "react-icons/io5"
 
 var generate = require('boring-name-generator');
+
+
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req });
@@ -79,9 +80,11 @@ const NewPeer: React.FC<Props> = (props) => {
         }
     };
 
+
+
     return (
         <Layout>
-            <div>
+            <div className="block">
                 <form className="w-1/2" onSubmit={submitData}>
 
                     <h1 className="uppercase mb-6">New Peer</h1>

@@ -208,9 +208,9 @@ export default function Layout({ children }: Props) {
 
             {/* Secondary column (hidden on smaller screens) */}
             <aside className="hidden w-96 overflow-y-auto border-l border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black lg:block">
-
+            <div className="font-jetbrains text-xs p-12 border-t border-gray-light dark:border-gray-dark">                                  
               <ThemeChanger />
-              <div className="font-jetbrains text-xs p-12 border-t border-gray-light dark:border-gray-dark">                                  
+             
               <Switch
       checked={enabled}
       onChange={setEnabled}
