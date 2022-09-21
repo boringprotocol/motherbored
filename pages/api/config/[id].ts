@@ -57,6 +57,7 @@ export default async function handle(req: any, res: any) {
         fileContents += peer.name
         fileContents += "\n"
         fileContents += "BORING_ID="
+        fileContents += "\n"
         fileContents += peer.id
         fileContents += "UPDATE=true"
         fileContents += "\n"
