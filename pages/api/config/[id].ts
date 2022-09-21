@@ -49,7 +49,7 @@ export default async function handle(req: any, res: any) {
         fileContents += "SETUP_KEY="
         fileContents += peer.setupkey
         fileContents += "\n"
-        fileContents += "PUBLIC_PEER_IP_LIST=18.118.130.170,3.144.33.182\n"
+        fileContents += "PUBLIC_PEER_IP_LIST=18.118.130.170,3.144.33.182,184.72.37.151,184.72.19.87\n"
         fileContents += "PROVIDER_PUBKEY="
         fileContents += targetPeer?.pubkey
         fileContents += "\n"
