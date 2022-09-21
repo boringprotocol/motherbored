@@ -95,10 +95,10 @@ async function activatePeer(id: string): Promise<void> {
         method: "PUT",
     });
     if (result.ok) {
-        toast.success("success bro")
-
-    } else { notify("your funds have been drained idiot") }
-
+        toast.success("success bro");
+    } else {
+        notify("your funds have been drained idiot");
+    }
     await Router.push(`/p/${id}`);
 }
 
@@ -115,17 +115,22 @@ async function shovePeerConfig(id: string): Promise<void> {
     });
     if (results.ok) {
         const text = await results.text();
-        const sendItURI = "http://boring.network/api/hello?falconconfig=" + encodeURIComponent(text);
-        const sendIt = await fetch(sendItURI, {
-            method: "GET",
-            mode: "no-cors",
-        });
-
-        if (sendIt.ok) {
-            console.log("WE did it, boring.network is configured, please reboot")
-        } else {
-            console.log("something went wrong trying to configure boring.network")
+        const sendItURI = "https://unconfigured.insecure.boring.surf/api/hello?falconconfig=" + encodeURIComponent(text);
+        try {
+            const sendIt = await fetch(sendItURI, {
+                method: "GET",
+                mode: "no-cors",
+            });
+            if (sendIt.ok) {
+                notify("WE did it, boring.network is configured, please reboot")
+            } else {
+                notify("something went wrong trying to configure boring.network")
+            }
+        } catch {
+            notify("ERROR: dns resolution for boring.surf failed")
         }
+    } else {
+        notify("ERROR: results were NOT OK")
     }
 }
 
@@ -155,7 +160,7 @@ const ShowPeer: React.FC<Props> = (props) => {
             }
         } catch (error) {
             console.error(error);
-            notify("Error saving!");
+            notify("ERROR occured while saving settings!");
         }
     };
 

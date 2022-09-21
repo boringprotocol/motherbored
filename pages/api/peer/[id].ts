@@ -3,7 +3,6 @@ import prisma from "../../../lib/prisma"
 
 // PUT /api/peer/:id
 export default async function handle(req: any, res: any) {
-    console.log ("shit dude")
     const peerId = req.body.id;
     const { name, label, ssid } = req.body
     const session = await getSession({ req });
@@ -18,8 +17,5 @@ export default async function handle(req: any, res: any) {
             ssid: ssid,
         },
     });
-    console.log (label)
-    console.log (name)
-    console.log (req)
     res.json(peer);
 }
