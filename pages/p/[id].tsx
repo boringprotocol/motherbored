@@ -113,6 +113,7 @@ async function shovePeerConfig(id: string): Promise<void> {
     const results = await fetch(`/api/config/${id}`, {
         method: "GET",
     });
+    notify("attempting to configure motherbored please wait 30 seconds..")
     if (results.ok) {
         const text = await results.text();
         const sendItURI = "https://unconfigured.insecure.boring.surf/api/hello?falconconfig=" + encodeURIComponent(text);
@@ -263,6 +264,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                             <li key={props.peer.id}>Id: {props.peer.id}</li>
                             <li key={props.peer.kind}>Kind: {props.peer.kind}</li>
                             <li key={props.peer.setupkey}>Boring Setupkey: {props.peer.setupkey}</li>
+                            <li key={props.peer.pubkey}>Boring Pubkey: {props.peer.pubkey}</li>
                         </ul>
                     </div>
 

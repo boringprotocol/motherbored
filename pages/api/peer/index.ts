@@ -37,7 +37,7 @@ export default async function handle(req: any, res: any) {
         res.statusCode = 200;
         return res.json(wtf);
     } else if (kind == "consumer") {
-        let wtf = await CreateFalconSetupkey(result.id, result.id, accesstoken)
+        let wtf = await CreateFalconSetupkey(result.id, target, accesstoken)
         res.statusCode = 200;
         return res.json(wtf);
     }
