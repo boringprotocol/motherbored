@@ -13,7 +13,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
 const steps = [
-    { id: '01', name: 'Peer Creation', description: 'Vitae sed mi luctus laoreet.', href: '#', status: 'complete' },
+    { id: '01', name: 'Peer Creation', description: 'Please configure your peer next.', href: '#', status: 'complete' },
     { id: '02', name: 'Configure', description: 'install config.', href: '#', status: 'current' },
     { id: '03', name: 'Activate', description: 'Penatibus eu quis ante.', href: '#', status: 'upcoming' },
   ]
@@ -179,7 +179,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
             });
-            if (response.ok) { notify("saved!") }
+            if (response.ok) { notify("Peer Saved!") }
             const resultData = await (response.json()) as any;
             if (response.ok) {
                 await Router.push(`/p/${resultData.id}`);
@@ -303,7 +303,7 @@ const ShowPeer: React.FC<Props> = (props) => {
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Progress">
         <ol
           role="list"
-          className="overflow-hidden rounded-md lg:flex lg:rounded-none lg:border-l lg:border-r lg:border-gray-200"
+          className="overflow-hidden rounded-md lg:flex lg:rounded-none lg:border-l lg:border-r lg:border-gray-dark"
         >
           {steps.map((step, stepIdx) => (
             <li key={step.id} className="relative overflow-hidden lg:flex-1">
@@ -332,8 +332,8 @@ const ShowPeer: React.FC<Props> = (props) => {
                         </span>
                       </span>
                       <span className="mt-0.5 ml-4 flex min-w-0 flex-col">
-                        <span className="text-sm font-medium">{step.name}</span>
-                        <span className="text-sm font-medium text-gray-500">{step.description}</span>
+                        <span className="text-sm">{step.name}</span>
+                        <span className="text-xs text-gray">{step.description}</span>
                       </span>
                     </span>
                   </a>
@@ -390,7 +390,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                     {/* Separator */}
                     <div className="absolute inset-0 top-0 left-0 hidden w-3 lg:block" aria-hidden="true">
                       <svg
-                        className="h-full w-full text-gray-300"
+                        className="h-full w-full text-gray-dark"
                         viewBox="0 0 12 82"
                         fill="none"
                         preserveAspectRatio="none"

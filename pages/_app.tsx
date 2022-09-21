@@ -23,6 +23,9 @@ import {
 } from "@solana-mobile/wallet-adapter-mobile";
 import type { AppProps } from "next/app";
 
+// Default styles that can be overridden by your app
+require('@solana/wallet-adapter-react-ui/styles.css');
+
 
 
 // Use of the <SessionProvider> is mandatory to allow components that call
