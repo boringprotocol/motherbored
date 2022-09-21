@@ -281,7 +281,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                             {isProvider && !providerActive && (
                                 <div>
-                                    <pre className="mt-6 text-sm">Turn on your motherbored, and connect to the "boring" WIFI network.  Password: motherbored</pre>
+                                    <pre className="mt-6 text-sm">Turn on your motherbored, and connect to the boring WIFI network.  Password: motherbored</pre>
                                     <ul className="mt-6 text-xs">
                                         {props.peer.pubkey && (<li key={props.peer.pubkey}>pubkey: {props.peer.pubkey}</li>)}
                                     </ul>
@@ -293,7 +293,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                             )}
                             {!isProvider && (
                                 <div>
-                                    <pre className="mt-6 text-sm">Turn on your motherbored, and connect to the "boring" WIFI network.  Password: motherbored</pre>
+                                    <pre className="mt-6 text-sm">Turn on your motherbored, and connect to the boring WIFI network.  Password: motherbored</pre>
                                     <button className="mt-8 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> install config</button>
                                     <pre className="mt-6 text-sm">Once connected to boring WIFI... click install ^^</pre>
                                 </div>
@@ -319,7 +319,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                             </ul>
                             <button className="mt-8 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
 
-                            <pre className="mt-6 text-sm">Copy the boring.env file to the SDCARD's boot partition.</pre>
+                            <pre className="mt-6 text-sm">Copy the boring.env file to the SDCARDs boot partition.</pre>
                         </div>
                     </div>
 
