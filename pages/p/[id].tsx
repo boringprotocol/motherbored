@@ -18,11 +18,9 @@ const steps = [
     { id: '03', name: 'Activate', description: 'Penatibus eu quis ante.', href: '#', status: 'upcoming' },
   ]
   
-  function classNames(...classes) {
+  function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
   }  
-
-
 
 // Deleting Peer / "Reset"
 async function deletePeer(id: string): Promise<void> {
