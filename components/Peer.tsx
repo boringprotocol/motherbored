@@ -53,7 +53,7 @@ if (peer.kind == "provider") {
             </div>
             <Image src={peerAvatar} alt="" width="48" height="48" />
             
-            { isProvider && providerActive && (<p>i'm active dude</p>)}
+            { isProvider && providerActive && (<p>im active dude</p>)}
           </div>
 
 {/* 
