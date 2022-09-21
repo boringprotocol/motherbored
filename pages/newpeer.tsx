@@ -7,9 +7,9 @@ import prisma from "../lib/prisma";
 import Peer, { PeerProps } from "../components/Peer";
 import { IoRefreshOutline } from "react-icons/io5"
 
+
+
 var generate = require('boring-name-generator');
-
-
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req });
@@ -79,8 +79,6 @@ const NewPeer: React.FC<Props> = (props) => {
             console.error(error);
         }
     };
-
-
 
     return (
         <Layout>

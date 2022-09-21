@@ -85,55 +85,7 @@ const IndexPage: React.FC<Props> = (props) => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <div className="main">
-
-
-      <div className="px-14 pt-8">
-        {/* ALERT
-        https://www.creative-tim.com/learning-lab/tailwind/nextjs/alerts/notus */}
-        {/* Success */}
-        <div className="animate-pulse flex border rounded-sm border-gray-light dark:border-gray-dark p-4 mb-4">
-          <div className="flex-shrink-0">
-            <CheckCircleIcon className="h-5 w-5 text-boring-black dark:text-boring-white" aria-hidden="true" />
-          </div>
-          <div className="ml-3">
-            <p className="font-jetbrains text-sm font-medium text-boring-black dark:text-boring-white">Successfully did something</p>
-          </div>
-          <div className="ml-auto pl-3">
-            <div className="-mx-1.5 -my-1.5">
-              <button
-                type="button"
-                className="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
-              >
-                <span className="sr-only">Dismiss</span>
-                <XMarkIcon className="h-5 w-5" aria-hidden="true" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Failure */}
-        <div className="flex border rounded-sm border-gray-light dark:border-gray-dark p-4 mb-12">
-          <div className="flex-shrink-0">
-            {/* <CheckCircleIcon className="h-5 w-5 text-boring-black dark:text-boring-white" aria-hidden="true" /> */}
-            <IoWarningOutline className="h-5 w-5 text-boring-black dark:text-boring-white" aria-hidden="true" />
-          </div>
-          <div className="ml-3">
-            <p className="font-jetbrains text-sm font-medium text-boring-black dark:text-boring-white">Oh dang all your funds have been drained idiot</p>
-          </div>
-          <div className="ml-auto pl-3">
-            <div className="-mx-1.5 -my-1.5">
-              <button
-                type="button"
-                className="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
-              >
-                <span className="sr-only">Dismiss</span>
-                <XMarkIcon className="h-5 w-5" aria-hidden="true" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>  
+      <div className="main pt-12">
           
         {/* PEERS */}
         {/* key={peer.name} has to be on the imideiate child element within a loop
@@ -196,7 +148,7 @@ const IndexPage: React.FC<Props> = (props) => {
         </dl>
         </div>  
     
-      </div>
+      </div>{/* end main */}
       
     </Layout>
   );

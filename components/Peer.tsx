@@ -16,8 +16,21 @@ export type PeerProps = {
 };
 
 const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
-  const peerAvatar = "https://source.boringavatars.com/sunset/" + peer.name + "?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
-  
+const peerAvatar = "https://source.boringavatars.com/sunset/" + peer.name + "?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
+
+
+// 
+let providerActive = false
+if (peer.pubkey != null) {
+    providerActive = true
+}
+
+let isProvider = false
+if (peer.kind == "provider") {
+    isProvider = true
+}
+
+
   return (
     
 
@@ -39,6 +52,8 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
               </div> */}
             </div>
             <Image src={peerAvatar} alt="" width="48" height="48" />
+            
+            { isProvider && providerActive && (<p>i'm active dude</p>)}
           </div>
 
 {/* 

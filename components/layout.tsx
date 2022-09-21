@@ -276,7 +276,7 @@ export default function Layout({ children }: Props) {
 
               <div className="font-jetbrains text-xs p-12 border-t border-gray-light dark:border-gray-dark">
               <h3>BORING ASTEROIDS</h3>
-              <p>↑ ↑ ↓ ↓ ← → ← → b a enter</p>    
+              <p><a href="/asteroids.html">↑ ↑ ↓ ↓ ← → ← → b a enter</a></p>    
     </div>
 
             </aside>
