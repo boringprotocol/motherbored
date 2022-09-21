@@ -83,52 +83,52 @@ const NewPeer: React.FC<Props> = (props) => {
         <Layout>
             <div>
                 <form className="w-1/2" onSubmit={submitData}>
-                
+
                     <h1 className="uppercase mb-6">New Peer</h1>
-                    
-                    
+
+
                     <div className="border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
-                    <label htmlFor="name" className="block text-xs text-gray">
-                    Peer Name
-                    </label>
+                        <label htmlFor="name" className="block text-xs text-gray">
+                            Peer Name
+                        </label>
 
 
-                    <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        onChange={(e) => setName(e.target.value)}
-                        className="cursor-not-allowed bg-boring-black block w-full border-0 p-0 text-gray-lightest placeholder-boring-white focus:ring-0 text-lg"
-                        placeholder=""
-                        value={name}
-                        disabled
-                    />
+                        <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            onChange={(e) => setName(e.target.value)}
+                            className="cursor-not-allowed bg-boring-black block w-full border-0 p-0 text-gray-lightest placeholder-boring-white focus:ring-0 text-lg"
+                            placeholder=""
+                            value={name}
+                            disabled
+                        />
                     </div>
                     <div className="m-4 hover:text-gray active:text-gray-dark">
-                    <a  onClick={(e) => setName(generate({ number: true }).dashed)}><span className=""><IoRefreshOutline /></span></a>
+                        <a onClick={(e) => setName(generate({ number: true }).dashed)}><span className=""><IoRefreshOutline /></span></a>
                     </div>
 
                     <div className="mt-6 border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
-                    <label htmlFor="mode" className="block text-xs text-gray">
-                        Mode
-                    </label>
-                    <select
-                        onChange={(e) => handleChangeKind(e.target.value)}
-                        id="kind"
-                        name="kind"
-                        className="bg-boring-black block w-full border-0 p-0 text-gray-lightest placeholder-boring-white focus:ring-0 text-lg"
-                        defaultValue="provider"
-                    >
-                        <option key="consumer" value="consumer">Consumer</option>
-                        <option key="provider" value="provider">Provider</option>
-                        required
-                    </select>
+                        <label htmlFor="mode" className="block text-xs text-gray">
+                            Mode
+                        </label>
+                        <select
+                            onChange={(e) => handleChangeKind(e.target.value)}
+                            id="kind"
+                            name="kind"
+                            className="bg-boring-black block w-full border-0 p-0 text-gray-lightest placeholder-boring-white focus:ring-0 text-lg"
+                            defaultValue="provider"
+                        >
+                            <option key="consumer" value="consumer">Consumer</option>
+                            <option key="provider" value="provider">Provider</option>
+                            required
+                        </select>
                     </div>
 
                     {kind == "consumer" && (
                         <div>
 
-                            
+
                             {/* https://tailwindui.com/components/application-ui/forms/select-menus#component-71d9116be789a254c260369f03472985 */}
                             <label htmlFor="target" className="block text-sm font-medium">
                                 Select an available vpn provider:
@@ -152,7 +152,7 @@ const NewPeer: React.FC<Props> = (props) => {
                     </a>
                 </form>
             </div>
-            
+
         </Layout >
     );
 };

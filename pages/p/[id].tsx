@@ -244,66 +244,82 @@ const ShowPeer: React.FC<Props> = (props) => {
                                     placeholder={ssid || ""}
                                 />
                             </div>
-
-
-
-
-
-
-
                             <button
                                 type="submit"
                                 className="mt-6 flex justify-center rounded-sm border text-boring-black dark:text-boring-white border-boring-black dark:border-boring-white  py-2 px-4 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
                             >
                                 Save Changes
                             </button>
-
-
                         </form>
-
                     </div>
 
                     <div className="w-1/4">
-                        <Image src={"https://source.boringavatars.com/sunset/" + name || "" + "?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"} alt="" width="48" height="48" /></div>
-                    <p className="text-xs" >You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode and are connected to <span className="text-gray underline">{props.target}</span></p>
+                        <Image src={"https://source.boringavatars.com/sunset/" + name || "" + "?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"} alt="" width="48" height="48" />
+                    </div>
+                    <div>
+                        {props.peer.kind == "provider" && (<p className="text-xs" >You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode </p>)}
+                        {props.peer.kind == "consumer" && (<p className="text-xs" >You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode and are connected to <span className="text-gray underline">{props.target}</span></p>)}
+                        <ul className="text-xs">
+                            <li key={props.peer.id}>Id: {props.peer.id}</li>
+                            <li key={props.peer.kind}>Kind: {props.peer.kind}</li>
+                            <li key={props.peer.setupkey}>Boring Setupkey: {props.peer.setupkey}</li>
+                        </ul>
+                    </div>
+
+                    <div>
+
+                    </div>
                 </div>
 
+                {/* Reg Configuration / Settings */}
+                <div className="px-14 py-16 border-b border-gray-light dark:border-gray-dark">
+                    <h1 className="font-jetbrains text-2xl">Configuration</h1>
+                    <p className="text-sm">Initial Motherbored configuration</p>
+
+                    <div className="flex">
+                        <div className="w-1/2  ">
+
+                            {isProvider && !providerActive && (
+                                <div>
+                                    <pre className="mt-6 text-sm">Turn on your motherbored, and connect to the "boring" WIFI network.  Password: motherbored</pre>
+                                    <ul className="mt-6 text-xs">
+                                        {props.peer.pubkey && (<li key={props.peer.pubkey}>pubkey: {props.peer.pubkey}</li>)}
+                                    </ul>
+                                    <button className="mt-8 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> install config</button>
+                                    <pre className="mt-6 text-sm">Once connected to boring WIFI... click install ^^</pre>
+                                    <button className="mt-8 inline-flex items-center rounded-sm border border-transparent bg-white px-3 py-1 text-boring-black shadow hover:bg-gray-lightest" onClick={() => activatePeer(props.peer.id)}>Activate</button>
+                                    <pre className="mt-6 text-sm">Then, wait a few minutes for your motherbored to reboot and then click activate ^^</pre>
+                                </div>
+                            )}
+                            {!isProvider && (
+                                <div>
+                                    <pre className="mt-6 text-sm">Turn on your motherbored, and connect to the "boring" WIFI network.  Password: motherbored</pre>
+                                    <button className="mt-8 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> install config</button>
+                                    <pre className="mt-6 text-sm">Once connected to boring WIFI... click install ^^</pre>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                </div>
 
                 {/* Advanced Configuration / Settings */}
                 <div className="px-14 py-16 border-b border-gray-light dark:border-gray-dark">
                     <h1 className="font-jetbrains text-2xl">Advanced Configuration</h1>
-                    <p className="text-sm">For peers that are not on your local network. </p>
+                    <p className="text-sm">For peers that are not on your local network. You can configure your motherbored by copying a file to your sdcard (see below)</p>
 
                     <div className="flex">
 
-                        <div className="w-1/2  ">
-                            <ul className="mt-6 text-xs">
-                                <li>Name: {props.peer.name}</li>
-                                <li key={props.peer.id}>Id: {props.peer.id}</li>
-                                <li key={props.peer.kind}>kind: {props.peer.kind}</li>
-                                <li>SSID:</li>
-                                <li key={props.peer.setupkey}>boring setupkey: {props.peer.setupkey}</li>
-                                <li key={props.peer.target}>target: {props.target}</li>
-                            </ul>
-                        </div>
+
 
                         <div className="w-1/2  ">
-                            <pre className="mt-6 text-sm">ssh 10.0.0.XX:XXXX</pre>
+                            <pre className="mt-6 text-sm">First, download the boring.env file</pre>
                             <ul className="mt-6 text-xs">
                                 {props.peer.pubkey && (<li key={props.peer.pubkey}>pubkey: {props.peer.pubkey}</li>)}
                             </ul>
                             <button className="mt-8 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
-                            <button className="mt-8 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> install config</button>
-                            {isProvider && !providerActive && (
-                                <div>
-                                    <button className="mt-8 inline-flex items-center rounded-sm border border-transparent bg-white px-3 py-1 text-boring-black shadow hover:bg-gray-lightest" onClick={() => activatePeer(props.peer.id)}>Activate</button>
-                                </div>
-                            )}
-                            {isProvider && providerActive && (
-                                <div>
-                                    <h1>This provider is active and available to the network!</h1>
-                                </div>
-                            )}
+
+                            <pre className="mt-6 text-sm">Copy the boring.env file to the SDCARD's boot partition.</pre>
                         </div>
                     </div>
 
