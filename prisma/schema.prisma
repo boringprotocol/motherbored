@@ -20,7 +20,14 @@ model Peer {
   userId   String?
   pubkey   String?
   label    String?
+
+  wifi_preference String?
+
+  hw_mode  String?
+  channel  Int?
   ssid     String?
+  country_code String?
+  wpa_passphrase String?
 
   @@index([userId])
 }

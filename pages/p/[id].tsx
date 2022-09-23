@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, Fragment } from "react"
 import { GetServerSideProps } from "next"
 import Router from "next/router"
 import Peer, { PeerProps } from "../../components/Peer"
@@ -9,8 +9,9 @@ import { IoDownloadOutline, IoWifiOutline } from "react-icons/io5"
 import Image from 'next/image'
 // import { toNamespacedPath } from "path"
 import toast, { Toaster } from 'react-hot-toast'
-
-import { CheckIcon } from '@heroicons/react/24/solid'
+import CountryCodes from "../../data/country_codes"
+import { Listbox, Transition } from '@headlessui/react'
+import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
 const steps = [
     { id: '01', name: 'Peer Creation', description: 'Please configure your peer next.', href: '#', status: 'complete' },
@@ -21,23 +22,6 @@ const steps = [
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
-
-// Deleting Peer / "Reset"
-async function deletePeer(id: string): Promise<void> {
-    const body = { id: id }
-    const result = await fetch(`/api/peer/${id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-    });
-    if (result.ok) {
-        toast.success("success bro you deleted haha meet me at 830");
-    } else {
-        notify("your funds have been drained idiot");
-    }
-    await Router.push(`/`);
-}
-
 
 // Success: Node created, Node deleted, node modified, activated(provider), /configured
 // Error: timeout, form contents are gross don't type that way... that name already exists / conflicts 
@@ -80,9 +64,6 @@ const notify = (message: string) =>
     ))
 // End Toast Shit
 
-
-
-
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     if (params == null || params.id == null) {
         return { props: { peer: {}, target: "" } }
@@ -118,6 +99,23 @@ type Props = {
     target: string,
 }
 
+// Deleting Peer / "Reset"
+async function deletePeer(id: string): Promise<void> {
+    const body = { id: id }
+    const result = await fetch(`/api/peer/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+    });
+    if (result.ok) {
+        toast.success("success bro you deleted haha meet me at 830");
+    } else {
+        notify("your funds have been drained idiot");
+    }
+    await Router.push(`/`);
+}
+
+// Activate peer
 async function activatePeer(id: string): Promise<void> {
     const result = await fetch(`/api/activate/${id}`, {
         method: "PUT",
@@ -130,6 +128,7 @@ async function activatePeer(id: string): Promise<void> {
     await Router.push(`/p/${id}`);
 }
 
+// download boring.env config file
 async function downloadPeerConfig(id: string): Promise<void> {
     //await fetch(`/api/config/${id}`, {
     //    method: "GET",
@@ -137,6 +136,7 @@ async function downloadPeerConfig(id: string): Promise<void> {
     await Router.push(`/api/config/${id}`);
 }
 
+// send boring.env config file to motherbored
 async function shovePeerConfig(id: string): Promise<void> {
     const results = await fetch(`/api/config/${id}`, {
         method: "GET",
@@ -168,12 +168,17 @@ const ShowPeer: React.FC<Props> = (props) => {
     const [name, setName] = useState(props.peer.name);
     const [label, setLabel] = useState(props.peer.label);
     const [ssid, setSSID] = useState(props.peer.ssid);
+    const [country_code, setSelectedCountryCode] = useState(props.peer.country_code)
+    const [wifi_preference, setSelectedWifiPreference] = useState(props.peer.wifi_preference)
+    const [wpa_passphrase, setSelectedWPAPassphrase] = useState(props.peer.wpa_passphrase)
     const id = props.peer.id;
+
+    const wifi_preferences = ["2.4Ghz", "5Ghz"]
 
     const submitData = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         try {
-            const body = { id: id, name: name, label: label, ssid: ssid };
+            const body = { id: id, name: name, label: label, ssid: ssid, country_code: country_code, wifi_preference, wpa_passphrase };
             const response = await fetch(`/api/peer/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -273,6 +278,136 @@ const ShowPeer: React.FC<Props> = (props) => {
                                     placeholder={ssid || ""}
                                 />
                             </div>
+                            <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
+                                <label htmlFor="name" className="block text-xs font-medium text-gray-900">
+                                    <IoWifiOutline className="float-left mr-2" /> WPA Passphrase
+                                </label>
+                                <input
+                                    type="text"
+                                    name="wpa_passphrase"
+                                    id="wpa_passphrase"
+                                    onChange={(e) => setSelectedWPAPassphrase(e.target.value)}
+                                    className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white block w-full border-0 p-0 focus:ring-0 text-lg"
+                                    placeholder={wpa_passphrase || ""}
+                                />
+                            </div>
+                            <Listbox value={country_code} onChange={setSelectedCountryCode}>
+                                {({ open }) => (
+                                    <>
+                                        <Listbox.Label className="block text-sm font-medium text-gray-700">Country Code</Listbox.Label>
+                                        <div className="relative mt-1">
+                                            <Listbox.Button className="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
+                                                <span className="block truncate">{country_code}</span>
+                                                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                                    <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                </span>
+                                            </Listbox.Button>
+
+                                            <Transition
+                                                show={open}
+                                                as={Fragment}
+                                                leave="transition ease-in duration-100"
+                                                leaveFrom="opacity-100"
+                                                leaveTo="opacity-0"
+                                            >
+                                                <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                                    {CountryCodes.map((code) => (
+                                                        <Listbox.Option
+                                                            key={code.alpha2}
+                                                            value={code.alpha2}
+                                                            className={({ active }) =>
+                                                                classNames(
+                                                                    active ? 'text-white bg-black' : 'text-gray',
+                                                                    'relative cursor-default select-none py-2 pl-3 pr-9'
+                                                                )
+                                                            }
+                                                        >
+
+                                                            {({ selected, active }) => (
+                                                                <>
+                                                                    <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                        {code.name}
+                                                                    </span>
+
+                                                                    {selected ? (
+                                                                        <span
+                                                                            className={classNames(
+                                                                                active ? 'text-white' : 'text-indigo-600',
+                                                                                'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                                            )}
+                                                                        >
+                                                                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                        </span>
+                                                                    ) : null}
+                                                                </>
+                                                            )}
+                                                        </Listbox.Option>
+                                                    ))}
+                                                </Listbox.Options>
+                                            </Transition>
+                                        </div>
+                                    </>
+                                )}
+                            </Listbox>
+                            <Listbox value={wifi_preference} onChange={setSelectedWifiPreference}>
+                                {({ open }) => (
+                                    <>
+                                        <Listbox.Label className="block text-sm font-medium text-gray-700">Wifi Mode</Listbox.Label>
+                                        <div className="relative mt-1">
+                                            <Listbox.Button className="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
+                                                <span className="block truncate">{wifi_preference}</span>
+                                                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                                    <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                </span>
+                                            </Listbox.Button>
+
+                                            <Transition
+                                                show={open}
+                                                as={Fragment}
+                                                leave="transition ease-in duration-100"
+                                                leaveFrom="opacity-100"
+                                                leaveTo="opacity-0"
+                                            >
+                                                <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                                    {wifi_preferences.map((wp) => (
+                                                        <Listbox.Option
+                                                            key={wp}
+                                                            value={wp}
+                                                            className={({ active }) =>
+                                                                classNames(
+                                                                    active ? 'text-white bg-black' : 'text-gray',
+                                                                    'relative cursor-default select-none py-2 pl-3 pr-9'
+                                                                )
+                                                            }
+                                                        >
+
+                                                            {({ selected, active }) => (
+                                                                <>
+                                                                    <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                        {wp}
+                                                                    </span>
+
+                                                                    {selected ? (
+                                                                        <span
+                                                                            className={classNames(
+                                                                                active ? 'text-white' : 'text-indigo-600',
+                                                                                'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                                            )}
+                                                                        >
+                                                                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                        </span>
+                                                                    ) : null}
+                                                                </>
+                                                            )}
+                                                        </Listbox.Option>
+                                                    ))}
+                                                </Listbox.Options>
+                                            </Transition>
+                                        </div>
+                                    </>
+                                )}
+                            </Listbox>
+
                             <button
                                 type="submit"
                                 className="mt-6 flex justify-center rounded-sm border text-boring-black dark:text-boring-white border-boring-black dark:border-boring-white  py-2 px-4 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
@@ -490,7 +625,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
 
             </div>
-        </Layout>
+        </Layout >
     );
 };
 
