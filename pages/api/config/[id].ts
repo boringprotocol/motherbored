@@ -37,6 +37,22 @@ export default async function handle(req: any, res: any) {
         fileContents += "\n"
         fileContents += "UPDATE=true"
         fileContents += "\n"
+
+        fileContents += "WPA_PASSPHRASE="
+        fileContents += peer.wpa_passphrase
+        fileContents += "\n"
+
+        fileContents += "SSID="
+        fileContents += peer.ssid
+        fileContents += "\n"
+
+        fileContents += "WIFI_PREFERENCE="
+        fileContents += peer.wifi_preference
+        fileContents += "\n"
+
+        fileContents += "COUNTRY_CODE="
+        fileContents += peer.country_code
+        fileContents += "\n"
     } else {
         //consumer
         const targetPeer = await prisma.peer.findUnique({
@@ -60,6 +76,22 @@ export default async function handle(req: any, res: any) {
         fileContents += peer.id
         fileContents += "\n"
         fileContents += "UPDATE=true"
+        fileContents += "\n"
+
+        fileContents += "WPA_PASSPHRASE="
+        fileContents += peer.wpa_passphrase
+        fileContents += "\n"
+
+        fileContents += "SSID="
+        fileContents += peer.ssid
+        fileContents += "\n"
+
+        fileContents += "WIFI_PREFERENCE="
+        fileContents += peer.wifi_preference
+        fileContents += "\n"
+
+        fileContents += "COUNTRY_CODE="
+        fileContents += peer.country_code
         fileContents += "\n"
     }
     res.statusCode = 200;
