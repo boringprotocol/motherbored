@@ -112,3 +112,5 @@ dist
 
 .DS_Store
 yarn.lock
+falcon-breath
+falcon-breath.pub
