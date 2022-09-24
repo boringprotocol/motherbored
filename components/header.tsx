@@ -1,9 +1,11 @@
-import { getCsrfToken, signIn, signOut, useSession } from "next-auth/react"
-import { useWalletModal } from "@solana/wallet-adapter-react-ui"
-import { useWallet } from "@solana/wallet-adapter-react"
-import { SigninMessage } from "../utils/SigninMessage"
+import { getCsrfToken, signIn, signOut, useSession } from 'next-auth/react'
+import { useWalletModal } from '@solana/wallet-adapter-react-ui'
+import { useWallet } from '@solana/wallet-adapter-react'
+import { SigninMessage } from '../utils/SigninMessage'
 import bs58 from "bs58"
-import { useEffect } from "react"
+import { useEffect } from 'react'
+import { IoWalletOutline } from 'react-icons/io5'
+
 
 export default function Header() {
   const { data: session, status } = useSession();
@@ -53,7 +55,7 @@ export default function Header() {
       <noscript>
         <style>{`.nojs-show { opacity: 1; top: 0; }`}</style>
       </noscript>
-      <div className="">
+      <div className="py-2">
         <p
           className=""
         >
@@ -69,15 +71,17 @@ export default function Header() {
               {session.user.image && (
                 <span
                   style={{ backgroundImage: `url('${session.user.image}')` }}
-                  className="fl w2 h2 cover"
+                  className="w2 h2 cover"
                 />
               )}
-              <span className="font-jetbrains text-sm">
+              {/* Wallet Address display */}
+              <span className="font-jetbrains text-xs">
+                <IoWalletOutline />
                 {session.user.email ?? session.user.name}
               </span>
               <a
                 href={`/api/auth/signout`}
-                className="ml-6 mt-2 inline-flex items-center rounded-sm text-boring-black dark:text-boring-white bg-white dark:bg-black px-3 py-1  font-medium text-indigo-600 shadow hover:bg-indigo-50"
+                className="ml-6 mt-2 inline-flex items-center text-xs text-boring-black dark:text-boring-black bg-white dark:bg-white px-1 py-1 shadow"
                 onClick={(e) => {
                   e.preventDefault();
                   signOut();
