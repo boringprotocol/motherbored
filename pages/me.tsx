@@ -9,7 +9,6 @@ export default function MePage() {
     <Layout>
       <div className="px-12 py-12">
       <span className="font-jetbrains text-xs truncate">
-                <IoWalletOutline />
                 {session.user.email ?? session.user.name}
               </span>
 

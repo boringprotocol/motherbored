@@ -5,7 +5,7 @@ import Peer, { PeerProps } from "../../components/Peer"
 import Layout from "../../components/layout"
 import prisma from "../../lib/prisma"
 import { useSession } from "next-auth/react"
-import { RiInstallLine, IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline } from "react-icons/io5"
+import {  IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline } from "react-icons/io5"
 import Image from 'next/image'
 // import { toNamespacedPath } from "path"
 import toast, { Toaster } from 'react-hot-toast'
@@ -458,7 +458,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                     <ul className="mt-6 text-xs">
                                         {props.peer.pubkey && (<li key={props.peer.pubkey}>pubkey: {props.peer.pubkey}</li>)}
                                     </ul>
-                                    <button className="mt-8 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><RiInstallLine /><IoDownloadOutline className="mr-2" /> install config</button>
+                                    <button className="mt-8 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> install config</button>
                                     <p className="mt-6 text-sm">Once connected to boring WIFI... click install ^^</p>
                                     <button className="mt-8 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => activatePeer(props.peer.id)}>Activate</button>
                                     <p className="mt-6 text-sm">Then, wait a few minutes for your motherbored to reboot and then click activate ^^</p>

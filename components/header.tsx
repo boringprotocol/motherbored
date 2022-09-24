@@ -4,7 +4,6 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { SigninMessage } from '../utils/SigninMessage'
 import bs58 from "bs58"
 import { useEffect } from 'react'
-import { IoWalletOutline } from 'react-icons/io5'
 
 
 export default function Header() {
@@ -76,7 +75,7 @@ export default function Header() {
               )}
               {/* Wallet Address display */}
               <span className="font-jetbrains text-xs">
-                <IoWalletOutline />
+                
                 {session.user.email ?? session.user.name}
               </span>
               <a
