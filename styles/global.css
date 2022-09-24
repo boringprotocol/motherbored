@@ -18,9 +18,12 @@ html {background-color: #1A1B1E;}
 
 /* .wallet-adapter-modal {position: relative!important;} */
 
+.wallet-adapter-modal-title {font-size: 16px!important;}
+.wallet-adapter-button {font-family: 'JetBrains-Mono-Thin'!important; color: #eee!important;}
+.wallet-adapter-modal-button-close {border: 1px solid #262729!important; background-color: #000!important;}
 .wallet-adapter-modal-wrapper {
     border: 1px solid #262729; 
-    background-color: #1A1B1E!important;
+    background-color: #000!important;
     border-radius:2px!important;
     font-family: 'JetBrains-Mono-Thin'!important;
 }
