@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import Layout from "../components/layout";
-import Router from "next/router";
-import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
-import prisma from "../lib/prisma";
-import Peer, { PeerProps } from "../components/Peer";
+import React, { useState } from "react"
+import Layout from "../components/layout"
+import Router from "next/router"
+import { GetServerSideProps } from "next"
+import { getSession } from "next-auth/react"
+import prisma from "../lib/prisma"
+import Peer, { PeerProps } from "../components/Peer"
 import { IoRefreshOutline } from "react-icons/io5"
 
 
+// https://github.com/boringprotocol/boring-name-generator/
+var generateName = require('boring-name-generator');
 
-var generate = require('boring-name-generator');
-
+//
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req });
     if (!session || !session.user || !session.user.name) {
@@ -42,12 +43,13 @@ const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     }
 }
 
+//
 type Props = {
     peers: PeerProps[]
 }
 
 const NewPeer: React.FC<Props> = (props) => {
-    const [name, setName] = useState(generate({ number: true }).dashed);
+    const [name, setName] = useState(generateName({ number: true }).dashed);
     const [kind, setKind] = useState("provider");
     const [target, setTarget] = useState("");
 
@@ -82,18 +84,13 @@ const NewPeer: React.FC<Props> = (props) => {
 
     return (
         <Layout>
-            <div className="block">
+            <div className="block px-14 py-16">
                 <form className="w-1/2" onSubmit={submitData}>
-
                     <h1 className="uppercase mb-6">New Peer</h1>
-
-
                     <div className="border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                         <label htmlFor="name" className="block text-xs text-gray">
                             Peer Name
                         </label>
-
-
                         <input
                             type="text"
                             name="name"
@@ -106,10 +103,9 @@ const NewPeer: React.FC<Props> = (props) => {
                         />
                     </div>
                     <div className="m-4 hover:text-gray active:text-gray-dark">
-                        <a onClick={(e) => setName(generate({ number: true }).dashed)}><span className=""><IoRefreshOutline /></span></a>
+                        <a onClick={(e) => setName(generateName({ number: true }).dashed)}><span className=""><IoRefreshOutline /></span></a>
                     </div>
-
-                    <div className="mt-6 border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                    <div className="my-6 border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                         <label htmlFor="mode" className="block text-xs text-gray">
                             Mode
                         </label>
@@ -127,18 +123,19 @@ const NewPeer: React.FC<Props> = (props) => {
                     </div>
 
                     {kind == "consumer" && (
-                        <div>
 
+
+                        <div className="border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
 
                             {/* https://tailwindui.com/components/application-ui/forms/select-menus#component-71d9116be789a254c260369f03472985 */}
-                            <label htmlFor="target" className="block text-sm font-medium">
+                            <label htmlFor="target" className="block text-xs text-gray">
                                 Select an available vpn provider:
                             </label>
                             <select
                                 onChange={(e) => setTarget(e.target.value)}
                                 id="target"
                                 name="target"
-                                className="mt-1 block w-full rounded-md border-gray-light py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                className="bg-boring-black block w-full border-0 p-0 text-gray-lightest placeholder-boring-white focus:ring-0 text-lg"
                             >
                                 {props.peers.map(option => (
                                     <option key={option.id} value={option.id}>{option.name}</option>
@@ -158,6 +155,8 @@ const NewPeer: React.FC<Props> = (props) => {
     );
 };
 
+//
 export { getServerSideProps }
 
+//
 export default NewPeer;
