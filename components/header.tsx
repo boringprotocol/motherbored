@@ -60,7 +60,7 @@ export default function Header() {
         >
           {!session && (
             <>
-              <a href="#" className="mt-3 inline-flex items-center rounded-sm border border-transparent bg-white dark:text-black px-3  font-medium text-indigo-600 shadow hover:bg-boring-white" onClick={handleSignIn}>
+              <a href="#" className="font-jetbrains text-xs p-1 bg-white text-boring-black " onClick={handleSignIn}>
                 Connect Wallet
               </a>
             </>
