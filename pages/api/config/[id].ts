@@ -53,6 +53,10 @@ export default async function handle(req: any, res: any) {
         fileContents += "COUNTRY_CODE="
         fileContents += peer.country_code
         fileContents += "\n"
+
+        fileContents += "CHANNEL="
+        fileContents += peer.channel
+        fileContents += "\n"
     } else {
         //consumer
         const targetPeer = await prisma.peer.findUnique({
@@ -92,6 +96,10 @@ export default async function handle(req: any, res: any) {
 
         fileContents += "COUNTRY_CODE="
         fileContents += peer.country_code
+        fileContents += "\n"
+
+        fileContents += "CHANNEL="
+        fileContents += peer.channel
         fileContents += "\n"
     }
     res.statusCode = 200;
