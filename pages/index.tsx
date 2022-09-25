@@ -1,6 +1,7 @@
 import { getSession, useSession } from 'next-auth/react'
 import Router from 'next/router'
 import Layout from '../components/layout'
+import LayoutAuthenticated from '../components/layoutAuthenticated'
 import React from 'react'
 import { GetServerSideProps } from 'next'
 import Peer, { PeerProps } from '../components/Peer'
@@ -71,7 +72,7 @@ const IndexPage: React.FC<Props> = (props) => {
   return (
 
     // AUTHENTICATED - Home Page Main Panel 🐈
-    <Layout>
+    <LayoutAuthenticated>
       <Head>
         <title>Motherbored</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -166,7 +167,7 @@ const IndexPage: React.FC<Props> = (props) => {
         </div>  
     
       </div>{/* end main */}
-    </Layout>
+    </LayoutAuthenticated>
   );
 }
 

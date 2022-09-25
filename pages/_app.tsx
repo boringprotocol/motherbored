@@ -23,6 +23,19 @@ import {
 } from "@solana-mobile/wallet-adapter-mobile";
 import type { AppProps } from "next/app";
 
+import Router from 'next/router';
+import nProgress from 'nprogress'; //nprogress module
+//import 'nprogress/nprogress.css'; //styles of nprogress
+import '../styles/nprogress.css';
+
+//Binding events. 
+
+Router.events.on("routeChangeStart", nProgress.start);
+Router.events.on("routeChangeError", nProgress.done);
+Router.events.on("routeChangeComplete", nProgress.done);
+
+
+
 // Default styles that can be overridden by your app
 require('@solana/wallet-adapter-react-ui/styles.css');
 

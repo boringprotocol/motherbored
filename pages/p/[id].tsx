@@ -2,7 +2,7 @@ import React, { useState, Fragment } from "react"
 import { GetServerSideProps } from "next"
 import Router from "next/router"
 import Peer, { PeerProps } from "../../components/Peer"
-import Layout from "../../components/layout"
+import LayoutAuthenticated from "../../components/layoutAuthenticated"
 import prisma from "../../lib/prisma"
 import { useSession } from "next-auth/react"
 import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline } from "react-icons/io5"
@@ -223,7 +223,7 @@ const ShowPeer: React.FC<Props> = (props) => {
     //setName (props.peer.name)
 
     return (
-        <Layout>
+        <LayoutAuthenticated>
             
                 <div>
                     <Toaster />
@@ -556,7 +556,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                 </div>
 
             </div>
-        </Layout>
+        </LayoutAuthenticated>
     );
 };
 

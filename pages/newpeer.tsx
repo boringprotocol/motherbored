@@ -1,11 +1,12 @@
 import React, { useState } from "react"
-import Layout from "../components/layout"
+import LayoutAuthenticated from "../components/layoutAuthenticated"
 import Router from "next/router"
 import { GetServerSideProps } from "next"
 import { getSession } from "next-auth/react"
 import prisma from "../lib/prisma"
 import Peer, { PeerProps } from "../components/Peer"
 import { IoRefreshOutline } from "react-icons/io5"
+
 
 
 // https://github.com/boringprotocol/boring-name-generator/
@@ -83,7 +84,7 @@ const NewPeer: React.FC<Props> = (props) => {
     };
 
     return (
-        <Layout>
+        <LayoutAuthenticated>
             <div className="block px-14 py-16">
                 <form className="w-1/2" onSubmit={submitData}>
                     <h1 className="uppercase mb-6">New Peer</h1>
@@ -121,12 +122,9 @@ const NewPeer: React.FC<Props> = (props) => {
                             required
                         </select>
                     </div>
-
+                    // Spawn provider menu    
                     {kind == "consumer" && (
-
-
                         <div className="border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
-
                             {/* https://tailwindui.com/components/application-ui/forms/select-menus#component-71d9116be789a254c260369f03472985 */}
                             <label htmlFor="target" className="block text-xs text-gray">
                                 Select an available vpn provider:
@@ -143,15 +141,13 @@ const NewPeer: React.FC<Props> = (props) => {
                             </select>
                         </div>
                     )}
-
                     <input className="float-left  mt-6 flex justify-center rounded-md border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40" type="submit" value="Create" />
                     <a className="back" onClick={() => Router.push("/")}>
                         <span className="text-xs float-left ml-6 mt-8">or Cancel</span>
                     </a>
                 </form>
             </div>
-
-        </Layout >
+        </LayoutAuthenticated >
     );
 };
 
