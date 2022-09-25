@@ -5,6 +5,7 @@ import Header from './header'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { Switch } from '@headlessui/react'
+import Waiting from './waiting'
 
 const ThemeChanger = () => {
   const { theme, setTheme } = useTheme()
@@ -42,8 +43,19 @@ export default function Layout({ children }: Props) {
   return (
 
     <>
-      
-      <Header />
+      <div className="flex items-center justify-center h-screen">
+        <div className="">
+          <div className='font-jetbrains text-sm'>
+            <div className='p-2'>A Private Path</div>
+            <Waiting />
+          </div>
+        <div className=''>
+          <div className='font-jetbrains text-center text-sm'>
+            <Header />
+          </div>
+        </div>
+      </div>
+    </div>
     </>
 
 
