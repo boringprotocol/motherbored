@@ -6,7 +6,7 @@ import prisma from "../../../lib/prisma"
 export default async function handle(req: any, res: any) {
     if (req.method === "PUT") {
         const peerId = req.body.id;
-        const { name, label, ssid, country_code, wifi_preference, wpa_passphrase } = req.body
+        const { name, label, ssid, country_code, wifi_preference, wpa_passphrase, target } = req.body
         const session = await getSession({ req });
         if (!session) {
             return
@@ -20,6 +20,7 @@ export default async function handle(req: any, res: any) {
                 country_code: country_code,
                 wifi_preference: wifi_preference,
                 wpa_passphrase: wpa_passphrase,
+                target: target,
             },
         });
         res.json(peer);
