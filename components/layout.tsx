@@ -129,7 +129,7 @@ export default function Layout({ children }: Props) {
                       <div className="font-jetbrains space-y-1">
                       <ThemeChanger />
                       </div>
-                    </nav>
+                      </nav>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
