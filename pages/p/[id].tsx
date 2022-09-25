@@ -224,7 +224,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
     return (
         <Layout>
-            <div>
+            
                 <div>
                     <Toaster />
                 </div>
@@ -447,6 +447,10 @@ const ShowPeer: React.FC<Props> = (props) => {
 
 
 
+                {/* Reg Configuration / Settings */}
+                <div className="px-14 py-16 dark:border-gray-dark border-r border-b border-gray-lightest">
+                    <h1 className="font-jetbrains text-2xl">Configuration</h1>
+                    <p className="text-xs mt-6">Initial Motherbored configuration</p>
 
                     {/* The small print. Deets on the node */}
                     <div className="col-span-3 mt-12 text-gray">
