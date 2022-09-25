@@ -26,7 +26,7 @@ function classNames(...classes: any) {
 // Success: Node created, Node deleted, node modified, activated(provider), /configured
 // Error: timeout, form contents are gross don't type that way... that name already exists / conflicts 
 
-// Toast Shit - later move to a file of its own
+// Toast stuff - later move to a file of its own
 const notify = (message: string) =>
     toast.custom((t) => (
         <div
@@ -36,9 +36,10 @@ const notify = (message: string) =>
             <div className="flex-1 w-0 p-8">
                 <div className="flex items-start">
                     <div className="flex-shrink-0 pt-0.5">
+                        
                         <img
                             className="h-16 w-16 rounded-full"
-                            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixqx=6GHAjsWpt9&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
+                            src="/img/cathy.png"
                             alt=""
                         />
                     </div>
@@ -112,9 +113,9 @@ async function deletePeer(id: string): Promise<void> {
         body: JSON.stringify(body),
     });
     if (result.ok) {
-        toast.success("success bro you deleted haha meet me at 830");
+        toast.success("Success! That peer has been wiped from existance.");
     } else {
-        notify("your funds have been drained idiot");
+        notify("Oh no! We couldn't delete this peer. Try again.");
     }
     await Router.push(`/`);
 }
@@ -125,9 +126,9 @@ async function activatePeer(id: string): Promise<void> {
         method: "PUT",
     });
     if (result.ok) {
-        toast.success("success bro");
+        toast.success("Great news. Successfully activated!");
     } else {
-        notify("your funds have been drained idiot");
+        notify("Your funds have been drained idiot!");
     }
     await Router.push(`/p/${id}`);
 }
@@ -145,7 +146,7 @@ async function shovePeerConfig(id: string): Promise<void> {
     const results = await fetch(`/api/config/${id}`, {
         method: "GET",
     });
-    notify("attempting to configure motherbored please wait 30 seconds..")
+    notify("We're attempting to configure your Motherbored. Please wait 30 seconds or so...")
     if (results.ok) {
         const text = await results.text();
         const sendItURI = "https://unconfigured.insecure.boring.surf/api/hello?falconconfig=" + encodeURIComponent(text);
@@ -155,7 +156,7 @@ async function shovePeerConfig(id: string): Promise<void> {
                 mode: "no-cors",
             });
             if (sendIt.status == 200) {
-                notify("WE did it, boring.network is configured, please reboot")
+                notify("We did it! boring.network is configured, please reboot")
             } else {
                 notify("something went wrong trying to configure boring.network")
             }
@@ -287,7 +288,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                     id="wpa_passphrase"
                                     onChange={(e) => setSelectedWPAPassphrase(e.target.value)}
                                     className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white block w-full border-0 p-0 focus:ring-0 text-lg"
-                                    placeholder={wpa_passphrase || ""}
+                                    placeholder={props.peer.wpa_passphrase || ""}
                                 />
                             </div>
 
@@ -321,7 +322,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                                                 value={code.alpha2}
                                                                 className={({ active }) =>
                                                                     classNames(
-                                                                        active ? 'text-black bg-gray-lightest dark:bg-gray-dark' : 'text-gray-dark',
+                                                                        active ? 'text-black dark:text-white bg-gray-lightest dark:bg-gray-dark' : 'text-gray-dark',
                                                                         'relative cursor-default select-none py-2 pl-3 pr-9'
                                                                     )
                                                                 }
@@ -336,7 +337,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                                                         {selected ? (
                                                                             <span
                                                                                 className={classNames(
-                                                                                    active ? 'text-white' : 'text-black',
+                                                                                    active ? 'text-white' : 'text-gray-light',
                                                                                     'absolute inset-y-0 right-0 flex items-center pr-4'
                                                                                 )}
                                                                             >
@@ -356,6 +357,8 @@ const ShowPeer: React.FC<Props> = (props) => {
                             </div>
 
                             {/* WiFi Mode */}
+
+                          <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">   
                             <Listbox value={wifi_preference} onChange={setSelectedWifiPreference}>
                                 {({ open }) => (
                                     <>
@@ -414,7 +417,8 @@ const ShowPeer: React.FC<Props> = (props) => {
                                     </>
                                 )}
                             </Listbox>
-                            {props.peer.kind == "consumer" && (<p className="text-xs" >You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode and are connected to <span className="text-gray underline">{props.target}</span></p>)}
+                            </div>
+                            {props.peer.kind == "consumer" && (<p className="p-4 text-relaxed text-xs text-gray-light" >You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode and are connected to <span className="text-gray underline">{props.target}</span></p>)}
                             {props.peer.kind == "consumer" && (
                                 <div>
                                     {/* https://tailwindui.com/components/application-ui/forms/select-menus#component-71d9116be789a254c260369f03472985 */}
@@ -437,7 +441,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                             )}
                             <button
                                 type="submit"
-                                className="mt-6 flex justify-center rounded-sm border-none text-boring-black dark:text-gray-lightest border-boring-black dark:border-boring-white bg-white dark:bg-black py-3 px-4 text-sm shadow-md hover:bg-gray-lightest focus:ring-1 focus:ring-blue w-40"
+                                className="mt-6 flex justify-center rounded-sm border-none text-boring-black dark:text-gray-dark bg-white dark:bg-gray-lightest py-3 px-4 text-sm shadow-md hover:bg-gray-lightest focus:ring-1 focus:ring-blue w-40"
                             >
                                 Save Changes
                             </button>
