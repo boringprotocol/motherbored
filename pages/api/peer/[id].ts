@@ -1,5 +1,7 @@
 import { getSession } from "next-auth/react"
 import prisma from "../../../lib/prisma"
+import { CreateFalconSetupkey, GetFalconToken } from "../../../lib/falcon";
+import sleep from 'sleep-promise';
 
 // PUT /api/peer/:id
 // DELETE /api/post/:id
@@ -23,6 +25,19 @@ export default async function handle(req: any, res: any) {
                 target: target,
             },
         });
+
+        if (peer.kind == "consumer") {
+            let accesstoken = await GetFalconToken();
+            await sleep(1000);
+            if (!accesstoken) {
+                res.statusCode = 500;
+                return
+            } else {
+                let wtf = await CreateFalconSetupkey(peer.id, target, accesstoken)
+                res.statusCode = 200;
+                return res.json(wtf);
+            }
+        }
         res.json(peer);
     } else if (req.method === "DELETE") {
         const peerId = req.query.id;
