@@ -15,10 +15,11 @@ export type PeerProps = {
   country_code: string | null;
   wifi_preference: string | null;
   wpa_passphrase: string | null;
+  channel: string | null;
 };
 
 const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
-const peerAvatar = "https://source.boringavatars.com/sunset/" + peer.name
+  const peerAvatar = "https://source.boringavatars.com/sunset/" + peer.name
 
   // 
   let providerActive = false
@@ -39,21 +40,21 @@ const peerAvatar = "https://source.boringavatars.com/sunset/" + peer.name
 
   return (
 
-<>
-<a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
+    <>
+      <a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
 
-<h2 className='text-lg md:text-xl lg:text-2xl px-4 mt-4'>{peer.name}</h2>
+        <h2 className='text-lg md:text-xl lg:text-2xl px-4 mt-4'>{peer.name}</h2>
 
-<p className="inline-flex items-center font-jetbrains px-4 text-sm text-gray-500 capitalize">
-  {isProvider && (<IoServerOutline className="float-left mr-2" />)}
-  {isConsumer && (<IoLaptopOutline className="float-left mr-2" />)} {peer.kind}
-</p>
+        <p className="inline-flex items-center font-jetbrains px-4 text-sm text-gray-500 capitalize">
+          {isProvider && (<IoServerOutline className="float-left mr-2" />)}
+          {isConsumer && (<IoLaptopOutline className="float-left mr-2" />)} {peer.kind}
+        </p>
 
-<div className='p-4 clear-right'><Image src={peerAvatar} alt="" width="48" height="48" /></div>
+        <div className='p-4 clear-right'><Image src={peerAvatar} alt="" width="48" height="48" /></div>
 
-<p className="text-xs mt-6 p-4 border-t border-gray-lightest dark:border-gray-dark"><IoWifiOutline className="float-left mr-3 text-xs" />{peer.ssid} &middot; {peer.label}</p>
+        <p className="text-xs mt-6 p-4 border-t border-gray-lightest dark:border-gray-dark"><IoWifiOutline className="float-left mr-3 text-xs" />{peer.ssid} &middot; {peer.label}</p>
 
-      {/* <div className="flex w-full items-center justify-between space-x-6 p-6">
+        {/* <div className="flex w-full items-center justify-between space-x-6 p-6">
         <div className="flex-1 truncate">
 
           <div className="flex items-center space-x-3">
@@ -83,8 +84,8 @@ const peerAvatar = "https://source.boringavatars.com/sunset/" + peer.name
 
       </div> */}
 
-    </a>
-</>
+      </a>
+    </>
 
   );
 };

@@ -2,17 +2,24 @@ import { getSession } from "next-auth/react"
 import prisma from "../../../lib/prisma"
 import { CreateFalconSetupkey, GetFalconToken } from "../../../lib/falcon";
 import sleep from 'sleep-promise';
+import { channel } from "diagnostics_channel";
 
 // PUT /api/peer/:id
 // DELETE /api/post/:id
 export default async function handle(req: any, res: any) {
     if (req.method === "PUT") {
         const peerId = req.body.id;
-        const { name, label, ssid, country_code, wifi_preference, wpa_passphrase, target } = req.body
+        const { name, label, ssid, country_code, wifi_preference, wpa_passphrase, target, channel } = req.body
         const session = await getSession({ req });
         if (!session) {
             return
         }
+        // convert channel to Int
+        let channelint = 7
+        if (channel != null) {
+            channelint = parseInt(channel);
+        }
+        // Save the updates
         const peer = await prisma.peer.update({
             where: { id: peerId },
             data: {
@@ -23,9 +30,11 @@ export default async function handle(req: any, res: any) {
                 wifi_preference: wifi_preference,
                 wpa_passphrase: wpa_passphrase,
                 target: target,
+                channel: channelint,
             },
         });
 
+        // Grab a new falcon key (TODO: don't do this everytime?)
         if (peer.kind == "consumer") {
             let accesstoken = await GetFalconToken();
             await sleep(1000);
