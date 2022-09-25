@@ -122,7 +122,7 @@ const NewPeer: React.FC<Props> = (props) => {
                             required
                         </select>
                     </div>
-                    // Spawn provider menu    
+                    {/* // Spawn provider menu     */}
                     {kind == "consumer" && (
                         <div className="border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                             {/* https://tailwindui.com/components/application-ui/forms/select-menus#component-71d9116be789a254c260369f03472985 */}
