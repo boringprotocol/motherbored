@@ -223,6 +223,11 @@ const ShowPeer: React.FC<Props> = (props) => {
 
     const userHasValidSession = Boolean(session);
 
+    let channelNotNull = "7"
+    if (channel != null) {
+        channelNotNull = channel
+    }
+
     //setName (props.peer.name)
 
     return (
@@ -423,12 +428,14 @@ const ShowPeer: React.FC<Props> = (props) => {
                         </div>
                         {/* WIFI CHANNEL */}
                         <div>
+                            <label>WiFi Channel</label>
                             <select
                                 onChange={(e) => setChannel(e.target.value)}
                                 id="channel"
                                 name="channel"
                                 className="mt-1 block w-full rounded-md border-gray-light py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                             >
+                                <option key={channelNotNull + "channelidthing"} value={channelNotNull}>{channelNotNull + " selected"}</option>
                                 {channels24.map(option => (
                                     <option key={option + "24channel"} value={option}>{option}</option>
                                 ))}
