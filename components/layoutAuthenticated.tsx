@@ -5,6 +5,8 @@ import HeaderAuthenticated from './headerAuthenticated'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { Switch } from '@headlessui/react'
+import Waiting from './waiting'
+
 
 const ThemeChanger = () => {
   const { theme, setTheme } = useTheme()
@@ -229,7 +231,9 @@ export default function Layout({ children }: Props) {
               <div className='px-12 pb-4'>
               <ThemeChanger />
               </div>
-
+              <div className='px-12 pb-4'>
+              <Waiting />
+              </div>                                  
 
             {/* ///// */}
              <div className='py-12 border-t border-gray-light dark:border-gray-dark'>
