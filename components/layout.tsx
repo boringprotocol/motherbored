@@ -5,7 +5,7 @@ import Header from './header'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { Switch } from '@headlessui/react'
-import Waiting from './waiting'
+import Waiting from './art/waiting'
 
 const ThemeChanger = () => {
   const { theme, setTheme } = useTheme()

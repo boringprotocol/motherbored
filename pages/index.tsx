@@ -6,8 +6,10 @@ import React from 'react'
 import { GetServerSideProps } from 'next'
 import Peer, { PeerProps } from '../components/Peer'
 import prisma from '../lib/prisma'
+
 import Head from 'next/head'
-import Waiting from '../components/waiting'
+import { IoAdd } from 'react-icons/io5'
+
 
 // Placeholder data for peers stats
 const stats = [
@@ -48,7 +50,8 @@ const peers = await prisma.peer.findMany({
 }
 
 type Props = {
-  peers: PeerProps[]
+  peers: PeerProps[],
+  providers: PeerProps[],
 }
 
 const IndexPage: React.FC<Props> = (props) => {
@@ -82,7 +85,7 @@ const IndexPage: React.FC<Props> = (props) => {
       <div className="main pt-12">
       
       
-        {/* <Waiting /> */}
+        
       
       
         {/* PEERS */}
@@ -90,7 +93,7 @@ const IndexPage: React.FC<Props> = (props) => {
         https://adhithiravi.medium.com/why-do-i-need-keys-in-react-lists-dbb522188bbb
         https://stackoverflow.com/questions/54401481/eslint-missing-key-prop-for-element-in-iterator-react-jsx-key */}
         <div className="px-14 pb-16">
-        <ul role="list" className="pb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
+        <ul role="list" className="pb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 2xl:grid-cols-3">
           {props.peers.map((peer) => (
             <li key={peer.name} className="col-span-1 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
               <Peer peer={peer} />
@@ -103,6 +106,7 @@ const IndexPage: React.FC<Props> = (props) => {
                 onClick={() => Router.push("/newpeer")}
                 className="relative block w-full rounded-lg text-boring-black dark:text-boring-white border-2 border-dotted border-gray-light dark:border-gray-dark p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
+                  <IoAdd />
                 <svg
                   className="mx-auto h-12 w-12 text-gray-400"
                   xmlns="http://www.w3.org/2000/svg"

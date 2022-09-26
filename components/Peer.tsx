@@ -2,6 +2,7 @@ import React from 'react'
 import Router from 'next/router'
 import { IoLaptopOutline, IoWifiOutline, IoServerOutline } from 'react-icons/io5'
 import Image from 'next/image'
+import Avatar from 'boring-avatars'
 
 export type PeerProps = {
   id: string;
@@ -19,7 +20,7 @@ export type PeerProps = {
 };
 
 const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
-  const peerAvatar = "https://source.boringavatars.com/sunset/" + peer.name
+  const peerAvatar = peer.name
 
   // 
   let providerActive = false
@@ -49,40 +50,16 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
           {isProvider && (<IoServerOutline className="float-left mr-2" />)}
           {isConsumer && (<IoLaptopOutline className="float-left mr-2" />)} {peer.kind}
         </p>
-
-        <div className='p-4 clear-right'><Image src={peerAvatar} alt="" width="48" height="48" /></div>
-
-        <p className="text-xs mt-6 p-4 border-t border-gray-lightest dark:border-gray-dark"><IoWifiOutline className="float-left mr-3 text-xs" />{peer.ssid} &middot; {peer.label}</p>
-
-        {/* <div className="flex w-full items-center justify-between space-x-6 p-6">
-        <div className="flex-1 truncate">
-
-          <div className="flex items-center space-x-3">
-
-            <h3 className="font-jetbrains truncate text-xl text-boring-black dark:text-boring-white">{peer.name}</h3>
-              <div className="flex items-center space-x-3">
-              
-                <h3 className="font-jetbrains truncate text-xl text-boring-black dark:text-boring-white">lkjhlkjh{peer.name}</h3>
-              </div>
-              
-              <p className="inline-flex items-center font-jetbrains mt-1 truncate text-sm text-gray-500 capitalize"><IoServerOutline className="float-left mr-2" />{peer.kind} Mode</p>
-              {peer.name}
-              <p className="text-xs mt-6 pt-2 border-t border-gray-lightest dark:border-gray-dark"><IoWifiOutline className="float-left mr-3 text-xs"/>{peer.ssid} &middot; {peer.label}</p>
-
-            </div>
-            <Image className="" src={peerAvatar} alt="" width="48" height="48" />
-            
-            <div>{ isProvider && providerActive && ("active")}</div>
-            
-          </div>
-          <p className="font-jetbrains mt-1 truncate text-sm text-gray-500 capitalize"><IoServerOutline className="float-left mr-2" />{peer.kind} Mode</p>
-          <p className="text-xs mt-6 pt-2 border-t border-gray-lightest dark:border-gray-dark"><IoWifiOutline className="float-left mr-3 text-xs" />{peer.ssid} &middot; {peer.label}</p>
         
-        <Image className="" src={peerAvatar} alt="" width="48" height="48" />
+        
+        <Avatar
+  size={40}
+  name="{peerAvatar}"
+  variant="sunset"
+/>
+        
 
-        <div>{isProvider && providerActive && ("active")}</div>
-
-      </div> */}
+        <p className="text-xs mt-6 p-4 border-t border-gray-lightest dark:border-gray-dark"><IoWifiOutline className="float-left mr-3 text-sm animate-pulse" />{peer.ssid} &middot; {peer.label}</p>
 
       </a>
     </>

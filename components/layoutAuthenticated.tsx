@@ -5,7 +5,11 @@ import HeaderAuthenticated from './headerAuthenticated'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { Switch } from '@headlessui/react'
-import Waiting from './waiting'
+import Waiting from './art/waiting'
+import Docs from './art/docs'
+import { useSession } from "next-auth/react"
+import { IoDownloadOutline, IoMoonOutline, IoSunnyOutline } from 'react-icons/io5'
+
 
 
 const ThemeChanger = () => {
@@ -13,9 +17,10 @@ const ThemeChanger = () => {
 
   return (
     <div className="font-jetbrains text-xs">
-      {/* The current theme is: <span className="capitalize">{theme}</span><br /><br /> */}
-      <button className='p-1 mr-3 bg-black dark:bg-boring-black text-boring-white dark:text-boring-white' onClick={() => setTheme('light')}>Light Mode</button>
-      <button className='p-1 bg-white text-black' onClick={() => setTheme('dark')}>Dark Mode</button>
+      
+
+      <button className='inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white' onClick={() => setTheme('light')}><IoSunnyOutline className="float-left mr-2" /> Light Mode</button>
+      <button className='inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white' onClick={() => setTheme('dark')}><IoMoonOutline className="float-left mr-2" /> Dark Mode</button>
     </div>
   )
 }
@@ -163,48 +168,7 @@ export default function Layout({ children }: Props) {
                 <HeaderAuthenticated />
 
                 </div>
-                <div className="ml-2 flex items-center space-x-4 sm:ml-6 sm:space-x-6 ">
-                  {/* Profile dropdown */}
-                  <Menu as="div" className="relative flex-shrink-0">
-                    <div>
-                      <Menu.Button className="flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                        <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-8 w-8 rounded-full"
-                          src="https://source.boringavatars.com/sunset/"
-                          alt=""
-                        />
-                      </Menu.Button>
-                    </div>
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-100"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
-                    >
-                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-boring-black py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        {userNavigation.map((item) => (
-                          <Menu.Item key={item.name}>
-                            {({ active }) => (
-                              <a
-                                href={item.href}
-                                className={classNames(
-                                  active ? 'bg-gray-lightest dark:bg-gray-dark' : '',
-                                  'block px-4 py-2 text-sm text-gray-700'
-                                )}
-                              >
-                                {item.name}
-                              </a>
-                            )}
-                          </Menu.Item>
-                        ))}
-                      </Menu.Items>
-                    </Transition>
-                  </Menu>
-                </div>
+                
               </div>
             </div>
           </header>
@@ -232,6 +196,8 @@ export default function Layout({ children }: Props) {
               <ThemeChanger />
               </div>
               <div className='px-12 pb-4'>
+                <Docs />
+                <p>hello</p>
               <Waiting />
               </div>                                  
 

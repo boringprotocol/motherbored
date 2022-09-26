@@ -5,13 +5,23 @@ import Peer, { PeerProps } from "../../components/Peer"
 import LayoutAuthenticated from "../../components/layoutAuthenticated"
 import prisma from "../../lib/prisma"
 import { useSession } from "next-auth/react"
-import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline } from "react-icons/io5"
+import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline, IoCloudUploadOutline } from "react-icons/io5"
 import Image from 'next/image'
 // import { toNamespacedPath } from "path"
 import toast, { Toaster } from 'react-hot-toast'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import CountryCodes from "../../data/country_codes"
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+
+import Avatar from "boring-avatars";
+
+
+
+const dudify = () => toast("Wow so easy!");
+
 
 const steps = [
     { id: '01', name: 'Provider Peer Creation', description: 'Please configure your peer next.', href: '#', status: 'complete' },
@@ -211,6 +221,11 @@ const ShowPeer: React.FC<Props> = (props) => {
         return <div>Authenticating ...</div>;
     }
 
+    if (!session) {
+        Router.push("/")
+        return <div>Your funds have been drained lmao</div>;
+    }
+    
     let providerActive = false
     if (props.peer.pubkey != null) {
         providerActive = true
@@ -234,8 +249,12 @@ const ShowPeer: React.FC<Props> = (props) => {
         <LayoutAuthenticated>
 
             <div>
-                <Toaster />
+                <Toaster position="top-left" />
             </div>
+
+         
+            
+            
 
 
 
@@ -243,14 +262,27 @@ const ShowPeer: React.FC<Props> = (props) => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-6 sm:px-14 py-12 border-b border-gray-light dark:border-gray-dark">
 
                 {/* Boring Generated Name */}
-                <div className="col-span-3"><h1 className="text-2xl sm:text-6xl md:text-7xl pb-12 sm:pt-12">{name || ""}</h1></div>
+                <div className="col-span-3"><h1 className="text-2xl sm:text-6xl md:text-7xl pb-12 sm:pt-4">{name || ""}</h1></div>
 
                 <div className="">
                     <Image src={"https://source.boringavatars.com/sunset/" + name} alt="" width="100%" height="100%" layout="responsive" objectFit="contain" />
                     {/* {props.peer.kind == "provider" && (<p className="text-xs" >this is a provider node</p>)} */}
+
+                    {/* The small print. Deets on the node */}
+                    <div className="col-span-3 mt-12 text-gray">
+                        {props.peer.kind == "provider" && (<p className="text-xs" >You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode </p>)}
+                        {props.peer.kind == "consumer" && (<p className="text-xs" >You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode and are connected to <span className="text-gray underline">{props.target}</span></p>)}
+                        <ul className="text-xs leading-relaxed">
+                            <li key={props.peer.id}>Id: {props.peer.id}</li>
+                            <li className="capitalize" key={props.peer.kind}>Kind: {props.peer.kind}</li>
+                            <li key={props.peer.setupkey}>Boring Setupkey: {props.peer.setupkey}</li>
+                            {/* Only show the pubkey if this is a provider node */}
+                            {props.peer.kind == "provider" && (<li key={props.peer.pubkey}>Boring Pubkey: {props.peer.pubkey}</li>)}
+                        </ul>
+                    </div>
                 </div>
 
-                <div className="p-12 col-span-1 sm:col-span-2">
+                <div className="px-12 col-span-1 sm:col-span-2">
                     <form className="w-full" onSubmit={submitData}>
 
                         {/* Label / Friendly Name */}
@@ -426,6 +458,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                 )}
                             </Listbox>
                         </div>
+
                         {/* WIFI CHANNEL */}
                         <div>
                             <label>WiFi Channel</label>
@@ -441,6 +474,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                 ))}
                             </select>
                         </div>
+
                         {/* provider picker */}
                         {props.peer.kind == "consumer" && (<p className="p-4 text-relaxed text-xs text-gray-light" >You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode and are connected to <span className="text-gray underline">{props.target}</span></p>)}
                         {props.peer.kind == "consumer" && (
@@ -465,100 +499,39 @@ const ShowPeer: React.FC<Props> = (props) => {
                         )}
                         <button
                             type="submit"
-                            className="mt-6 flex justify-center rounded-sm border-none text-boring-black dark:text-gray-dark bg-white dark:bg-gray-lightest py-3 px-4 text-sm shadow-md hover:bg-gray-lightest focus:ring-1 focus:ring-blue w-40"
+                            className="mt-4 inline-flex items-center rounded-sm border border-transparent text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue"
                         >
                             Save Changes
                         </button>
-
+                        
                     </form>
                 </div>
 
+                
 
-
-                {/* Reg Configuration / Settings */}
-                <div className="px-14 py-16 dark:border-gray-dark border-r border-b border-gray-lightest">
-                    <h1 className="font-jetbrains text-2xl">Configuration</h1>
-                    <p className="text-xs mt-6">Initial Motherbored configuration</p>
-
-                    {/* The small print. Deets on the node */}
-                    <div className="col-span-3 mt-12 text-gray">
-                        {props.peer.kind == "provider" && (<p className="text-xs" >You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode </p>)}
-                        {props.peer.kind == "consumer" && (<p className="text-xs" >You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode and are connected to <span className="text-gray underline">{props.target}</span></p>)}
-                        <ul className="text-xs leading-relaxed">
-                            <li key={props.peer.id}>Id: {props.peer.id}</li>
-                            <li className="capitalize" key={props.peer.kind}>Kind: {props.peer.kind}</li>
-                            <li key={props.peer.setupkey}>Boring Setupkey: {props.peer.setupkey}</li>
-                            {/* Only show the pubkey if this is a provider node */}
-                            {props.peer.kind == "provider" && (<li key={props.peer.pubkey}>Boring Pubkey: {props.peer.pubkey}</li>)}
-
-
-                        </ul>
-                    </div>
-
-
+                {/* Advanced Configuration / Settings */}
+                <div className="col-span-3"> 
+                    {isProvider && !providerActive && (
+                            <div>
+                                <button className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoCloudUploadOutline className="mr-2" /> install config</button>
+                                <button className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => activatePeer(props.peer.id)}><IoDownloadOutline className="mr-2" /> Activate</button>
+                            </div>
+                        )}
+                            {!isProvider && (
+                                <button className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> install config</button>
+                    )} 
+                    <button className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
                 </div>
-
-                {/* Advanced / Manual settings */}
-                <div className="grid grid-cols-2">
-
-                    {/* Reg Configuration / Settings */}
-                    <div className="px-14 py-16 dark:border-gray- border-r border-gray-dark">
-                        <h1 className="font-jetbrains text-2xl">Configuration</h1>
-                        <p className="text-xs mt-6">Initial Motherbored configuration</p>
-
-                        <div className="flex">
-                            <div className="w-1/2  ">
-
-                                {isProvider && !providerActive && (
-                                    <div>
-                                        <p className="text-xs leading-relaxed">Turn on your motherbored, and connect to the boring WIFI network. Password: motherbored</p>
-                                        <ul className="mt-6 text-xs">
-                                            {props.peer.pubkey && (<li key={props.peer.pubkey}>pubkey: {props.peer.pubkey}</li>)}
-                                        </ul>
-                                        <button className="mt-8 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> install config</button>
-                                        <p className="mt-6 text-sm">Once connected to boring WIFI... click install ^^</p>
-                                        <button className="mt-8 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => activatePeer(props.peer.id)}>Activate</button>
-                                        <p className="mt-6 text-sm">Then, wait a few minutes for your motherbored to reboot and then click activate ^^</p>
-                                    </div>
-                                )}
-                                {!isProvider && (
-                                    <div>
-                                        <p className="font-jetbrains mt-6 text-xs leading-relaxed">Turn on your Motherbored, and connect to the Boring Protocol WIFI network.  Password: motherbored</p>
-                                        <button className="mt-8 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> install config</button>
-                                        <p className="mt-6 text-xs leading-relaxed">Once connected to boring WIFI... click install ^^</p>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-
-                    </div>
-
-                    {/* Advanced Configuration / Settings */}
-                    <div className="px-14 py-16 border-b border-gray-light dark:border-gray-dark">
-                        <h1 className="font-jetbrains text-2xl">Advanced Configuration</h1>
-                        <p className="text-xs mt-6 leading-relaxed">For peers that are not on your local network. You can configure your motherbored by copying a file to your SD card (see below)</p>
-
-                        <div className="flex">
+                
 
 
 
-                            <div className="w-1/2  ">
-                                <p className="mt-6 text-xs">First, download the boring.env file</p>
-                                <ul className="mt-6 text-xs">
-                                    {props.peer.pubkey && (<li key={props.peer.pubkey}>pubkey: {props.peer.pubkey}</li>)}
-                                </ul>
-                                <button className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
+                    
 
-                                <p className="mt-6 text-xs leading-relaxed">Copy the boring.env file to the SD card boot partition.</p>
-                            </div>
-                        </div>
 
-                    </div>
+                
 
-                    {/* Advanced Configuration / Settings */}
-                    <div className="col-span-3 px-14 py-16 border-b border-gray-light dark:border-gray-dark">
-
-                        <h1 className="font-jetbrains text-2xl mt-24">Danger Zone</h1>
+                    <div className="col-span-3  py-16 border-b border-gray-light dark:border-gray-dark">
 
                         <div className="text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black border border-gray-dark shadow sm:rounded-lg mt-6">
                             <div className="px-4 py-5 sm:p-6">
@@ -570,10 +543,10 @@ const ShowPeer: React.FC<Props> = (props) => {
                                     <form>
                                         <button
                                             type="button"
-                                            className="mt-6 flex justify-center rounded-sm border text-boring-black dark:text-boring-white border-boring-black dark:border-boring-white  py-2 px-4 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
+                                            className="mt-6 flex justify-center rounded-sm border text-boring-black dark:text-boring-white border-boring-black dark:border-boring-white  py-2 px-2 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
                                             onClick={() => deletePeer(props.peer.id)}
                                         >
-                                            Reset peer
+                                            Destroy
                                         </button>
                                     </form>
                                 </div>
@@ -581,7 +554,6 @@ const ShowPeer: React.FC<Props> = (props) => {
                         </div>
                     </div>
 
-                </div>
 
             </div>
         </LayoutAuthenticated>
