@@ -40,3 +40,9 @@ model User {
   image  String?
   peers  Peer[]
 }
+
+model FalconToken {
+  id     String  @id @default(cuid())
+  token        String @db.VarChar(4096)
+  expires_at DateTime
+}

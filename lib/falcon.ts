@@ -1,6 +1,38 @@
 import prisma from "./prisma";
 
 export async function GetFalconToken() {
+    // if we don't have a token yet, get one
+    const now = new Date(Date.now())
+    try {
+        const prismatoken = await prisma.falconToken.findFirstOrThrow();
+
+        if (prismatoken.expires_at < now) {
+            // token expired, get a new one
+            console.log("falcon token is expired, fetching a new one")
+
+        } else {
+            console.log("found a token to use, using it")
+            // use the current token
+            return prismatoken.token
+        }
+    } catch {
+        console.log('no token yet, grabbing one')
+        // create an initial blank token for updating
+        const myNewToken = await prisma.falconToken.create({
+            data: {
+                token: "",
+                expires_at: now,
+            },
+        })
+    }
+
+    const tokenRefresh = await prisma.falconToken.findFirst();
+
+    if (tokenRefresh == null) {
+        console.log("we screwed up, there is no db record to update for tokens")
+        return ""
+    }
+
     //if (response.status == 401) {
     console.log("fetching auth token")
     const tokenbody = {
@@ -24,7 +56,18 @@ export async function GetFalconToken() {
             }
         });
         let tokendata = await (tokenresponse.json()) as any;
-        return ("Bearer " + tokendata.access_token);
+        let bearer_token = "Bearer " + tokendata.access_token;
+        const newExpires = new Date()
+        newExpires.setSeconds(now.getSeconds() + 84000)
+        const setNewToken = await prisma.falconToken.update({
+            where: { id: tokenRefresh.id },
+            data: {
+                token: bearer_token,
+                expires_at: newExpires,
+            }
+        })
+
+        return (bearer_token);
     } else {
         return ""
     }
