@@ -75,7 +75,6 @@ export default function Header() {
               )}
               {/* Wallet Address display */}
               <span className="font-jetbrains text-xs">
-                
                 {session.user.email ?? session.user.name}
               </span>
               <a
@@ -86,7 +85,7 @@ export default function Header() {
                   signOut();
                 }}
               >
-                Sign out
+                Sign Out
               </a>
             </>
           )}

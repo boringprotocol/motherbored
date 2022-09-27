@@ -14,8 +14,8 @@ import { CheckCircleIcon } from '@heroicons/react/20/solid'
 
 
 const providerKindLists = [
-    { id: 1, title: 'Local', description: 'Usually a device you own, like a Motherbored.' },
-    { id: 2, title: 'Cloud', description: 'On a remote server somewhere remote' },
+    { id: 1, title: 'Local', description: 'Usually a device you own, like a Motherbored' },
+    { id: 2, title: 'Cloud', description: 'On a server somewhere, probably remote' },
   ]
 
 
@@ -107,16 +107,16 @@ const NewPeer: React.FC<Props> = (props) => {
 
     return (
         <LayoutAuthenticated>
-            <div className="block px-14 py-16">
+            <div className="px-4 sm:px-8 md:px-12 pt-16">
 
-            <div>
+            
       
       
       <p>{query.provider_kind}</p>
-    </div>
-                <form className="w-1/2" onSubmit={submitData}>
+    
+                <form className="w-100 md:w-1/2" onSubmit={submitData}>
                     <h1 className="uppercase mb-6">New <span>{query.mode}</span> Peer</h1>
-                    <div className="border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                    <div className="border border-gray-dark text-boring-white rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                         <label htmlFor="name" className="block text-xs text-gray">
                             Peer Name
                         </label>
@@ -134,7 +134,7 @@ const NewPeer: React.FC<Props> = (props) => {
                     <div className="m-4 hover:text-gray active:text-gray-dark">
                         <a onClick={(e) => setName(generateName({ number: true }).dashed)}><span className=""><IoRefreshOutline /></span></a>
                     </div>
-                    <div className="my-6 border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                    <div className="my-6 border border-gray-dark text-boring-white rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                         <label htmlFor="mode" className="block text-xs text-gray">
                             Mode
                         </label>
@@ -152,7 +152,7 @@ const NewPeer: React.FC<Props> = (props) => {
                     </div>
                     {/* // Spawn provider menu     */}
                     {kind == "consumer" && (
-                        <div className="border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                        <div className="border border-gray-dark text-boring-white rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                             {/* https://tailwindui.com/components/application-ui/forms/select-menus#component-71d9116be789a254c260369f03472985 */}
                             <label htmlFor="target" className="block text-xs text-gray">
                                 Select an available vpn provider:
@@ -174,7 +174,7 @@ const NewPeer: React.FC<Props> = (props) => {
                         <div className="">
 
                         <RadioGroup value={selectedProviderKindLists} onChange={setSelectedProviderKindLists}>
-                        <RadioGroup.Label className="text-base font-medium text-gray-900">Select a Provider Kind</RadioGroup.Label>
+                        <RadioGroup.Label className="text-xs font-medium text-gray">Select a Provider Kind</RadioGroup.Label>
 
                         <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                             {providerKindLists.map((providerKindList) => (
@@ -223,7 +223,7 @@ const NewPeer: React.FC<Props> = (props) => {
                         </div>
                     )}
 
-                    <input className="float-left  mt-6 flex justify-center rounded-md border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40" type="submit" value="Create" />
+                    <input className="float-left  mt-6 flex justify-center rounded-sm border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40" type="submit" value="Create" />
                     <a className="back" onClick={() => Router.push("/")}>
                         <span className="text-xs float-left ml-6 mt-8">or Cancel</span>
                     </a>

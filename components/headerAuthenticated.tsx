@@ -4,6 +4,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { SigninMessage } from '../utils/SigninMessage'
 import bs58 from "bs58"
 import { useEffect } from 'react'
+import { IoWalletOutline } from 'react-icons/io5'
 
 
 export default function Header() {
@@ -51,43 +52,24 @@ export default function Header() {
 
   return (
     <header>
-      <noscript>
-        <style>{`.nojs-show { opacity: 1; top: 0; }`}</style>
-      </noscript>
-      <div className="py-2">
-        <p
-          className=""
-        >
-          {!session && (
-            <>
-              <a href="#" className="mt-3 inline-flex items-center rounded-sm border border-transparent bg-white dark:text-black px-3  font-medium text-indigo-600 shadow hover:bg-boring-white" onClick={handleSignIn}>
-                Connect Wallet
-              </a>
-            </>
-          )}
+      <div className="py-4">
+      <p className="text-ellipsis overflow-hidden ...">
+        
           {session?.user && (
             <>
-              {session.user.image && (
-                <span
-                  style={{ backgroundImage: `url('${session.user.image}')` }}
-                  className="w2 h2 cover"
-                />
-              )}
               {/* Wallet Address display */}
               <span className="font-jetbrains text-xs">
-                
                 {session.user.email ?? session.user.name}
               </span>
-              <a
-                href={`/api/auth/signout`}
-                className="ml-6 mt-2 inline-flex items-center text-xs text-boring-black dark:text-boring-black bg-white dark:bg-white px-1 py-1 shadow"
+              
+
+              <button 
+                className="ml-3 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" 
                 onClick={(e) => {
                   e.preventDefault();
                   signOut();
-                }}
-              >
-                Sign out
-              </a>
+                }}><IoWalletOutline className="mr-2" /> Sign Out</button>
+
             </>
           )}
         </p>

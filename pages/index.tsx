@@ -2,14 +2,12 @@ import { getSession, useSession } from 'next-auth/react'
 import Router from 'next/router'
 import Layout from '../components/layout'
 import LayoutAuthenticated from '../components/layoutAuthenticated'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { GetServerSideProps } from 'next'
 import Peer, { PeerProps } from '../components/Peer'
 import prisma from '../lib/prisma'
-
 import Head from 'next/head'
 import { IoAdd, IoAddCircleOutline } from 'react-icons/io5'
-
 
 // Placeholder data for peers stats
 const stats = [
@@ -19,7 +17,7 @@ const stats = [
 ]
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-
+  
 const session = await getSession({ req });
   if (!session || !session.user || !session.user.name) {
     res.statusCode = 403;
@@ -54,11 +52,13 @@ type Props = {
   providers: PeerProps[],
 }
 
-const IndexPage: React.FC<Props> = (props) => {
+  
+const IndexPage: React.FC<Props> = (props) => {  
 
   const { data } = useSession(); // do we need this here? 
   const { data: session, status } = useSession();
   if (!session) {
+
     return (
 
       // NOT AUTHENTICATED - Home Page Main Panel 🐈
@@ -85,38 +85,36 @@ const IndexPage: React.FC<Props> = (props) => {
       <div className="main pt-12">
       
       
-        
-      
-      
         {/* PEERS */}
         {/* key={peer.name} has to be on the first child element within a loop
         https://adhithiravi.medium.com/why-do-i-need-keys-in-react-lists-dbb522188bbb
         https://stackoverflow.com/questions/54401481/eslint-missing-key-prop-for-element-in-iterator-react-jsx-key */}
-        <div className="px-14 pb-16">
+        <div className="px-4 sm:px-8 md:px-12 pb-16">
         <ul role="list" className="pb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 2xl:grid-cols-3">
           {props.peers.map((peer) => (
             <li key={peer.name} className="col-span-1 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
               <Peer peer={peer} />
             </li>
-            
-          ))}
-          <li> <div id="add-peer" className="pb-12">
-                <button
-                type="button"
-                onClick={() => Router.push("//newpeer?mode=consumer")}
-                className="relative block w-full rounded-lg text-boring-black dark:text-boring-white border-2 border-dotted border-gray-light dark:border-gray-dark p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-               
-               <div className='border'>
-                <IoAddCircleOutline className="h-12" />
-               </div>
-                <span className="font-jetbrains mt-2 block text-xs font-medium text-gray-900">Add Motherbored Consumer</span>
-                <span className="font-jetbrains mt-2 block text-xs text-gray"></span>
-                </button>
-                </div>{/* /#add-peer */}</li>
+          ))}      
         </ul>
 
 
+
+        <ul role="list" className="pb-12 grid grid-cols-1 gap-6 sm:grid-cols-4 2xl:grid-cols-3">
+          <li className="col-span-1"> 
+            <div id="add-peer" className="pb-12">
+              <button
+              type="button"
+              onClick={() => Router.push("//newpeer?mode=consumer")}
+              className="relative block w-full rounded-lg text-boring-black dark:text-boring-white border-2 border-dotted border-gray-light dark:border-gray-dark p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+              <span className="font-jetbrains mt-2 block text-xs text-boring-white"><IoAddCircleOutline className="text-4xl" /></span>
+              <span className="font-jetbrains mt-2 block text-xs text-boring-white">Add Motherbored Consumer</span>
+              <span className="font-jetbrains mt-2 block text-xs text-gray"></span>
+              </button>
+            </div>{/* /#add-peer */}
+          </li>
+        </ul>
 
               
                 {/* ADD PEER */}
@@ -209,11 +207,11 @@ const IndexPage: React.FC<Props> = (props) => {
   
         
         {/* NETWORK STATISTICS */}
-        <div className="px-14 py-16 border-t border-gray-light dark:border-gray-dark">
-        <h3 className="font-jetbrains text-lg font-medium leading-6 text-gray dark:text-boring-white uppercase">Network</h3>
-        <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <div className="px-4 sm:px-8 md:px-12 py-16 border-t border-gray-light dark:border-gray-dark">
+        <h3 className="font-jetbrains text-lg  text-gray dark:text-boring-white uppercase">Network</h3>
+        <dl className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-3">
           {stats.map((item) => (
-            <div key={item.name} className="font-jetbrains  overflow-hidden rounded-sm text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black px-4 py-5 shadow sm:p-6">
+            <div key={item.name} className="font-jetbrains  overflow-hidden rounded-sm text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black py-5 shadow sm:p-6">
               <dt className="truncate text-sm font-medium text-gray-500">{item.name}</dt>
               <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{item.stat}</dd>
             </div>
