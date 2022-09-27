@@ -8,7 +8,7 @@ import Peer, { PeerProps } from '../components/Peer'
 import prisma from '../lib/prisma'
 
 import Head from 'next/head'
-import { IoAdd } from 'react-icons/io5'
+import { IoAdd, IoAddCircleOutline } from 'react-icons/io5'
 
 
 // Placeholder data for peers stats
@@ -103,27 +103,15 @@ const IndexPage: React.FC<Props> = (props) => {
           <li> <div id="add-peer" className="pb-12">
                 <button
                 type="button"
-                onClick={() => Router.push("/newpeer")}
+                onClick={() => Router.push("//newpeer?mode=consumer")}
                 className="relative block w-full rounded-lg text-boring-black dark:text-boring-white border-2 border-dotted border-gray-light dark:border-gray-dark p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                  <IoAdd />
-                <svg
-                  className="mx-auto h-12 w-12 text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  stroke="currentColor"
-                  fill="none"
-                  viewBox="0 0 48 48"
-                  aria-hidden="true"
-                  >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1}
-                    d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6"
-                  />
-                </svg>
-                <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add Motherbored Consumer</span>
-                <span className="font-jetbrains mt-2 block text-xs text-gray">Deploy to a virtual machine offered by any cloud provider (e.g., AWS, DigitalOcean, Hetzner, Google Cloud, Contabo ...)</span>
+               
+               <div className='border'>
+                <IoAddCircleOutline className="h-12" />
+               </div>
+                <span className="font-jetbrains mt-2 block text-xs font-medium text-gray-900">Add Motherbored Consumer</span>
+                <span className="font-jetbrains mt-2 block text-xs text-gray"></span>
                 </button>
                 </div>{/* /#add-peer */}</li>
         </ul>
@@ -135,7 +123,7 @@ const IndexPage: React.FC<Props> = (props) => {
                 <div id="add-peer" className="pb-12">
                 <button
                 type="button"
-                onClick={() => Router.push("/newpeer")}
+                onClick={() => Router.push("/newpeer?mode=provider")}
                 className="relative block w-full rounded-lg text-boring-black dark:text-boring-white border-2 border-dotted border-gray-light dark:border-gray-dark p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                 <svg

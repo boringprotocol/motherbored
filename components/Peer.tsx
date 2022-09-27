@@ -19,8 +19,10 @@ export type PeerProps = {
   channel: string | null;
 };
 
+
+// generating peer avatoar from the id as opposed to the label
 const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
-  const peerAvatar = peer.name
+  const peerAvatar = peer.id
 
   // 
   let providerActive = false
@@ -51,13 +53,13 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
           {isConsumer && (<IoLaptopOutline className="float-left mr-2" />)} {peer.kind}
         </p>
         
-        
+        <div className="pt-4 pl-4">
         <Avatar
-  size={40}
-  name="{peerAvatar}"
-  variant="sunset"
-/>
-        
+          size={40}
+          name={peerAvatar}
+          variant="sunset"
+        />
+        </div>
 
         <p className="text-xs mt-6 p-4 border-t border-gray-lightest dark:border-gray-dark"><IoWifiOutline className="float-left mr-3 text-sm animate-pulse" />{peer.ssid} &middot; {peer.label}</p>
 

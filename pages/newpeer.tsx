@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import LayoutAuthenticated from "../components/layoutAuthenticated"
-import Router from "next/router"
+import Router, { useRouter } from "next/router"
 import { GetServerSideProps } from "next"
 import { getSession } from "next-auth/react"
 import prisma from "../lib/prisma"
@@ -8,6 +8,20 @@ import Peer, { PeerProps } from "../components/Peer"
 import { IoRefreshOutline } from "react-icons/io5"
 
 
+// radio buttons to elect provider_mode
+import { RadioGroup } from '@headlessui/react'
+import { CheckCircleIcon } from '@heroicons/react/20/solid'
+
+
+const providerKindLists = [
+    { id: 1, title: 'Local', description: 'Usually a device you own, like a Motherbored.' },
+    { id: 2, title: 'Cloud', description: 'On a remote server somewhere remote' },
+  ]
+
+
+  function classNames(...classes: any ) {
+    return classes.filter(Boolean).join(' ')
+  }
 
 // https://github.com/boringprotocol/boring-name-generator/
 var generateName = require('boring-name-generator');
@@ -50,6 +64,10 @@ type Props = {
 }
 
 const NewPeer: React.FC<Props> = (props) => {
+    
+    const { query } = useRouter();
+    
+    
     const [name, setName] = useState(generateName({ number: true }).dashed);
     const [kind, setKind] = useState("provider");
     const [target, setTarget] = useState("");
@@ -60,6 +78,8 @@ const NewPeer: React.FC<Props> = (props) => {
         }
         setKind(newKind);
     }
+
+    
 
     const submitData = async (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -83,11 +103,19 @@ const NewPeer: React.FC<Props> = (props) => {
         }
     };
 
+    const [selectedProviderKindLists, setSelectedProviderKindLists] = useState(providerKindLists[0])
+
     return (
         <LayoutAuthenticated>
             <div className="block px-14 py-16">
+
+            <div>
+      
+      
+      <p>{query.provider_kind}</p>
+    </div>
                 <form className="w-1/2" onSubmit={submitData}>
-                    <h1 className="uppercase mb-6">New Peer</h1>
+                    <h1 className="uppercase mb-6">New <span>{query.mode}</span> Peer</h1>
                     <div className="border border-gray-dark text-boring-white rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                         <label htmlFor="name" className="block text-xs text-gray">
                             Peer Name
@@ -115,7 +143,7 @@ const NewPeer: React.FC<Props> = (props) => {
                             id="kind"
                             name="kind"
                             className="bg-boring-black block w-full border-0 p-0 text-gray-lightest placeholder-boring-white focus:ring-0 text-lg"
-                            defaultValue="provider"
+                            defaultValue={query.mode}
                         >
                             <option key="consumer" value="consumer">Consumer</option>
                             <option key="provider" value="provider">Provider</option>
@@ -141,6 +169,60 @@ const NewPeer: React.FC<Props> = (props) => {
                             </select>
                         </div>
                     )}
+
+                    {kind == "provider" && (
+                        <div className="">
+
+                        <RadioGroup value={selectedProviderKindLists} onChange={setSelectedProviderKindLists}>
+                        <RadioGroup.Label className="text-base font-medium text-gray-900">Select a Provider Kind</RadioGroup.Label>
+
+                        <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                            {providerKindLists.map((providerKindList) => (
+                            <RadioGroup.Option
+                                key={providerKindList.id}
+                                value={providerKindList}
+                                className={({ checked, active }) =>
+                                classNames(
+                                    checked ? 'border-transparent' : 'border-gray-300',
+                                    active ? 'dark:border-gray-dark ring-2 ring-blue' : '',
+                                    'relative flex cursor-pointer rounded-lg border bg-boring-black p-4 shadow-sm focus:outline-none'
+                                )
+                                }
+                            >
+                                {({ checked, active }) => (
+                                <>
+                                    <span className="flex flex-1">
+                                    <span className="flex flex-col">
+                                        <RadioGroup.Label as="span" className="mb-2 block text-xs font-medium text-gray-900">
+                                        {providerKindList.title}
+                                        </RadioGroup.Label>
+                                        <RadioGroup.Description as="span" className="mt-1 flex items-center text-xs text-gray">
+                                        {providerKindList.description}
+                                        </RadioGroup.Description>
+                                    </span>
+                                    </span>
+                                    <CheckCircleIcon
+                                    className={classNames(!checked ? 'invisible' : '', 'h-5 w-5 text-indigo-600')}
+                                    aria-hidden="true"
+                                    />
+                                    <span
+                                    className={classNames(
+                                        active ? 'border' : 'border-2',
+                                        checked ? 'border-indigo-500' : 'border-gray-dark',
+                                        'pointer-events-none absolute -inset-px rounded-lg'
+                                    )}
+                                    aria-hidden="true"
+                                    />
+                                </>
+                                )}
+                            </RadioGroup.Option>
+                            ))}
+                        </div>
+                        </RadioGroup>
+
+                        </div>
+                    )}
+
                     <input className="float-left  mt-6 flex justify-center rounded-md border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40" type="submit" value="Create" />
                     <a className="back" onClick={() => Router.push("/")}>
                         <span className="text-xs float-left ml-6 mt-8">or Cancel</span>

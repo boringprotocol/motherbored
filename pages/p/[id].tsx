@@ -5,7 +5,7 @@ import Peer, { PeerProps } from "../../components/Peer"
 import LayoutAuthenticated from "../../components/layoutAuthenticated"
 import prisma from "../../lib/prisma"
 import { useSession } from "next-auth/react"
-import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline, IoCloudUploadOutline } from "react-icons/io5"
+import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline, IoCloudUploadOutline, IoServerOutline } from "react-icons/io5"
 import Image from 'next/image'
 // import { toNamespacedPath } from "path"
 import toast, { Toaster } from 'react-hot-toast'
@@ -19,6 +19,7 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import Avatar from "boring-avatars";
 
 
+  
 
 const dudify = () => toast("Wow so easy!");
 
@@ -179,6 +180,10 @@ async function shovePeerConfig(id: string): Promise<void> {
 }
 
 const ShowPeer: React.FC<Props> = (props) => {
+
+    // generating peer avatoar from the id as opposed to the label
+    const peerAvatar = props.peer.id
+
     // here dude - update components/Peer.tsx to make mroe of these babies
     const [name, setName] = useState(props.peer.name);
     const [label, setLabel] = useState(props.peer.label);
@@ -236,6 +241,12 @@ const ShowPeer: React.FC<Props> = (props) => {
         isProvider = true
     }
 
+    let isConsumer = false
+      if (props.peer.kind == "consumer") {
+    isConsumer = true
+  }
+
+
     const userHasValidSession = Boolean(session);
 
     let channelNotNull = "7"
@@ -265,13 +276,23 @@ const ShowPeer: React.FC<Props> = (props) => {
                 <div className="col-span-3"><h1 className="text-2xl sm:text-6xl md:text-7xl pb-12 sm:pt-4">{name || ""}</h1></div>
 
                 <div className="">
-                    <Image src={"https://source.boringavatars.com/sunset/" + name} alt="" width="100%" height="100%" layout="responsive" objectFit="contain" />
+
+
+                
+        <div className="">
+        <Avatar
+          size="100%"
+          name={peerAvatar}
+          variant="sunset"
+        />
+        </div>
+        
+
                     {/* {props.peer.kind == "provider" && (<p className="text-xs" >this is a provider node</p>)} */}
 
-                    {/* The small print. Deets on the node */}
+                    {/* The small print. Details on the node */}
                     <div className="col-span-3 mt-12 text-gray">
-                        {props.peer.kind == "provider" && (<p className="text-xs" >You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode </p>)}
-                        {props.peer.kind == "consumer" && (<p className="text-xs" >You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode and are connected to <span className="text-gray underline">{props.target}</span></p>)}
+       
                         <ul className="text-xs leading-relaxed">
                             <li key={props.peer.id}>Id: {props.peer.id}</li>
                             <li className="capitalize" key={props.peer.kind}>Kind: {props.peer.kind}</li>
@@ -280,14 +301,36 @@ const ShowPeer: React.FC<Props> = (props) => {
                             {props.peer.kind == "provider" && (<li key={props.peer.pubkey}>Boring Pubkey: {props.peer.pubkey}</li>)}
                         </ul>
                     </div>
+
+                           {/* Advanced Configuration / Settings */}
+                <div className="col-span-3 mt-6"> 
+                    <button className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
+                </div>
+                   
+                   
+                   <div className="py-6">
+                    {isProvider && !providerActive && (
+                            <div>
+                                <button className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoCloudUploadOutline className="mr-2" /> install config</button>
+                                <button className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => activatePeer(props.peer.id)}><IoDownloadOutline className="mr-2" /> Activate</button>
+                            </div>
+                        )}
+                            {!isProvider && (
+                                <button className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> install config</button>
+                    )} 
+                    </div>
+
+
                 </div>
 
                 <div className="px-12 col-span-1 sm:col-span-2">
-                    <form className="w-full" onSubmit={submitData}>
+
+                    {/* Main Form */}
+                    <form className="w-full pb-24 mb-12 border-b border-gray-lightestest dark:border-gray-dark" onSubmit={submitData}>
 
                         {/* Label / Friendly Name */}
                         <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
-                            <label htmlFor="name" className="block text-xs text-gray uppercase">
+                            <label htmlFor="name" className="block text-xs text-gray ">
                                 Label
                             </label>
                             <input
@@ -300,6 +343,88 @@ const ShowPeer: React.FC<Props> = (props) => {
                             />
                         </div>
 
+
+                        {isConsumer && (
+
+                        <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
+                            <Listbox value={target} onChange={setTarget}>
+                                {({ open }) => (
+                                    <>
+                                        <Listbox.Label className="block text-xs text-gray "><IoServerOutline className="float-left mr-2"/> Change Provider</Listbox.Label>
+                                        <div className="relative mt-1">
+
+                                            <Listbox.Button className="relative w-full cursor-default rounded-md border border-none dark:text-boring-white bg-boring-white dark:bg-boring-black py-4 pl-2 pr-10 text-left shadow-sm focus:border-blue focus:outline-none focus:ring-none  sm:text-sm">
+                                                <span className="block truncate text-gray-lightest">{country_code} - {name} - {label}</span>
+                                                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                                    <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                </span>
+                                            </Listbox.Button>
+
+                                            <Transition
+                                                show={open}
+                                                as={Fragment}
+                                                leave="transition ease-in duration-100"
+                                                leaveFrom="opacity-100"
+                                                leaveTo="opacity-0"
+                                            >
+                                                <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-boring-black text-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                                    {props.providerPeers.map((pp) => (
+                                                        <Listbox.Option
+                                                            key={pp.id}
+                                                            value={pp.id}
+                                                            className={({ active }) =>
+                                                                classNames(
+                                                                    active ? 'text-white bg-gray-dark' : 'text-gray-lightest',
+                                                                    'relative cursor-default select-none py-2 pl-3 pr-9'
+                                                                )
+                                                            }
+                                                        >
+
+                                                            {({ selected, active }) => (
+                                                                <>
+                                                                    <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                    <span className="text-gray">{pp.country_code}</span> - {pp.name}
+                                                                    </span>
+
+                                                                    {selected ? (
+                                                                        <span
+                                                                            className={classNames(
+                                                                                active ? 'text-green' : 'text-green',
+                                                                                'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                                            )}
+                                                                        >
+                                                                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                        </span>
+                                                                    ) : null}
+                                                                </>
+                                                            )}
+                                                        </Listbox.Option>
+                                                    ))}
+                                                </Listbox.Options>
+                                            </Transition>
+                                        </div>
+                                    </>
+                                )}
+                            </Listbox>
+                        </div>
+
+)} 
+
+                        
+                        <button
+                            type="submit"
+                            className="mt-4 inline-flex items-center rounded-sm border border-transparent text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue"
+                        >
+                            Save Changes
+                        </button>
+                        
+                    </form>
+
+                    
+
+                    {/* Wifi Form */}
+                    <h2 className="pb-6 text-gray text-sm ">Wifi Settings</h2>
+                    <form>
 
                         {/* SSID */}
                         <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
@@ -318,7 +443,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                         {/* WPA Passphrase */}
                         <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-md px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
-                            <label htmlFor="name" className="block text-xs text-gray uppercase">
+                            <label htmlFor="name" className="block text-xs text-gray ">
                                 <IoKey className="float-left mr-2" /> WPA Passphrase
                             </label>
                             <input
@@ -338,7 +463,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                                 {({ open }) => (
                                     <>
-                                        <Listbox.Label className="block text-xs text-gray uppercase"><IoMapOutline className="float-left mr-2" />Country</Listbox.Label>
+                                        <Listbox.Label className="block text-xs text-gray "><IoMapOutline className="float-left mr-2" />Country</Listbox.Label>
                                         <div className="relative mt-1">
                                             <Listbox.Button className="relative w-full cursor-default rounded-md border-none  bg-boring-white text-boring-black dark:bg-boring-black dark:text-boring-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-0 sm:text-sm">
                                                 <span className="block truncate">{country_code}</span>
@@ -475,53 +600,18 @@ const ShowPeer: React.FC<Props> = (props) => {
                             </select>
                         </div>
 
-                        {/* provider picker */}
-                        {props.peer.kind == "consumer" && (<p className="p-4 text-relaxed text-xs text-gray-light" >You are running this peer in <span className="text-gray underline">{props.peer.kind}</span> mode and are connected to <span className="text-gray underline">{props.target}</span></p>)}
-                        {props.peer.kind == "consumer" && (
-                            <div>
-                                {/* https://tailwindui.com/components/application-ui/forms/select-menus#component-71d9116be789a254c260369f03472985 */}
-                                <label htmlFor="target" className="block text-sm font-medium">
-                                    Select an available vpn provider:
-                                </label>
-                                <select
-                                    onChange={(e) => setTarget(e.target.value)}
-                                    id="target"
-                                    name="target"
-                                    className="mt-1 block w-full rounded-md border-gray-light py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                >
-
-                                    <option key="invalid" value="invalid">Connect to a different provider</option>
-                                    {props.providerPeers.map(option => (
-                                        <option key={option.id} value={option.id}>{option.name}</option>
-                                    ))}
-                                </select>
-                            </div>
-                        )}
                         <button
                             type="submit"
                             className="mt-4 inline-flex items-center rounded-sm border border-transparent text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue"
                         >
                             Save Changes
                         </button>
-                        
                     </form>
                 </div>
 
                 
 
-                {/* Advanced Configuration / Settings */}
-                <div className="col-span-3"> 
-                    {isProvider && !providerActive && (
-                            <div>
-                                <button className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoCloudUploadOutline className="mr-2" /> install config</button>
-                                <button className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => activatePeer(props.peer.id)}><IoDownloadOutline className="mr-2" /> Activate</button>
-                            </div>
-                        )}
-                            {!isProvider && (
-                                <button className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> install config</button>
-                    )} 
-                    <button className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
-                </div>
+         
                 
 
 
@@ -540,6 +630,8 @@ const ShowPeer: React.FC<Props> = (props) => {
                                     <p>Once you reset your peer, all data associated with it goes away, forever.</p>
                                 </div>
                                 <div className="mt-5">
+                               
+                                    
                                     <form>
                                         <button
                                             type="button"
@@ -548,7 +640,12 @@ const ShowPeer: React.FC<Props> = (props) => {
                                         >
                                             Destroy
                                         </button>
+                               
+                               
                                     </form>
+
+                                
+
                                 </div>
                             </div>
                         </div>

@@ -20,6 +20,7 @@ model Peer {
   userId   String?
   pubkey   String?
   label    String?
+  provider_kind String?
 
   wifi_preference String?
 

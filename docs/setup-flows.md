@@ -4,9 +4,8 @@ title: set up flows
 
 maybe we duplicate the newpeer page.
 
-new/consumer
-new/provider/motherbored
-new/provider/cloud
+new/consumer/
+new/provider/
 
 
 # Add Consumer Peer
