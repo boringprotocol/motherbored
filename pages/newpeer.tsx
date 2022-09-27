@@ -69,7 +69,9 @@ const NewPeer: React.FC<Props> = (props) => {
     
     
     const [name, setName] = useState(generateName({ number: true }).dashed);
-    const [kind, setKind] = useState("provider");
+    let queryMode = "consumer"
+    if(query.mode){queryMode = String(query.mode)}
+    const [kind, setKind] = useState(queryMode);
     const [target, setTarget] = useState("");
 
     function handleChangeKind(newKind: string) {
@@ -79,7 +81,6 @@ const NewPeer: React.FC<Props> = (props) => {
         setKind(newKind);
     }
 
-    
 
     const submitData = async (e: React.SyntheticEvent) => {
         e.preventDefault();

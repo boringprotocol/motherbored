@@ -88,7 +88,7 @@ export default function Layout({ children }: Props) {
 
 
       <div className="flex items-center justify-center h-screen text-white">
-        <div className="">
+        <div className="p-4">
           <div className='font-jetbrains '>
           <div className='p-2 text-sm '><span className="text-orange">Boring</span> Protocol</div>
             <div className='p-2 text-xs'>A <span className=" text-yellow">Private</span> Path</div>
@@ -96,17 +96,19 @@ export default function Layout({ children }: Props) {
           </div>
 
           <BrowserView>
-            <a href="#" className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={handleSignIn}>
+            <a href="#" className="m-4 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={handleSignIn}>
                <IoWalletOutline className="mr-2"/> Connect Wallet
             </a>
           </BrowserView>
 
           <MobileView>
-            <a className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" href="https://phantom.app/ul/browse/https%3A%2F%2Fboring-falcon.netlify.app"><IoWalletOutline className="mr-2" />Connect Phantom</a>
+            <a className="m-4 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" href="https://phantom.app/ul/browse/https%3A%2F%2Fboring-falcon.netlify.app"><IoWalletOutline className="mr-2" />Connect Phantom</a>
           </MobileView>
 
+
+        <p className="p-4 text-xs text-boring-black dark:text-gray">iOS and Android users should be able to use the Phantom wallet&apos;s in app-browser to access the Motherbored GUI. Use the Connect Phantom button which loads the GUI into  </p>
         <div className=''>         
-          <button className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white"><IoLinkOutline className="mr-2" /> Get Motherbored</button>
+          <button className="m-4 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white"><IoLinkOutline className="mr-2" /> Get Motherbored</button>
         </div>
 
         <p className="text-xs text-gray"></p>

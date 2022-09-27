@@ -108,13 +108,13 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     }
 
     return {
-        props: { peer: peer, target: targetPeer.name, providerPeers: providerPeers },
+        props: { peer: peer, target: targetPeer, providerPeers: providerPeers },
     };
 };
 
 type Props = {
     peer: PeerProps,
-    target: string,
+    target: PeerProps,
     providerPeers: PeerProps[],
 }
 
@@ -194,7 +194,7 @@ const ShowPeer: React.FC<Props> = (props) => {
     const [country_code, setSelectedCountryCode] = useState(props.peer.country_code)
     const [wifi_preference, setSelectedWifiPreference] = useState(props.peer.wifi_preference)
     const [wpa_passphrase, setSelectedWPAPassphrase] = useState(props.peer.wpa_passphrase)
-    const [target, setTarget] = useState(props.peer.target);
+    const [target, setTarget] = useState(props.target);
     const [channel, setChannel] = useState(props.peer.channel);
     const id = props.peer.id;
 
@@ -204,7 +204,7 @@ const ShowPeer: React.FC<Props> = (props) => {
     const submitData = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         try {
-            const body = { id: id, name: name, label: label, ssid: ssid, country_code: country_code, wifi_preference: wifi_preference, wpa_passphrase: wpa_passphrase, target: target, channel: channel };
+            const body = { id: id, name: name, label: label, ssid: ssid, country_code: country_code, wifi_preference: wifi_preference, wpa_passphrase: wpa_passphrase, target: target.id, channel: channel };
             const response = await fetch(`/api/peer/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -266,11 +266,6 @@ const ShowPeer: React.FC<Props> = (props) => {
                 <Toaster position="top-left" />
             </div>
 
-         
-            
-            
-
-
 
             {/* The Current Peer */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-6 sm:px-14 py-12 border-b border-gray-light dark:border-gray-dark">
@@ -279,8 +274,6 @@ const ShowPeer: React.FC<Props> = (props) => {
                 <div className="col-span-3"><h1 className="text-2xl sm:text-6xl md:text-7xl pb-12 sm:pt-4">{name || ""}</h1></div>
 
                 <div className="">
-
-
                 
         <div className="">
         <Avatar
@@ -290,7 +283,6 @@ const ShowPeer: React.FC<Props> = (props) => {
         />
         </div>
         
-
                     {/* {props.peer.kind == "provider" && (<p className="text-xs" >this is a provider node</p>)} */}
 
                     {/* The small print. Details on the node */}
@@ -424,7 +416,16 @@ const ShowPeer: React.FC<Props> = (props) => {
                                         <div className="relative mt-1">
 
                                             <Listbox.Button className="relative w-full cursor-default rounded-sm border border-none dark:text-boring-white bg-boring-white dark:bg-boring-black py-4 pl-2 pr-10 text-left shadow-sm focus:border-blue focus:outline-none focus:ring-none  sm:text-sm">
-                                                <span className="block truncate text-gray-lightest"> {country_code} - {name} - {label}</span>
+                                                <span className="text-boring-white border-r border-gray-dark pr-4 text-xs">{target.country_code}</span> 
+                                                    <span className="float-left mt-1 pr-3">
+                                                        <Avatar
+                                                    size="10"
+                                                    name={peerAvatar}
+                                                    variant="sunset"
+                                                    /> 
+                                                    </span>
+                                                    
+                                                    <span className="pl-2 text-boring-white text-sm">{target.name}</span>
                                                 <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                                     <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                                                 </span>
@@ -441,7 +442,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                                     {props.providerPeers.map((pp) => (
                                                         <Listbox.Option
                                                             key={pp.id}
-                                                            value={pp.id}
+                                                            value={pp}
                                                             className={({ active }) =>
                                                                 classNames(
                                                                     active ? 'text-white bg-gray-dark' : 'text-gray-lightest',
@@ -454,11 +455,16 @@ const ShowPeer: React.FC<Props> = (props) => {
                                                                 <>
                                                                     <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
                                                                     <span className="text-boring-white border-r border-gray-dark pr-4 text-xs">{pp.country_code}</span> 
-        <span className="float-left mt-1 pr-3"><Avatar
-          size="10"
-          name={peerAvatar}
-          variant="sunset"
-        /> </span><span className="pl-2 text-boring-white text-sm">{pp.name}</span>
+        
+                                                                    <span className="float-left mt-1 pr-3">
+                                                                        <Avatar
+                                                                    size="10"
+                                                                    name={peerAvatar}
+                                                                    variant="sunset"
+                                                                    /> 
+                                                                    </span>
+        
+                                                                    <span className="pl-2 text-boring-white text-sm">{pp.name}</span>
                                                                     </span>
 
                                                                     {selected ? (

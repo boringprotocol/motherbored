@@ -80,6 +80,7 @@ const IndexPage: React.FC<Props> = (props) => {
       <Head>
         <title>Motherbored</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link rel="apple-touch-icon" href="/img/favicon.png"/>
       </Head>
       {/* Main content */}
       <div className="main pt-12">
