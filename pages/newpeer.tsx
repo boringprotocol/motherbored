@@ -16,12 +16,12 @@ import { CheckCircleIcon } from '@heroicons/react/20/solid'
 const providerKindLists = [
     { id: 1, title: 'Local', description: 'Usually a device you own, like a Motherbored' },
     { id: 2, title: 'Cloud', description: 'On a server somewhere, probably remote' },
-  ]
+]
 
 
-  function classNames(...classes: any ) {
+function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
-  }
+}
 
 // https://github.com/boringprotocol/boring-name-generator/
 var generateName = require('boring-name-generator');
@@ -64,15 +64,15 @@ type Props = {
 }
 
 const NewPeer: React.FC<Props> = (props) => {
-    
+
     const { query } = useRouter();
-    
-    
+
+
     const [name, setName] = useState(generateName({ number: true }).dashed);
     let queryMode = "consumer"
-    if(query.mode){queryMode = String(query.mode)}
+    if (query.mode) { queryMode = String(query.mode) }
     const [kind, setKind] = useState(queryMode);
-    const [target, setTarget] = useState("");
+    const [target, setTarget] = useState(props.peers[0].id);
 
     function handleChangeKind(newKind: string) {
         if (newKind == "consumer") {
@@ -110,11 +110,11 @@ const NewPeer: React.FC<Props> = (props) => {
         <LayoutAuthenticated>
             <div className="px-4 sm:px-8 md:px-12 pt-16">
 
-            
-      
-      
-      <p>{query.provider_kind}</p>
-    
+
+
+
+                <p>{query.provider_kind}</p>
+
                 <form className="w-100 md:w-1/2" onSubmit={submitData}>
                     <h1 className="uppercase mb-6">New <span>{query.mode}</span> Peer</h1>
                     <div className="border border-gray-dark text-boring-white rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
@@ -174,52 +174,52 @@ const NewPeer: React.FC<Props> = (props) => {
                     {kind == "provider" && (
                         <div className="">
 
-                        <RadioGroup value={selectedProviderKindLists} onChange={setSelectedProviderKindLists}>
-                        <RadioGroup.Label className="text-xs font-medium text-gray">Select a Provider Kind</RadioGroup.Label>
+                            <RadioGroup value={selectedProviderKindLists} onChange={setSelectedProviderKindLists}>
+                                <RadioGroup.Label className="text-xs font-medium text-gray">Select a Provider Kind</RadioGroup.Label>
 
-                        <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                            {providerKindLists.map((providerKindList) => (
-                            <RadioGroup.Option
-                                key={providerKindList.id}
-                                value={providerKindList}
-                                className={({ checked, active }) =>
-                                classNames(
-                                    checked ? 'border-transparent' : 'border-gray-300',
-                                    active ? 'dark:border-gray-dark ring-2 ring-blue' : '',
-                                    'relative flex cursor-pointer rounded-lg border bg-boring-black p-4 shadow-sm focus:outline-none'
-                                )
-                                }
-                            >
-                                {({ checked, active }) => (
-                                <>
-                                    <span className="flex flex-1">
-                                    <span className="flex flex-col">
-                                        <RadioGroup.Label as="span" className="mb-2 block text-xs font-medium text-gray-900">
-                                        {providerKindList.title}
-                                        </RadioGroup.Label>
-                                        <RadioGroup.Description as="span" className="mt-1 flex items-center text-xs text-gray">
-                                        {providerKindList.description}
-                                        </RadioGroup.Description>
-                                    </span>
-                                    </span>
-                                    <CheckCircleIcon
-                                    className={classNames(!checked ? 'invisible' : '', 'h-5 w-5 text-indigo-600')}
-                                    aria-hidden="true"
-                                    />
-                                    <span
-                                    className={classNames(
-                                        active ? 'border' : 'border-2',
-                                        checked ? 'border-indigo-500' : 'border-gray-dark',
-                                        'pointer-events-none absolute -inset-px rounded-lg'
-                                    )}
-                                    aria-hidden="true"
-                                    />
-                                </>
-                                )}
-                            </RadioGroup.Option>
-                            ))}
-                        </div>
-                        </RadioGroup>
+                                <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                                    {providerKindLists.map((providerKindList) => (
+                                        <RadioGroup.Option
+                                            key={providerKindList.id}
+                                            value={providerKindList}
+                                            className={({ checked, active }) =>
+                                                classNames(
+                                                    checked ? 'border-transparent' : 'border-gray-300',
+                                                    active ? 'dark:border-gray-dark ring-2 ring-blue' : '',
+                                                    'relative flex cursor-pointer rounded-lg border bg-boring-black p-4 shadow-sm focus:outline-none'
+                                                )
+                                            }
+                                        >
+                                            {({ checked, active }) => (
+                                                <>
+                                                    <span className="flex flex-1">
+                                                        <span className="flex flex-col">
+                                                            <RadioGroup.Label as="span" className="mb-2 block text-xs font-medium text-gray-900">
+                                                                {providerKindList.title}
+                                                            </RadioGroup.Label>
+                                                            <RadioGroup.Description as="span" className="mt-1 flex items-center text-xs text-gray">
+                                                                {providerKindList.description}
+                                                            </RadioGroup.Description>
+                                                        </span>
+                                                    </span>
+                                                    <CheckCircleIcon
+                                                        className={classNames(!checked ? 'invisible' : '', 'h-5 w-5 text-indigo-600')}
+                                                        aria-hidden="true"
+                                                    />
+                                                    <span
+                                                        className={classNames(
+                                                            active ? 'border' : 'border-2',
+                                                            checked ? 'border-indigo-500' : 'border-gray-dark',
+                                                            'pointer-events-none absolute -inset-px rounded-lg'
+                                                        )}
+                                                        aria-hidden="true"
+                                                    />
+                                                </>
+                                            )}
+                                        </RadioGroup.Option>
+                                    ))}
+                                </div>
+                            </RadioGroup>
 
                         </div>
                     )}
