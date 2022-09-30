@@ -52,7 +52,6 @@ type Props = {
   providers: PeerProps[],
 }
 
-  
 const IndexPage: React.FC<Props> = (props) => {  
 
   const { data } = useSession(); // do we need this here? 
@@ -67,9 +66,6 @@ const IndexPage: React.FC<Props> = (props) => {
           <title>Boring Protocol</title>
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         </Head>
-        <div className="bg-boring-white dark:bg-boring-black font-jetbrains">
-          login pls
-        </div>
       </Layout>
     );
   }
@@ -82,6 +78,7 @@ const IndexPage: React.FC<Props> = (props) => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link rel="apple-touch-icon" href="/img/favicon.png"/>
       </Head>
+    
       {/* Main content */}
       <div className="main pt-12">
       

@@ -7,20 +7,17 @@ import { useTheme } from 'next-themes'
 import { Switch } from '@headlessui/react'
 import Waiting from './art/waiting'
 import Docs from './art/docs'
-import { useSession } from "next-auth/react"
-import { IoDownloadOutline, IoMoonOutline, IoSunnyOutline } from 'react-icons/io5'
+import { signOut, useSession } from "next-auth/react"
+import { IoDownloadOutline, IoMoonOutline, IoSunnyOutline, IoWalletOutline } from 'react-icons/io5'
 
-
-
-
-// move this into /component
+// light mode / dark mode
 const ThemeChanger = () => {
   const { theme, setTheme } = useTheme()
 
   return (
     <div className="font-jetbrains text-xs">
-      <button className='inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white' onClick={() => setTheme('light')}><IoSunnyOutline className="float-left mr-2" /> Light Mode</button>
-      <button className='inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white' onClick={() => setTheme('dark')}><IoMoonOutline className="float-left mr-2" /> Dark Mode</button>
+      <button className='inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white' onClick={() => setTheme('light')}><IoSunnyOutline className="float-left mr-2" /> Light Mode</button>
+      <button className='inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white' onClick={() => setTheme('dark')}><IoMoonOutline className="float-left mr-2" /> Dark Mode</button>
     </div>
   )
 }
@@ -33,8 +30,11 @@ interface Props {
   children: React.ReactNode;
 }
 
+// let's go
 export default function Layout({ children }: Props) {
+  // some layout sorcery
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  // ui switches / toggles
   const [enabled, setEnabled] = useState(false)
 
   return (
@@ -45,7 +45,7 @@ export default function Layout({ children }: Props) {
         <div className="hidden w-12 overflow-y-auto md:block border-r border-gray-light dark:border-gray-dark">
           <div className="flex w-full flex-col items-center">
             <div className="flex flex-shrink-0 items-center mt-3">
-              
+            
               <Link href="/">
               <span className="text-gray-light dark:text-gray-dark hover:text-black ">
               <svg width="100%" height="100%" viewBox="0 0 262 262" xmlns="http://www.w3.org/2000/svg">
@@ -55,19 +55,9 @@ export default function Layout({ children }: Props) {
                </svg>
               </span>
               </Link>
-
-
-
-
             </div>
             <div className="flex flex-shrink-0 items-center border-t border-gray-dark">
-              {/* <Link href="/">
-                <img
-                  className="h-18 w-auto text-black"
-                  src="/img/logo/mark.svg"
-                  alt="Boring Protocol"
-                />
-              </Link> */}
+            
             </div>
           </div>
         </div>
@@ -107,10 +97,10 @@ export default function Layout({ children }: Props) {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                   >
-                    <div className="absolute top-1 right-0 -mr-14 p-1 bg-boring-white dark:bg-boring-black border border-gray-lightest dark:border-gray-dark">
+                    <div className="absolute top-0 right-0  bg-boring-white dark:bg-boring-black border-none">
                       <button
                         type="button"
-                        className="flex h-12 w-12 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-white"
+                        className="flex h-12 w-12 items-center justify-center  focus:outline-none focus:ring-2 focus:ring-blue"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <XMarkIcon className="h-6 w-6 text-boring-black dark:text-boring-white" aria-hidden="true" />
@@ -118,18 +108,23 @@ export default function Layout({ children }: Props) {
                     </div>
                   </Transition.Child>
                   <div className="flex flex-shrink-0 items-center px-4">
-                    <img
-                      className="h-8 w-auto"
-                      src="/img/logo/mark.svg"
-                      alt="Boring Protocol"
-                    />
+                    {/* maybe put wallet address here */}
                   </div>
                   <div className="mt-5 h-0 flex-1 overflow-y-auto px-2">
                     <nav className="flex h-full flex-col">
                       <div className="font-jetbrains space-y-1">
                       <ThemeChanger />
+                      <button 
+                className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  signOut();
+                }}><IoWalletOutline className="mr-2" /> Sign Out</button>
+                
                       </div>
-                      </nav>
+                    </nav>
+
+                    
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -145,7 +140,6 @@ export default function Layout({ children }: Props) {
           <header className="w-full">
             <div className="relative z-10 flex h-16 flex-shrink-0 border-b border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black  shadow-sm">
 
-            {/* <pre className="font-jetbrains text-xs p-2">layout.tsx header</pre> */}
               <button
                 type="button"
                 className="border-r border-gray-light dark:border-gray-dark px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500 md:hidden"
@@ -156,10 +150,9 @@ export default function Layout({ children }: Props) {
               </button>
               <div className="flex flex-1 justify-between px-4 sm:px-6">
                 <div className="flex flex-1">
-                <HeaderAuthenticated />
 
+                <HeaderAuthenticated />
                 </div>
-                
               </div>
             </div>
           </header>
@@ -169,9 +162,6 @@ export default function Layout({ children }: Props) {
             <main className="flex-1 overflow-y-auto">
               {/* Primary column */}
               <section aria-labelledby="primary-heading" className="flex h-full min-w-0 flex-1 flex-col lg:order-last">
-                <h1 id="primary-heading" className="sr-only">
-                sr-only
-                </h1>
                 <div>
                   <main className=''>
                     {children}</main>
@@ -189,7 +179,38 @@ export default function Layout({ children }: Props) {
               <div className='px-12 pb-4'>
                 {/* <Docs /> */}
               <Waiting />
-              </div>                                  
+              </div>    
+              
+        {/* genesys go */}
+        <div className="sm:flex p-12 border-t border-gray-lightest dark:border-gray-dark">
+          <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
+            <img className="h-16 w-16 text-gray-300" src='/img/genesys-go.png' width='28px' />
+          </div>
+          <div>
+            <h4 className="text-sm">Genesys Go</h4>
+            <p className="mt-1 text-xs">
+              RPC Lorem, ipsum dolor sit amet consectetur
+            </p>
+          </div>
+        </div>
+        
+        
+        {/* jupiter agg */}
+        <div className="sm:flex p-12 border-t border-gray-lightest dark:border-gray-dark">
+          <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
+            <img className="h-16 w-16 text-gray-300" src='/img/jupiter-aggregator.svg' width='28px' />
+          </div>
+          <div>
+            <h4 className="text-sm">Jupiter Aggregator</h4>
+            <p className="mt-1 text-xs">
+              Acquire $BOP Lorem, ipsum dolor sit amet consectetur
+            </p>
+          </div>
+        </div>
+    
+    
+        
+                                
 
             {/* //// */}
 

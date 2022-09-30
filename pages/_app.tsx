@@ -27,6 +27,7 @@ import Router from 'next/router';
 import nProgress from 'nprogress'; //nprogress module
 //import 'nprogress/nprogress.css'; //styles of nprogress
 import '../styles/nprogress.css';
+import '../styles/toast.css';
 
 //Binding events. 
 

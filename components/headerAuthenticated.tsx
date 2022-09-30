@@ -53,7 +53,7 @@ export default function Header() {
   return (
     <header>
       <div className="py-4">
-      <p className="text-ellipsis overflow-hidden ...">
+      <p className="">
         
           {session?.user && (
             <>
@@ -62,13 +62,7 @@ export default function Header() {
                 {session.user.email ?? session.user.name}
               </span>
               
-
-              <button 
-                className="ml-3 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" 
-                onClick={(e) => {
-                  e.preventDefault();
-                  signOut();
-                }}><IoWalletOutline className="mr-2" /> Sign Out</button>
+              
 
             </>
           )}
