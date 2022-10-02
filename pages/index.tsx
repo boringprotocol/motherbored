@@ -119,7 +119,7 @@ const IndexPage: React.FC<Props> = (props) => {
                 <div id="add-peer" className="pb-12">
                 <button
                 type="button"
-                onClick={() => Router.push("/newpeer?mode=provider")}
+                onClick={() => Router.push("/newpeer?mode=provider&provider_kind=local")}
                 className="relative block w-full rounded-lg text-boring-black dark:text-boring-white border-2 border-dotted border-gray-light dark:border-gray-dark p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                 <svg
@@ -146,9 +146,8 @@ const IndexPage: React.FC<Props> = (props) => {
               <div id="add-peer" className="pb-12">
                 <button
                 title="Coming Soon"
-                disabled
                 type="button"
-                onClick={() => Router.push("/newpeer")}
+                onClick={() => Router.push("/newpeer?mode=provider&provider_kind=cloud")}
                 className="cursor-not-allowed relative block w-full rounded-lg text-boring-black dark:text-boring-white border-2 border-dotted border-gray-light dark:border-gray-dark p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                 <svg

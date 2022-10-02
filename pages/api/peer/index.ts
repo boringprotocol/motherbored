@@ -7,7 +7,7 @@ import sleep from 'sleep-promise';
 
 // POST /api/peer
 export default async function handle(req: any, res: any) {
-    const { name, kind, target } = req.body;
+    const { name, kind, target, provider_kind } = req.body;
     const session = await getSession({ req });
     if (!session || !session.user?.name) {
         res.statusCode = 403;
@@ -21,6 +21,7 @@ export default async function handle(req: any, res: any) {
             name: name,
             kind: kind,
             target: target,
+            provider_kind: provider_kind,
             User: { connect: { wallet: session.user.name } }
         },
     });

@@ -9,7 +9,7 @@ import { channel } from "diagnostics_channel";
 export default async function handle(req: any, res: any) {
     if (req.method === "PUT") {
         const peerId = req.body.id;
-        const { name, label, ssid, country_code, wifi_preference, wpa_passphrase, target, channel } = req.body
+        const { name, label, ssid, country_code, wifi_preference, wpa_passphrase, target, channel, provider_kind } = req.body
         const session = await getSession({ req });
         if (!session) {
             return
@@ -31,6 +31,7 @@ export default async function handle(req: any, res: any) {
                 wpa_passphrase: wpa_passphrase,
                 target: target,
                 channel: channelint,
+                provider_kind: provider_kind,
             },
         });
 

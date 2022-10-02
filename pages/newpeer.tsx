@@ -8,15 +8,16 @@ import Peer, { PeerProps } from "../components/Peer"
 import { IoRefreshOutline } from "react-icons/io5"
 
 
-// radio buttons to elect provider_mode
+// radio buttons to select provider_kind
 import { RadioGroup } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/20/solid'
 
 
-const providerKindLists = [
-    { id: 1, title: 'Local', description: 'Usually a device you own, like a Motherbored' },
+const providerKindLists = [ 'local', 'cloud' ]
+   /* { id: 1, title: 'Local', description: 'Usually a device you own, like a Motherbored' },
     { id: 2, title: 'Cloud', description: 'On a server somewhere, probably remote' },
 ]
+*/
 
 
 function classNames(...classes: any) {
@@ -69,8 +70,14 @@ const NewPeer: React.FC<Props> = (props) => {
 
 
     const [name, setName] = useState(generateName({ number: true }).dashed);
+    
     let queryMode = "consumer"
     if (query.mode) { queryMode = String(query.mode) }
+
+    let queryProviderMode = "local"
+    if (query.provider_kind) { queryProviderMode = String(query.provider_kind) }
+    const [selectedProviderKindLists, setSelectedProviderKindLists] = useState(queryProviderMode)
+
     const [kind, setKind] = useState(queryMode);
     const [target, setTarget] = useState(props.peers[0].id);
 
@@ -85,7 +92,7 @@ const NewPeer: React.FC<Props> = (props) => {
     const submitData = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         try {
-            const body = { name: name, kind: kind, target: target };
+            const body = { name: name, kind: kind, target: target, provider_kind: selectedProviderKindLists };
             const response = await fetch("/api/peer", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -104,16 +111,11 @@ const NewPeer: React.FC<Props> = (props) => {
         }
     };
 
-    const [selectedProviderKindLists, setSelectedProviderKindLists] = useState(providerKindLists[0])
 
     return (
         <LayoutAuthenticated>
             <div className="px-4 sm:px-8 md:px-12 pt-16">
 
-
-
-
-                <p>{query.provider_kind}</p>
 
                 <form className="w-100 md:w-1/2" onSubmit={submitData}>
                     <h1 className="uppercase mb-6">New <span>{query.mode}</span> Peer</h1>
@@ -135,7 +137,7 @@ const NewPeer: React.FC<Props> = (props) => {
                     <div className="m-4 hover:text-gray active:text-gray-dark">
                         <a onClick={(e) => setName(generateName({ number: true }).dashed)}><span className=""><IoRefreshOutline /></span></a>
                     </div>
-                    <div className="my-6 border border-gray-dark text-boring-white rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                    {/* <div className="my-6 border border-gray-dark text-boring-white rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                         <label htmlFor="mode" className="block text-xs text-gray">
                             Mode
                         </label>
@@ -150,11 +152,10 @@ const NewPeer: React.FC<Props> = (props) => {
                             <option key="provider" value="provider">Provider</option>
                             required
                         </select>
-                    </div>
+                    </div> */}
                     {/* // Spawn provider menu     */}
-                    {kind == "consumer" && (
+                    {/* {kind == "consumer" && (
                         <div className="border border-gray-dark text-boring-white rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
-                            {/* https://tailwindui.com/components/application-ui/forms/select-menus#component-71d9116be789a254c260369f03472985 */}
                             <label htmlFor="target" className="block text-xs text-gray">
                                 Select an available vpn provider:
                             </label>
@@ -169,7 +170,7 @@ const NewPeer: React.FC<Props> = (props) => {
                                 ))}
                             </select>
                         </div>
-                    )}
+                    )} */}
 
                     {kind == "provider" && (
                         <div className="">
@@ -180,8 +181,9 @@ const NewPeer: React.FC<Props> = (props) => {
                                 <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                                     {providerKindLists.map((providerKindList) => (
                                         <RadioGroup.Option
-                                            key={providerKindList.id}
+                                            key={providerKindList}
                                             value={providerKindList}
+                                            //defaultValue={query.provider_kind}
                                             className={({ checked, active }) =>
                                                 classNames(
                                                     checked ? 'border-transparent' : 'border-gray-300',
@@ -195,10 +197,10 @@ const NewPeer: React.FC<Props> = (props) => {
                                                     <span className="flex flex-1">
                                                         <span className="flex flex-col">
                                                             <RadioGroup.Label as="span" className="mb-2 block text-xs font-medium text-gray-900">
-                                                                {providerKindList.title}
+                                                                {providerKindList}
                                                             </RadioGroup.Label>
                                                             <RadioGroup.Description as="span" className="mt-1 flex items-center text-xs text-gray">
-                                                                {providerKindList.description}
+                                                                {providerKindList}
                                                             </RadioGroup.Description>
                                                         </span>
                                                     </span>
@@ -223,6 +225,10 @@ const NewPeer: React.FC<Props> = (props) => {
 
                         </div>
                     )}
+
+
+                    <input name="ssid" value=""></input>
+
 
                     <input className="float-left  mt-6 flex justify-center rounded-sm border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40" type="submit" value="Create" />
                     <a className="back" onClick={() => Router.push("/")}>

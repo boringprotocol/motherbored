@@ -9,6 +9,7 @@ export type PeerProps = {
   name: string | null;
   setupkey: string | null;
   kind: string | null;
+  provider_kind: string | null;
   target: string | null;
   pubkey: string | null;
   label: string | null;
@@ -20,7 +21,7 @@ export type PeerProps = {
 };
 
 
-// generating peer avatoar from the id as opposed to the label
+// generating peer avatar from the id as opposed to the label
 const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
   const peerAvatar = peer.id
 
