@@ -15,8 +15,6 @@
     "@heroicons/react": "^2.0.11",
     "@metaplex-foundation/js": "^0.15.0",
     "@metaplex/js": "^4.12.0",
-    "@nfteyez/sol-rayz": "^0.10.2",
-    "@nfteyez/sol-rayz-react": "^0.10.2",
     "@prisma/client": "^4.3.1",
     "@solana-mobile/wallet-adapter-mobile": "^0.0.1-alpha.5",
     "@solana/wallet-adapter-base": "^0.9.16",
