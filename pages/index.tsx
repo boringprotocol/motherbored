@@ -80,15 +80,17 @@ const IndexPage: React.FC<Props> = (props) => {
       </Head>
     
       {/* Main content */}
-      <div className="main pt-12">
-      
+      <div className="main pt-12 text-xs">
+        <div className='p-12'>
+      show peers: <a className="border p-1" href="#">all</a>, providers: <a className="border p-1" href="#">all</a> <a className="border p-1" href="#">local</a> <a className="border p-1" href="#">cloud</a> consumers: <a className="border p-1" href="#">all</a>
+      </div>
       
         {/* PEERS */}
         {/* key={peer.name} has to be on the first child element within a loop
         https://adhithiravi.medium.com/why-do-i-need-keys-in-react-lists-dbb522188bbb
         https://stackoverflow.com/questions/54401481/eslint-missing-key-prop-for-element-in-iterator-react-jsx-key */}
         <div className="px-4 sm:px-8 md:px-12 pb-16">
-        <ul role="list" className="pb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 2xl:grid-cols-3">
+        <ul role="list" className="{peer.kind} pb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 2xl:grid-cols-3">
           {props.peers.map((peer) => (
             <li key={peer.name} className="col-span-1 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
               <Peer peer={peer} />
