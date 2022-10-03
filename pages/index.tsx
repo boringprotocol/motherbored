@@ -81,7 +81,9 @@ const IndexPage: React.FC<Props> = (props) => {
     
       {/* Main content */}
       <div className="main pt-12 text-xs">
-        <div className='p-12'>
+        
+      {/* Maybe just add/remove a 'hidden' class on the rendered peer list item. Or probably useState though for back button  */}
+      <div className='p-12'>
       show peers: <a className="border p-1" href="#">all</a>, providers: <a className="border p-1" href="#">all</a> <a className="border p-1" href="#">local</a> <a className="border p-1" href="#">cloud</a> consumers: <a className="border p-1" href="#">all</a>
       </div>
       
@@ -95,7 +97,24 @@ const IndexPage: React.FC<Props> = (props) => {
             <li key={peer.name} className="col-span-1 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
               <Peer peer={peer} />
             </li>
-          ))}      
+          ))}   
+
+          <li className='className="col-span-1 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black'>
+          <div id="add-peer" className="pb-12">
+              <button
+              type="button"
+              onClick={() => Router.push("//newpeer?mode=consumer")}
+              className="relative block w-full rounded-lg text-boring-black dark:text-boring-white border-2 border-dotted border-gray-light dark:border-gray-dark p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+              <span className="font-jetbrains mt-2 block text-xs text-boring-white"><IoAddCircleOutline className="text-4xl" /></span>
+              <span className="font-jetbrains mt-2 block text-xs text-boring-white">Add Motherbored Consumer</span>
+              <span className="font-jetbrains mt-2 block text-xs text-gray"></span>
+              </button>
+            </div>{/* /#add-peer */}  
+          </li>   
+          <li className='className="col-span-1 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black'>hello</li>   
+          <li className='className="col-span-1 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black'>hello</li>   
+          
         </ul>
 
 

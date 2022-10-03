@@ -246,6 +246,8 @@ const ShowPeer: React.FC<Props> = (props) => {
 {/* rows and columns w/ grid */}
 
 <div className="p-8 xl:pl-24 xl:pt-24 grid overflow-hidden grid-cols-2 md:grid-cols-3 grid-rows-1 gap-2">
+
+{props.peer.provider_kind == "cloud" && (<li>provider_kind: {props.peer.provider_kind}</li>)}
 	
     <div className="box row-start-1 col-span-2 md:col-span-3 col-start-2 md:col-start-1 ">
         <h1 className="text-5xl lg:text-6xl xl:text-7xl | pb-12">{name || ""}</h1>
@@ -463,18 +465,17 @@ const ShowPeer: React.FC<Props> = (props) => {
 
     <div className="box row-start-3 col-start-1 col-span-1 ">
         {/* The small print. Details on the node */}
-                    <div className="col-span-1  mt-12 text-gray">
-    
-                        <ul className="text-xs leading-relaxed">
-                            <li key={props.peer.id}>Id: {props.peer.id}</li>
-                            <li className="capitalize" key={props.peer.kind}>Kind: {props.peer.kind}</li>
-                            <li key={props.peer.setupkey}>Boring Setupkey: {props.peer.setupkey}</li>
-                            {/* Only show the pubkey if this is a provider node */}
-                            {props.peer.kind == "provider" && (<li key={props.peer.pubkey}>Boring Pubkey: {props.peer.pubkey}</li>)}
-                        </ul>
-                    </div>
+        <div className="col-span-1  mt-12 text-gray">
+            <ul className="text-xs leading-relaxed">
+                <li key={props.peer.id}>Id: {props.peer.id}</li>
+                <li className="capitalize" key={props.peer.kind}>Kind: {props.peer.kind}</li>
+                <li key={props.peer.setupkey}>Boring Setupkey: {props.peer.setupkey}</li>
+                {/* Only show the pubkey if this is a provider node */}
+                {props.peer.kind == "provider" && (<li key={props.peer.pubkey}>Boring Pubkey: {props.peer.pubkey}</li>)}
+            </ul>
+        </div>
     </div>
-    
+
     <div className="box row-start-3 col-start-2 col-span-2 ">secondary form</div>
 
 </div>
@@ -484,7 +485,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
             {/* The Current Peer */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-6 sm:px-14 py-12 border-b border-gray-light dark:border-gray-dark">
-                
+
 
             {/* Boring Name Generator Name */}
             {/* https://github.com/boringprotocol/boring-name-generator/ */}

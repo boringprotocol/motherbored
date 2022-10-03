@@ -1,6 +1,6 @@
 import React from 'react'
 import Router from 'next/router'
-import { IoLaptopOutline, IoWifiOutline, IoServerOutline } from 'react-icons/io5'
+import { IoLaptopOutline, IoWifiOutline, IoServerOutline, IoCloudCircleOutline, IoCloudOutline } from 'react-icons/io5'
 import Image from 'next/image'
 import Avatar from 'boring-avatars'
 
@@ -31,6 +31,8 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
     providerActive = true
   }
 
+
+  // Sorting by peer kind (provider or consumer)
   let isProvider = false
   if (peer.kind == "provider") {
     isProvider = true
@@ -42,6 +44,19 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
   }
 
 
+  // Sorting by provider_kind (local or cloud)
+  let isCloudProvider = false
+  if (peer.provider_kind == "cloud") {
+    isCloudProvider = true
+  }
+
+  let isLocalProvider = false
+  if (peer.provider_kind == "local") {
+    isLocalProvider = true
+  }
+
+  
+
   return (
 
     <>
@@ -50,8 +65,11 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
         <h2 className='text-lg md:text-xl lg:text-2xl px-4 mt-4'>{peer.name}</h2>
 
         <p className="inline-flex items-center font-jetbrains px-4 text-sm text-gray-500 capitalize">
-          {isProvider && (<IoServerOutline className="float-left mr-2" />)}
-          {isConsumer && (<IoLaptopOutline className="float-left mr-2" />)} {peer.kind}
+          {/* {isProvider && (<IoServerOutline className="float-left mr-2" />)} */}
+          {isConsumer && (<IoLaptopOutline className="float-left mr-2" />)} 
+          {isCloudProvider && (<IoCloudOutline className="float-left mr-2" />)}
+          {isLocalProvider && (<IoServerOutline className="float-left mr-2" />)}<span className="capitalize">{peer.provider_kind} {peer.kind}</span>
+          
         </p>
         
         <div className="pt-4 pl-4">
