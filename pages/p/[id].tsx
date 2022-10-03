@@ -368,7 +368,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                     Connect
                 </button>
 
-        
+        <a className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue" href="https://unconfigured.insecure.boring.surf/api/reboot">Reboot </a><a className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue" href="https://unconfigured.insecure.boring.surf/">Debug </a><a className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue" href="https://unconfigured.insecure.boring.surf:19531/browse">Logs</a>
 
 
         {/* Advanced Configuration / Settings */}

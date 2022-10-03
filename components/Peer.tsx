@@ -55,6 +55,8 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
     isLocalProvider = true
   }
 
+
+  
   
 
   return (
@@ -80,7 +82,27 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
         />
         </div>
 
-        <p className="text-xs mt-6 p-4 border-t border-gray-lightest dark:border-gray-dark"><IoWifiOutline className="float-left mr-3 text-sm animate-pulse" />{peer.ssid} &middot; {peer.label}</p>
+        <p className="text-xs mt-6 p-4 border-t border-gray-lightest dark:border-gray-dark">
+        
+        {isConsumer && (<IoWifiOutline className="float-left mr-2" />)} 
+        {isProvider && isLocalProvider && (<IoWifiOutline className="float-left mr-2" />)} 
+        
+        {isConsumer && (
+          <>
+          {peer.ssid} &middot; &nbsp;
+          </>
+        )}
+
+        {isLocalProvider && (
+          <>
+          {peer.ssid} &middot; &nbsp;
+          </>
+        )}
+        
+
+        {peer.label}
+ 
+ </p>
 
       </a>
     </>
