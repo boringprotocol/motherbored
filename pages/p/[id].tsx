@@ -261,7 +261,7 @@ const ShowPeer: React.FC<Props> = (props) => {
     </div>
 
 	<div className="box col-start-1 col-span-2 sm:col-span-2 ">
-        <form className="px-0 md:px-12 pt-12 max-w-lg">
+        <form className="px-0 md:px-12 pt-12 max-w-lg" onSubmit={submitData}>
 
         {/* Label / Friendly Name */}
         <div className=" bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
@@ -368,11 +368,12 @@ const ShowPeer: React.FC<Props> = (props) => {
                     Connect
                 </button>
 
-        </form>
+        
 
 
         {/* Advanced Configuration / Settings */}
         <div className="col-span-3 px-12 pt-6"> 
+        
                         <button className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
                     </div>
 
@@ -390,6 +391,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                     </div>
 
 
+    </form>
     </div>
 
     <div className=" box row-start-3 col-start-1 col-span-1 ">
@@ -408,7 +410,7 @@ const ShowPeer: React.FC<Props> = (props) => {
     <div className="  p-12 box row-start-3 col-start-2 col-span-2 ">
     <h2 className="text-gray text-sm mt-8 dark:border-gray-dark">Wifi Settings</h2>
                     {/* <p className="text-xs text-gray">hide me if this is a cloud provider</p> */}
-
+                        <form onSubmit={submitData}>
                         
                         {/* SSID */}
                         <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
@@ -653,10 +655,12 @@ const ShowPeer: React.FC<Props> = (props) => {
                         >
                             Save Changes
                         </button>
+                        </form>
         
         </div>
-
+        
 </div>
+
 
 
 
