@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     })
 
     if (targetPeer == null || targetPeer.name == null) {
-        return { props: { peer: peer, target: "" } }
+        return { props: { peer: peer, providerPeers: providerPeers } }
     }
 
     return {
@@ -137,6 +137,9 @@ const ShowPeer: React.FC<Props> = (props) => {
     const [wifi_preference, setSelectedWifiPreference] = useState(props.peer.wifi_preference)
     const [wpa_passphrase, setSelectedWPAPassphrase] = useState(props.peer.wpa_passphrase)
     const [target, setTarget] = useState(props.target);
+    if(target==null){
+        setTarget(props.providerPeers[0])
+    }
     const [channel, setChannel] = useState(props.peer.channel);
     const id = props.peer.id;
 
@@ -247,223 +250,149 @@ const ShowPeer: React.FC<Props> = (props) => {
 
 <div className="p-8 xl:pl-24 xl:pt-24 grid overflow-hidden grid-cols-2 md:grid-cols-3 grid-rows-1 gap-2">
 
-{props.peer.provider_kind == "cloud" && (<li>provider_kind: {props.peer.provider_kind}</li>)}
+{/* {props.peer.provider_kind == "cloud" && (<li>provider_kind: {props.peer.provider_kind}</li>)} */}
 	
-    <div className="box row-start-1 col-span-2 md:col-span-3 col-start-2 md:col-start-1 ">
-        <h1 className="text-5xl lg:text-6xl xl:text-7xl | pb-12">{name || ""}</h1>
+    <div className=" box row-start-1 col-span-2 md:col-span-3 col-start-2 md:col-start-1 ">
+        <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl | pb-12">{name || ""}</h1>
     </div>
 	
-    <div className="box row-start-1 md:row-start-2 col-start-1 col-span-1">
+    <div className=" box row-start-1 md:row-start-2 col-start-1 col-span-1">
         <Avatar size="100%" name={peerAvatar} variant="sunset" />
     </div>
 
-	<div className="box col-start-2 col-span-2 ">
-        <form className="pl-12 pt-12 max-w-lg">
+	<div className="box col-start-1 col-span-2 sm:col-span-2 ">
+        <form className="px-0 md:px-12 pt-12 max-w-lg">
 
-    {/* Label / Friendly Name */}
-    <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
-                                <label htmlFor="name" className="block text-xs text-gray ">
-                                    Label
-                                </label>
-                                <input
-                                    type="text"
-                                    name="label"
-                                    id="label"
-                                    onChange={(e) => setLabel(e.target.value)}
-                                    className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white block w-full border-0 p-0 focus:ring-0 text-lg"
-                                    placeholder={label || ""}
-                                />
-                            </div>
+        {/* Label / Friendly Name */}
+        <div className=" bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                                    <label htmlFor="name" className="block text-xs text-gray ">
+                                        Label
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="label"
+                                        id="label"
+                                        onChange={(e) => setLabel(e.target.value)}
+                                        className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white block w-full border-0 p-0 focus:ring-0 text-lg"
+                                        placeholder={label || ""}
+                                    />
+        </div>
 
-                            <h2 className="pb-0 pt-4 text-gray text-sm mt-8 border-t border-gray-light dark:border-gray-dark">Wifi Settings</h2>
-                        {/* <p className="text-xs text-gray">hide me if this is a cloud provider</p> */}
+        {isConsumer && (
+                                    <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
+                                        <Listbox value={target} onChange={setTarget}>
+                                            {({ open }) => (
+                                                <>
+                                                    <Listbox.Label className="block text-xs text-gray "><IoServerOutline className="float-left mr-2"/> Change Provider</Listbox.Label>
+                                                    <div className="relative mt-1">
 
-                            
-                            {/* SSID */}
-                            <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
-                                <label htmlFor="name" className="block text-xs text-gray">
-                                    <IoWifiOutline className="float-left mr-2" /> SSID
-                                </label>
-                                <input
-                                    type="text"
-                                    name="ssid"
-                                    id="ssid"
-                                    onChange={(e) => setSSID(e.target.value)}
-                                    className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white block w-full border-0 p-0 focus:ring-0 text-lg"
-                                    placeholder={ssid || ""}
-                                />
-                            </div>
+                                                        <Listbox.Button className="relative w-full cursor-default rounded-sm border border-none dark:text-boring-white bg-boring-white dark:bg-boring-black py-6 pl-2 pr-10 text-left shadow-sm focus:border-blue focus:outline-none focus:ring-none  ">
+                                                            <span className="text-boring-black dark:text-boring-white border-r border-gray-light dark:border-gray-dark pr-4 ">{target.country_code}</span> 
+                                                                <span className="float-left pr-3">
+                                                                    <Avatar
+                                                                size="30"
+                                                                name={peerAvatar}
+                                                                variant="sunset"
+                                                                /> 
+                                                                </span>
+                                                                
+                                                                <span className="pl-2 text-boring-black dark:text-boring-white text-sm">{target.name}</span>
+                                                            <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                                                <ChevronUpDownIcon className="h-5 w-5 text-boring-black dark:text-boring-white" aria-hidden="true" />
+                                                            </span>
+                                                        </Listbox.Button>
 
-                            {/* WPA Passphrase */}
-                            <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
-                                <label htmlFor="name" className="block text-xs text-gray ">
-                                    <IoKey className="float-left mr-2" /> WPA Passphrase
-                                </label>
-                                <input
-                                    type="password"
-                                    name="wpa_passphrase"
-                                    id="wpa_passphrase"
-                                    onChange={(e) => setSelectedWPAPassphrase(e.target.value)}
-                                    className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white block w-full border-0 p-0 focus:ring-0 text-lg"
-                                    placeholder={props.peer.wpa_passphrase || ""}
-                                />
-                            </div>                    
-
-                            {/* WiFi Mode */}
-
-                            <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
-                                <Listbox value={wifi_preference} onChange={setSelectedWifiPreference}>
-                                    {({ open }) => (
-                                        <>
-                                            <Listbox.Label className="block text-sm font-medium text-gray-700">Wifi Mode</Listbox.Label>
-                                            <div className="relative mt-1">
-                                                <Listbox.Button className="relative w-full cursor-default rounded-sm border-none  bg-boring-white text-boring-black dark:bg-boring-black dark:text-boring-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-0 sm:text-sm">
-                                                    <span className="block truncate">{wifi_preference}</span>
-                                                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                                        <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                    </span>
-                                                </Listbox.Button>
-
-                                                <Transition
-                                                    show={open}
-                                                    as={Fragment}
-                                                    leave="transition ease-in duration-100"
-                                                    leaveFrom="opacity-100"
-                                                    leaveTo="opacity-0"
-                                                >
-                                                    <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-sm text-black bg-boring-white dark:bg-boring-black py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                                        {wifi_preferences.map((wp) => (
-                                                            <Listbox.Option
-                                                                key={wp}
-                                                                value={wp}
-                                                                className={({ active }) =>
-                                                                    classNames(
-                                                                        active ? 'text-black dark:text-white bg-gray-lightest dark:bg-gray-dark' : 'text-gray-dark',
-                                                                        'relative cursor-default select-none py-2 pl-3 pr-9'
-                                                                    )
-                                                                }
-                                                            >
-
-                                                                {({ selected, active }) => (
-                                                                    <>
-                                                                        <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
-                                                                            {wp}
-                                                                        </span>
-
-                                                                        {selected ? (
-                                                                            <span
-                                                                                className={classNames(
-                                                                                    active ? 'text-white' : 'text-indigo-600',
-                                                                                    'absolute inset-y-0 right-0 flex items-center pr-4'
-                                                                                )}
-                                                                            >
-                                                                                <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                                                                            </span>
-                                                                        ) : null}
-                                                                    </>
-                                                                )}
-                                                            </Listbox.Option>
-                                                        ))}
-                                                    </Listbox.Options>
-                                                </Transition>
-                                            </div>
-                                        </>
-                                    )}
-                                </Listbox>
-                            </div>
-
-                            {/* WIFI CHANNEL */}
-                            <div>
-                                <label>WiFi Channel</label>
-                                <select
-                                    onChange={(e) => setChannel(e.target.value)}
-                                    id="channel"
-                                    name="channel"
-                                    className="mt-1 block w-full rounded-sm border-gray-light py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none sm:text-sm"
-                                >
-                                    <option key={channelNotNull + "channelidthing"} value={channelNotNull}>{channelNotNull + " selected"}</option>
-                                    {channels24.map(option => (
-                                        <option key={option + "24channel"} value={option}>{option}</option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            {/* Country Code */}
-                            <p className="pl-2 pt-4 text-gray text-xs">Please choose the country from which this peer will {isProvider && ( <>provide</> )}{isConsumer && ( <>consume</> )}</p>
-                            <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
-
-                            <Listbox value={country_code} onChange={setSelectedCountryCode}>
-
-                                {({ open }) => (
-                                    <>
-                                        <Listbox.Label className="block text-xs text-gray "><IoMapOutline className="float-left mr-2" />Country</Listbox.Label>
-                                        <div className="relative mt-1">
-                                            <Listbox.Button className="relative w-full cursor-default rounded-sm border-none  bg-boring-white text-boring-black dark:bg-boring-black dark:text-boring-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-0 sm:text-sm">
-                                                <span className="block truncate">{country_code}</span>
-                                                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                                    <ChevronUpDownIcon className="h-5 w-5 text-boring-black" aria-hidden="true" />
-                                                </span>
-                                            </Listbox.Button>
-
-                                            <Transition
-                                                show={open}
-                                                as={Fragment}
-                                                leave="transition ease-in duration-100"
-                                                leaveFrom="opacity-100"
-                                                leaveTo="opacity-0"
-                                            >
-                                                <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-sm text-black bg-boring-white dark:bg-boring-black py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                                    {CountryCodes.map((code) => (
-                                                        <Listbox.Option
-                                                            key={code.alpha2}
-                                                            value={code.alpha2}
-                                                            className={({ active }) =>
-                                                                classNames(
-                                                                    active ? 'text-black dark:text-white bg-gray-lightest dark:bg-gray-dark' : 'text-gray-dark',
-                                                                    'relative cursor-default select-none py-2 pl-3 pr-9'
-                                                                )
-                                                            }
+                                                        <Transition
+                                                            show={open}
+                                                            as={Fragment}
+                                                            leave="transition ease-in duration-100"
+                                                            leaveFrom="opacity-100"
+                                                            leaveTo="opacity-0"
                                                         >
+                                                            <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-sm bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                                                {props.providerPeers.map((pp) => (
+                                                                    <Listbox.Option
+                                                                        key={pp.id}
+                                                                        value={pp}
+                                                                        className={({ active }) =>
+                                                                            classNames(
+                                                                                active ? 'text-white bg-gray-lightest dark:bg-gray-dark' : 'text-gray-lightest',
+                                                                                'relative cursor-default select-none py-2 pl-3 pr-9'
+                                                                            )
+                                                                        }
+                                                                    >
 
-                                                            {({ selected, active }) => (
-                                                                <>
-                                                                    <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
-                                                                        {code.name}
-                                                                    </span>
+                                                                        {({ selected, active }) => (
+                                                                            <>
+                                                                                <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                                <span className="text-boring-black dark:text-boring-white border-r border-gray-light dark:border-gray-dark pr-4 text-sm">{pp.country_code}</span> 
+                    
+                                                                                <span className="float-left pr-3 ">
+                                                                                    <Avatar
+                                                                                size="16"
+                                                                                name={peerAvatar}
+                                                                                variant="sunset"
+                                                                                /> 
+                                                                                </span>
+                    
+                                                                                <span className="pl-2 text-boring-black dark:text-boring-white text-sm">{pp.name}</span>
+                                                                                </span>
 
-                                                                    {selected ? (
-                                                                        <span
-                                                                            className={classNames(
-                                                                                active ? 'text-white' : 'text-gray-light',
-                                                                                'absolute inset-y-0 right-0 flex items-center pr-4'
-                                                                            )}
-                                                                        >
-                                                                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                                                                        </span>
-                                                                    ) : null}
-                                                                </>
-                                                            )}
-                                                        </Listbox.Option>
-                                                    ))}
-                                                </Listbox.Options>
-                                            </Transition>
-                                        </div>
-                                    </>
-                                )}
-                            </Listbox>
-                            </div>
+                                                                                {selected ? (
+                                                                                    <span
+                                                                                        className={classNames(
+                                                                                            active ? 'text-boring-white' : 'text-boring-white',
+                                                                                            'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                                                        )}
+                                                                                    >
+                                                                                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                                    </span>
+                                                                                ) : null}
+                                                                            </>
+                                                                        )}
+                                                                    </Listbox.Option>
+                                                                ))}
+                                                            </Listbox.Options>
+                                                        </Transition>
+                                                    </div>
+                                                </>
+                                            )}
+                                        </Listbox>
+                                    </div>
+                                )} 
 
-                            <button
-                                type="submit"
-                                className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue"
-                            >
-                                Save Changes
-                            </button>
+                <button
+                    type="submit"
+                    className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue"
+                >
+                    Connect
+                </button>
 
         </form>
+
+
+        {/* Advanced Configuration / Settings */}
+        <div className="col-span-3 px-12 pt-6"> 
+                        <button className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
+                    </div>
+
+                    {/* If Provider is active or not yet, show relavant buttons */}
+                    <div className="px-12">
+                    {isProvider && !providerActive && (
+                            <div>
+                                <button className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoCloudUploadOutline className="mr-2" /> Install Config</button>
+                                <button className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => activatePeer(props.peer.id)}><IoDownloadOutline className="mr-2" /> Activate</button>
+                            </div>
+                        )}
+                            {!isProvider && (
+                                <button className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> Install Config</button>
+                    )} 
+                    </div>
+
+
     </div>
 
-    <div className="box row-start-3 col-start-1 col-span-1 ">
+    <div className=" box row-start-3 col-start-1 col-span-1 ">
         {/* The small print. Details on the node */}
         <div className="col-span-1  mt-12 text-gray">
             <ul className="text-xs leading-relaxed">
@@ -476,181 +405,8 @@ const ShowPeer: React.FC<Props> = (props) => {
         </div>
     </div>
 
-    <div className="box row-start-3 col-start-2 col-span-2 ">secondary form</div>
-
-</div>
-
-
-
-
-            {/* The Current Peer */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-6 sm:px-14 py-12 border-b border-gray-light dark:border-gray-dark">
-
-
-            {/* Boring Name Generator Name */}
-            {/* https://github.com/boringprotocol/boring-name-generator/ */}
-            <div className="col-span-1 sm:col-span-3"><h1 className="text-2xl sm:text-6xl md:text-7xl pb-12 sm:pt-4">{name || ""}</h1></div>
-
-                {/* Avatar and Peer small-print; config, active, and env buttons. */}
-                <div className="border">
-                    <div className="w-1/1">
-                    <Avatar size="100%" name={peerAvatar} variant="sunset" />
-                    </div>
-            <a className="border p-4" href="https:motherbored.app?mode-consumer&target=peer_name">share your peer</a>
-                    {/* The small print. Details on the node */}
-                    <div className="col-span-1  mt-12 text-gray">
-    
-                        <ul className="text-xs leading-relaxed">
-                            <li key={props.peer.id}>Id: {props.peer.id}</li>
-                            <li className="capitalize" key={props.peer.kind}>Kind: {props.peer.kind}</li>
-                            <li key={props.peer.setupkey}>Boring Setupkey: {props.peer.setupkey}</li>
-                            {/* Only show the pubkey if this is a provider node */}
-                            {props.peer.kind == "provider" && (<li key={props.peer.pubkey}>Boring Pubkey: {props.peer.pubkey}</li>)}
-                        </ul>
-                    </div>
-
-                    {/* Advanced Configuration / Settings */}
-                    <div className="col-span-3 mt-6"> 
-                        <button className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
-                    </div>
-
-                    {/* If Provider is active or not yet, show relavant buttons */}
-                    <div className="py-6">
-                    {isProvider && !providerActive && (
-                            <div>
-                                <button className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoCloudUploadOutline className="mr-2" /> Install Config</button>
-                                <button className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => activatePeer(props.peer.id)}><IoDownloadOutline className="mr-2" /> Activate</button>
-                            </div>
-                        )}
-                            {!isProvider && (
-                                <button className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={() => shovePeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> Install Config</button>
-                    )} 
-                    </div>
-                </div>{/*  */}
-
-                {/* Edit Peer Forms */}
-                <div className="px-12 col-span-1 sm:col-span-2">
-                    
-                    
-                    {/* Edit Peer Main Form - Just the essentials. Wifi settings in the form below it */}
-                    {/* Main Form */}
-                    <form className="border w-full pb-24 mb-12 border-b 
-                    border-gray-lightestest dark:border-gray-dark" onSubmit={submitData}>
-                        #Main Form
-                        {/* If this is a consumer show relavant fields */}
-                        {isConsumer && (
-                                <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
-                                    <Listbox value={target} onChange={setTarget}>
-                                        {({ open }) => (
-                                            <>
-                                                <Listbox.Label className="block text-xs text-gray "><IoServerOutline className="float-left mr-2"/> Change Provider</Listbox.Label>
-                                                <div className="relative mt-1">
-
-                                                    <Listbox.Button className="relative w-full cursor-default rounded-sm border border-none dark:text-boring-white bg-boring-white dark:bg-boring-black py-6 pl-2 pr-10 text-left shadow-sm focus:border-blue focus:outline-none focus:ring-none  ">
-                                                        <span className="text-boring-black dark:text-boring-white border-r border-gray-light dark:border-gray-dark pr-4 ">{target.country_code}</span> 
-                                                            <span className="float-left pr-3">
-                                                                <Avatar
-                                                            size="30"
-                                                            name={peerAvatar}
-                                                            variant="sunset"
-                                                            /> 
-                                                            </span>
-                                                            
-                                                            <span className="pl-2 text-boring-black dark:text-boring-white text-sm">{target.name}</span>
-                                                        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                                            <ChevronUpDownIcon className="h-5 w-5 text-boring-black dark:text-boring-white" aria-hidden="true" />
-                                                        </span>
-                                                    </Listbox.Button>
-
-                                                    <Transition
-                                                        show={open}
-                                                        as={Fragment}
-                                                        leave="transition ease-in duration-100"
-                                                        leaveFrom="opacity-100"
-                                                        leaveTo="opacity-0"
-                                                    >
-                                                        <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-sm bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                                            {props.providerPeers.map((pp) => (
-                                                                <Listbox.Option
-                                                                    key={pp.id}
-                                                                    value={pp}
-                                                                    className={({ active }) =>
-                                                                        classNames(
-                                                                            active ? 'text-white bg-gray-lightestest' : 'text-gray-lightest',
-                                                                            'relative cursor-default select-none py-2 pl-3 pr-9'
-                                                                        )
-                                                                    }
-                                                                >
-
-                                                                    {({ selected, active }) => (
-                                                                        <>
-                                                                            <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
-                                                                            <span className="text-boring-black dark:text-boring-white border-r border-gray-light dark:border-gray-dark pr-4 text-sm">{pp.country_code}</span> 
-                
-                                                                            <span className="float-left pr-3 ">
-                                                                                <Avatar
-                                                                            size="16"
-                                                                            name={peerAvatar}
-                                                                            variant="sunset"
-                                                                            /> 
-                                                                            </span>
-                
-                                                                            <span className="pl-2 text-boring-black dark:text-boring-white text-sm">{pp.name}</span>
-                                                                            </span>
-
-                                                                            {selected ? (
-                                                                                <span
-                                                                                    className={classNames(
-                                                                                        active ? 'text-boring-white' : 'text-boring-white',
-                                                                                        'absolute inset-y-0 right-0 flex items-center pr-4'
-                                                                                    )}
-                                                                                >
-                                                                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                                                                                </span>
-                                                                            ) : null}
-                                                                        </>
-                                                                    )}
-                                                                </Listbox.Option>
-                                                            ))}
-                                                        </Listbox.Options>
-                                                    </Transition>
-                                                </div>
-                                            </>
-                                        )}
-                                    </Listbox>
-                                </div>
-                            )} 
-
-                        <button
-                            type="submit"
-                            className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue"
-                        >
-                            Save Changes
-                        </button>
-                        
-                    </form>
-     
-
-                    {/* Edit Wifi and other Misc Form */}
-
-                    <form className="border">
-
-{/* Label / Friendly Name */}
-<div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
-                            <label htmlFor="name" className="block text-xs text-gray ">
-                                Label
-                            </label>
-                            <input
-                                type="text"
-                                name="label"
-                                id="label"
-                                onChange={(e) => setLabel(e.target.value)}
-                                className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white block w-full border-0 p-0 focus:ring-0 text-lg"
-                                placeholder={label || ""}
-                            />
-                        </div>
-
-                        <h2 className="pb-0 pt-4 text-gray text-sm mt-8 border-t border-gray-light dark:border-gray-dark">Wifi Settings</h2>
+    <div className="  p-12 box row-start-3 col-start-2 col-span-2 ">
+    <h2 className="text-gray text-sm mt-8 dark:border-gray-dark">Wifi Settings</h2>
                     {/* <p className="text-xs text-gray">hide me if this is a cloud provider</p> */}
 
                         
@@ -690,7 +446,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                             <Listbox value={wifi_preference} onChange={setSelectedWifiPreference}>
                                 {({ open }) => (
                                     <>
-                                        <Listbox.Label className="block text-sm font-medium text-gray-700">Wifi Mode</Listbox.Label>
+                                        <Listbox.Label className="block text-xs text-gray">Wifi Mode</Listbox.Label>
                                         <div className="relative mt-1">
                                             <Listbox.Button className="relative w-full cursor-default rounded-sm border-none  bg-boring-white text-boring-black dark:bg-boring-black dark:text-boring-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-0 sm:text-sm">
                                                 <span className="block truncate">{wifi_preference}</span>
@@ -706,14 +462,14 @@ const ShowPeer: React.FC<Props> = (props) => {
                                                 leaveFrom="opacity-100"
                                                 leaveTo="opacity-0"
                                             >
-                                                <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-sm text-black bg-boring-white dark:bg-boring-black py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                                <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-sm text-gray dark:text-gray-lightest bg-boring-white dark:bg-boring-black py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                                     {wifi_preferences.map((wp) => (
                                                         <Listbox.Option
                                                             key={wp}
                                                             value={wp}
                                                             className={({ active }) =>
                                                                 classNames(
-                                                                    active ? 'text-black dark:text-white bg-gray-lightest dark:bg-gray-dark' : 'text-gray-dark',
+                                                                    active ? 'text-black dark:text-white bg-gray-lightest dark:bg-gray-dark' : 'text-gray-dark dark:text-gray-light',
                                                                     'relative cursor-default select-none py-2 pl-3 pr-9'
                                                                 )
                                                             }
@@ -729,7 +485,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                                                         <span
                                                                             className={classNames(
                                                                                 active ? 'text-white' : 'text-indigo-600',
-                                                                                'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                                                'absolute inset-y-0 right-0 flex items-center pr-4 text-gray-dark dark:text-gray-lightest'
                                                                             )}
                                                                         >
                                                                             <CheckIcon className="h-5 w-5" aria-hidden="true" />
@@ -748,8 +504,71 @@ const ShowPeer: React.FC<Props> = (props) => {
                         </div>
 
                         {/* WIFI CHANNEL */}
-                        <div>
-                            <label>WiFi Channel</label>
+
+                        <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
+                            <Listbox value={channel} onChange={setChannel}>
+                                {({ open }) => (
+                                    <>
+                                        <Listbox.Label className="block text-xs text-gray">Channel</Listbox.Label>
+                                        <div className="relative mt-1">
+                                            <Listbox.Button className="relative w-full cursor-default rounded-sm border-none  bg-boring-white text-boring-black dark:bg-boring-black dark:text-boring-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-0 sm:text-sm">
+                                                <span className="block truncate">{channel}</span>
+                                                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                                    <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                </span>
+                                            </Listbox.Button>
+
+                                            <Transition
+                                                show={open}
+                                                as={Fragment}
+                                                leave="transition ease-in duration-100"
+                                                leaveFrom="opacity-100"
+                                                leaveTo="opacity-0"
+                                            >
+                                                <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-sm  text-gray dark:text-gray-lightest bg-boring-white dark:bg-boring-black py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                                    {channels24.map((wp) => (
+                                                        <Listbox.Option
+                                                            key={wp}
+                                                            value={wp}
+                                                            className={({ active }) =>
+                                                                classNames(
+                                                                    active ? 'text-white dark:text-gray  bg-gray-lightest dark:bg-gray-dark' : '',
+                                                                    'relative cursor-default select-none py-2 pl-3 pr-9'
+                                                                )
+                                                            }
+                                                        >
+
+                                                            {({ selected, active }) => (
+                                                                <>
+                                                                    <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                        {wp}
+                                                                    </span>
+
+                                                                    {selected ? (
+                                                                        <span
+                                                                            className={classNames(
+                                                                                active ? 'text-white' : 'text-white',
+                                                                                'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                                            )}
+                                                                        >
+                                                                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                        </span>
+                                                                    ) : null}
+                                                                </>
+                                                            )}
+                                                        </Listbox.Option>
+                                                    ))}
+                                                </Listbox.Options>
+                                            </Transition>
+                                        </div>
+                                    </>
+                                )}
+                            </Listbox>
+                        </div>
+
+
+                        {/* <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
+                            <label className="block text-xs text-gray">WiFi Channel</label>
                             <select
                                 onChange={(e) => setChannel(e.target.value)}
                                 id="channel"
@@ -761,7 +580,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                     <option key={option + "24channel"} value={option}>{option}</option>
                                 ))}
                             </select>
-                        </div>
+                        </div> */}
 
                         {/* Country Code */}
                         <p className="pl-2 pt-4 text-gray text-xs">Please choose the country from which this peer will {isProvider && ( <>provide</> )}{isConsumer && ( <>consume</> )}</p>
@@ -787,14 +606,14 @@ const ShowPeer: React.FC<Props> = (props) => {
                                             leaveFrom="opacity-100"
                                             leaveTo="opacity-0"
                                         >
-                                            <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-sm text-black bg-boring-white dark:bg-boring-black py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                            <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-sm text-gray dark:text-gray-lightest bg-boring-white dark:bg-boring-black py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                                 {CountryCodes.map((code) => (
                                                     <Listbox.Option
                                                         key={code.alpha2}
                                                         value={code.alpha2}
                                                         className={({ active }) =>
                                                             classNames(
-                                                                active ? 'text-black dark:text-white bg-gray-lightest dark:bg-gray-dark' : 'text-gray-dark',
+                                                                active ? 'text-black dark:text-white bg-gray-lightest dark:bg-gray-dark' : 'text-gray dark:text-gray-lightest',
                                                                 'relative cursor-default select-none py-2 pl-3 pr-9'
                                                             )
                                                         }
@@ -810,7 +629,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                                                     <span
                                                                         className={classNames(
                                                                             active ? 'text-white' : 'text-gray-light',
-                                                                            'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                                            'absolute inset-y-0 right-0 flex items-center pr-4 '
                                                                         )}
                                                                     >
                                                                         <CheckIcon className="h-5 w-5" aria-hidden="true" />
@@ -834,12 +653,25 @@ const ShowPeer: React.FC<Props> = (props) => {
                         >
                             Save Changes
                         </button>
+        
+        </div>
 
-                    </form>
+</div>
 
-                </div>
-            
-                {/* Destroy Peer */}
+
+
+
+
+
+
+
+
+
+
+
+            {/* Destroy Peer */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-6 sm:px-14 py-12 border-b border-gray-light dark:border-gray-dark">
+                
                 <div className="col-span-3  py-16 border-b border-gray-light dark:border-gray-dark">
 
                     <div className="text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black border border-gray-dark shadow sm:rounded-lg mt-6">
@@ -867,7 +699,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                 </div>
 
 
-            </div>{/* /The Current Peer */}
+            </div>
 
 
         </LayoutAuthenticated>

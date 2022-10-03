@@ -7,7 +7,7 @@ import sleep from 'sleep-promise';
 
 // POST /api/peer
 export default async function handle(req: any, res: any) {
-    const { name, kind, target, provider_kind } = req.body;
+    const { name, kind, target, provider_kind, wifi_preference, channel, ssid, wpa_passphrase, country_code } = req.body;
     const session = await getSession({ req });
     if (!session || !session.user?.name) {
         res.statusCode = 403;
@@ -16,12 +16,29 @@ export default async function handle(req: any, res: any) {
 
     console.log(target)
 
+    let pk = provider_kind
+    if (kind=="consumer"){
+        pk=null
+    }
+    
+    // convert channel to Int
+    let channelint = 7
+        if (channel != null) {
+            channelint = parseInt(channel);
+        }
+
     const result = await prisma.peer.create({
         data: {
             name: name,
             kind: kind,
             target: target,
-            provider_kind: provider_kind,
+            provider_kind: pk,
+            wifi_preference: wifi_preference,
+            channel: channelint,
+            ssid: ssid,
+            wpa_passphrase: wpa_passphrase,
+            country_code: country_code,
+
             User: { connect: { wallet: session.user.name } }
         },
     });

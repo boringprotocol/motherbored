@@ -99,12 +99,12 @@ const IndexPage: React.FC<Props> = (props) => {
             </li>
           ))}   
 
-          <li className='className="col-span-1 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black'>
+          <li className='className="col-span-1 border-dotted rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black'>
           <div id="add-peer" className="pb-12">
               <button
               type="button"
               onClick={() => Router.push("//newpeer?mode=consumer")}
-              className="relative block w-full rounded-lg text-boring-black dark:text-boring-white border-2 border-dotted border-gray-light dark:border-gray-dark p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="relative block w-full rounded-lg text-boring-black dark:text-boring-white p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
               <span className="font-jetbrains mt-2 block text-xs text-boring-white"><IoAddCircleOutline className="text-4xl" /></span>
               <span className="font-jetbrains mt-2 block text-xs text-boring-white">Add Motherbored Consumer</span>
@@ -112,8 +112,6 @@ const IndexPage: React.FC<Props> = (props) => {
               </button>
             </div>{/* /#add-peer */}  
           </li>   
-          <li className='className="col-span-1 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black'>hello</li>   
-          <li className='className="col-span-1 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black'>hello</li>   
           
         </ul>
 

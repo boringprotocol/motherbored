@@ -78,7 +78,14 @@ const NewPeer: React.FC<Props> = (props) => {
     if (query.provider_kind) { queryProviderMode = String(query.provider_kind) }
     const [selectedProviderKindLists, setSelectedProviderKindLists] = useState(queryProviderMode)
 
+
     const [kind, setKind] = useState(queryMode);
+    const [wifi_preference, setWifiPreference] = useState("2.4Ghz");
+    const [channel, setChannel] = useState("7");
+    const [ssid, setSSID] = useState("boring");
+    const [wpa_passphrase, setWpaPassphrase] = useState('motherbored');
+    const [country_code, setCountryCode] = useState("US");
+
     const [target, setTarget] = useState(props.peers[0].id);
 
     function handleChangeKind(newKind: string) {
@@ -92,7 +99,7 @@ const NewPeer: React.FC<Props> = (props) => {
     const submitData = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         try {
-            const body = { name: name, kind: kind, target: target, provider_kind: selectedProviderKindLists };
+            const body = { name: name, kind: kind, target: target, provider_kind: selectedProviderKindLists, wifi_preference: wifi_preference, channel: channel, ssid: ssid, wpa_passphrase: wpa_passphrase, country_code: country_code };
             const response = await fetch("/api/peer", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -227,12 +234,23 @@ const NewPeer: React.FC<Props> = (props) => {
                     )}
 
 
-                    <input name="ssid" value=""></input>
+                    {/* hide me and give me default values */}
+                <div className="hidden">
+                <input name="kind" value={query.mode}></input>
+                <input name="ssid" value="boring"></input>
+                <input name="wpa_passphrase" value="motherbored"></input>
+                  
+                {/* state setters for these */}
+                <input name="country_code"  value="US"></input>
+                <input name="channel"  value="7"></input>
+                <input name="wifi_preference" value="2.4Ghz" ></input>
+
+                </div>                                        
 
 
                     <input className="float-left  mt-6 flex justify-center rounded-sm border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40" type="submit" value="Create" />
                     <a className="back" onClick={() => Router.push("/")}>
-                        <span className="text-xs float-left ml-6 mt-8">or Cancel</span>
+                    <span className="text-xs float-left ml-6 mt-8">or Cancel</span>
                     </a>
                 </form>
             </div>
