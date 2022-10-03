@@ -83,9 +83,9 @@ const IndexPage: React.FC<Props> = (props) => {
       <div className="main pt-12 text-xs">
         
       {/* Maybe just add/remove a 'hidden' class on the rendered peer list item. Or probably useState though for back button  */}
-      <div className='p-12'>
+      {/* <div className='p-12'>
       show peers: <a className="border p-1" href="#">all</a>, providers: <a className="border p-1" href="#">all</a> <a className="border p-1" href="#">local</a> <a className="border p-1" href="#">cloud</a> consumers: <a className="border p-1" href="#">all</a>
-      </div>
+      </div> */}
       
         {/* PEERS */}
         {/* key={peer.name} has to be on the first child element within a loop
