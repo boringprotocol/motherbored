@@ -210,7 +210,7 @@ const IndexPage: React.FC<Props> = (props) => {
                   />
                 </svg>
                 <span className="font-jetbrains mt-2 block text-sm text-gray-dark dark:text-boring-white">Add Helium Hotspot Provider</span>
-                <span className="font-jetbrains mt-2 block text-xs text-gray">Run a provider peer on any network-connected Helium device. coming soon...</span>
+                <span className="font-jetbrains mt-2 block text-xs text-gray">Run a provider peer on network-connected Helium devices. coming soon...</span>
                 </button>
                 </div>{/* /#add-peer */}
               

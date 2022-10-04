@@ -248,28 +248,22 @@ const ShowPeer: React.FC<Props> = (props) => {
 
 {/* rows and columns w/ grid */}
 
-<div className="p-8 xl:pl-24 xl:pt-24 grid overflow-hidden grid-cols-2 md:grid-cols-3 grid-rows-1 gap-2">
+<div className="p-8 xl:p-12 xl:pt-24 grid overflow-hidden grid-cols-4 md:grid-cols-6 grid-rows-1 gap-2">
 
 {/* {props.peer.provider_kind == "cloud" && (<li>provider_kind: {props.peer.provider_kind}</li>)} */}
 	
-    <div className=" box row-start-1 col-span-2 md:col-span-3 col-start-2 md:col-start-1 "> {isProvider &&  (
-                    <div>
-                        <h2 className="text-2xl text-gray">Provider</h2>
-                    </div>
-                )}
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl | pb-12 inline-block align-middle">{name || ""}</h1>
+    <div className="box row-start-1 col-span-4 md:col-span-6 col-start-2 md:col-start-1"> 
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl | pb-12 inline-block align-middle">{name || ""}</h1>
     </div>
 	
-    <div className="box row-start-1 md:row-start-2 col-start-1 col-span-1">
+    <div className="box row-start-1 md:row-start-2 col-start-1 col-span-1 md:col-span-2">
         <Avatar size="100%" name={peerAvatar} variant="sunset" />
     </div>
 
-    
-
-	<div className="box col-start-1 col-span-2 sm:col-span-2 ">
+	<div className=" box col-start-1 col-span-4 sm:col-span-4 ">
 
     {isProvider &&  (
-                    <div className="p-12 ">
+                    <div className="md:p-12 max-w-xl ">
                         <div className="p-12 border rounded-sm border-gray-lightest dark:border-gray-dark text-xs text-gray">charts go here</div>
                     </div>
                 )}
@@ -392,7 +386,8 @@ const ShowPeer: React.FC<Props> = (props) => {
        
         
         {/* Advanced Configuration / Settings */}
-        <div className="mt-6 border-t border-gray-lightest">
+        <div className="mt-6 pt-6 border-t border-gray-lightest">
+            <h2 className="text-xs">Advanced / Helpers &quote;Dev Mode&quote;:</h2>
         <a className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoRefreshOutline className="mr-2" /> Reboot </a><a className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/" target="_blank" rel="noreferrer"><IoBugOutline className="mr-2" /> Debug </a><a className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf:19531/browse" target="_blank" rel="noreferrer"> <IoFileTrayFull className="mr-2" /> Logs</a>
         <button className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
         </div>
@@ -400,7 +395,7 @@ const ShowPeer: React.FC<Props> = (props) => {
     </form>
     </div>
 
-    <div className="box row-start-4 md:row-start-3 col-start-1 col-span-3 md:col-span-1 ">
+    <div className="box row-start-4 md:row-start-3 col-start-1 col-span-2 md:col-span-2 ">
         {/* The small print. Details on the node */}
         <div className="col-span-1  mt-12 text-gray">
             <ul className="text-xs leading-relaxed">
@@ -413,7 +408,7 @@ const ShowPeer: React.FC<Props> = (props) => {
         </div>
     </div>
 
-    <div className="md:p-12 box row-start-3 col-start-1 md:col-start-2 col-span-3 md:col-span-2">
+    <div className="md:p-12 box row-start-3 col-start-1 md:col-start-3 col-span-6 md:col-span-4">
     <h2 className="text-gray text-sm mt-8 dark:border-gray-dark">Wifi Settings</h2>
                     {/* <p className="text-xs text-gray">hide me if this is a cloud provider</p> */}
                         <form onSubmit={submitData} className="max-w-xl">
@@ -666,7 +661,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                 )}
                         </form>
         
-        </div>
+    </div>
         
 </div>
 
