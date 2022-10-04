@@ -4,7 +4,6 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { SigninMessage } from '../utils/SigninMessage'
 import bs58 from "bs58"
 import { useEffect } from 'react'
-import { IoWalletOutline } from 'react-icons/io5'
 import Link from 'next/link'
 
 
