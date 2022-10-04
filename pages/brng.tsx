@@ -4,12 +4,10 @@ import { useEffect, useState } from "react";
 import { Connection } from "@metaplex/js";
 import { Account } from "@metaplex-foundation/mpl-core";
 import { Metadata } from "@metaplex-foundation/mpl-token-metadata";
+import { toCandyMachineConfigs } from "@metaplex-foundation/js";
 
 const connection = new Connection("mainnet-beta");
 const tokenAddress = "CxkKDaBvtHqg8aHBVY8E4YYBsCfJkJVsTAEdTo5k4SEw";
-
-
-
 
 export default function MePage() {
   const { data } = useSession()
@@ -18,6 +16,12 @@ export default function MePage() {
   const [newToken, setNewToken] = useState(tokenAddress);
   const [setData] = useState<unknown>(null);
   const [imageSrc, setImage] = useState(null);
+
+
+// this page is for trying new things
+// like metaplex sorcery 
+
+
 
   /*
 useEffect(() => {
