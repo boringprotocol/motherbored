@@ -47,6 +47,8 @@ const peers = await prisma.peer.findMany({
   }
 }
 
+
+
 type Props = {
   peers: PeerProps[],
   providers: PeerProps[],
@@ -123,19 +125,13 @@ const IndexPage: React.FC<Props> = (props) => {
             <li key={peer.name} className="col-span-1 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
               <Peer peer={peer} />
             </li>
-          ))}           
-        </ul>
+          ))}     
 
-
-  
-
-              
-                {/* ADD PEER */}
-                <div id="add-peer" className="pb-12">
-                <button
+          <li className="shadow-md rounded-lg pb-2 pt-4 col-span-1 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
+          <button
                 type="button"
                 onClick={() => Router.push("/newpeer?mode=provider&provider_kind=local")}
-                className="relative block w-full rounded-lg text-boring-black dark:text-boring-white border-2 border-dotted border-gray-light dark:border-gray-dark p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                className="relative block w-full rounded-lg text-boring-black dark:text-boring-white p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                 <svg
                   className="mx-auto h-12 w-12 text-gray-400"
@@ -155,15 +151,13 @@ const IndexPage: React.FC<Props> = (props) => {
                 <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add Motherbored Provider</span>
                 <span className="font-jetbrains mt-2 block text-xs text-gray">Configure your Motherbored to run as provider peer.</span>
                 </button>
-                </div>{/* /#add-peer */}
-
-              {/* ADD HELIUM HOTSPOT */}
-              <div id="add-peer" className="pb-12">
-                <button
+          </li>
+          <li className="shadow-md rounded-lg pb-2 pt-4 col-span-1 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
+          <button
                 title="LFG"
                 type="button"
                 onClick={() => Router.push("/newpeer?mode=provider&provider_kind=cloud")}
-                className="relative block w-full rounded-lg text-boring-black dark:text-boring-white border-2 border-dotted border-gray-light dark:border-gray-dark p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                className="relative block w-full rounded-lg text-boring-black dark:text-boring-white p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                 <svg
                   className="mx-auto h-12 w-12 text-gray-400"
@@ -183,16 +177,14 @@ const IndexPage: React.FC<Props> = (props) => {
                 <span className="font-jetbrains mt-2 block text-sm text-gray-dark dark:text-boring-white">Add Cloud Provider</span>
                 <span className="font-jetbrains mt-2 block text-xs text-gray">Deploy to a virtual machine offered by any cloud provider (e.g., AWS, DigitalOcean, Hetzner, Google Cloud, Contabo ...)</span>
                 </button>
-                </div>{/* /#add-peer */}
-
-                {/* ADD HELIUM HOTSPOT */}
-                <div id="add-peer" className="pb-12">
-                <button
+          </li>
+          <li className="shadow-md rounded-lg pb-2 pt-4 col-span-1 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
+          <button
                 title="Coming Soon"
                 disabled
                 type="button"
                 onClick={() => Router.push("/newpeer")}
-                className="cursor-not-allowed relative block w-full rounded-lg text-boring-black dark:text-boring-white border-2 border-dotted border-gray-light dark:border-gray-dark p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                className="cursor-not-allowed relative block w-full rounded-lg text-boring-black dark:text-boring-white p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                 <svg
                   className="mx-auto h-12 w-12 text-gray-400"
@@ -212,14 +204,18 @@ const IndexPage: React.FC<Props> = (props) => {
                 <span className="font-jetbrains mt-2 block text-sm text-gray-dark dark:text-boring-white">Add Helium Hotspot Provider</span>
                 <span className="font-jetbrains mt-2 block text-xs text-gray">Run a provider peer on network-connected Helium devices. coming soon...</span>
                 </button>
-                </div>{/* /#add-peer */}
+          </li>
+        </ul>
+
+
+  
               
         
       </div>{/* end .main */}
   
         
         {/* NETWORK STATISTICS */}
-        <div className="px-4 sm:px-8 md:px-12 py-16 border-t border-gray-light dark:border-gray-dark">
+        {/* <div className="px-4 sm:px-8 md:px-12 py-16 border-t border-gray-light dark:border-gray-dark">
         <h3 className="font-jetbrains text-lg  text-gray dark:text-boring-white uppercase">Network</h3>
         <dl className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-3">
           {stats.map((item) => (
@@ -229,7 +225,7 @@ const IndexPage: React.FC<Props> = (props) => {
             </div>
           ))}
         </dl>
-        </div>  
+        </div>   */}
     
       </div>{/* end main */}
     </LayoutAuthenticated>
