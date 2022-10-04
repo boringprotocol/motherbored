@@ -126,7 +126,7 @@ const NewPeer: React.FC<Props> = (props) => {
 
                 <form className="w-100 md:w-1/2" onSubmit={submitData}>
                     <h1 className="uppercase mb-6">New <span>{query.mode}</span> Peer</h1>
-                    <div className="border border-gray-dark text-boring-white rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                    <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                         <label htmlFor="name" className="block text-xs text-gray">
                             Peer Name
                         </label>
@@ -135,7 +135,7 @@ const NewPeer: React.FC<Props> = (props) => {
                             name="name"
                             id="name"
                             onChange={(e) => setName(e.target.value)}
-                            className="cursor-not-allowed bg-boring-black block w-full border-0 p-0 text-gray-lightest placeholder-boring-white focus:ring-0 text-lg"
+                            className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white block w-full border-0 p-0 focus:ring-0 text-lg"
                             placeholder=""
                             value={name}
                             disabled

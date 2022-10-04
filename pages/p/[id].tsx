@@ -234,7 +234,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
 
 {/* Design tool shows breakpoints on the rendered page */}
-<div className="flex items-center m-2 fixed bottom-0 right-0 border border-gray-400 rounded p-2 bg-gray-300 text-pink-600 text-sm">
+{/* <div className="flex items-center m-2 fixed bottom-0 right-0 border border-gray-400 rounded p-2 bg-gray-300 text-pink-600 text-sm">
     Current breakpoint - 
     <span className="ml-1 sm:hidden md:hidden lg:hidden xl:hidden">default (&lt; 640px)</span>
     <span className="ml-1 hidden sm:inline md:hidden font-extrabold">sm</span>
@@ -242,18 +242,18 @@ const ShowPeer: React.FC<Props> = (props) => {
     <span className="ml-1 hidden lg:inline xl:hidden font-extrabold">lg</span>
     <span className="ml-1 hidden xl:inline 2xl:hidden font-extrabold">xl</span>
     <span className="ml-1 hidden 2xl:inline font-extrabold">2xl</span>
-</div>
+</div> */}
 
 
 
 {/* rows and columns w/ grid */}
 
-<div className="p-8 xl:p-12 xl:pt-24 grid overflow-hidden grid-cols-4 md:grid-cols-6 grid-rows-1 gap-2">
+<div className="p-8 xl:p-12 xl:pt-24 grid overflow-hidden grid-cols-4 md:grid-cols-6 grid-rows-1 sm:gap-2">
 
 {/* {props.peer.provider_kind == "cloud" && (<li>provider_kind: {props.peer.provider_kind}</li>)} */}
 	
     <div className="box row-start-1 col-span-4 md:col-span-6 col-start-2 md:col-start-1"> 
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl | pb-12 inline-block align-middle">{name || ""}</h1>
+        <h1 className="text-2xl sm:text-5xl lg:text-6xl xl:text-7xl pl-6">{name || ""}</h1>
     </div>
 	
     <div className="box row-start-1 md:row-start-2 col-start-1 col-span-1 md:col-span-2">
@@ -267,7 +267,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                         <div className="p-12 border rounded-sm border-gray-lightest dark:border-gray-dark text-xs text-gray">charts go here</div>
                     </div>
                 )}
-        <form className="px-0 md:px-12 max-w-xl" onSubmit={submitData}>
+        <form className="px-0 md:px-12" onSubmit={submitData}>
 
         {/* Label / Friendly Name */}
         <div className=" bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
@@ -289,7 +289,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                         <Listbox value={target} onChange={setTarget}>
                                             {({ open }) => (
                                                 <>
-                                                    <Listbox.Label className="block text-xs text-gray "><IoServerOutline className="float-left mr-2"/> Change Provider</Listbox.Label>
+                                                    <Listbox.Label className="block text-xs text-gray "><IoServerOutline className="float-left mr-2"/> Select Provider</Listbox.Label>
                                                     <div className="relative mt-1">
 
                                                         <Listbox.Button className="relative w-full cursor-default rounded-sm border border-none dark:text-boring-white bg-boring-white dark:bg-boring-black py-6 pl-2 pr-10 text-left  focus:border-blue focus:outline-none focus:ring-none  ">
@@ -386,10 +386,10 @@ const ShowPeer: React.FC<Props> = (props) => {
        
         
         {/* Advanced Configuration / Settings */}
-        <div className="mt-6 pt-6 border-t border-gray-lightest">
-            <h2 className="text-xs">Advanced / Helpers &quote;Dev Mode&quote;:</h2>
-        <a className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoRefreshOutline className="mr-2" /> Reboot </a><a className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/" target="_blank" rel="noreferrer"><IoBugOutline className="mr-2" /> Debug </a><a className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf:19531/browse" target="_blank" rel="noreferrer"> <IoFileTrayFull className="mr-2" /> Logs</a>
-        <button className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
+        <div className="mt-6 py-6 border-t border-b border-gray-lightest">
+            <h2 className="text-xs">Advanced / Helpers (Dev Mode):</h2>
+        <a className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoRefreshOutline className="mr-2" /> Reboot </a><a className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/" target="_blank" rel="noreferrer"><IoBugOutline className="mr-2" /> Debug </a><a className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf:19531/browse" target="_blank" rel="noreferrer"> <IoFileTrayFull className="mr-2" /> Logs</a>
+        <button className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
         </div>
 
     </form>

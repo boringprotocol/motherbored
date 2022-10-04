@@ -58,10 +58,11 @@ export default function Header() {
           {session?.user && (
             <>
               {/* Wallet Address display */}
+              <a href="/">
               <span className="font-jetbrains text-xs">
                 {session.user.email ?? session.user.name}
               </span>
-              
+              </a>
               
 
             </>
