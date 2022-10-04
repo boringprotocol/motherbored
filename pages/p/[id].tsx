@@ -253,7 +253,9 @@ const ShowPeer: React.FC<Props> = (props) => {
 {/* {props.peer.provider_kind == "cloud" && (<li>provider_kind: {props.peer.provider_kind}</li>)} */}
 	
     <div className="box row-start-1 col-span-4 md:col-span-6 col-start-2 md:col-start-1"> 
-        <h1 className="text-2xl sm:text-5xl lg:text-6xl xl:text-7xl pl-6">{name || ""}</h1>
+    
+        <h1 className="text-2xl sm:text-5xl lg:text-6xl xl:text-7xl pl-6 pt-12 mb-12">{name || ""}</h1>
+      
     </div>
 	
     <div className="box row-start-1 md:row-start-2 col-start-1 col-span-1 md:col-span-2">
@@ -292,7 +294,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                                     <Listbox.Label className="block text-xs text-gray "><IoServerOutline className="float-left mr-2"/> Select Provider</Listbox.Label>
                                                     <div className="relative mt-1">
 
-                                                        <Listbox.Button className="relative w-full cursor-default rounded-sm border border-none dark:text-boring-white bg-boring-white dark:bg-boring-black py-6 pl-2 pr-10 text-left  focus:border-blue focus:outline-none focus:ring-none  ">
+                                                        <Listbox.Button className="relative w-full cursor-default rounded-sm border border-none dark:text-boring-white bg-boring-white dark:bg-boring-black py-6 pl-0 text-left  focus:border-blue focus:outline-none focus:ring-none  ">
                                                             <span className="text-boring-black dark:text-boring-white border-r border-gray-light dark:border-gray-dark pr-4 ">{target.country_code}</span> 
                                                                 <span className="float-left pr-3">
                                                                     <Avatar
@@ -330,8 +332,8 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                                                                         {({ selected, active }) => (
                                                                             <>
-                                                                                <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
-                                                                                <span className="text-boring-black dark:text-boring-white border-r border-gray-light dark:border-gray-dark pr-4 text-sm">{pp.country_code}</span> 
+                                                                                <span className={classNames(selected ? '' : '', 'block truncate')}>
+                                                                                <span className="text-boring-black dark:text-boring-white border-r border-gray-light dark:border-gray-dark pr-4 text-xs">{pp.country_code}</span> 
                     
                                                                                 <span className="float-left pr-3 ">
                                                                                     <Avatar
@@ -386,7 +388,7 @@ const ShowPeer: React.FC<Props> = (props) => {
        
         
         {/* Advanced Configuration / Settings */}
-        <div className="mt-6 py-6 border-t border-b border-gray-lightest">
+        <div className="mt-6 py-6 border-t border-b border-gray-lightest dark:border-gray-dark opacity-20 hover:opacity-100">
             <h2 className="text-xs">Advanced / Helpers (Dev Mode):</h2>
         <a className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoRefreshOutline className="mr-2" /> Reboot </a><a className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/" target="_blank" rel="noreferrer"><IoBugOutline className="mr-2" /> Debug </a><a className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf:19531/browse" target="_blank" rel="noreferrer"> <IoFileTrayFull className="mr-2" /> Logs</a>
         <button className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
@@ -682,7 +684,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                 
                 <div className="col-span-3  py-4 border rounded-sm border-gray-light dark:border-gray-dark">
 
-                    <div className="text-boring-black mt-6">
+                    <div className="text-boring-black dark:text-boring-white mt-6">
                         <div className="px-4 sm:p-6">
                             <h3 className="text-lg font-medium ">Destroy Peer</h3>
                             <div className="mt-2 max-w-xl text-xs ">
@@ -693,7 +695,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                 <form>
                                     <button
                                         type="button"
-                                        className="mt-6 flex justify-center rounded-sm border border-gray dark:border-black  text-boring-black dark:text-boring-white py-2 px-2 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
+                                        className="mt-6 flex justify-center rounded-sm border border-gray dark:border-black  text-boring-black dark:text-boring-white dark:bg-black py-2 px-2 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
                                         onClick={() => deletePeer(props.peer.id)}
                                     >
                                         Destroy
