@@ -15,10 +15,10 @@ const ThemeChanger = () => {
   const { theme, setTheme } = useTheme()
 
   return (
-    <div className="font-jetbrains text-xs">
-      <button className='inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white' onClick={() => setTheme('light')}><IoSunnyOutline className="float-left mr-2" /> Light Mode</button>
-      <button className='inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white' onClick={() => setTheme('dark')}><IoMoonOutline className="float-left mr-2" /> Dark Mode</button>
-    </div>
+    <div className='mt-12 border rounded-sm  border-gray dark:border-black'>
+      <button className='text-center inline-flex items-center  text-xs bg-white px-3 py-2 text-boring-black hover:bg-gray-lightestest dark:hover:bg-gray-light border-r border-gray dark:border-black  w-1/2' onClick={() => setTheme('light')}><IoSunnyOutline className="float-left mr-2" /> Light Mode</button>
+      <button className='inline-flex items-center text-xs bg-white px-3 py-2 text-boring-black hover:bg-gray-lightestest dark:hover:bg-gray-light w-1/2' onClick={() => setTheme('dark')}><IoMoonOutline className="float-left mr-2" /> Dark Mode</button>
+</div>
   )
 }
 
@@ -64,7 +64,7 @@ export default function Layout({ children }: Props) {
 
         {/* Mobile menu */}
         <Transition.Root show={mobileMenuOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-20 sm:hidden " onClose={setMobileMenuOpen}>
+          <Dialog as="div" className="relative z-20 lg:hidden " onClose={setMobileMenuOpen}>
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -120,6 +120,8 @@ export default function Layout({ children }: Props) {
                   e.preventDefault();
                   signOut();
                 }}><IoWalletOutline className="mr-2" /> Sign Out</button>
+
+                <p className="text-xs">A private path</p>
                 
                       </div>
                     </nav>
@@ -142,7 +144,7 @@ export default function Layout({ children }: Props) {
 
               <button
                 type="button"
-                className="border-r border-gray-light dark:border-gray-dark px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500 md:hidden"
+                className="border-r border-gray-light dark:border-gray-dark px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500 lg:hidden"
                 onClick={() => setMobileMenuOpen(true)}
               >
                 <span className="sr-only">Open sidebar</span>
@@ -175,13 +177,14 @@ export default function Layout({ children }: Props) {
               
               <div className='px-12 pb-4'>
               <ThemeChanger />
-              </div>
+              
               <button 
                 className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" 
                 onClick={(e) => {
                   e.preventDefault();
                   signOut();
                 }}><IoWalletOutline className="mr-2" /> Sign Out</button>
+                </div>
               <div className='px-12 pb-4'>
                 {/* <Docs /> */}
               <Waiting />
