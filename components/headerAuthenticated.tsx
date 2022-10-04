@@ -5,6 +5,7 @@ import { SigninMessage } from '../utils/SigninMessage'
 import bs58 from "bs58"
 import { useEffect } from 'react'
 import { IoWalletOutline } from 'react-icons/io5'
+import Link from 'next/link'
 
 
 export default function Header() {
@@ -58,11 +59,11 @@ export default function Header() {
           {session?.user && (
             <>
               {/* Wallet Address display */}
-              <a href="/">
+              <Link href="/">
               <span className="font-jetbrains text-xs">
                 {session.user.email ?? session.user.name}
               </span>
-              </a>
+              </Link>
               
 
             </>
