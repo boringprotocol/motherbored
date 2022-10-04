@@ -6,7 +6,6 @@ import React, { Component, useEffect, useState } from 'react'
 import { GetServerSideProps } from 'next'
 import prisma from '../lib/prisma'
 import Head from 'next/head'
-import Table from 'react-tailwind-table'
 import 'react-tailwind-table/dist/index.css'
 
 import PeerPublic, { PeerPublicProps } from '../components/PeerPublic'
