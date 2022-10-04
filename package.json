@@ -15,6 +15,7 @@
     "@heroicons/react": "^2.0.11",
     "@metaplex-foundation/js": "^0.15.0",
     "@metaplex/js": "^4.12.0",
+    "@nextui-org/react": "^1.0.0-beta.10",
     "@prisma/client": "^4.3.1",
     "@solana-mobile/wallet-adapter-mobile": "^0.0.1-alpha.5",
     "@solana/wallet-adapter-base": "^0.9.16",
@@ -40,6 +41,7 @@
     "react-device-detect": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
+    "react-tailwind-table": "^1.1.1",
     "react-toastify": "^9.0.8",
     "sleep-promise": "^9.1.0",
     "tweetnacl": "^1.0.3"
