@@ -141,8 +141,8 @@ const NewPeer: React.FC<Props> = (props) => {
                             disabled
                         />
                     </div>
-                    <div className="m-4 hover:text-gray active:text-gray-dark">
-                        <a onClick={(e) => setName(generateName({ number: true }).dashed)}><span className=""><IoRefreshOutline /></span></a>
+                    <div className="mt-4 ">
+                        <a onClick={(e) => setName(generateName({ number: true }).dashed)}><span className="float-right p-4 border border-gray-lightest rounded-sm hover:text-gray active:text-gray-dark"><IoRefreshOutline /></span></a>
                     </div>
                     {/* <div className="my-6 border border-gray-dark text-boring-white rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                         <label htmlFor="mode" className="block text-xs text-gray">
