@@ -40,11 +40,25 @@ const TrafficStats = (props: any) => {
             <div id='nostats'></div>
         )
     }
+    // this was a breakdown by consumer:
+    /*
     props.stats.map((el: any) => {
-        if (testdata.has(el.public_key)) {
-            testdata.get(el.public_key).values.push({ x: el._time, y: el._value })
+        if (testdata.has(el.public_key + el._field)) {
+            testdata.get(el.public_key + el._field).values.push({ x: el._time, y: el._value })
         } else {
-            testdata.set(el.public_key, { field: el._field, values: [{ x: el._time, y: el._value }] })
+            testdata.set(el.public_key + el._field, { field: el._field, values: [{ x: el._time, y: el._value }] })
+        }
+    })
+    */
+
+    // this is traffic totals by rx/tx bytes (all consumers)
+    props.stats.map((el: any) => {
+        if (el.public_key != props.peer.pubkey) {
+            if (testdata.has(el._field)) {
+                testdata.get(el._field).values.push({ x: el._time, y: el._value })
+            } else {
+                testdata.set(el._field, { field: el._field, values: [{ x: el._time, y: el._value }] })
+            }
         }
     })
 
@@ -62,6 +76,13 @@ const TrafficStats = (props: any) => {
     const datasets: Dataset[] = []
 
     testdata.forEach((value, key, map) => {
+
+        let borderColor = "#990000";
+
+        if (value.field == "rx_bytes") {
+            borderColor = "#3B82F6"
+        }
+
         datasets.push(
             {
                 // label for our chart (pubkey?)
@@ -69,7 +90,7 @@ const TrafficStats = (props: any) => {
                 fill: false,
                 data: value.values,
                 // color of the line chart
-                borderColor: '#3B82F6',
+                borderColor: borderColor,
                 // Examples of other values you could use here
                 // partially transparent part below our line graph
                 //backgroundColor: 'rgba(59, 130, 246, 0.2)',
@@ -87,7 +108,7 @@ const TrafficStats = (props: any) => {
     })
 
     testdata.forEach((value, key, map) => {
-        console.log(key, value.values)
+        console.log(key, value.field)
     })
 
     //console.log("datasets", datasets.length)
