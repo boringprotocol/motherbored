@@ -9,18 +9,6 @@ import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 
-const ThemeChanger = () => {
-  const { theme, setTheme } = useTheme()
-
-  return (
-    <div className="font-jetbrains text-xs">
-      {/* The current theme is: <span className="capitalize">{theme}</span><br /><br /> */}
-      <button className='p-1 mr-3 bg-black dark:bg-boring-black text-boring-white dark:text-boring-white' onClick={() => setTheme('light')}>Light Mode</button>
-      <button className='p-1 bg-white text-black' onClick={() => setTheme('dark')}>Dark Mode</button>
-    </div>
-  )
-}
-
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
@@ -70,6 +58,8 @@ export default function Layout({ children }: Props) {
       handleSignIn();
     }
   }, [wallet.connected, status]);
+
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const [enabled, setEnabled] = useState(false)
@@ -95,11 +85,14 @@ export default function Layout({ children }: Props) {
           </BrowserView>
 
           <MobileView>
+          <a href="#" className="m-4 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={handleSignIn}>
+               <IoWalletOutline className="mr-2"/> Connect Wallet
+            </a>
             <a className="m-4 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" href="https://phantom.app/ul/browse/https%3A%2F%2Fboring-falcon.netlify.app"><IoWalletOutline className="mr-2" />Connect Phantom</a>
           </MobileView>
 
 
-        <p className="p-4 text-xs text-boring-black dark:text-gray">iOS and Android users should be able to use the Phantom wallet&apos;s in app-browser to access the Motherbored GUI.  </p>
+        <p className="p-4 text-xs text-boring-black dark:text-gray">iOS and Android users should be able to use the Phantom wallet in-app browser to access the Motherbored GUI.  </p>
         <div className=''>         
         </div>
 
