@@ -5,7 +5,7 @@ import Peer, { PeerProps } from "../../components/Peer"
 import LayoutAuthenticated from "../../components/layoutAuthenticated"
 import prisma from "../../lib/prisma"
 import { useSession } from "next-auth/react"
-import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline, IoCloudUploadOutline, IoServerOutline, IoText, IoFileTrayFull, IoBugOutline, IoRefreshOutline } from "react-icons/io5"
+import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline, IoCloudUploadOutline, IoServerOutline, IoText, IoFileTrayFull, IoBugOutline, IoRefreshOutline, IoArrowBack } from "react-icons/io5"
 import Image from 'next/image'
 import { ToastContainer, toast } from 'react-toastify'
 import CountryCodes from "../../data/country_codes"
@@ -16,6 +16,7 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
 import Avatar from "boring-avatars"
 import { useTheme } from "next-themes"
+import Link from "next/link"
 
 
 // this old thing seems to want to live on every page
@@ -249,8 +250,10 @@ const ShowPeer: React.FC<Props> = (props) => {
 
 
 {/* rows and columns w/ grid */}
+<div className="p-8 xl:p-12 xl:pt-12"><Link href={"/"}><a className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoArrowBack className="mr-2" /> peers </a></Link></div>
 
-<div className="p-8 xl:p-12 xl:pt-24 grid overflow-hidden grid-cols-4 md:grid-cols-6 grid-rows-1 sm:gap-2">
+
+<div className="p-8  xl:pt-0 grid overflow-hidden grid-cols-4 md:grid-cols-6 grid-rows-1 sm:gap-2">
 
 {/* {props.peer.provider_kind == "cloud" && (<li>provider_kind: {props.peer.provider_kind}</li>)} */}
 	
