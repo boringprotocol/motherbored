@@ -35,6 +35,11 @@ export const Config = {
 const TrafficStats = (props: any) => {
 
     let testdata = new Map()
+    if (!props.stats) {
+        return (
+            <div id='nostats'></div>
+        )
+    }
     props.stats.map((el: any) => {
         if (testdata.has(el.public_key)) {
             testdata.get(el.public_key).values.push({ x: el._time, y: el._value })
@@ -59,12 +64,13 @@ const TrafficStats = (props: any) => {
     testdata.forEach((value, key, map) => {
         datasets.push(
             {
-                // label for our chart
+                // label for our chart (pubkey?)
                 label: key,
                 fill: false,
                 data: value.values,
                 // color of the line chart
                 borderColor: '#3B82F6',
+                // Examples of other values you could use here
                 // partially transparent part below our line graph
                 //backgroundColor: 'rgba(59, 130, 246, 0.2)',
                 //borderWidth: 3,
