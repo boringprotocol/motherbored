@@ -88,11 +88,11 @@ export default function Layout({ children }: Props) {
           <a href="#" className="m-4 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={handleSignIn}>
                <IoWalletOutline className="mr-2"/> Connect Wallet
             </a>
-            <a className="m-4 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" href="https://phantom.app/ul/browse/https%3A%2F%2Fboring-falcon.netlify.app"><IoWalletOutline className="mr-2" />Connect Phantom</a>
+            {/* <a className="m-4 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" href="https://phantom.app/ul/browse/https%3A%2F%2Fboring-falcon.netlify.app"><IoWalletOutline className="mr-2" />Connect Phantom</a> */}
           </MobileView>
 
 
-        <p className="p-4 text-xs text-boring-black dark:text-gray">iOS and Android users should be able to use the Phantom wallet in-app browser to access the Motherbored GUI.  </p>
+        <p className="p-4 text-xs text-boring-black dark:text-gray">iOS and Android users should be able to use the Phantom wallet in-app browser to access this Motherbored GUI.  </p>
         <div className=''>         
         </div>
 
