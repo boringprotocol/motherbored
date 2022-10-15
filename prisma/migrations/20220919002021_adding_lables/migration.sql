@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Peer` ADD COLUMN `label` VARCHAR(191) NULL;

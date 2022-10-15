@@ -1,0 +1,48 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model Peer {
+  id       String  @id @default(cuid())
+  name     String?
+  setupkey String?
+  target   String?
+  kind     String?
+  User     User?   @relation(fields: [userId], references: [id])
+  userId   String?
+  pubkey   String?
+  label    String?
+  provider_kind String?
+
+  wifi_preference String?
+
+  hw_mode  String?
+  channel  Int?
+  ssid     String?
+  country_code String?
+  wpa_passphrase String?
+
+  @@index([userId])
+}
+
+model User {
+  id     String  @id @default(cuid())
+  wallet String  @unique
+  name   String?
+  image  String?
+  peers  Peer[]
+}
+
+model FalconToken {
+  id     String  @id @default(cuid())
+  token        String @db.VarChar(4096)
+  expires_at DateTime
+}
