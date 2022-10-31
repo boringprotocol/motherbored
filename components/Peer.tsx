@@ -1,7 +1,6 @@
 import React from 'react'
 import Router from 'next/router'
-import { IoLaptopOutline, IoWifiOutline, IoServerOutline, IoCloudCircleOutline, IoCloudOutline, IoPricetagOutline } from 'react-icons/io5'
-import Image from 'next/image'
+import { IoLaptopOutline, IoWifiOutline, IoServerOutline, IoCloudOutline, IoPricetagOutline } from 'react-icons/io5'
 import Avatar from 'boring-avatars'
 
 export type PeerProps = {
@@ -31,7 +30,6 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
     providerActive = true
   }
 
-
   // Sorting by peer kind (provider or consumer)
   let isProvider = false
   if (peer.kind == "provider") {
@@ -42,7 +40,6 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
   if (peer.kind == "consumer") {
     isConsumer = true
   }
-
 
   // Sorting by provider_kind (local or cloud)
   let isCloudProvider = false
@@ -55,16 +52,11 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
     isLocalProvider = true
   }
 
-
-
-
-
   return (
 
     <div className=''>
     
       <a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
-
 
       <div className="px-4 pt-4">&nbsp;
         {isConsumer && (<IoWifiOutline className="float-left mr-2" />)}
@@ -85,13 +77,20 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
 
         <h2 className='text-lg md:text-xl lg:text-2xl px-4 mt-4'>{peer.name}</h2>
 
-        <p className="inline-flex items-center font-jetbrains px-4 text-sm text-gray-500 capitalize">
+        <p className="inline-flex items-center font-jetbrains px-4 text-xs text-gray-500 capitalize">
           {/* {isProvider && (<IoServerOutline className="float-left mr-2" />)} */}
           {isConsumer && (<IoLaptopOutline className="float-left mr-2" />)}
           {isCloudProvider && (<IoCloudOutline className="float-left mr-2" />)}
           {isLocalProvider && (<IoServerOutline className="float-left mr-2" />)}<span className="capitalize">{peer.provider_kind} {peer.kind}</span>
 
         </p>
+
+        {isConsumer && (
+          <>
+          <span className="animate-pulse inline-flex rounded-full h-2 w-2 bg-green"></span>  
+          {peer.target}    
+          </>
+        )}
 
         <div className="pt-4 pl-4">
           <Avatar
@@ -100,8 +99,6 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
             variant="sunset"
           />
         </div>
-
-        
         
       </a>
       <div className='pt-4'>

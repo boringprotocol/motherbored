@@ -7,7 +7,12 @@ import { GetServerSideProps } from 'next'
 import Peer, { PeerProps } from '../components/Peer'
 import prisma from '../lib/prisma'
 import Head from 'next/head'
-import { IoAdd, IoAddCircleOutline } from 'react-icons/io5'
+import PeerFilter from '../components/peerFilter'
+
+
+// function classNames(...classes: any) {
+//   return classes.filter(Boolean).join(' ')
+// }
 
 // Placeholder data for peers stats
 const stats = [
@@ -76,19 +81,24 @@ const IndexPage: React.FC<Props> = (props) => {
     // AUTHENTICATED - Home Page Main Panel 🐈
     <LayoutAuthenticated>
       <Head>
-        <title>Motherbored</title>
+        <title>Motherbored - Boring Protocol</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link rel="apple-touch-icon" href="/img/favicon.png"/>
+        {/* make open graph / twitter cards here */}
       </Head>
     
       {/* Main content */}
       <div className="main pt-12 text-xs">
-        
-      {/* Maybe just add/remove a 'hidden' class on the rendered peer list item. Or probably useState though for back button  */}
-      {/* <div className='p-12'>
-      show peers: <a className="border p-1" href="#">all</a>, providers: <a className="border p-1" href="#">all</a> <a className="border p-1" href="#">local</a> <a className="border p-1" href="#">cloud</a> consumers: <a className="border p-1" href="#">all</a>
-      </div> */}
-      
+
+          {/* Build peers naviation here */}
+          <div className="grid grid-cols-3 mx-12 mb-4">
+            <div className="col-start-3">
+              <div className="flow-root">  
+              <PeerFilter />
+              </div>
+            </div>
+          </div>
+    
         {/* PEERS */}
         {/* key={peer.name} has to be on the first child element within a loop
         https://adhithiravi.medium.com/why-do-i-need-keys-in-react-lists-dbb522188bbb
@@ -206,16 +216,12 @@ const IndexPage: React.FC<Props> = (props) => {
                 </button>
           </li>
         </ul>
-
-
-  
-              
-        
+            
       </div>{/* end .main */}
   
         
         {/* NETWORK STATISTICS */}
-        {/* <div className="px-4 sm:px-8 md:px-12 py-16 border-t border-gray-light dark:border-gray-dark">
+        <div className="px-4 sm:px-8 md:px-12 py-16 border-t border-gray-light dark:border-gray-dark">
         <h3 className="font-jetbrains text-lg  text-gray dark:text-boring-white uppercase">Network</h3>
         <dl className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-3">
           {stats.map((item) => (
@@ -225,7 +231,7 @@ const IndexPage: React.FC<Props> = (props) => {
             </div>
           ))}
         </dl>
-        </div>   */}
+        </div>  
     
       </div>{/* end main */}
     </LayoutAuthenticated>
