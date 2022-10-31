@@ -60,10 +60,10 @@ const TrafficStats = (props: any) => {
 
     // this was a breakdown by consumer (for sorting):
     props.stats.map((el: any) => {
-        if (testdata.has(el.public_key + el._field)) {
-            testdata.get(el.public_key + el._field).values.push({ x: el._time, y: el._value })
+        if (testdata.has(el.public_key)) {
+            testdata.get(el.public_key).values.push({ x: el._time, y: el._value })
         } else {
-            testdata.set(el.public_key + el._field, { field: el._field, values: [{ x: el._time, y: el._value }] })
+            testdata.set(el.public_key, { field: el._field, values: [{ x: el._time, y: el._value }] })
         }
     })
 
