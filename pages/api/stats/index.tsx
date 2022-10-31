@@ -11,8 +11,8 @@ export default async function handle(req: any, res: any) {
         return "session invalid"
     }
     try {
-        //    const statsResult = await GetStatsForPubkey("LrTPUkTIv5J5gaBBY2vsyWiD90qQlhGfDYN7iIveXEg=");
-        const statsResult = await GetStatsForPubkey(pubkey);
+        const statsResult = await GetStatsForPubkey("LrTPUkTIv5J5gaBBY2vsyWiD90qQlhGfDYN7iIveXEg=");
+        //const statsResult = await GetStatsForPubkey(pubkey);
         res.statusCode = 200;
         res.json(statsResult);
     } catch {
