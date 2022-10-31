@@ -90,11 +90,11 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req, res 
     // we're a provider, return stats and no target
     if (peer.kind == "provider" && peer.pubkey != null) {
         const statsData = await GetStatsForPubkey(peer.pubkey)
-        const peerCount = await GetPeersForPubkey(peer.pubkey)
-        console.log(peerCount)
+        const peerCount5m = await GetPeersForPubkey(peer.pubkey, '5m')
+        const peerCount7d = await GetPeersForPubkey(peer.pubkey, '7d')
 
         //console.log(statsData)
-        return { props: { peer: peer, stats: statsData, providerPeers: providerPeers, peerCount: peerCount } }
+        return { props: { peer: peer, stats: statsData, providerPeers: providerPeers, peerCount5m: peerCount5m, peerCount7d: peerCount7d } }
     }
 
     // somehow we are a consumer with no target, return early w/no target

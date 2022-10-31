@@ -46,6 +46,14 @@ const Config: ChartOptions = {
             }
         },
         y: {
+            title: {
+                display: true,
+                text: 'bytes transfered',
+                font: {
+                    size: 12,
+                    family: "JetBrains-Mono-Thin",
+                },
+            },
             stacked: true,
             ticks: {
                 callback: function (value: any) {
@@ -58,9 +66,8 @@ const Config: ChartOptions = {
 
 const TrafficStats = (props: any) => {
 
-    let peerC = props.peerCount._value
     let testdata = new Map()
-    if (!props.peerCount) {
+    if (!props.peerCount5m) {
         return (
             <div id='nostats'></div>
         )
@@ -106,9 +113,14 @@ const TrafficStats = (props: any) => {
 
     const datasets: ChartDataset[] = []
 
+    const pal = ["C37D06", "7BB3C4", "DAE036", "B03C33", "215782", "384730", "C4BDA2", "FEDC89", "FEB98D", "7B0A5C", "C61427", "FD8056", "FDC05B", "7F472E", "A47A23", "5A3302", "F8485A"];
+    var counter = 0;
+
     testdata.forEach((value, key, map) => {
-        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-        const borderColor = "#" + randomColor;
+        var borderColor = "#" + pal[counter % pal.length];
+        counter += 1
+        //const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+        //const borderColor = "#" + randomColor;
 
         //let sorted = value.values.sort((a: any, b: any) => a.valueOf() - b.valueOf())
         /*
@@ -165,8 +177,14 @@ const TrafficStats = (props: any) => {
             <div>
                 <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
                     <div key="connected-peers" className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark">
-                        <dt className="truncate text-sm font-medium text-gray-500 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">connected peers</dt>
-                        <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">{props.peerCount[0]._value}</dd>
+                        <dt className="truncate text-sm font-medium text-gray-500 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">consumers 5m</dt>
+                        <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">{props.peerCount5m[0]._value}</dd>
+                    </div>
+                </dl>
+                <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+                    <div key="connected-peers7" className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark">
+                        <dt className="truncate text-sm font-medium text-gray-500 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">consumers 7d</dt>
+                        <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">{props.peerCount7d[0]._value}</dd>
                     </div>
                 </dl>
             </div >

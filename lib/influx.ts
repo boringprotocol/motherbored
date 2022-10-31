@@ -9,10 +9,10 @@ const bucket = 'my-bucket'
 
 import { InfluxDB, FluxTableMetaData } from '@influxdata/influxdb-client'
 
-export async function GetPeersForPubkey(pubkey: string) {
+export async function GetPeersForPubkey(pubkey: string, range: string) {
     const queryApi = new InfluxDB({ url, token }).getQueryApi(org)
 
-    const fluxQuery = 'from(bucket:"boringstats") |> range(start: -5m) |> filter(fn: (r) => r["_measurement"] == "wireguard_peer") |> filter(fn: (r) => r["mypubkey"] == "' + pubkey + '") |> group(columns: ["mypubkey"], mode: "by") |> distinct(column: "public_key") |> count()'
+    const fluxQuery = 'from(bucket:"boringstats") |> range(start: -' + range + ') |> filter(fn: (r) => r["_measurement"] == "wireguard_peer") |> filter(fn: (r) => r["mypubkey"] == "' + pubkey + '") |> group(columns: ["mypubkey"], mode: "by") |> distinct(column: "public_key") |> count()'
 
     console.log('*** QUERY: ***' + fluxQuery)
     try {
