@@ -10,6 +10,9 @@ const Config: ChartOptions = {
     plugins: {
         legend: {
             display: false
+        },
+        tooltip: {
+
         }
     },
     scales: {
@@ -17,6 +20,10 @@ const Config: ChartOptions = {
             title: {
                 display: true,
                 text: 'datetime (UTC)',
+                font: {
+                    size: 12,
+                    family: "JetBrains-Mono-Thin",
+                },
             },
             adapters: {
                 date: {
@@ -30,6 +37,12 @@ const Config: ChartOptions = {
                 //    day: "D",
                 //},
                 unit: 'day',
+            },
+            ticks: {
+                font: {
+                    size: 12,
+                    family: "JetBrains-Mono-Thin",
+                }
             }
         },
         y: {
@@ -112,7 +125,7 @@ const TrafficStats = (props: any) => {
         datasets.push(
             {
                 // label for our chart (pubkey?)
-                label: key,
+                label: "",
                 fill: true,
                 data: sorted,
                 // color of the line chart

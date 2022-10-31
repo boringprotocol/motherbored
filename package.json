@@ -26,6 +26,7 @@
     "@solana/wallet-adapter-wallets": "^0.18.8",
     "@solana/web3.js": "^1.60.0",
     "@tailwindcss/forms": "^0.5.3",
+    "@types/luxon": "^3.0.2",
     "boring-avatars": "^1.7.0",
     "boring-name-generator": "^1.0.1",
     "bs58": "^5.0.0",
