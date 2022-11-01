@@ -5,6 +5,9 @@ const Moment = require('moment')
 import prettyBytes from 'pretty-bytes';
 import { ChartDataset, ChartOptions } from 'chart.js';
 
+
+
+
 // import our custom configuration for our chart
 const Config: ChartOptions = {
     plugins: {
@@ -12,8 +15,14 @@ const Config: ChartOptions = {
             display: false
         },
         tooltip: {
-
-        }
+            titleFont: {
+                family: "Jetbrains-Mono-Thin"
+            },
+            bodyFont: {
+                family: "Jetbrains-Mono-Thin"
+            },
+            cornerRadius: 2,
+        },
     },
     scales: {
         x: {
@@ -56,10 +65,15 @@ const Config: ChartOptions = {
             },
             stacked: true,
             ticks: {
+                font: {
+                    size: 12,
+                    family: "JetBrains-Mono-Thin",
+                },
                 callback: function (value: any) {
                     return prettyBytes(value)
                 }
-            }
+            },
+            
         }
     }
 };
