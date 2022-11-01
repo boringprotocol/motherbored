@@ -113,7 +113,7 @@ const TrafficStats = (props: any) => {
 
     const datasets: ChartDataset[] = []
 
-    const pal = ["C37D06", "7BB3C4", "DAE036", "B03C33", "215782", "384730", "C4BDA2", "FEDC89", "FEB98D", "7B0A5C", "C61427", "FD8056", "FDC05B", "7F472E", "A47A23", "5A3302", "F8485A"];
+    const pal = ["DDD", "333333", "7BB3C4", "DAE036", "B03C33", "215782", "384730", "C4BDA2", "FEDC89", "FEB98D", "7B0A5C", "C61427", "FD8056", "FDC05B", "7F472E", "A47A23", "5A3302", "F8485A"];
     var counter = 0;
 
     testdata.forEach((value, key, map) => {
@@ -152,7 +152,7 @@ const TrafficStats = (props: any) => {
                 //pointHoverBackgroundColor: 'rgba(59, 130, 246, 1)',
                 //pointHoverBorderColor: 'rgba(59, 130, 246, 1)',
                 //pointHoverBorderWidth: 2
-                barThickness: 30,
+                barThickness: 10,
 
             }
 
@@ -171,23 +171,24 @@ const TrafficStats = (props: any) => {
     //   config
     return (
         <div>
-            <div className="chart-container w-full h-full p-2">
-                <Chart type='bar' data={data} options={Config} />
-            </div>
-            <div>
+            <div className="grid">
                 <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-                    <div key="connected-peers" className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark">
-                        <dt className="truncate text-sm font-medium text-gray-500 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">consumers 5m</dt>
+                    <div key="connected-peers" className="overflow-hidden  px-4 py-5 sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white">
+                        <dt className="truncate text-xs bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">Consumers (5min)</dt>
                         <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">{props.peerCount5m[0]._value}</dd>
                     </div>
                 </dl>
                 <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-                    <div key="connected-peers7" className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark">
-                        <dt className="truncate text-sm font-medium text-gray-500 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">consumers 7d</dt>
+                    <div key="connected-peers7" className="overflow-hidden ite px-4 py-5 sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white ">
+                        <dt className="truncate text-sm font-medium text-gray-500 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">Consumers 7d</dt>
                         <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">{props.peerCount7d[0]._value}</dd>
                     </div>
                 </dl>
             </div >
+            <div className="chart-container w-full h-full p-2">
+                <Chart type='bar' data={data} options={Config} />
+            </div>
+            
         </div >
     );
 };

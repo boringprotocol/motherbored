@@ -326,7 +326,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                 <div className=" box col-start-1 col-span-4 sm:col-span-4 ">
 
                     {isProvider && (
-                        <div className="m-12 border border-gray-lightest dark:border-gray-dark">
+                        <div className="m-12">
                             <TrafficStats  {...props} />
                         </div>
                     )}
