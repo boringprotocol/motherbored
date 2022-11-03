@@ -7,7 +7,8 @@ import { GetServerSideProps } from 'next'
 import Peer, { PeerProps } from '../components/Peer'
 import prisma from '../lib/prisma'
 import Head from 'next/head'
-import { IoAdd, IoAddCircleOutline, IoLogoApple, IoPhonePortrait } from 'react-icons/io5'
+import { IoAdd, IoAddCircleOutline, IoLogoApple, IoLogoWindows, IoPhonePortrait } from 'react-icons/io5'
+import { VscTerminalLinux } from 'react-icons/vsc'
 import PeerFilter from '../components/peerFilter'
 
 
@@ -106,7 +107,7 @@ const IndexPage: React.FC<Props> = (props) => {
         https://stackoverflow.com/questions/54401481/eslint-missing-key-prop-for-element-in-iterator-react-jsx-key */}
         <div className="px-4 sm:px-8 md:px-12 pb-16">
         <ul role="list" className=" pb-12 grid grid-cols-2 gap-6 sm:grid-cols-4 2xl:grid-cols-6">
-          <li className="shadow-md rounded-lg pb-2 pt-4 col-span-2 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
+          <li className="rounded-md pb-2 pt-4 col-span-1 border border-dashed border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
                   <button
                   type="button"
                   onClick={() => Router.push("/newpeer?mode=consumer")}
@@ -137,9 +138,9 @@ const IndexPage: React.FC<Props> = (props) => {
                   onClick={() => Router.push("/newpeer?mode=consumer")}
                   className="relative block w-full rounded-lg text-boring-black dark:text-boring-white  p-12 text-center  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
-                  <IoPhonePortrait /><IoLogoApple />
-                  <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add iPhone Consumer</span>
-                  <span className="font-jetbrains mt-2 block text-xs text-gray">Configure your iPhone to run as a consumer peer.</span>
+                  
+                  <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add <IoLogoApple className="float-left"/> Macintosh Consumer</span>
+                  <span className="font-jetbrains mt-2 block text-xs text-gray">Configure a VPN for OS X</span>
                   </button>
           </li>{/* /#add-peer */}
           <li className="shadow-md rounded-lg pb-2 pt-4 col-span-1 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
@@ -148,13 +149,26 @@ const IndexPage: React.FC<Props> = (props) => {
                   onClick={() => Router.push("/newpeer?mode=consumer")}
                   className="relative block w-full rounded-lg text-boring-black dark:text-boring-white  p-12 text-center  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
-                  <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add Android Consumer</span>
-                  <span className="font-jetbrains mt-2 block text-xs text-gray">Configure your Android phone to run as a consumer peer.</span>
+                  
+                  <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add <IoLogoWindows className="float-left"/> Windows Consumer</span>
+                  <span className="font-jetbrains mt-2 block text-xs text-gray">Configure a VPN for your Windows machine</span>
+                  </button>
+          </li>{/* /#add-peer */}
+          <li className="shadow-md rounded-lg pb-2 pt-4 col-span-1 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
+                  <button
+                  type="button"
+                  onClick={() => Router.push("/newpeer?mode=consumer")}
+                  className="relative block w-full rounded-lg text-boring-black dark:text-boring-white  p-12 text-center  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                  
+                  <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add  
+                  <VscTerminalLinux className="float-left" /> Linux Consumer</span>
+                  <span className="font-jetbrains mt-2 block text-xs text-gray">Configure a VPN to run on Linux</span>
                   </button>
           </li>{/* /#add-peer */}
 
           {props.peers.map((peer) => (
-            <li key={peer.name} className="col-span-2 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
+            <li key={peer.name} className="shadow-md col-span-2 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
               <Peer peer={peer} />
             </li>
           ))}     

@@ -2,6 +2,7 @@ import React from 'react'
 import Router from 'next/router'
 import { IoLaptopOutline, IoWifiOutline, IoServerOutline, IoCloudOutline, IoPricetagOutline } from 'react-icons/io5'
 import Avatar from 'boring-avatars'
+import Identicon from 'react-identicons'
 
 export type PeerProps = {
   id: string;
@@ -54,7 +55,7 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
 
   return (
 
-    <div className=''>
+    <div className='p-4'>
     
       <a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
 
@@ -82,7 +83,6 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
           {isConsumer && (<IoLaptopOutline className="float-left mr-2" />)}
           {isCloudProvider && (<IoCloudOutline className="float-left mr-2" />)}
           {isLocalProvider && (<IoServerOutline className="float-left mr-2" />)}<span className="capitalize">{peer.provider_kind} {peer.kind}</span>
-
         </p>
 
         {isConsumer && (
@@ -93,11 +93,12 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
         )}
 
         <div className="pt-4 pl-4">
-          <Avatar
+          {/* <Avatar
             size={40}
             name={peerAvatar}
             variant="sunset"
-          />
+          /> */}
+          <Identicon string={peerAvatar} size={40} fg="#666" />
         </div>
         
       </a>

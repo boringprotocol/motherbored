@@ -4,11 +4,12 @@ import { Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import HeaderAuthenticated from './headerAuthenticated'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
-import { Switch } from '@headlessui/react'
 import Waiting from './art/waiting'
 import Docs from './art/docs'
 import { signOut, useSession } from "next-auth/react"
-import { IoBugOutline, IoDownloadOutline, IoListOutline, IoLogoGithub, IoMoonOutline, IoSunnyOutline, IoWalletOutline } from 'react-icons/io5'
+import { IoAppsOutline, IoBugOutline, IoDownloadOutline, IoLogoGithub, IoMoonOutline, IoServerOutline, IoSunnyOutline, IoWalletOutline } from 'react-icons/io5'
+import { Tooltip } from '@nextui-org/react'
+
 
 // light mode / dark mode
 const ThemeChanger = () => {
@@ -58,14 +59,21 @@ export default function Layout({ children }: Props) {
             </div>
             
               <Link href="/directory" className='hello'>
-                <a className="hover:bg-gray-lightestest dark:hover:bg-gray-dark py-4 flex flex-shrink-0 items-center border-t border-b border-gray-lightest dark:border-gray-dark">
-                  <IoListOutline className="w-12 text-1xl" />
+                <a className="hover:bg-gray-lightestest dark:hover:bg-gray-dark py-4 flex flex-shrink-0 items-center border-t border-b border-gray-lightest dark:border-gray-dark" title=
+                "Provider Directory">
+                  <IoServerOutline className="w-12 text-1xl" />
                 </a>
               </Link>
 
               <Link href="/bug" className=''>
                 <a className="hover:bg-gray-lightestest dark:hover:bg-gray-dark py-4 flex flex-shrink-0 items-center border-b border-gray-lightest dark:border-gray-dark">
                   <IoBugOutline className="w-12 text-1xl" />
+                </a>
+              </Link>
+
+              <Link href="/peers" className=''>
+                <a className="hover:bg-gray-lightestest dark:hover:bg-gray-dark py-4 flex flex-shrink-0 items-center border-b border-gray-lightest dark:border-gray-dark">
+                  <IoAppsOutline className="w-12 text-1xl"  />
                 </a>
               </Link>
             

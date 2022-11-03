@@ -51,6 +51,8 @@
     "react-device-detect": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
+    "react-identicons": "^1.2.5",
+    "react-tetris": "^0.3.0",
     "react-toastify": "^9.0.8",
     "sleep-promise": "^9.1.0",
     "tweetnacl": "^1.0.3"

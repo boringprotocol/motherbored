@@ -10,16 +10,13 @@ import { ToastContainer, toast } from 'react-toastify'
 import CountryCodes from "../../data/country_codes"
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-
-
+import Identicon from 'react-identicons'
 import Avatar from "boring-avatars"
 import { useTheme } from "next-themes"
 import Link from "next/link"
 import TrafficStats from "../../components/trafficStats"
 import { GetStatsForPubkey, GetPeersForPubkey } from "../../lib/influx"
 
-
-// this old thing seems to want to live on every page
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
@@ -323,7 +320,8 @@ const ShowPeer: React.FC<Props> = (props) => {
                 </div>
 
                 <div className="box row-start-1 md:row-start-2 col-start-1 col-span-1 md:col-span-2">
-                    <Avatar size="100%" name={peerAvatar} variant="sunset" />
+                    {/* <Avatar size="100%" name={peerAvatar} variant="sunset" /> */}
+                    <Identicon size="300" string="{peerAvatar}" fg="#000000" />
                 </div>
 
                 <div className=" box col-start-1 col-span-4 sm:col-span-4 ">
@@ -368,7 +366,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                                     <span className="float-left pr-3">
                                                         <Avatar
                                                             size="30"
-                                                            name={target.name}
+                                                            name="dude"
                                                             variant="sunset"
                                                         />
                                                     </span>
@@ -407,7 +405,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                                                             <span className="float-left pr-3 ">
                                                                                 <Avatar
                                                                                     size="16"
-                                                                                    name={target.name}
+                                                                                    name="dude"
                                                                                     variant="sunset"
                                                                                 />
                                                                             </span>

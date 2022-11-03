@@ -3,3 +3,4 @@
 //       theme?: string
 //     }
 //   }
+declare module 'react-identicons';

@@ -1,7 +1,10 @@
 import React from 'react'
 import Router from 'next/router'
 import { IoArrowForwardOutline } from 'react-icons/io5'
-import Avatar from 'boring-avatars'
+// Switching to react-identicons from boring-avatars
+// import Avatar from 'boring-avatars'
+// https://www.npmjs.com/package/react-identicons
+import Identicon from 'react-identicons'
 
 export type PeerPublicProps = {
   id: string;
@@ -51,11 +54,12 @@ export type PeerPublicProps = {
         <td className="whitespace-nowrap py-0 pl-4 pr-3 text-sm sm:pl-6">
           <div className="flex items-center">
             <div className="h-11 w-10 mt-4 flex-shrink-0">
-              <Avatar
+              {/* <Avatar
                 size={24}
                 name={peerAvatar}
                 variant="sunset"
-              />
+              /> */}
+              <Identicon size={24} string={peerAvatar} fg="#000000" />
               {/* <img className="h-10 w-10 rounded-full" src="person.image" alt="" /> */}
             </div>
             <div className="ml-4">

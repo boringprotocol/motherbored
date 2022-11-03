@@ -123,7 +123,9 @@ const ShowDirectoryPeer: React.FC<Props> = (props) => {
         <LayoutAuthenticated>
 
             {/* rows and columns w/ grid */}
-            <div className="p-8 xl:p-12 xl:pt-12"><Link href={"/directory"}><a className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="/directory"><IoArrowBack className="mr-2" /> directory </a></Link></div>
+            <div className="p-8 xl:px-12 xl:pt-12">
+                <Link href={"/directory"}><a className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2">Browse Providers </a></Link>
+            <Link href={"/directory"}><a className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2">Connect</a></Link></div>
 
       
            
@@ -135,7 +137,7 @@ const ShowDirectoryPeer: React.FC<Props> = (props) => {
 
                     <dl className="grid grid-cols-1 gap-5 sm:grid-cols-3">
         {stats.map((item) => (
-          <div key={item.name} className="overflow-hidden bg-white px-4 py-5 sm:p-6">
+          <div key={item.name} className="overflow-hidden bg-boring-white dark:bg-boring-black px-4 py-5 sm:p-6">
             <dt className="truncate text-sm font-medium text-gray-500">{item.name}</dt>
             <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{item.stat}</dd>
           </div>
