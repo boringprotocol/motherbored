@@ -15,18 +15,23 @@ export async function GetPeersForPubkey(pubkey: string, range: string) {
     const fluxQuery = 'from(bucket:"boringstats") |> range(start: -' + range + ') |> filter(fn: (r) => r["_measurement"] == "wireguard_peer") |> filter(fn: (r) => r["mypubkey"] == "' + pubkey + '") |> group(columns: ["mypubkey"], mode: "by") |> distinct(column: "public_key") |> count()'
 
     console.log('*** QUERY: ***' + fluxQuery)
-    try {
-        const data = await queryApi.collectRows(
-            fluxQuery /*, you can specify a row mapper as a second arg */
-        )
-        console.log('\nCollect ROWS SUCCESS')
-        //res.status(200).json(data)
-        return data
-    } catch (e) {
-        console.error(e)
-        console.log('\nCollect ROWS ERROR')
-        return e
-    }
+    let stat = ""
+    return await new Promise((resolve, reject) => {
+        queryApi.queryRows(fluxQuery, {
+            next(row, tableMeta) {
+                const o = tableMeta.toObject(row)
+                console.log(o._value)
+                stat = o._value
+                if (!stat) {
+                    return
+                }
+            },
+            error: reject,
+            complete() {
+                resolve(stat)
+            },
+        })
+    })
 }
 
 export async function GetStatsForPubkey(pubkey: string) {
@@ -41,25 +46,22 @@ export async function GetStatsForPubkey(pubkey: string) {
     //'from(bucket:"boringstats") |> range(start: -15m) |> filter(fn: (r) => r["_measurement"] == "wireguard_peer") |> filter(fn: (r) => r["_field"] == "rx_bytes" or r["_field"] == "tx_bytes") |> filter(fn: (r) => r["mypubkey"] == "' + pubkey + '") |> group(columns: ["_measurement", "_field", "public_key"]) |> derivative(unit: 1m, nonNegative: true)|> aggregateWindow(every: 10m, fn: mean, createEmpty: false) |> truncateTimeColumn(unit: 1s) |> yield(name: "mean")'
     console.log('*** QUERY: ***' + fluxQuery)
 
-    try {
-        const data = await queryApi.collectRows(
-            fluxQuery /*, you can specify a row mapper as a second arg */
-        )
-        /*
-        data.forEach((x) => {
-
-            console.log(JSON.stringify(x))
-
+    const stat = ""
+    return await new Promise((resolve, reject) => {
+        queryApi.queryRows(fluxQuery, {
+            next(row, tableMeta) {
+                const o = tableMeta.toObject(row)
+                const stat = o[0]._value
+                if (!stat) {
+                    return
+                }
+            },
+            error: reject,
+            complete() {
+                resolve(stat)
+            },
         })
-        */
-        //res.status(200).json(data)
-        console.log('\nCollect ROWS SUCCESS')
-        return data
-    } catch (e) {
-        console.error(e)
-        console.log('\nCollect ROWS ERROR')
-        return e
-    }
+    })
 
     /*
     // this method didn't work right (exception)
