@@ -73,7 +73,7 @@ const Config: ChartOptions = {
                     return prettyBytes(value)
                 }
             },
-            
+
         }
     }
 };
@@ -81,7 +81,7 @@ const Config: ChartOptions = {
 const TrafficStats = (props: any) => {
 
     let testdata = new Map()
-    if (!props.peerCount5m) {
+    if (!props.) {
         return (
             <div id='nostats'></div>
         )
@@ -202,7 +202,7 @@ const TrafficStats = (props: any) => {
             <div className="chart-container w-full h-full p-2">
                 <Chart type='bar' data={data} options={Config} />
             </div>
-            
+
         </div >
     );
 };
