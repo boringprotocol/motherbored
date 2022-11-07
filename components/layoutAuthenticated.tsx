@@ -7,7 +7,7 @@ import { useTheme } from 'next-themes'
 import Waiting from './art/waiting'
 import Docs from './art/docs'
 import { signOut, useSession } from "next-auth/react"
-import { IoAppsOutline, IoBugOutline, IoDownloadOutline, IoLogoGithub, IoMoonOutline, IoServerOutline, IoSunnyOutline, IoWalletOutline } from 'react-icons/io5'
+import { IoAppsOutline, IoBugOutline, IoDownloadOutline, IoLogoGithub, IoMoonOutline, IoServerOutline, IoSettingsOutline, IoSunnyOutline, IoWalletOutline } from 'react-icons/io5'
 import { Tooltip } from '@nextui-org/react'
 
 
@@ -57,7 +57,12 @@ export default function Layout({ children }: Props) {
                 </a>
               </Link>
             </div>
-            
+            <Link href="/account" className='hello'>
+                <a className="hover:bg-gray-lightestest dark:hover:bg-gray-dark py-4 flex flex-shrink-0 items-center border-t border-gray-lightest dark:border-gray-dark" title=
+                "Provider Directory">
+                  <IoSettingsOutline className="w-12 text-1xl" />
+                </a>
+              </Link>
               <Link href="/directory" className='hello'>
                 <a className="hover:bg-gray-lightestest dark:hover:bg-gray-dark py-4 flex flex-shrink-0 items-center border-t border-b border-gray-lightest dark:border-gray-dark" title=
                 "Provider Directory">

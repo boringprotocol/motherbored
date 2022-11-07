@@ -188,13 +188,13 @@ const TrafficStats = (props: any) => {
             <div className="grid">
                 <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
                     <div key="connected-peers" className="overflow-hidden  px-4 py-5 sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white">
-                        <dt className="truncate text-xs bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">Consumers (5min)</dt>
+                        <dt className="truncate text-sm bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">Consumers 5m</dt>
                         <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">{props.peerCount5m[0]._value}</dd>
                     </div>
                 </dl>
                 <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
                     <div key="connected-peers7" className="overflow-hidden ite px-4 py-5 sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white ">
-                        <dt className="truncate text-sm font-medium text-gray-500 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">Consumers 7d</dt>
+                        <dt className="truncate text-sm text-gray-500 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">Consumers 7d</dt>
                         <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">{props.peerCount7d[0]._value}</dd>
                     </div>
                 </dl>

@@ -315,13 +315,13 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                 <div className="box row-start-1 col-span-4 md:col-span-6 col-start-2 md:col-start-1">
 
-                    <h1 className="text-2xl sm:text-5xl lg:text-6xl xl:text-7xl pl-6 pt-12 mb-12">{name || ""}</h1>
+                    <h1 className="  text-2xl sm:text-5xl lg:text-6xl xl:text-7xl pl-6  mb-12">{name || ""}</h1>
 
                 </div>
 
-                <div className="box row-start-1 md:row-start-2 col-start-1 col-span-1 md:col-span-2">
+                <div className=" box row-start-1 md:row-start-2 col-start-1 col-span-1 md:col-span-2">
                     {/* <Avatar size="100%" name={peerAvatar} variant="sunset" /> */}
-                    <Identicon size="300" string="{peerAvatar}" fg="#000000" />
+                    <Identicon size="300" string={peerAvatar} fg="#666" />
                 </div>
 
                 <div className=" box col-start-1 col-span-4 sm:col-span-4 ">
@@ -332,7 +332,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                     )}
 
                     {isProvider && (
-                        <div className="m-12">
+                        <div className="">
                             <TrafficStats  {...props} />
                         </div>
                     )}
