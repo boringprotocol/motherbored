@@ -74,7 +74,8 @@ export const Table = ({ columns, rows }) => {
           <tr>
             {columns.map((column) => {
               return (
-                <th>
+                <th
+                  key={`${column.accessor}-th`}>
                   <input
                     key={`${column.accessor}-search`}
                     type="search"

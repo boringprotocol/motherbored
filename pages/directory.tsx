@@ -48,20 +48,26 @@ const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   //peers.forEach((value, key, map) => {
   for (const value of peers) {
 
-    const myStat = await GetPeersForPubkey(value.pubkey, "5m")
+    if (value.pubkey != null) {
 
-    let myRealStat = "0"
-    if (myStat.length != 0) {
-      myRealStat = myStat[0]._value
+      const myStat: any = await GetPeersForPubkey(value.pubkey, "5m")
+
+      if (myStat != null) {
+
+        let myRealStat = "0"
+        if (myStat.length != 0) {
+          myRealStat = myStat[0]._value
+        }
+
+        const newPeer = {
+          name: value.name,
+          country_code: value.country_code,
+          connected_peers: myRealStat,
+        }
+
+        peersWithStats.push(newPeer)
+      }
     }
-
-    const newPeer = {
-      name: value.name,
-      country_code: value.country_code,
-      connected_peers: myRealStat,
-    }
-
-    peersWithStats.push(newPeer)
 
   }
   //})

@@ -81,7 +81,7 @@ const Config: ChartOptions = {
 const TrafficStats = (props: any) => {
 
     let testdata = new Map()
-    if (!props.) {
+    if (!props.peerCount5m) {
         return (
             <div id='nostats'></div>
         )
