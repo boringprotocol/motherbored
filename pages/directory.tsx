@@ -6,7 +6,7 @@ import React, { Component, useEffect, useState } from 'react'
 import { GetServerSideProps } from 'next'
 import prisma from '../lib/prisma'
 import Head from 'next/head'
-import { GetPeersForPubkey } from "../lib/influx.ts"
+import { GetPeersForPubkey } from "../lib/influx"
 import PeerPublic, { PeerPublicProps } from '../components/peerPublic'
 import CountryFilter from '../components/countryFilter'
 
