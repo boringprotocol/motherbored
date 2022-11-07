@@ -11,19 +11,19 @@ import PeerPublic, { PeerPublicProps } from '../components/peerPublic'
 import CountryFilter from '../components/countryFilter'
 
 // Providers table:
-// import { Table } from '../components/providersTable.js'
+import { Table } from '../components/providersTable.js'
 
 
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  
-const session = await getSession({ req });
+
+  const session = await getSession({ req });
   if (!session || !session.user || !session.user.name) {
     res.statusCode = 403;
     return { props: { peers: [] } }
   }
 
-const user = await prisma.user.findFirst({
+  const user = await prisma.user.findFirst({
     where: { wallet: session.user.name }
   })
 
@@ -38,7 +38,7 @@ const user = await prisma.user.findFirst({
     }
   }
 
-const peers = await prisma.peer.findMany({ 
+  const peers = await prisma.peer.findMany({
     // show all peers
     //where: { userId: user?.id },
   })
@@ -52,7 +52,7 @@ type Props = {
   providers: PeerPublicProps[],
 }
 
-const DirectoryPage: React.FC<Props> = (props) => {  
+const DirectoryPage: React.FC<Props> = (props) => {
 
   // const columns = [
   //   { accessor: 'name', label: 'Name' },
@@ -61,7 +61,7 @@ const DirectoryPage: React.FC<Props> = (props) => {
   //   { accessor: 'start_date', label: 'Start Date' },
   // ]
 
-  
+
   // const rows = [
   //   { id: 1, name: 'Liz Lemon', age: 36, is_manager: true, start_date: '02-28-1999' },
   //   { id: 2, name: 'Jack Donaghy', age: 40, is_manager: true, start_date: '03-05-1997' },
@@ -73,7 +73,7 @@ const DirectoryPage: React.FC<Props> = (props) => {
   //   { id: 8, name: null, age: null, is_manager: null, start_date: null },
   // ]
 
-  const { data } = useSession(); 
+  const { data } = useSession();
   const { data: session, status } = useSession();
   if (!session) {
 
@@ -91,11 +91,12 @@ const DirectoryPage: React.FC<Props> = (props) => {
             <li key={peer.name} className="">
               <PeerPublic peer={peer} />
             </li>
-          ))}           
+          ))}
         </ul>
       </LayoutDirectory>
     );
   }
+  const columns = [{ accessor: "name", label: "Name" }]
   return (
 
     // AUTHENTICATED - Home Page Main Panel 🐈
@@ -103,72 +104,72 @@ const DirectoryPage: React.FC<Props> = (props) => {
       <Head>
         <title>Motherbored</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="apple-touch-icon" href="/img/favicon.png"/>
+        <link rel="apple-touch-icon" href="/img/favicon.png" />
       </Head>
 
 
       <div className="fixed w-full flex p-6">
         <div className="z-10 bg-boring-white dark:bg-boring-black">
 
-        {/* <Table rows={rows} columns={columns} /> */}
+          <Table rows={props.peers} columns={columns} />
 
-          
-        <CountryFilter />
-        
+
+          <CountryFilter />
+
         </div>
       </div>
 
       {/* Main content */}
       <div className="main p-8 text-xs">
-      
-        {/* PEERS */} 
-      
+
+        {/* PEERS */}
+
 
         <div className="mt-12 flex flex-col">
-            
-        <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle">
-            <div className="overflow-hidden shadow-sm ring-1 ring-black ring-opacity-5">
-              <table className="min-w-full divide-y divide-gray-lightest dark:divide-gray-dark">
-              <thead className="bg-boring-white dark:bg-boring-black">
-                  <tr>
-                    <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                      Provider
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Country
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      POA
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Status
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Consumers
-                    </th>
-                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                      <span className="sr-only">
-                        View
+
+          <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="inline-block min-w-full py-2 align-middle">
+              <div className="overflow-hidden shadow-sm ring-1 ring-black ring-opacity-5">
+                <table className="min-w-full divide-y divide-gray-lightest dark:divide-gray-dark">
+                  <thead className="bg-boring-white dark:bg-boring-black">
+                    <tr>
+                      <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                        Provider
+                      </th>
+                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                        Country
+                      </th>
+                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                        POA
+                      </th>
+                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                        Status
+                      </th>
+                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                        Consumers
+                      </th>
+                      <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                        <span className="sr-only">
+                          View
                         </span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="mt-24 divide-y divide-gray-lightest dark:divide-gray-dark">
-                {props.peers.map((peer) => (
-                  <tr key={peer.name} className="p-12 hover:bg-gray-lightestest dark:hover:bg-gray-dark cursor-pointer" onClick={() => Router.push("/directory/p/[id]", `/directory/p/${peer.id}`)}>
-                    <PeerPublic peer={peer} />
-                  </tr>
-                ))}          
-                </tbody>
-              </table>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="mt-24 divide-y divide-gray-lightest dark:divide-gray-dark">
+                    {props.peers.map((peer) => (
+                      <tr key={peer.name} className="p-12 hover:bg-gray-lightestest dark:hover:bg-gray-dark cursor-pointer" onClick={() => Router.push("/directory/p/[id]", `/directory/p/${peer.id}`)}>
+                        <PeerPublic peer={peer} />
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
       </div>{/* end .main */}
-  
+
     </LayoutAuthenticated>
   );
 }
