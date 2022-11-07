@@ -18,7 +18,7 @@ import Avatar from "boring-avatars"
 import { useTheme } from "next-themes"
 import Link from "next/link"
 import TrafficStats from "../../components/trafficStats"
-import { GetStatsForPubkey } from "../../lib/influx"
+import { GetStatsForPubkey, GetPeersForPubkey } from "../../lib/influx"
 
 
 // this old thing seems to want to live on every page
@@ -90,8 +90,11 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req, res 
     // we're a provider, return stats and no target
     if (peer.kind == "provider" && peer.pubkey != null) {
         const statsData = await GetStatsForPubkey(peer.pubkey)
+        const peerCount5m = await GetPeersForPubkey(peer.pubkey, '5m')
+        const peerCount7d = await GetPeersForPubkey(peer.pubkey, '7d')
+
         //console.log(statsData)
-        return { props: { peer: peer, stats: statsData, providerPeers: providerPeers } }
+        return { props: { peer: peer, stats: statsData, providerPeers: providerPeers, peerCount5m: peerCount5m, peerCount7d: peerCount7d } }
     }
 
     // somehow we are a consumer with no target, return early w/no target
@@ -323,7 +326,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                 <div className=" box col-start-1 col-span-4 sm:col-span-4 ">
 
                     {isProvider && (
-                        <div className="m-12 border border-gray-lightest dark:border-gray-dark">
+                        <div className="m-12">
                             <TrafficStats  {...props} />
                         </div>
                     )}
