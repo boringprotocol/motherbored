@@ -181,6 +181,17 @@ const TrafficStats = (props: any) => {
 
     const data = { datasets: datasets };
 
+
+    let m5 = "0"
+    let d7 = "0"
+    if (props.peerCount7d.length != 0 && props.peerCount7d[0]._value != null) {
+        d7 = props.peerCount7d[0]._value
+    }
+
+    if (props.peerCount5m.length != 0 && props.peerCount5m[0]._value != null) {
+        m5 = props.peerCount7d[0]._value
+    }
+
     //   and finally lets return a chart component with our api data and
     //   config
     return (
@@ -193,11 +204,11 @@ const TrafficStats = (props: any) => {
                 <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
                     <div key="connected-peers" className="overflow-hidden  px-4 py-5 sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white">
                         <dt className="truncate text-xs bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">Consumers (last 7 days)</dt>
-                        <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">{props.peerCount7d[0]._value}</dd>
+                        <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">{d7}</dd>
                     </div>
                     <div key="connected-peers5" className="overflow-hidden  px-4 py-5 sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white">
                         <dt className="truncate text-xs bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">Consumers (now)</dt>
-                        <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">{props.peerCount5m[0]._value}</dd>
+                        <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">{m5}</dd>
                     </div>
                 </dl>
             </div >
