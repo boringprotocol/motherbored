@@ -285,8 +285,9 @@ export default function Layout({ children }: Props) {
                       <p className="text-xs mb-2">Motherbored set-up, VPS set-up, Development notes, etc...</p>
 
                       <a
-                        href="https://github.com/boringprotocol/docs"
+                        href="https://docs.motherbored.app"
                         className="mb-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black hover:bg-boring-white hover:opacity-70 active:opacity-50 shadow-md active:shadow-sm"
+                        target="_blank"
                       ><IoLogoGithub className="mr-2" />GitHub</a>
                       <div>
 
