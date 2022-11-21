@@ -10,7 +10,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import CountryCodes from "../../data/country_codes"
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import Identicon from 'react-identicons'
+// import Identicon from 'react-identicons'
 import Avatar from "boring-avatars"
 import { useTheme } from "next-themes"
 import Link from "next/link"
@@ -288,7 +288,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
 
             {/* Design tool shows breakpoints on the rendered page */}
-            {/* <div className="flex items-center m-2 fixed bottom-0 right-0 border border-gray-400 rounded p-2 bg-gray-300 text-pink-600 text-sm">
+            <div className="flex items-center m-2 fixed bottom-0 right-0 border border-gray-400 rounded p-2 bg-gray-300 text-pink-600 text-sm">
     Current breakpoint - 
     <span className="ml-1 sm:hidden md:hidden lg:hidden xl:hidden">default (&lt; 640px)</span>
     <span className="ml-1 hidden sm:inline md:hidden font-extrabold">sm</span>
@@ -296,12 +296,12 @@ const ShowPeer: React.FC<Props> = (props) => {
     <span className="ml-1 hidden lg:inline xl:hidden font-extrabold">lg</span>
     <span className="ml-1 hidden xl:inline 2xl:hidden font-extrabold">xl</span>
     <span className="ml-1 hidden 2xl:inline font-extrabold">2xl</span>
-</div> */}
+</div>
 
 
 
             {/* rows and columns w/ grid */}
-            <div className="p-8 xl:p-12 xl:pt-12"><Link href={"/"}><a className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoArrowBack className="mr-2" /> peers </a></Link></div>
+            <div className="p-8 xl:p-12 xl:pt-12"><Link href={"/"}><a className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoArrowBack className="mr-2" /> my peers </a></Link></div>
 
             {/* <div className="bg-orange">&nbsp;</div>
             <div className="bg-yellow">&nbsp;</div>
@@ -320,14 +320,14 @@ const ShowPeer: React.FC<Props> = (props) => {
                 </div>
 
                 <div className=" box row-start-1 md:row-start-2 col-start-1 col-span-1 md:col-span-2">
-                    {/* <Avatar size="100%" name={peerAvatar} variant="sunset" /> */}
-                    <Identicon size="300" string={peerAvatar} fg="#666" />
+                    <Avatar size="100%" name={peerAvatar} variant="sunset" />
+                    {/* <Identicon size="300" string={peerAvatar} fg="#666" /> */}
                 </div>
 
                 <div className=" box col-start-1 col-span-4 sm:col-span-4 ">
                 {isProvider && (
                       <>
-
+i'm a provider
                       </>
                     )}
 
@@ -737,7 +737,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
 
 
-
+<p className="text-orange">if local privider, show info about how to change pi to consumer </p>
 
 
 
