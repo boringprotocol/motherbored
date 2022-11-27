@@ -216,7 +216,7 @@ const ShowPeer: React.FC<Props> = (props) => {
             });
 
             //Peer Saved
-            if (response.ok) { toast('Changes Saved.  Press Install Config to activate', { containerId: 'PeerSavedNotification' }) }
+            if (response.ok) { toast('Changes Saved.  Install Config to activate', { containerId: 'PeerSavedNotification' }) }
 
             const resultData = await (response.json()) as any;
             if (response.ok) {
