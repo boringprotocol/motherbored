@@ -1,7 +1,7 @@
 const Waiting = () => {
     return ( 
         <>
-        <span className="text-black dark:text-gray">
+        <span className="text-boring-black dark:text-boring-white">
         <svg width="100%" viewBox="0 0 840 640" xmlns="http://www.w3.org/2000/svg">
         <g id="Group">
                 <path id="Path-copy-75" fill="none" stroke="currentColor" strokeWidth="0.45378" strokeLinecap="round" strokeLinejoin="round" d="M 789.495178 343.637573 L 789.402039 342.835754 C 788.365417 333.860168 783.371643 325.063538 781.648926 316.136688 C 779.157349 303.22998 773.704041 291.977417 769.903564 279.537231 C 767.472717 271.582092 768.837585 263.337036 765.428223 255.555573"/>
