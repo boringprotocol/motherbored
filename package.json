@@ -29,7 +29,7 @@
     "@tailwindcss/forms": "^0.5.3",
     "@types/luxon": "^3.0.2",
     "boring-avatars": "^1.7.0",
-    "boring-name-generator": "^1.0.1",
+    "boring-name-generator": "^1.0.2",
     "bs58": "^5.0.0",
     "chart.js": "^3.9.1",
     "chartjs-adapter-luxon": "^1.2.0",
