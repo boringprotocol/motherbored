@@ -219,7 +219,7 @@ const ShowPeer: React.FC<Props> = (props) => {
             });
 
             //Peer Saved
-            if (response.ok) { toast('Changes Saved - press Install Config to reboot and activate.', { containerId: 'PeerSavedNotification' }) }
+            if (response.ok) { toast('Changes Saved.  Install Config to activate', { containerId: 'PeerSavedNotification' }) }
 
             const resultData = await (response.json()) as any;
             if (response.ok) {
@@ -309,7 +309,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
 
             {/* rows and columns w/ grid */}
-            <div className="p-8 xl:p-12 xl:pt-12"><Link href={"/"}><a className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoArrowBack className="mr-2" /> my peers </a></Link></div>
+            <div className="p-4"><Link href={"/"}><a className="inline-flex items-center rounded-sm border border-gray-light dark:border-gray-dark text-xs  px-3 py-2 text-gray dark:text-gray-light hover:bg-gray-lightestest dark:hover:bg-gray-dark focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoArrowBack className="mr-2" /> peers </a></Link></div>
 
             {/* <div className="bg-orange">&nbsp;</div>
             <div className="bg-yellow">&nbsp;</div>
@@ -322,27 +322,23 @@ const ShowPeer: React.FC<Props> = (props) => {
                 {props.peer.provider_kind == "cloud" && (<li>provider_kind: {props.peer.provider_kind}</li>)}
 
                 <div className="box row-start-1 col-span-4 md:col-span-6 col-start-2 md:col-start-1">
-                    <h1 className="  text-2xl sm:text-5xl lg:text-6xl xl:text-7xl pl-6  mb-12">{name || ""}</h1>
+
+                    <h1 className="text-2xl sm:text-5xl lg:text-6xl xl:text-7xl pl-6 pt-2 mb-2">{name || ""}</h1>
+
                 </div>
 
                 <div className="box row-start-1 md:row-start-2 col-start-1 col-span-1 md:col-span-2">
-                    <Avatar size="100%" name={peerAvatar} variant="sunset" colors={[
-	"#FB6900",
-	"#F63700",
-	"#004853",
-	"#007E80",
-	"#00B9BD"]} />
-                    {/* <Identicon size="150" string={peerAvatar} fg="#666" className="identicon" /> */}
-                    {/* <Jdenticon size="100%" value={peerAvatar} className=""/> */}
-
-                    {/* <ReactQrCode
-        value={"https://github.com/devmehq/react-qr-code"}
-        size={128}
-        bgColor={'#ffffff'}
-        fgColor={'#000000'}
-        renderAs={'svg'}
-        marginSize={50}
-      /> */}
+                    <Avatar 
+                        size="100%" 
+                        name={peerAvatar} 
+                        variant="sunset" 
+                        colors={[
+                            "#FB6900",
+                            "#F63700",
+                            "#004853",
+                            "#007E80",
+                            "#00B9BD"]} 
+                    />
                 </div>
 
                 <div className=" box col-start-1 col-span-4 sm:col-span-4 ">
@@ -353,7 +349,7 @@ i'm a provider
                     )}
 
                     {isProvider && (
-                        <div className="">
+                        <div className="m-0 md:m-12">
                             <TrafficStats  {...props} />
                         </div>
                     )}

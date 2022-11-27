@@ -24,14 +24,14 @@ const stats = [
 ]
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  
-const session = await getSession({ req });
+
+  const session = await getSession({ req });
   if (!session || !session.user || !session.user.name) {
     res.statusCode = 403;
     return { props: { peers: [] } }
   }
 
-const user = await prisma.user.findFirst({
+  const user = await prisma.user.findFirst({
     where: { wallet: session.user.name }
   })
 
@@ -46,7 +46,7 @@ const user = await prisma.user.findFirst({
     }
   }
 
-const peers = await prisma.peer.findMany({
+  const peers = await prisma.peer.findMany({
     where: { userId: user?.id },
   })
   return {
@@ -61,7 +61,7 @@ type Props = {
   providers: PeerProps[],
 }
 
-const IndexPage: React.FC<Props> = (props) => {  
+const IndexPage: React.FC<Props> = (props) => {
 
   const { data } = useSession(); // do we need this here? 
   const { data: session, status } = useSession();
@@ -85,10 +85,9 @@ const IndexPage: React.FC<Props> = (props) => {
       <Head>
         <title>Motherbored - Boring Protocol</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="apple-touch-icon" href="/img/favicon.png"/>
-        {/* make open graph / twitter cards here */}
+        <link rel="apple-touch-icon" href="/img/favicon.png" />
       </Head>
-    
+
       {/* Main content */}
       <div className="main pt-12 text-xs">
 
@@ -176,9 +175,9 @@ const IndexPage: React.FC<Props> = (props) => {
           <li className="shadow-md rounded-lg pb-2 pt-4 col-span-2 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
           <button
                 type="button"
-                onClick={() => Router.push("/newpeer?mode=provider&provider_kind=local")}
-                className="relative block w-full rounded-lg text-boring-black dark:text-boring-white p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
+                onClick={() => Router.push("/newpeer?mode=consumer")}
+                className="relative block w-full rounded-lg text-boring-black dark:text-boring-white  p-12 text-center  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
                 <svg
                   className="mx-auto h-12 w-12 text-gray-400"
                   xmlns="http://www.w3.org/2000/svg"
@@ -186,7 +185,39 @@ const IndexPage: React.FC<Props> = (props) => {
                   fill="none"
                   viewBox="0 0 48 48"
                   aria-hidden="true"
-                  >
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1}
+                    d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6"
+                  />
+                </svg>
+                <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add Motherbored Consumer</span>
+                <span className="font-jetbrains mt-2 block text-xs text-gray">Configure your Motherbored to run as a consumer peer.</span>
+              </button>
+            </li>{/* /#add-peer */}
+
+            {props.peers.map((peer) => (
+              <li key={peer.name} className="col-span-2 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
+                <Peer peer={peer} />
+              </li>
+            ))}
+
+            <li className="shadow-md rounded-lg pb-2 pt-4 col-span-2 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
+              <button
+                type="button"
+                onClick={() => Router.push("/newpeer?mode=provider&provider_kind=local")}
+                className="relative block w-full rounded-lg text-boring-black dark:text-boring-white p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                <svg
+                  className="mx-auto h-12 w-12 text-gray-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  stroke="currentColor"
+                  fill="none"
+                  viewBox="0 0 48 48"
+                  aria-hidden="true"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -204,7 +235,7 @@ const IndexPage: React.FC<Props> = (props) => {
                 type="button"
                 onClick={() => Router.push("/newpeer?mode=provider&provider_kind=cloud")}
                 className="relative block w-full rounded-lg text-boring-black dark:text-boring-white p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
+              >
                 <svg
                   className="mx-auto h-12 w-12 text-gray-400"
                   xmlns="http://www.w3.org/2000/svg"
@@ -212,7 +243,7 @@ const IndexPage: React.FC<Props> = (props) => {
                   fill="none"
                   viewBox="0 0 48 48"
                   aria-hidden="true"
-                  >
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -231,7 +262,7 @@ const IndexPage: React.FC<Props> = (props) => {
                 type="button"
                 onClick={() => Router.push("/newpeer")}
                 className="cursor-not-allowed relative block w-full rounded-lg text-boring-black dark:text-boring-white p-12 text-center hover:border-gray dark:hover:border-gray focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
+              >
                 <svg
                   className="mx-auto h-12 w-12 text-gray-400"
                   xmlns="http://www.w3.org/2000/svg"
@@ -239,7 +270,7 @@ const IndexPage: React.FC<Props> = (props) => {
                   fill="none"
                   viewBox="0 0 48 48"
                   aria-hidden="true"
-                  >
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
