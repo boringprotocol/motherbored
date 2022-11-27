@@ -12,10 +12,18 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 // import Identicon from 'react-identicons'
 import Avatar from "boring-avatars"
+import Jdenticon from 'react-jdenticon'
+// import jdenticon from "jdenticon";
 import { useTheme } from "next-themes"
 import Link from "next/link"
 import TrafficStats from "../../components/trafficStats"
 import { GetStatsForPubkey, GetPeersForPubkey } from "../../lib/influx"
+
+
+import { ReactQrCode } from '@devmehq/react-qr-code';
+
+
+
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
@@ -211,7 +219,7 @@ const ShowPeer: React.FC<Props> = (props) => {
             });
 
             //Peer Saved
-            if (response.ok) { toast('Syncing Peer.  See you at 8:30', { containerId: 'PeerSavedNotification' }) }
+            if (response.ok) { toast('Changes Saved - press Install Config to reboot and activate.', { containerId: 'PeerSavedNotification' }) }
 
             const resultData = await (response.json()) as any;
             if (response.ok) {
@@ -314,14 +322,27 @@ const ShowPeer: React.FC<Props> = (props) => {
                 {props.peer.provider_kind == "cloud" && (<li>provider_kind: {props.peer.provider_kind}</li>)}
 
                 <div className="box row-start-1 col-span-4 md:col-span-6 col-start-2 md:col-start-1">
-
                     <h1 className="  text-2xl sm:text-5xl lg:text-6xl xl:text-7xl pl-6  mb-12">{name || ""}</h1>
-
                 </div>
 
-                <div className=" box row-start-1 md:row-start-2 col-start-1 col-span-1 md:col-span-2">
-                    <Avatar size="100%" name={peerAvatar} variant="sunset" />
-                    {/* <Identicon size="300" string={peerAvatar} fg="#666" /> */}
+                <div className="box row-start-1 md:row-start-2 col-start-1 col-span-1 md:col-span-2">
+                    <Avatar size="100%" name={peerAvatar} variant="sunset" colors={[
+	"#FB6900",
+	"#F63700",
+	"#004853",
+	"#007E80",
+	"#00B9BD"]} />
+                    {/* <Identicon size="150" string={peerAvatar} fg="#666" className="identicon" /> */}
+                    {/* <Jdenticon size="100%" value={peerAvatar} className=""/> */}
+
+                    {/* <ReactQrCode
+        value={"https://github.com/devmehq/react-qr-code"}
+        size={128}
+        bgColor={'#ffffff'}
+        fgColor={'#000000'}
+        renderAs={'svg'}
+        marginSize={50}
+      /> */}
                 </div>
 
                 <div className=" box col-start-1 col-span-4 sm:col-span-4 ">
