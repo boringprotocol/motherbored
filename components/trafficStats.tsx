@@ -127,6 +127,12 @@ const TrafficStats = (props: any) => {
 
     const datasets: ChartDataset[] = []
 
+    const pal = ["FB6900",
+	"F63700",
+	"004853",
+	"007E80",
+	"00B9BD", "DDD", "333333", "7BB3C4", "DAE036", "B03C33", "215782", "384730", "C4BDA2", "FEDC89", "FEB98D", "7B0A5C", "C61427", "FD8056", "FDC05B", "7F472E", "A47A23", "5A3302", "F8485A"];
+    
     //const pal = ["DDD", "333333", "7BB3C4", "DAE036", "B03C33", "215782", "384730", "C4BDA2", "FEDC89", "FEB98D", "7B0A5C", "C61427", "FD8056", "FDC05B", "7F472E", "A47A23", "5A3302", "F8485A"];
     //var counter = 0;
 
