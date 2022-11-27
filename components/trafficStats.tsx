@@ -127,7 +127,11 @@ const TrafficStats = (props: any) => {
 
     const datasets: ChartDataset[] = []
 
-    const pal = ["DDD", "333333", "7BB3C4", "DAE036", "B03C33", "215782", "384730", "C4BDA2", "FEDC89", "FEB98D", "7B0A5C", "C61427", "FD8056", "FDC05B", "7F472E", "A47A23", "5A3302", "F8485A"];
+    const pal = ["FB6900",
+	"F63700",
+	"004853",
+	"007E80",
+	"00B9BD", "DDD", "333333", "7BB3C4", "DAE036", "B03C33", "215782", "384730", "C4BDA2", "FEDC89", "FEB98D", "7B0A5C", "C61427", "FD8056", "FDC05B", "7F472E", "A47A23", "5A3302", "F8485A"];
     var counter = 0;
 
     testdata.forEach((value, key, map) => {
@@ -166,7 +170,7 @@ const TrafficStats = (props: any) => {
                 //pointHoverBackgroundColor: 'rgba(59, 130, 246, 1)',
                 //pointHoverBorderColor: 'rgba(59, 130, 246, 1)',
                 //pointHoverBorderWidth: 2
-                barThickness: 10,
+                barThickness: 20,
 
             }
 
