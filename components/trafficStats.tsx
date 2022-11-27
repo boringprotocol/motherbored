@@ -134,13 +134,13 @@ const TrafficStats = (props: any) => {
 	"00B9BD", "DDD", "333333", "7BB3C4", "DAE036", "B03C33", "215782", "384730", "C4BDA2", "FEDC89", "FEB98D", "7B0A5C", "C61427", "FD8056", "FDC05B", "7F472E", "A47A23", "5A3302", "F8485A"];
     
     //const pal = ["DDD", "333333", "7BB3C4", "DAE036", "B03C33", "215782", "384730", "C4BDA2", "FEDC89", "FEB98D", "7B0A5C", "C61427", "FD8056", "FDC05B", "7F472E", "A47A23", "5A3302", "F8485A"];
-    //var counter = 0;
+    var counter = 0;
 
     testdata.forEach((value, key, map) => {
-        //var borderColor = "#" + pal[counter % pal.length];
-        //counter += 1
-        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-        const borderColor = "#" + randomColor;
+        var borderColor = "#" + pal[counter % pal.length];
+        counter += 1
+        // const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+        // const borderColor = "#" + randomColor;
 
         //let sorted = value.values.sort((a: any, b: any) => a.valueOf() - b.valueOf())
         /*
@@ -207,7 +207,7 @@ const TrafficStats = (props: any) => {
                 <Chart type='bar' data={data} options={Config} />
             </div>
             <div className="grid">
-                <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+                <dl className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-3">
                     <div key="connected-peers" className="overflow-hidden  px-4 py-5 sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white">
                         <dt className="truncate text-xs bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">Consumers (last 7 days)</dt>
                         <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">{d7}</dd>
