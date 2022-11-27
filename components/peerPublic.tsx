@@ -5,6 +5,7 @@ import { IoArrowForwardOutline } from 'react-icons/io5'
 // import Avatar from 'boring-avatars'
 // https://www.npmjs.com/package/react-identicons
 import Identicon from 'react-identicons'
+import Avatar from 'boring-avatars';
 
 export type PeerPublicProps = {
   id: string;
@@ -55,11 +56,17 @@ const PeerPublic: React.FC<{ peer: PeerPublicProps }> = ({ peer }) => {
       <td className="whitespace-nowrap py-0 pl-4 pr-3 text-sm sm:pl-6">
         <div className="flex items-center">
           <div className="h-11 w-10 mt-4 flex-shrink-0">
-            {/* <Avatar
+            <Avatar
                 size={24}
                 name={peerAvatar}
                 variant="sunset"
-              /> */}
+                colors={[
+	"#FB6900",
+	"#F63700",
+	"#004853",
+	"#007E80",
+	"#00B9BD"]} 
+              />
             <Identicon size={24} string={peerAvatar} fg="#000000" />
             {/* <img className="h-10 w-10 rounded-full" src="person.image" alt="" /> */}
           </div>

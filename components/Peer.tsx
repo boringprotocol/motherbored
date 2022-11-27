@@ -93,12 +93,18 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
         )}
 
         <div className="pt-4 pl-4">
-          {/* <Avatar
+          <Avatar
             size={40}
             name={peerAvatar}
             variant="sunset"
-          /> */}
-          <Identicon string={peerAvatar} size={40} fg="#666" />
+            colors={[
+	"#FB6900",
+	"#F63700",
+	"#004853",
+	"#007E80",
+	"#00B9BD"]} 
+          />
+          {/* <Identicon string={peerAvatar} size={40} fg="#666" /> */}
         </div>
         
       </a>
