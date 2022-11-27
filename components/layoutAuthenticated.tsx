@@ -8,7 +8,7 @@ import { Switch } from '@headlessui/react'
 import Waiting from './art/waiting'
 import Docs from './art/docs'
 import { signOut, useSession } from "next-auth/react"
-import { IoDownloadOutline, IoLogoGithub, IoMoonOutline, IoSunnyOutline, IoWalletOutline } from 'react-icons/io5'
+import { IoDocumentOutline, IoDownloadOutline, IoMoonOutline, IoSunnyOutline, IoWalletOutline } from 'react-icons/io5'
 
 // light mode / dark mode
 const ThemeChanger = () => {
@@ -257,13 +257,15 @@ export default function Layout({ children }: Props) {
                   <div className="container  mx-auto bg-gray-500  relative">
                     <Docs />
                     <div className="text-sm  absolute top-0">
-                      <h2 className="text-sm mb-2">Docs</h2>
+                      <h2 className="text-sm mb-2">Documentation</h2>
                       <p className="text-xs mb-2">Motherbored set-up, VPS set-up, Development notes, etc...</p>
 
                       <a
-                        href="https://github.com/boringprotocol/docs"
+                        href="https://docs.motherbored.app/docs/category/motherbored---basics"
+                        target="_blank"
                         className="mb-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black hover:bg-boring-white hover:opacity-70 active:opacity-50 shadow-md active:shadow-sm"
-                      ><IoLogoGithub className="mr-2" />GitHub</a>
+                      >
+                        <IoDocumentOutline className="mr-2"/>Docs</a>
                       <div>
 
                       </div>
@@ -273,7 +275,7 @@ export default function Layout({ children }: Props) {
 
 
                 {/* genesys go */}
-                <div className="sm:flex p-12 border-t border-gray-lightest dark:border-gray-dark">
+                {/* <div className="sm:flex p-12 border-t border-gray-lightest dark:border-gray-dark">
                   <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
                     <img className="h-11 w-11 text-gray-300" src='/img/genesys-go.png' width='28px' />
                   </div>
@@ -283,19 +285,26 @@ export default function Layout({ children }: Props) {
                       RPC service
                     </p>
                   </div>
-                </div>
+                </div> */}
 
                 {/* jupiter agg */}
                 <div className="sm:flex p-12 border-t border-gray-lightest dark:border-gray-dark">
                   <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
                     <img className="h-11 w-11 text-gray-300" src='/img/jupiter-aggregator.svg' width='28px' />
                   </div>
+                  <a href="https://jup.ag/swap/SOL-BOP"
+                        target="_blank"
+                      >
                   <div>
                     <h4 className="text-sm">Jupiter Aggregator</h4>
                     <p className="mt-1 text-xs">
+                      
+                        
                       Acquire $BOP
+                     
                     </p>
                   </div>
+                  </a>
                 </div>
 
 
