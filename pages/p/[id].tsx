@@ -320,7 +320,17 @@ const ShowPeer: React.FC<Props> = (props) => {
                 </div>
 
                 <div className="box row-start-1 md:row-start-2 col-start-1 col-span-1 md:col-span-2">
-                    <Avatar size="100%" name={peerAvatar} variant="sunset" />
+                    <Avatar 
+                        size="100%" 
+                        name={peerAvatar} 
+                        variant="sunset" 
+                        colors={[
+                            "#FB6900",
+                            "#F63700",
+                            "#004853",
+                            "#007E80",
+                            "#00B9BD"]} 
+                    />
                 </div>
 
                 <div className=" box col-start-1 col-span-4 sm:col-span-4 ">
