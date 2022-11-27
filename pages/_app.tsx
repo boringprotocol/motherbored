@@ -29,6 +29,9 @@ import nProgress from 'nprogress'; //nprogress module
 import '../styles/nprogress.css';
 import '../styles/toast.css';
 
+import { useEffect } from 'react';
+import type { NextPage } from 'next';
+
 //Binding events. 
 
 Router.events.on("routeChangeStart", nProgress.start);
@@ -75,8 +78,8 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
         <WalletModalProvider>
           <SessionProvider session={pageProps.session} refetchInterval={0}>
 
-          <ThemeProvider attribute="class">
-            <Component {...pageProps} />
+            <ThemeProvider attribute="class">
+              <Component {...pageProps} />
             </ThemeProvider>
 
           </SessionProvider>
