@@ -12,7 +12,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 // import Identicon from 'react-identicons'
 import Avatar from "boring-avatars"
-import Jdenticon from 'react-jdenticon'
+// import Jdenticon from 'react-jdenticon'
 // import jdenticon from "jdenticon";
 import { useTheme } from "next-themes"
 import Link from "next/link"
