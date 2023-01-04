@@ -263,6 +263,7 @@ export default function Layout({ children }: Props) {
                       <a
                         href="https://docs.motherbored.app/docs/category/motherbored---basics"
                         target="_blank"
+                        rel="noreferrer"
                         className="mb-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black hover:bg-boring-white hover:opacity-70 active:opacity-50 shadow-md active:shadow-sm"
                       >
                         <IoDocumentOutline className="mr-2"/>Docs</a>
@@ -294,6 +295,7 @@ export default function Layout({ children }: Props) {
                   </div>
                   <a href="https://jup.ag/swap/SOL-BOP"
                         target="_blank"
+                        rel="noreferrer"
                       >
                   <div>
                     <h4 className="text-sm">Jupiter Aggregator</h4>
