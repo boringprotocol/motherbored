@@ -7,10 +7,34 @@ import prisma from "../lib/prisma"
 import Peer, { PeerProps } from "../components/Peer"
 import { IoRefreshOutline } from "react-icons/io5"
 
-
 // radio buttons to select provider_kind
 import { RadioGroup } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/20/solid'
+import ConsumerKindSelect from "../components/consumerKindSelect"
+
+
+
+// // Generate a QR code with same name as the boring-name-generator name
+// import qr from 'qr-image';
+
+// // Define a constant for the filename:
+// const fileName = 'lazy-horse-420.png';
+
+// // Use the qr.imageSync method to generate a PNG image of the QR code:
+// const qrCode = qr.imageSync('lazy-horse-420', { type: 'png' });
+
+// // Save the QR code image to the /public folder on the server, use the fs (File System) module that comes with Node.js. First, import the fs module:
+// import fs from 'fs';
+
+// // Use the fs.writeFileSync method to write the QR code image to a file in a specific folder on the server, using the filename constant:
+// fs.writeFileSync(`/public/img/peer-qr-png/${fileName}`, qrCode);
+
+
+
+
+
+
+
 
 
 const providerKindLists = [ 'local', 'cloud' ]
@@ -19,12 +43,12 @@ const providerKindLists = [ 'local', 'cloud' ]
 ]
 */
 
-
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
 
 // https://github.com/boringprotocol/boring-name-generator/
+// npm package published: https://www.npmjs.com/package/boring-name-generator
 var generateName = require('boring-name-generator');
 
 //
@@ -66,14 +90,17 @@ type Props = {
 
 const NewPeer: React.FC<Props> = (props) => {
 
+    // URL paramaters so inbound links can use context and create all kinds of peers (consumer, provider, etc...)
     const { query } = useRouter();
 
-
+    // boring-name-generator
     const [name, setName] = useState(generateName({ number: true }).dashed);
     
+    // default value 'consumer' unless specified through the query paramater
     let queryMode = "consumer"
     if (query.mode) { queryMode = String(query.mode) }
-
+    
+    // default value 'local' unless specified through the query paramater
     let queryProviderMode = "local"
     if (query.provider_kind) { queryProviderMode = String(query.provider_kind) }
     const [selectedProviderKindLists, setSelectedProviderKindLists] = useState(queryProviderMode)
@@ -82,7 +109,7 @@ const NewPeer: React.FC<Props> = (props) => {
     const [kind, setKind] = useState(queryMode);
     const [wifi_preference, setWifiPreference] = useState("2.4Ghz");
     const [channel, setChannel] = useState("7");
-    const [ssid, setSSID] = useState("boring");
+    const [ssid, setSSID] = useState("boring"); 
     const [wpa_passphrase, setWpaPassphrase] = useState('motherbored');
     const [country_code, setCountryCode] = useState("US");
 
@@ -95,7 +122,7 @@ const NewPeer: React.FC<Props> = (props) => {
         setKind(newKind);
     }
 
-
+    // submit form to create a new peer
     const submitData = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         try {
@@ -118,16 +145,22 @@ const NewPeer: React.FC<Props> = (props) => {
         }
     };
 
-
     return (
         <LayoutAuthenticated>
             <div className="px-4 sm:px-8 md:px-12 pt-16">
 
 
-                <form className="w-100 md:w-1/2" onSubmit={submitData}>
+                <form className="w-100 md:w-1/2 select-none" onSubmit={submitData}>
+                
+                {/* <ConsumerKindSelect /> */}
+
+
+
+                {/* sdkjfhjsdfkjjksdhlfkjhsdjkhlkfjhsdlkjfh */}
+
                     <h1 className="uppercase mb-6">New <span>{query.mode}</span> Peer</h1>
-                    <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
-                        <label htmlFor="name" className="block text-xs text-gray">
+                    <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 focus-within:border-blue focus-within:ring-1 focus-within:ring-blue select-none">
+                        <label htmlFor="name" className="block text-xs text-gray select-none">
                             Peer Name
                         </label>
                         <input
@@ -135,14 +168,14 @@ const NewPeer: React.FC<Props> = (props) => {
                             name="name"
                             id="name"
                             onChange={(e) => setName(e.target.value)}
-                            className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white block w-full border-0 p-0 focus:ring-0 text-lg"
+                            className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white block w-full border-0 p-0 focus:ring-0 text-lg select-none"
                             placeholder=""
                             value={name}
                             disabled
                         />
                     </div>
                     <div className="mt-4 ">
-                        <a onClick={(e) => setName(generateName({ number: true }).dashed)}><span className="float-right p-4 border border-gray-lightest rounded-sm hover:text-gray active:text-gray-dark"><IoRefreshOutline /></span></a>
+                        <a onClick={(e) => setName(generateName({ number: true }).dashed)}><span className="float-right p-4 border border-gray-lightest rounded-sm hover:text-gray active:text-gray-dark"><IoRefreshOutline /></span>...</a>
                     </div>
                     {/* <div className="my-6 border border-gray-dark text-boring-white rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                         <label htmlFor="mode" className="block text-xs text-gray">
@@ -180,7 +213,7 @@ const NewPeer: React.FC<Props> = (props) => {
                     )} */}
 
                     {kind == "provider" && (
-                        <div className="">
+                        <div className="w-full inline-block">
 
                             <RadioGroup value={selectedProviderKindLists} onChange={setSelectedProviderKindLists}>
                                 <RadioGroup.Label className="text-xs font-medium text-gray">Select a Provider Kind</RadioGroup.Label>

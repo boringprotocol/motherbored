@@ -203,11 +203,8 @@ const TrafficStats = (props: any) => {
     return (
         <div>
 
-            <div className="chart-container w-full h-full p-2">
-                <Chart type='bar' data={data} options={Config} />
-            </div>
             <div className="grid">
-                <dl className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-3">
+                <dl className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-2">
                     <div key="connected-peers" className="overflow-hidden  px-4 py-5 sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white">
                         <dt className="truncate text-xs bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">Consumers (last 7 days)</dt>
                         <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">{d7}</dd>
@@ -218,6 +215,11 @@ const TrafficStats = (props: any) => {
                     </div>
                 </dl>
             </div >
+            
+            <div className="chart-container w-full h-full p-2">
+                <Chart type='bar' data={data} options={Config} />
+            </div>
+
         </div >
     );
 };

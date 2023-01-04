@@ -8,12 +8,10 @@ import prisma from '../lib/prisma'
 import Head from 'next/head'
 import { GetPeersForPubkey } from "../lib/influx"
 import PeerPublic, { PeerPublicProps } from '../components/peerPublic'
-import CountryFilter from '../components/countryFilter'
+// import CountryFilter from '../components/countryFilter'
 
 // Providers table:
 import { Table } from '../components/providersTable.js'
-
-
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 

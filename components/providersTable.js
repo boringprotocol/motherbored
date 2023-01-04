@@ -1,8 +1,9 @@
 import { useState, useMemo } from 'react'
 import { sortRows, filterRows, paginateRows } from '../helpers/providersTable.js'
+// import Waiting from './art/waiting.tsx'
 import { Pagination } from './providersTablePagination.js'
-import Avatar from 'boring-avatars';
-import Router from 'next/router'
+// import Avatar from 'boring-avatars';
+// import Router from 'next/router'
 export const Table = ({ columns, rows }) => {
   const [activePage, setActivePage] = useState(1)
   const [filters, setFilters] = useState({})
@@ -50,15 +51,9 @@ export const Table = ({ columns, rows }) => {
 
   return (
     <>
-      <div className="main p-8 text-xs">
-        <div className="flex flex-col">
-          <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-">
-            <div className="inline-block min-w-full py-2 align-middle">
-              <div className="overflow-hidden ring-1 ring-black ring-opacity-5">
-
-                <table className="min-w-full divide-y divide-gray-lightest dark:divide-gray-dark">
+                <table className="w-full divide-y divide-gray-lightest dark:divide-gray-dark">
                   <thead className="bg-boring-white dark:bg-boring-black">
-                    <tr>
+                    <tr className="mt-6">
                       {columns.map((column) => {
                         const sortIcon = () => {
                           if (column.accessor === sort.orderBy) {
@@ -81,24 +76,25 @@ export const Table = ({ columns, rows }) => {
                     <tr>
             {columns.map((column) => {
               return (
-                <th
+                <th className="ml-0 pt-4 pb-4"
                   key={`${column.accessor}-th`}>
-                  {/* <input
+                  <input
+                    className="ml-6 border-gray-dark float-left text-xs text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black"
                     key={`${column.accessor}-search`}
                     type="search"
                     placeholder={`Search ${column.label}`}
                     value={filters[column.accessor]}
                     onChange={(event) => handleSearch(event.target.value, column.accessor)}
-                  /> */}
+                  />
                 </th>
               )
             })}
           </tr>
                   </thead>
-                  <tbody className="mt-24 divide-y divide-gray-lightest dark:divide-gray-dark">
+                  <tbody className="">
                     {calculatedRows.map((row) => {
                       return (
-                        <tr key={row.id} className="hover:bg-gray-lightestest dark:hover:bg-gray-dark cursor-pointer text-red">
+                        <tr key={row.id} className="hover:bg-gray-lightestest dark:hover:bg-gray-dark cursor-pointer divide-y border-gray-lightest dark:border-gray-dark dark:divide-gray-dark border-b">
                           {columns.map((column) => {
                             if (column.format) {
                               return <td className="whitespace-nowrap py-0 pl-4 pr-3 text-sm sm:pl-6" key={column.accessor}>{column.format(row[column.accessor])}</td>
@@ -110,11 +106,7 @@ export const Table = ({ columns, rows }) => {
                     })}
                   </tbody>
                 </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              
 
       {count > 0 ? (
         <Pagination
@@ -125,43 +117,18 @@ export const Table = ({ columns, rows }) => {
           setActivePage={setActivePage}
         />
       ) : (
-        <p>No data found</p>
+        <p className="px-6 py-6 text-sm text-boring-black dark:text-boring-white">Nothing found.
+        {/* lulz <Waiting /> */}
+        </p>
       )}
 
-      <div>
+      {/* <div className="ml-6 mb-6 text-xs">
+
+        // Clear results 
         <p>
-          <button onClick={clearAll}>Clear all</button>
+          <button onClick={clearAll} className="rounded-sm border border-gray px-3 py-1 text-sm font-medium text-gray-light dark:text-gray-dark hover:bg-gray-50">Clear all</button>
         </p>
-      </div>
-
-
-
-      <nav
-      className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
-      aria-label="Pagination"
-    >
-      <div className="sm:block">
-        <p className="text-sm text-gray-700">
-          Showing <span className="font-medium">1</span> to <span className="font-medium">10</span> of{' '}
-          <span className="font-medium">20</span> results
-        </p>
-      </div>
-      <div className="flex flex-1 justify-between sm:justify-end">
-        <a
-          href="#"
-          className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-s hover:bg-gray-dark"
-        >
-          Previous
-        </a>
-        <a
-          href="#"
-          className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-        >
-          Next
-        </a>
-      </div>
-    </nav>
-
+      </div> */}
     
     </>
   )
