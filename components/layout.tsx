@@ -8,7 +8,7 @@ import bs58 from 'bs58'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
-import PhantomLogo from './art/phantom'
+// import PhantomLogo from './art/phantom'
 
 
 // light mode / dark mode
@@ -116,7 +116,7 @@ export default function Layout({ children }: Props) {
               
 
           <BrowserView>
-          Desktop Options<br></br>
+          Desktop Options...<br></br>
             <a href="#" className="inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={handleSignIn}>
                <IoWalletOutline className="mr-2"/> Connect Phantom
             </a>

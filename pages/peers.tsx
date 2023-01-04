@@ -46,7 +46,6 @@ const peers = await prisma.peer.findMany({
 }
 
 
-
 type Props = {
   peers: PeerProps[],
   providers: PeerProps[],
@@ -54,7 +53,7 @@ type Props = {
 
 const PeerPage: React.FC<Props> = (props) => {  
 
-  const { data } = useSession(); // do we need this here? 
+  const { data } = useSession(); 
   const { data: session, status } = useSession();
   if (!session) {
 
@@ -82,7 +81,9 @@ const PeerPage: React.FC<Props> = (props) => {
     
       {/* Main content */}
       <div className="main pt-12 text-xs">
-        <p className="p-12">setup tools</p>
+      <p className="px-12">VPN: You are using 3 out of your allowed 4 consumer peers on the elon plan (8 dollars</p>
+      <p className="px-12">Mining: </p>
+        <p className="p-12">You are using 3 out of your allowed 4 consumer peers on the elon plan (8 dollars</p>
 
         <div className="px-4 sm:px-8 md:px-12 pb-16">
         <div role="list" className="grid-rows-6 pb-12 grid grid-cols-2 gap-6 sm:grid-cols-4 2xl:grid-cols-6">
@@ -90,7 +91,7 @@ const PeerPage: React.FC<Props> = (props) => {
           <div className="shadow-md rounded-lg pb-2 pt-4 col-span-2 row-span-1 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
               <button
               type="button"
-              onClick={() => Router.push("/newpeer?mode=consumer")}
+              onClick={() => Router.push("/newpeer?mode=consumer&consumer_kind=local_consumer")}
               className="relative block w-full rounded-lg text-boring-black dark:text-boring-white  p-12 text-center  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
               <svg

@@ -156,6 +156,7 @@ export default function Layout({ children }: Props) {
                         </div>
 
                         <div>
+                          
                           <button
                             className="inline-flex items-center rounded-sm border border-gray dark:border-white text-xs bg-white px-3 py-2 text-boring-black hover:bg-boring-white hover:opacity-90 active:opacity-70 shadow-md active:border-transparent"
                             onClick={(e) => {
@@ -266,6 +267,7 @@ export default function Layout({ children }: Props) {
                 </div> */}
 
                 <div className="p-12 border-t border-gray-lightest dark:border-gray-dark">
+                <p className="">Plan: Elon</p>
                   <button
                     className="inline-flex items-center rounded-sm border border-gray dark:border-white text-xs bg-white px-3 py-2 text-boring-black hover:bg-boring-white hover:opacity-90 active:opacity-70 shadow-md active:border-transparent"
                     onClick={(e) => {
@@ -285,6 +287,7 @@ export default function Layout({ children }: Props) {
                       <a
                         href="https://docs.motherbored.app/docs/category/motherbored---basics"
                         target="_blank"
+                        rel="noreferrer"
                         className="mb-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black hover:bg-boring-white hover:opacity-70 active:opacity-50 shadow-md active:shadow-sm"
                       >
                         <IoDocumentOutline className="mr-2"/>Docs</a>
@@ -310,12 +313,13 @@ export default function Layout({ children }: Props) {
                 </div> */}
 
                 {/* jupiter agg */}
-                <div className="sm:flex p-12 border-t border-gray-lightest dark:border-gray-dark">
+                {/* <div className="sm:flex p-12 border-t border-gray-lightest dark:border-gray-dark">
                   <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
                     <img className="h-11 w-11 text-gray-300" src='/img/jupiter-aggregator.svg' width='28px' />
                   </div>
                   <a href="https://jup.ag/swap/SOL-BOP"
                         target="_blank"
+                        rel="noreferrer"
                       >
                   <div>
                     <h4 className="text-sm">Jupiter Aggregator</h4>
@@ -327,7 +331,7 @@ export default function Layout({ children }: Props) {
                     </p>
                   </div>
                   </a>
-                </div>
+                </div> */}
 
 
 

@@ -7,9 +7,9 @@ import { GetServerSideProps } from 'next'
 import Peer, { PeerProps } from '../components/Peer'
 import prisma from '../lib/prisma'
 import Head from 'next/head'
-import { IoAdd, IoAddCircleOutline, IoLogoApple, IoLogoWindows, IoPhonePortrait } from 'react-icons/io5'
+import { IoLogoApple, IoLogoWindows } from 'react-icons/io5'
 import { VscTerminalLinux } from 'react-icons/vsc'
-import PeerFilter from '../components/peerFilter'
+// import PeerFilter from '../components/peerFilter'
 
 
 // function classNames(...classes: any) {
@@ -20,7 +20,6 @@ import PeerFilter from '../components/peerFilter'
 const stats = [
   { name: 'Consumers', stat: '54' },
   { name: 'Providers', stat: '30' },
-  { name: 'Connections', stat: '48' },
 ]
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
@@ -63,7 +62,7 @@ type Props = {
 
 const IndexPage: React.FC<Props> = (props) => {
 
-  const { data } = useSession(); // do we need this here? 
+  const { data } = useSession(); // 
   const { data: session, status } = useSession();
   if (!session) {
 
@@ -92,20 +91,20 @@ const IndexPage: React.FC<Props> = (props) => {
       <div className="main pt-12 text-xs">
 
           {/* Build peers naviation here */}
-          <div className="grid grid-cols-3 mx-12 mb-4">
+          {/* <div className="grid grid-cols-3 mx-12 mb-4">
             <div className="col-start-3">
               <div className="flow-root">  
               <PeerFilter />
               </div>
             </div>
-          </div>
+          </div> */}
     
         {/* PEERS */}
         {/* key={peer.name} has to be on the first child element within a loop
         https://adhithiravi.medium.com/why-do-i-need-keys-in-react-lists-dbb522188bbb
         https://stackoverflow.com/questions/54401481/eslint-missing-key-prop-for-element-in-iterator-react-jsx-key */}
         <div className="px-4 sm:px-8 md:px-12 pb-16">
-        <ul role="list" className=" pb-12 grid grid-cols-2 gap-6 sm:grid-cols-4 2xl:grid-cols-6">
+        <ul role="list" className=" pb-12 grid grid-cols-2 gap-6 md:grid-cols-4 2xl:grid-cols-6">
           <li className="rounded-md pb-2 pt-4 col-span-1 border border-dashed border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
                   <button
                   type="button"
@@ -289,8 +288,8 @@ const IndexPage: React.FC<Props> = (props) => {
         
         {/* NETWORK STATISTICS */}
         <div className="px-4 sm:px-8 md:px-12 py-16 border-t border-gray-light dark:border-gray-dark">
-        <h3 className="font-jetbrains text-lg  text-gray dark:text-boring-white uppercase">Network</h3>
-        <dl className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-3">
+        <h3 className="font-jetbrains text-lg  text-gray dark:text-boring-white uppercase">Network Stats</h3>
+        <dl className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-2">
           {stats.map((item) => (
             <div key={item.name} className="font-jetbrains  overflow-hidden rounded-sm text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black py-5 shadow sm:p-6">
               <dt className="truncate text-sm font-medium text-gray-500">{item.name}</dt>
@@ -301,6 +300,7 @@ const IndexPage: React.FC<Props> = (props) => {
         </div>  
     
       </div>{/* end main */}
+
     </LayoutAuthenticated>
   );
 }

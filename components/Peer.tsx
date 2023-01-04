@@ -60,6 +60,15 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
       <a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
 
       <div className="px-4 pt-4">&nbsp;
+
+      {isProvider && (
+          <>
+          <span className="float-right animate-pulse inline-flex rounded-full h-2 w-2 bg-green"></span>  
+          {/* {peer.target}     */}
+          </>
+        )}
+
+
         {isConsumer && (<IoWifiOutline className="float-left mr-2" />)}
         {isProvider && isLocalProvider && (<IoWifiOutline className="float-left mr-2" />)}
 
@@ -85,12 +94,7 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
           {isLocalProvider && (<IoServerOutline className="float-left mr-2" />)}<span className="capitalize">{peer.provider_kind} {peer.kind}</span>
         </p>
 
-        {isConsumer && (
-          <>
-          <span className="animate-pulse inline-flex rounded-full h-2 w-2 bg-green"></span>  
-          {peer.target}    
-          </>
-        )}
+        
 
         <div className="pt-4 pl-4">
           <Avatar

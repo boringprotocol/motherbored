@@ -14,7 +14,7 @@ export default function AccountPage() {
         {/* <span className="font-jetbrains text-xs truncate">
           motherbored-bug-report
         </span> */}
-        <button>hello</button>
+        <h1 className="text-2xl mb-4">CojKKtJMg94Gx75NG4sPpVLngZDtLG9KHNfrg2Liqzu3</h1>
         <p>Your account allows for up to 4 consumer peers.</p>
         <p>3/4 NFT licenses used</p>
         <h2 className="text-2xl">Consumer Account</h2>
