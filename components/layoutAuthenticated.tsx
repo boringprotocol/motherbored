@@ -124,7 +124,7 @@ export default function Layout({ children }: Props) {
                               <h2 className="text-sm mb-2">Set-up:</h2>
                               <p className="text-xs mb-2">Flash image to Pi. Join &quot;boring&quot; WiFi network. Create peer. </p>
                               <a
-                                href="https://s3.us-east-2.amazonaws.com/boringfiles.dank.earth/2022-10-26-boring-lite.zip"
+                                href="https://s3.us-east-2.amazonaws.com/boringfiles.dank.earth/2023-01-03-boring-lite.zip"
                                 className="mb-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black hover:bg-boring-white hover:opacity-70 active:opacity-50 shadow-md active:shadow-sm"
                               ><IoDownloadOutline className="mr-2" />Image</a>
                               <div>
@@ -208,7 +208,7 @@ export default function Layout({ children }: Props) {
                           <h2 className="text-sm mb-2">Set-up</h2>
                           <p className="text-xs mb-2">Flash image to Pi. Join &quot;boring&quot; WiFi network. Create peer. </p>
                           <a
-                            href="https://s3.us-east-2.amazonaws.com/boringfiles.dank.earth/2022-10-26-boring-lite.zip"
+                            href="https://s3.us-east-2.amazonaws.com/boringfiles.dank.earth/2023-01-03-boring-lite.zip"
                             className="mb-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black hover:bg-boring-white hover:opacity-70 active:opacity-50 shadow-md active:shadow-sm"
                           ><IoDownloadOutline className="mr-2" />Image</a>
                           <div>
