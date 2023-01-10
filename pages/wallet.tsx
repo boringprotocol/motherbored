@@ -1,3 +1,8 @@
+// This page will display all the token accounts for a given wallet address
+
+
+// check wallet for nfts
+
 import { Connection, GetProgramAccountsFilter } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { useState } from 'react'
