@@ -35,11 +35,8 @@ Router.events.on("routeChangeStart", nProgress.start);
 Router.events.on("routeChangeError", nProgress.done);
 Router.events.on("routeChangeComplete", nProgress.done);
 
-
-
-// Default styles that can be overridden by your app
+// Default styles that can be overridden by passing styles to the <WalletMultiButton> component.
 require('@solana/wallet-adapter-react-ui/styles.css');
-
 
 
 // Use of the <SessionProvider> is mandatory to allow components that call
