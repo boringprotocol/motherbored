@@ -15,6 +15,8 @@ export default function SiteMenu() {
           onChange={handleChange}
         >
           <option value="settlements">settlements</option>
+          <option value="settings">settings</option>
+          <option value="peer">peer</option>
           <option value="wallet">account</option>
           <option value="bug">bug</option>
           <option value="sandbox">sandbox</option>
