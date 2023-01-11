@@ -1,33 +1,62 @@
-import React, { useState, useEffect } from 'react';
-import { Connection } from '@solana/web3.js';
+import { useState, useEffect } from 'react';
+import { Connection, GetProgramAccountsFilter } from "@solana/web3.js";
+import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 
-const connection = new Connection('https://mainnet.solana.com');
+const wallet = "oyja18UadrHNEuDxYzUr4mgyLSe81WdN8uBCoyGbK6V";
 
-const AccountPage = () => {
-    const walletAddress = 'oyja18UadrHNEuDxYzUr4mgyLSe81WdN8uBCoyGbK6V'; // Your Solana wallet address
-    const tokenAddress = 'BLwTnYKqf7u4qjgZrrsKeNs2EzWkMLqVCu6j8iHyrNA3'; // Your $BOP token contract address
-    return (
-      <MyComponent walletAddress={walletAddress} tokenAddress={tokenAddress} />
-    );
-  };
-  
-
-const MyComponent = ({ walletAddress, tokenAddress }) => {
-  const [balance, setBalance] = useState(null);
+export default function TokenPage() {
+  const [error, setError] = useState<Error | null>(null);
+  const [tokenAccounts, setTokenAccounts] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const balanceInLamports = await connection.getBalance({address: walletAddress, contractAddress: tokenAddress});
-      setBalance(balanceInLamports);
-    };
-    fetchData();
-  }, [walletAddress, tokenAddress]);
+    async function allocations() {
+      try {
+        const solana = new Connection(
+          'https://fluent-dimensional-shadow.solana-mainnet.quiknode.pro/'
+        );
+        const filters: GetProgramAccountsFilter[] = [
+          {
+            dataSize: 165,    //size of account (bytes)
+          },
+          {
+            memcmp: {
+              offset: 32,     //location of our query in the account (bytes)
+              bytes: wallet,  //our search criteria, a base58 encoded string
+            }
+          }
+        ]
+        const tokenAccounts = await solana.getParsedProgramAccounts(
+          TOKEN_PROGRAM_ID,
+          { filters }
+        );
+        setTokenAccounts(tokenAccounts);
+      } catch (err) {
+        setError(err);
+        console.error(err);
+      }
+    }
+    allocations();
+  }, []);
 
   return (
     <div>
-      {balance ? `Your balance is ${balance} Sol` : 'Loading...'}
-    </div>
-  );
-};
-
-export default MyComponent;
+      <h1>Token Accounts</h1>
+      <div id="token-accounts">
+<ul>
+{tokenAccounts.map((account, i) => {
+return (
+<li key={i}>
+parsed: {account.parsed}
+<br />
+program: {account.program}
+<br />
+space: {account.space}
+</li>
+);
+})}
+</ul>
+</div>
+{error ? <p>Error: {error.message}</p> : <p>Loading...</p> }
+</div>
+);
+}
