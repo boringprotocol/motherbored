@@ -8,7 +8,7 @@ const Setup = () => {
                           <div className="container  mx-auto bg-gray-500  relative">
                             <Waiting />
                             <div className="text-sm  absolute top-0">
-                              <h2 className="text-sm mb-2">Set-up:</h2>
+                              <h2 className="text-sm mb-2">Set-up</h2>
                               <p className="text-xs mb-2">Flash image to Pi. Join &quot;boring&quot; WiFi network. Create peer. </p>
                               <a
                                 href="https://s3.us-east-2.amazonaws.com/boringfiles.dank.earth/2022-10-26-boring-lite.zip"
