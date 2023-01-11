@@ -2,7 +2,6 @@ import React from 'react'
 import Router from 'next/router'
 import { IoLaptopOutline, IoWifiOutline, IoServerOutline, IoCloudOutline, IoPricetagOutline } from 'react-icons/io5'
 import Avatar from 'boring-avatars'
-import Identicon from 'react-identicons'
 
 export type PeerProps = {
   id: string;
