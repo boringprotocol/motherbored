@@ -7,6 +7,7 @@ import { GetServerSideProps } from 'next'
 import Peer, { PeerProps } from '../components/Peer'
 import prisma from '../lib/prisma'
 import Head from 'next/head'
+import { IoLogoApple, IoLogoWindows } from 'react-icons/io5'
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
