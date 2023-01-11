@@ -47,10 +47,10 @@ export async function GetStatsForPubkey(pubkey: string) {
     const queryApi = new InfluxDB({ url, token }).getQueryApi(org)
     // const fluxQuery = 'from(bucket:"boringstats") |> range(start: -7d) |> filter(fn: (r) => r["_measurement"] == "wireguard_peer") |> filter(fn: (r) => r["_field"] == "tx_bytes" or r["_field"] == "rx_bytes" ) |> filter(fn: (r) => r["mypubkey"] == "' + pubkey + '") |> difference(nonNegative: true) |> group(columns: ["_measurement", "_field", "public_key"]) |> aggregateWindow(every: 1d, fn: sum, createEmpty: false)'
     
-    // const fluxQuery = 'from(bucket:"boringstats") |> range(start: -7d) |> filter(fn: (r) => r["_measurement"] == "wireguard_peer") |> filter(fn: (r) => r["_field"] == "rx_bytes" ) |> filter(fn: (r) => r["mypubkey"] == "" and r["_field"] == "rx_bytes") |> difference(nonNegative: true) |> group(columns: ["_measurement", "_field", "public_key"]) |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)'
+    const fluxQuery = 'from(bucket:"boringstats") |> range(start: -7d) |> filter(fn: (r) => r["_measurement"] == "wireguard_peer") |> filter(fn: (r) => r["_field"] == "rx_bytes" ) |> filter(fn: (r) => r["mypubkey"] == "" and r["_field"] == "rx_bytes") |> difference(nonNegative: true) |> group(columns: ["_measurement", "_field", "public_key"]) |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)'
 
 
-    //'from(bucket:"boringstats") |> range(start: -7d) |> filter(fn: (r) => r["_measurement"] == "wireguard_peer") |> filter(fn: (r) => r["_field"] == "rx_bytes") |> filter(fn: (r) => r["mypubkey"] == "' + pubkey + '") |> group(columns: ["_measurement", "_field", "public_key"]) |> derivative(unit: 1h, nonNegative: true)|> aggregateWindow(every: 24h, fn: sum, createEmpty: false)'
+    // 'from(bucket:"boringstats") |> range(start: -7d) |> filter(fn: (r) => r["_measurement"] == "wireguard_peer") |> filter(fn: (r) => r["_field"] == "rx_bytes") |> filter(fn: (r) => r["mypubkey"] == "' + pubkey + '") |> group(columns: ["_measurement", "_field", "public_key"]) |> derivative(unit: 1h, nonNegative: true)|> aggregateWindow(every: 24h, fn: sum, createEmpty: false)'
     //'from(bucket:"boringstats") |> range(start: -7d) |> filter(fn: (r) => r["_measurement"] == "wireguard_peer") |> filter(fn: (r) => r["_field"] == "rx_bytes") |> filter(fn: (r) => r["mypubkey"] == "' + pubkey + '") |> group(columns: ["_measurement", "_field", "public_key"]) |> derivative(unit: 1s, nonNegative: true)|> aggregateWindow(every: 24h, fn: mean, createEmpty: false)'
 
 
@@ -74,24 +74,6 @@ export async function GetStatsForPubkey(pubkey: string) {
         })
     })
 
-    /*
-    // this method didn't work right (exception)
-       queryApi.queryRows(fluxQuery, {
-           next: (row: string[], tableMeta: FluxTableMetaData) => {
-               const o = tableMeta.toObject(row)
-               console.log(JSON.stringify(o, null, 2))
-               //res.status(200).json(JSON.stringify(o, null, 2))
-           },
-           error: (error: Error) => {
-               console.error(error)
-               console.log('\nFinished ERROR')
-           },
-           complete: () => {
-               console.log('\nFinished SUCCESS')
-           },
-       })
-   
-   */
 }
 
 export { url, token, org, bucket }
