@@ -81,6 +81,8 @@ const PeerPage: React.FC<Props> = (props) => {
     
       {/* Main content */}
       <div className="main pt-12 text-xs">
+      <p className="px-12">check chain for usdc payment in the last 30 days. count days left until payment due again. this is for consumer unlimited accounts in beta phase.</p>
+      
       <p className="px-12">VPN: You are using 3 out of your allowed 4 consumer peers on the elon plan (8 dollars</p>
       <p className="px-12">Mining: </p>
         <p className="p-12">You are using 3 out of your allowed 4 consumer peers on the elon plan (8 dollars</p>
