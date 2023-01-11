@@ -1,13 +1,12 @@
 import { Fragment, useState } from 'react'
-import { Dialog, Menu, Transition } from '@headlessui/react'
+import { Dialog, Transition } from '@headlessui/react'
 import { Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import HeaderAuthenticated from './headerAuthenticated'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
-import { Switch } from '@headlessui/react'
 import Waiting from './art/waiting'
 import Docs from './art/docs'
-import { signOut, useSession } from "next-auth/react"
+import { signOut } from "next-auth/react"
 import { IoDownloadOutline, IoLogoGithub, IoMoonOutline, IoSunnyOutline, IoWalletOutline } from 'react-icons/io5'
 
 // light mode / dark mode
