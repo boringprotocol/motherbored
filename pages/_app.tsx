@@ -13,15 +13,8 @@ import {
 } from "@solana/wallet-adapter-wallets";
 import {
   WalletModalProvider,
-  WalletDisconnectButton,
-  WalletMultiButton,
 } from "@solana/wallet-adapter-react-ui";
 import { clusterApiUrl } from "@solana/web3.js";
-import {
-  createDefaultAuthorizationResultCache,
-  SolanaMobileWalletAdapter,
-} from "@solana-mobile/wallet-adapter-mobile";
-import type { AppProps } from "next/app";
 
 import Router from 'next/router';
 import nProgress from 'nprogress'; //nprogress module
