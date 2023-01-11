@@ -1,22 +1,18 @@
 import { getSession, useSession } from 'next-auth/react'
 import Layout from '../components/layout'
 import LayoutAuthenticated from '../components/layoutAuthenticated'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { GetServerSideProps } from 'next'
 import prisma from '../lib/prisma'
 import Head from 'next/head'
+
 import { Connection, GetProgramAccountsFilter, clusterApiUrl } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token"
 
-
-//BopTokenMint, SolTokenMint, and UsdcTokenMint defined first so that they can be accessed by both the getServerSideProps and getTokenAccounts functions.
 const BopTokenMint = 'BLwTnYKqf7u4qjgZrrsKeNs2EzWkMLqVCu6j8iHyrNA3';
-const SolTokenMint = 'ErGB9xa24Szxbk1M28u2Tx8rKPqzL6BroNkkzk5rG4zj';
 const UsdcTokenMint = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
 
-
-async function getTokenAccounts(wallet: string, solanaConnection: Connection, mintAddresses: string[]) {
-
+async function getTokenAccounts(wallet: string, solanaConnection: Connection) {
   const filters: GetProgramAccountsFilter[] = [
     {
       dataSize: 165,    //size of account (bytes)
@@ -27,81 +23,88 @@ async function getTokenAccounts(wallet: string, solanaConnection: Connection, mi
         bytes: wallet,  //our search criteria, a base58 encoded string
       },
     }];
-  
   const accounts = await solanaConnection.getParsedProgramAccounts(
-    TOKEN_PROGRAM_ID, 
+    TOKEN_PROGRAM_ID, //new PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA")
     { filters: filters }
   );
-  
   console.log(`Found ${accounts.length} token account(s) for wallet ${wallet}.`);
-  const filteredAccounts = accounts.filter(account => {
-    const parsedAccountInfo: any = account.account.data;
-    const mintAddress: string = parsedAccountInfo["parsed"]["info"]["mint"];
-    return mintAddresses.includes(mintAddress);
-  });
-
-  let balance = {};
-  filteredAccounts.forEach((account, i) => {
+  let bopTokenBalance = 0;
+  let usdcTokenBalance = 0;
+  accounts.forEach((account, i) => {
     //Parse the account data
     const parsedAccountInfo: any = account.account.data;
     const mintAddress: string = parsedAccountInfo["parsed"]["info"]["mint"];
-    const tokenBalance: number = parsedAccountInfo["parsed"]["info"]["tokenAmount"]["uiAmount"];
+    const bopBalance: number = parsedAccountInfo["parsed"]["info"]["tokenAmount"]["uiAmount"];
+    const usdcBalance: number = parsedAccountInfo["parsed"]["info"]["tokenAmount"]["uiAmount"];
     //Log results
     console.log(`Token Account No. ${i + 1}: ${account.pubkey.toString()}`);
     console.log(`--Token Mint: ${mintAddress}`);
-    console.log(`--Token Balance: ${tokenBalance}`);
-    balance[mintAddress] = tokenBalance;
+    console.log(`--Token Balance: ${bopBalance}`);
+    console.log(`--Token Balance: ${usdcBalance}`);
+    if (mintAddress == BopTokenMint) {
+      bopTokenBalance = bopBalance
+    }
+    if (mintAddress == UsdcTokenMint) {
+      usdcTokenBalance = usdcBalance
+    }
   });
-  return balance
+  return bopTokenBalance + usdcTokenBalance
 }
-
-
-const mintAddressToPropNameMap = {
-  'BLwTnYKqf7u4qjgZrrsKeNs2EzWkMLqVCu6j8iHyrNA3': 'bop',
-  'ErGB9xa24Szxbk1M28u2Tx8rKPqzL6BroNkkzk5rG4zj': 'sol',
-  'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v': 'usdc',
-};
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+
   const session = await getSession({ req });
   if (!session || !session.user || !session.user.name) {
-    return { props: { hasSession: false } }
+    res.statusCode = 403;
+    return { props: { peers: [], tokenAccounts: [] } }
   }
 
-  // find token balances
+  const user = await prisma.user.findFirst({
+    where: { wallet: session.user.name }
+  })
+
+
+  // wtf is this
+  // if (!user) {
+  //   if (session.user.name) {
+  //     const sessionUser = session.user.name
+  //     const user = await prisma.user.create({
+  //       data: {
+  //         wallet: sessionUser,
+  //       },
+  //     })
+  //   }
+  // }
+
+  // findbop
   const rpcEndpoint = 'https://fluent-dimensional-shadow.solana-mainnet.quiknode.pro/';
   const solanaConnection = new Connection(rpcEndpoint);
-  const mintAddresses = [BopTokenMint, SolTokenMint, UsdcTokenMint];
-  const balance = await getTokenAccounts(session.user.name, solanaConnection, mintAddresses);
+  const bopAmount = await getTokenAccounts(session.user.name, solanaConnection);
+  const usdcAmmount = await getTokenAccounts(session.user.name, solanaConnection);
 
-  const mappedBalance = {};
-  Object.entries(balance).forEach(([mintAddress, amount]) => {
-    const propName = mintAddressToPropNameMap[mintAddress];
-    mappedBalance[propName] = amount;
-  });
+  // const peers = await prisma.peer.findMany({
+  //   where: { userId: user?.id },
+  // })
 
   return {
-    props: { hasSession: true, wallet: session.user.name, ...mappedBalance }
+    props: { bop: bopAmount, usdc: usdcAmmount },
   }
 }
 
-
 type Props = {
-  [mintAddressToPropNameMap[BopTokenMint]]: number,
-  [mintAddressToPropNameMap[SolTokenMint]]: number,
-  [mintAddressToPropNameMap[UsdcTokenMint]]: number
+  bop: string,
+  usdc: string,
 }
 
+const IndexPage: React.FC<Props> = (props) => {
 
-
-const Wallet: React.FC<Props> = (props) => {
-
+  // const { data } = useSession(); // do we need this here? 
   const { data: session, status } = useSession();
   if (!session) {
 
     return (
 
-      // Not AUTHENTICATED 
+      // NOT AUTHENTICATED
       <Layout>
         <Head>
           <title>Boring Protocol</title>
@@ -120,19 +123,14 @@ const Wallet: React.FC<Props> = (props) => {
         <link rel="apple-touch-icon" href="/img/favicon.png" />
       </Head>
 
-      {/* Main content */}
       <div>
-        <h1 className="text-xs">boring-wallet</h1>
-        <div>
-          <p>BOP: {props.bop}</p>
-          <p>SOL: {props.sol}</p>
-          <p>USDC: {props.usdc}</p>
-          
-        </div>
+        bop: {props.bop} | usdc: {props.usdc}
       </div>
       
     </LayoutAuthenticated>
   );
 }
 
-export default Wallet
+export { getServerSideProps }
+
+export default IndexPage
