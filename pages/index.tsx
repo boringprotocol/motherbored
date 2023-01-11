@@ -7,14 +7,14 @@ import { GetServerSideProps } from 'next'
 import Peer, { PeerProps } from '../components/Peer'
 import prisma from '../lib/prisma'
 import Head from 'next/head'
-import { IoAdd, IoAddCircleOutline, IoLogoApple, IoPhonePortrait } from 'react-icons/io5'
+
 
 // Placeholder data for peers stats
-const stats = [
-  { name: 'Consumers', stat: '54' },
-  { name: 'Providers', stat: '30' },
-  { name: 'Connections', stat: '48' },
-]
+// const stats = [
+//   { name: 'Consumers', stat: '54' },
+//   { name: 'Providers', stat: '30' },
+//   { name: 'Connections', stat: '48' },
+// ]
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
@@ -56,8 +56,8 @@ type Props = {
 
 const IndexPage: React.FC<Props> = (props) => {
 
-  const { data } = useSession(); // do we need this here? 
-  const { data: session, status } = useSession();
+  // const { data } = useSession(); // do we need this here? 
+  const { data: session } = useSession();
   if (!session) {
 
     return (
