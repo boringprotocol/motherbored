@@ -1,7 +1,7 @@
 import { ThemeProvider } from 'next-themes'
 import '../styles/global.css';
 import { SessionProvider } from "next-auth/react";
-import React, { FC, useMemo } from "react";
+import React, { useMemo } from "react";
 import {
   ConnectionProvider,
   WalletProvider,
