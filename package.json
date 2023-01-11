@@ -21,11 +21,12 @@
     "@notionhq/client": "^2.2.1",
     "@prisma/client": "^4.3.1",
     "@solana-mobile/wallet-adapter-mobile": "^0.0.1-alpha.5",
+    "@solana/spl-token": "^0.3.7",
     "@solana/wallet-adapter-base": "^0.9.16",
     "@solana/wallet-adapter-react": "^0.15.18",
     "@solana/wallet-adapter-react-ui": "^0.9.16",
     "@solana/wallet-adapter-wallets": "^0.18.8",
-    "@solana/web3.js": "^1.60.0",
+    "@solana/web3.js": "^1.66.2",
     "@tailwindcss/forms": "^0.5.3",
     "@types/luxon": "^3.0.2",
     "boring-avatars": "^1.7.0",
@@ -56,6 +57,7 @@
     "react-qr-image": "^1.1.0",
     "react-toastify": "^9.0.8",
     "sleep-promise": "^9.1.0",
+    "ts-node": "^10.9.1",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {

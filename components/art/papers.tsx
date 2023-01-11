@@ -1,4 +1,4 @@
-const DocsArt = () => {
+const PapersArt = () => {
     return ( 
         <>
         <span className="text-black dark:text-gray hover:animate-pulse">
@@ -47,4 +47,4 @@ const DocsArt = () => {
      );
 }
  
-export default DocsArt;
+export default PapersArt;

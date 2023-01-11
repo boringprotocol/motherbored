@@ -1,4 +1,4 @@
-import { getCsrfToken, signIn, signOut, useSession } from 'next-auth/react'
+import { getCsrfToken, signIn, useSession } from 'next-auth/react'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { SigninMessage } from '../utils/SigninMessage'
@@ -9,7 +9,6 @@ import Link from 'next/link'
 
 export default function Header() {
   const { data: session, status } = useSession();
-  const loading = status === "loading";
 
   const wallet = useWallet();
   const walletModal = useWalletModal();
@@ -52,7 +51,7 @@ export default function Header() {
 
   return (
     <header>
-      <div className="py-4">
+      <div className="py-5">
       <p className="">
         
           {session?.user && (
