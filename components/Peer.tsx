@@ -1,7 +1,6 @@
 import React from 'react'
 import Router from 'next/router'
-import { IoLaptopOutline, IoWifiOutline, IoServerOutline, IoCloudCircleOutline, IoCloudOutline, IoPricetagOutline } from 'react-icons/io5'
-import Image from 'next/image'
+import { IoLaptopOutline, IoWifiOutline, IoServerOutline, IoCloudOutline, IoPricetagOutline } from 'react-icons/io5'
 import Avatar from 'boring-avatars'
 
 export type PeerProps = {
@@ -19,7 +18,6 @@ export type PeerProps = {
   wpa_passphrase: string | null;
   channel: string | null;
 };
-
 
 // generating peer avatar from the id as opposed to the label
 const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
@@ -61,27 +59,26 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
 
   return (
 
-    <div className=''>
-    
+    <div className='px-6 py-6'>
+
       <a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
 
+        <div className="">&nbsp;
+          {isConsumer && (<IoWifiOutline className="float-left mr-2" />)}
+          {isProvider && isLocalProvider && (<IoWifiOutline className="float-left mr-2" />)}
 
-      <div className="px-4 pt-4">&nbsp;
-        {isConsumer && (<IoWifiOutline className="float-left mr-2" />)}
-        {isProvider && isLocalProvider && (<IoWifiOutline className="float-left mr-2" />)}
+          {isConsumer && (
+            <>
+              {peer.ssid}
+            </>
+          )}
 
-        {isConsumer && (
-          <>
-            {peer.ssid}
-          </>
-        )}
-
-        {isLocalProvider && (
-          <>
-            {peer.ssid}
-          </>
-        )}
-      </div>
+          {isLocalProvider && (
+            <>
+              {peer.ssid}
+            </>
+          )}
+        </div>
 
         <h2 className='text-lg md:text-xl lg:text-2xl px-4 mt-4'>{peer.name}</h2>
 
@@ -101,13 +98,11 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
           />
         </div>
 
-        
-        
       </a>
       <div className='pt-4'>
-      <span className="inline-block align-bottom text-xs mt-6 p-4">
-        <IoPricetagOutline className="float-left mr-2"/> {peer.label}
-      </span>
+        <span className="inline-block align-bottom text-xs mt-6 p-4">
+          <IoPricetagOutline className="float-left mr-2" /> {peer.label}
+        </span>
       </div>
     </div>
 
