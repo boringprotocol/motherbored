@@ -1,7 +1,7 @@
 import { ThemeProvider } from 'next-themes'
 import '../styles/global.css';
 import { SessionProvider } from "next-auth/react";
-import React, { FC, useMemo } from "react";
+import React, { useMemo } from "react";
 import {
   ConnectionProvider,
   WalletProvider,
@@ -13,15 +13,8 @@ import {
 } from "@solana/wallet-adapter-wallets";
 import {
   WalletModalProvider,
-  WalletDisconnectButton,
-  WalletMultiButton,
 } from "@solana/wallet-adapter-react-ui";
 import { clusterApiUrl } from "@solana/web3.js";
-import {
-  createDefaultAuthorizationResultCache,
-  SolanaMobileWalletAdapter,
-} from "@solana-mobile/wallet-adapter-mobile";
-import type { AppProps } from "next/app";
 
 import Router from 'next/router';
 import nProgress from 'nprogress'; //nprogress module
@@ -38,11 +31,8 @@ Router.events.on("routeChangeStart", nProgress.start);
 Router.events.on("routeChangeError", nProgress.done);
 Router.events.on("routeChangeComplete", nProgress.done);
 
-
-
-// Default styles that can be overridden by your app
+// Default styles that can be overridden by passing styles to the <WalletMultiButton> component.
 require('@solana/wallet-adapter-react-ui/styles.css');
-
 
 
 // Use of the <SessionProvider> is mandatory to allow components that call
