@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import LayoutAuthenticated from "../components/layoutAuthenticated";
 
 export default function lfg() {
 
