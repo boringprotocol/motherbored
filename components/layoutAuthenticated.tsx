@@ -5,7 +5,7 @@ import HeaderAuthenticated from './headerAuthenticated'
 import Link from 'next/link'
 import Docs from './asides/docs'
 import { signOut } from "next-auth/react"
-import { IoWalletOutline } from 'react-icons/io5'
+import { IoAppsOutline, IoBugOutline, IoServerOutline, IoSettingsOutline, IoWalletOutline } from 'react-icons/io5'
 import SiteMenu from './siteMenu'
 import Setup from './asides/setup'
 import ThemeChanger from './themeChanger'
