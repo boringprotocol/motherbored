@@ -3,23 +3,17 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import HeaderAuthenticated from './headerAuthenticated'
 import Link from 'next/link'
-import { useTheme } from 'next-themes'
-import Waiting from './art/waiting'
-import Docs from './art/docs'
+import Docs from './asides/docs'
 import { signOut } from "next-auth/react"
-import { IoDownloadOutline, IoLogoGithub, IoMoonOutline, IoSunnyOutline, IoWalletOutline } from 'react-icons/io5'
+import { IoWalletOutline } from 'react-icons/io5'
+import SiteMenu from './siteMenu'
+import Setup from './asides/setup'
+import ThemeChanger from './themeChanger'
+import JupterAgg from './asides/jupiterAgg'
+import GenesysGo from './asides/genesys'
+import AccountCard from './asides/accountCard'
 
-// light mode / dark mode
-const ThemeChanger = () => {
-  const { theme, setTheme } = useTheme()
-
-  return (
-    <div className='mt-12 border rounded-sm  border-gray dark:border-black'>
-      <button className='text-center inline-flex items-center  text-xs bg-white px-3 py-2 text-boring-black hover:bg-gray-lightestest dark:hover:bg-gray-light border-r border-gray dark:border-black  w-1/2' onClick={() => setTheme('light')}><IoSunnyOutline className="float-left mr-2" /> Light Mode</button>
-      <button className='inline-flex items-center text-xs bg-white px-3 py-2 text-boring-black hover:bg-gray-lightestest dark:hover:bg-gray-light w-1/2' onClick={() => setTheme('dark')}><IoMoonOutline className="float-left mr-2" /> Dark Mode</button>
-    </div>
-  )
-}
+<ThemeChanger />
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
@@ -116,31 +110,13 @@ export default function Layout({ children }: Props) {
 
                         <ThemeChanger />
 
-                        <div className="pt-12">
-                          <div className="container  mx-auto bg-gray-500  relative">
-                            <Waiting />
-                            <div className="text-sm  absolute top-0">
-                              <h2 className="text-sm mb-2">Set-up:</h2>
-                              <p className="text-xs mb-2">Flash image to Pi. Join &quot;boring&quot; WiFi network. Create peer. </p>
-                              <a
-                                href="https://s3.us-east-2.amazonaws.com/boringfiles.dank.earth/2022-10-26-boring-lite.zip"
-                                className="mb-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black hover:bg-boring-white hover:opacity-70 active:opacity-50 shadow-md active:shadow-sm"
-                              ><IoDownloadOutline className="mr-2" />Image</a>
-                              <div>
-                                <a className='text-xs underline hover:opacity-70 active:opacity-50' href="https://www.raspberrypi.com/software/" target="_blank" rel="noreferrer">Raspberry Pi Imager</a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                        <SiteMenu />
 
-                        <div>
-                          <button
-                            className="inline-flex items-center rounded-sm border border-gray dark:border-white text-xs bg-white px-3 py-2 text-boring-black hover:bg-boring-white hover:opacity-90 active:opacity-70 shadow-md active:border-transparent"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              signOut();
-                            }}><IoWalletOutline className="mr-2" /> Sign Out</button>
-                        </div>
+                        <Setup />
+
+                       <AccountCard />
+
+
                       </div>
                     </nav>
 
@@ -196,141 +172,34 @@ export default function Layout({ children }: Props) {
 
                 <nav className="flex h-full flex-col px-12">
                   <div className="font-jetbrains space-y-1">
+
+                  <AccountCard />
+
+
+                  
                     <h1 className="text-xs mt-4 mb-4">Boring Protol <span className="text-xs text-gray py-6">dev-preview</span></h1>
 
                     <ThemeChanger />
 
-                    <div className="pt-12">
-                      <div className="container  mx-auto bg-gray-500  relative">
-                        <Waiting />
-                        <div className="text-sm  absolute top-0">
-                          <h2 className="text-sm mb-2">Set-up</h2>
-                          <p className="text-xs mb-2">Flash image to Pi. Join &quot;boring&quot; WiFi network. Create peer. </p>
-                          <a
-                            href="https://s3.us-east-2.amazonaws.com/boringfiles.dank.earth/2022-10-26-boring-lite.zip"
-                            className="mb-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black hover:bg-boring-white hover:opacity-70 active:opacity-50 shadow-md active:shadow-sm"
-                          ><IoDownloadOutline className="mr-2" />Image</a>
-                          <div>
-                            <a className='text-xs underline hover:opacity-70 active:opacity-50' href="https://www.raspberrypi.com/software/" target="_blank" rel="noreferrer">Raspberry Pi Imager</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    
+
+                    <SiteMenu />
+
+                    <Setup />
 
 
                   </div>
+
+                  
                 </nav>
 
+                
 
+                <Docs />
 
+                <GenesysGo />
 
-                {/* <div className='px-12 pb-4'>
-                  <ThemeChanger />
-                  <div className='px-12 pb-4'>
-
-                    <Waiting />
-                  </div>
-                  <button
-                    className="inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      signOut();
-                    }}><IoWalletOutline className="mr-2" /> Sign Out</button>
-                </div> */}
-
-                {/* <div className="font-jetbrains text-xs py-4 border-t border-gray-light dark:border-gray-dark">
-                  <Docs />
-                </div> */}
-
-                <div className="p-12 border-t border-gray-lightest dark:border-gray-dark">
-                  <button
-                    className="inline-flex items-center rounded-sm border border-gray dark:border-white text-xs bg-white px-3 py-2 text-boring-black hover:bg-boring-white hover:opacity-90 active:opacity-70 shadow-md active:border-transparent"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      signOut();
-                    }}><IoWalletOutline className="mr-2" /> Sign Out</button>
-                </div>
-
-
-                <div className="p-12 border-t border-gray-lightest dark:border-gray-dark">
-                  <div className="container  mx-auto bg-gray-500  relative">
-                    <Docs />
-                    <div className="text-sm  absolute top-0">
-                      <h2 className="text-sm mb-2">Docs</h2>
-                      <p className="text-xs mb-2">Motherbored set-up, VPS set-up, Development notes, etc...</p>
-
-                      <a
-                        href="https://github.com/boringprotocol/docs"
-                        className="mb-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black hover:bg-boring-white hover:opacity-70 active:opacity-50 shadow-md active:shadow-sm"
-                      ><IoLogoGithub className="mr-2" />GitHub</a>
-                      <div>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-                {/* genesys go */}
-                <div className="sm:flex p-12 border-t border-gray-lightest dark:border-gray-dark">
-                  <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                    <img className="h-11 w-11 text-gray-300" src='/img/genesys-go.png' width='28px' />
-                  </div>
-                  <div>
-                    <h4 className="text-sm">Genesys Go</h4>
-                    <p className="mt-1 text-xs">
-                      RPC service
-                    </p>
-                  </div>
-                </div>
-
-                {/* jupiter agg */}
-                <div className="sm:flex p-12 border-t border-gray-lightest dark:border-gray-dark">
-                  <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                    <img className="h-11 w-11 text-gray-300" src='/img/jupiter-aggregator.svg' width='28px' />
-                  </div>
-                  <div>
-                    <h4 className="text-sm">Jupiter Aggregator</h4>
-                    <p className="mt-1 text-xs">
-                      Acquire $BOP
-                    </p>
-                  </div>
-                </div>
-
-
-
-                {/* //// */}
-
-                {/* <div className='py-12 border-t border-gray-light dark:border-gray-dark'>
-             <div className='px-12 pb-12'>
-             
-             <Switch.Group as="div" className="flex items-center">
-      <Switch
-        checked={enabled}
-        onChange={setEnabled}
-        className={classNames(
-          enabled ? 'bg-green' : 'bg-gray-lightest dark:bg-gray-dark',
-          'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-white dark:border-boring-black transition-colors duration-200 ease-in-out focus:outline-none focus:ring-1 focus:ring-blue focus:ring-offset-1'
-        )}
-      >
-        <span
-          aria-hidden="true"
-          className={classNames(
-            enabled ? 'translate-x-5' : 'translate-x-0',
-            'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out'
-          )}
-        />
-      </Switch>
-      <Switch.Label as="span" className="ml-3">
-        <span className="text-sm">Kill Switch</span>
-      </Switch.Label>
-             </Switch.Group>
-             <p className='text-xs py-4'>Do not try to find another peer if this one becomes unavailable. </p>
-
-
-              </div>
-              </div> */}
-
+                <JupterAgg />
 
               </div>
 
