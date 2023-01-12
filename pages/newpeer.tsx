@@ -1,3 +1,12 @@
+// TODO:
+// SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON"
+// i think the falcon.ts is not returning the correct data
+// boring.dank.earth is returing html error page, not json
+// maybe the endpoint is down or wrong url
+//
+// i need to hook up the loading indicator and prevent retards from spamming the create button
+// when the create button is clicked, it should disable the button and show a loading indicator
+
 import React, { useState } from "react"
 import LayoutAuthenticated from "../components/layoutAuthenticated"
 import Router, { useRouter } from "next/router"
@@ -10,36 +19,10 @@ import { IoRefreshOutline } from "react-icons/io5"
 // radio buttons to select provider_kind
 import { RadioGroup } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/20/solid'
-import ConsumerKindSelect from "../components/consumerKindSelect"
 
-
-
-// // Generate a QR code with same name as the boring-name-generator name
-// import qr from 'qr-image';
-
-// // Define a constant for the filename:
-// const fileName = 'lazy-horse-420.png';
-
-// // Use the qr.imageSync method to generate a PNG image of the QR code:
-// const qrCode = qr.imageSync('lazy-horse-420', { type: 'png' });
-
-// // Save the QR code image to the /public folder on the server, use the fs (File System) module that comes with Node.js. First, import the fs module:
-// import fs from 'fs';
-
-// // Use the fs.writeFileSync method to write the QR code image to a file in a specific folder on the server, using the filename constant:
-// fs.writeFileSync(`/public/img/peer-qr-png/${fileName}`, qrCode);
-
-
-
-
-
-
-
-
-
-const providerKindLists = [ 'local', 'cloud' ]
-   /* { id: 1, title: 'Local', description: 'Usually a device you own, like a Motherbored' },
-    { id: 2, title: 'Cloud', description: 'On a server somewhere, probably remote' },
+const providerKindLists = ['local', 'cloud']
+/* { id: 1, title: 'Local', description: 'Usually a device you own, like a Motherbored' },
+ { id: 2, title: 'Cloud', description: 'On a server somewhere, probably remote' },
 ]
 */
 
@@ -48,7 +31,6 @@ function classNames(...classes: any) {
 }
 
 // https://github.com/boringprotocol/boring-name-generator/
-// npm package published: https://www.npmjs.com/package/boring-name-generator
 var generateName = require('boring-name-generator');
 
 //
@@ -90,29 +72,23 @@ type Props = {
 
 const NewPeer: React.FC<Props> = (props) => {
 
-    // URL paramaters so inbound links can use context and create all kinds of peers (consumer, provider, etc...)
     const { query } = useRouter();
 
-    // boring-name-generator
+
     const [name, setName] = useState(generateName({ number: true }).dashed);
-    
-    // default value 'consumer' unless specified through the query paramater
+
     let queryMode = "consumer"
     if (query.mode) { queryMode = String(query.mode) }
-    
-    // default value 'local' unless specified through the query paramater
+
     let queryProviderMode = "local"
     if (query.provider_kind) { queryProviderMode = String(query.provider_kind) }
     const [selectedProviderKindLists, setSelectedProviderKindLists] = useState(queryProviderMode)
-
-
     const [kind, setKind] = useState(queryMode);
     const [wifi_preference, setWifiPreference] = useState("2.4Ghz");
     const [channel, setChannel] = useState("7");
-    const [ssid, setSSID] = useState("boring"); 
+    const [ssid, setSSID] = useState("boring");
     const [wpa_passphrase, setWpaPassphrase] = useState('motherbored');
     const [country_code, setCountryCode] = useState("US");
-
     const [target, setTarget] = useState(props.peers[0].id);
 
     function handleChangeKind(newKind: string) {
@@ -122,7 +98,7 @@ const NewPeer: React.FC<Props> = (props) => {
         setKind(newKind);
     }
 
-    // submit form to create a new peer
+
     const submitData = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         try {
@@ -133,12 +109,10 @@ const NewPeer: React.FC<Props> = (props) => {
                 body: JSON.stringify(body),
             });
             const resultData = await (response.json()) as any;
-            console.log(resultData);
             if (response.ok) {
-                await Router.push(`/p/${resultData.id}`);
-
+                await Router.replace(`/p/${resultData.id}`);
             } else {
-                await Router.push("/")
+                await Router.replace("/")
             }
         } catch (error) {
             console.error(error);
@@ -150,17 +124,10 @@ const NewPeer: React.FC<Props> = (props) => {
             <div className="px-4 sm:px-8 md:px-12 pt-16">
 
 
-                <form className="w-100 md:w-1/2 select-none" onSubmit={submitData}>
-                
-                {/* <ConsumerKindSelect /> */}
-
-
-
-                {/* sdkjfhjsdfkjjksdhlfkjhsdjkhlkfjhsdlkjfh */}
-
+                <form className="w-100 md:w-1/2" onSubmit={submitData}>
                     <h1 className="uppercase mb-6">New <span>{query.mode}</span> Peer</h1>
-                    <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 focus-within:border-blue focus-within:ring-1 focus-within:ring-blue select-none">
-                        <label htmlFor="name" className="block text-xs text-gray select-none">
+                    <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                        <label htmlFor="name" className="block text-xs text-gray">
                             Peer Name
                         </label>
                         <input
@@ -168,52 +135,19 @@ const NewPeer: React.FC<Props> = (props) => {
                             name="name"
                             id="name"
                             onChange={(e) => setName(e.target.value)}
-                            className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white block w-full border-0 p-0 focus:ring-0 text-lg select-none"
+                            className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white block w-full border-0 p-0 focus:ring-0 text-lg"
                             placeholder=""
                             value={name}
                             disabled
                         />
                     </div>
                     <div className="mt-4 ">
-                        <a onClick={(e) => setName(generateName({ number: true }).dashed)}><span className="float-right p-4 border border-gray-lightest rounded-sm hover:text-gray active:text-gray-dark"><IoRefreshOutline /></span>...</a>
+                        <a onClick={(e) => setName(generateName({ number: true }).dashed)}><span className="float-right p-4 border border-gray-lightest rounded-sm hover:text-gray active:text-gray-dark"><IoRefreshOutline /></span></a>
                     </div>
-                    {/* <div className="my-6 border border-gray-dark text-boring-white rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
-                        <label htmlFor="mode" className="block text-xs text-gray">
-                            Mode
-                        </label>
-                        <select
-                            onChange={(e) => handleChangeKind(e.target.value)}
-                            id="kind"
-                            name="kind"
-                            className="bg-boring-black block w-full border-0 p-0 text-gray-lightest placeholder-boring-white focus:ring-0 text-lg"
-                            defaultValue={query.mode}
-                        >
-                            <option key="consumer" value="consumer">Consumer</option>
-                            <option key="provider" value="provider">Provider</option>
-                            required
-                        </select>
-                    </div> */}
-                    {/* // Spawn provider menu     */}
-                    {/* {kind == "consumer" && (
-                        <div className="border border-gray-dark text-boring-white rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
-                            <label htmlFor="target" className="block text-xs text-gray">
-                                Select an available vpn provider:
-                            </label>
-                            <select
-                                onChange={(e) => setTarget(e.target.value)}
-                                id="target"
-                                name="target"
-                                className="bg-boring-black block w-full border-0 p-0 text-gray-lightest placeholder-boring-white focus:ring-0 text-lg"
-                            >
-                                {props.peers.map(option => (
-                                    <option key={option.id} value={option.id}>{option.name}</option>
-                                ))}
-                            </select>
-                        </div>
-                    )} */}
+
 
                     {kind == "provider" && (
-                        <div className="w-full inline-block">
+                        <div className="">
 
                             <RadioGroup value={selectedProviderKindLists} onChange={setSelectedProviderKindLists}>
                                 <RadioGroup.Label className="text-xs font-medium text-gray">Select a Provider Kind</RadioGroup.Label>
@@ -267,23 +201,23 @@ const NewPeer: React.FC<Props> = (props) => {
                     )}
 
 
-                    {/* hide me and give me default values */}
-                <div className="hidden">
-                <input name="kind" value={query.mode}></input>
-                <input name="ssid" value="boring"></input>
-                <input name="wpa_passphrase" value="motherbored"></input>
-                  
-                {/* state setters for these */}
-                <input name="country_code"  value="US"></input>
-                <input name="channel"  value="7"></input>
-                <input name="wifi_preference" value="2.4Ghz" ></input>
+                    {/* hide me and give me default values. we should set defaults another way obviously */}
+                    <div className="hidden">
+                        <input name="kind" value={query.mode}></input>
+                        <input name="ssid" value="boring"></input>
+                        <input name="wpa_passphrase" value="motherbored"></input>
 
-                </div>                                        
+                        {/* state setters for these */}
+                        <input name="country_code" value="US"></input>
+                        <input name="channel" value="7"></input>
+                        <input name="wifi_preference" value="2.4Ghz" ></input>
 
+                    </div>
 
                     <input className="float-left  mt-6 flex justify-center rounded-sm border border-transparent  py-2 px-4 text-sm text-gray shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40" type="submit" value="Create" />
+
                     <a className="back" onClick={() => Router.push("/")}>
-                    <span className="text-xs float-left ml-6 mt-8">or Cancel</span>
+                        <span className="text-xs float-left ml-6 mt-8">or Cancel</span>
                     </a>
                 </form>
             </div>
