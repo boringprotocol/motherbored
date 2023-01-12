@@ -8,6 +8,9 @@ import Peer, { PeerProps } from '../components/Peer'
 import prisma from '../lib/prisma'
 import Head from 'next/head'
 import { IoLogoApple, IoLogoWindows } from 'react-icons/io5'
+import { VscTerminalLinux } from "react-icons/vsc";
+import Waiting from '../components/art/waiting'
+
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
@@ -47,6 +50,8 @@ type Props = {
 
 const IndexPage: React.FC<Props> = (props) => {
 
+  
+
   // const { data } = useSession(); // do we need this here? 
   const { data: session } = useSession();
   if (!session) {
@@ -62,6 +67,19 @@ const IndexPage: React.FC<Props> = (props) => {
       </Layout>
     );
   }
+
+
+  let content;
+  if (props.peers.length === 0) {
+    content = <div className="p-12">You don't have any peers setup yet. If you want to mine, setup up a provider. If you want to browser the internet through a our dVPN choose a consumer.<Waiting /></div>;
+  } else if (props.peers.length === 1) {
+    content = <div className="p-12">You have one peer</div>;
+  } else if (props.peers.length >= 2 && props.peers.length < 5) {
+    content = <div className="p-12">You have {props.peers.length} peers. nice! </div>;
+  } else if (props.peers.length >= 5) {
+    content = <div className="p-12">Whoa dang you have many peers bro! Maybe you want to try you hand and running some of the experimental peer types?</div>;
+  }
+
   return (
 
     // AUTHENTICATED - Home Page Main Panel 🐈
@@ -76,6 +94,8 @@ const IndexPage: React.FC<Props> = (props) => {
       <div className="main pt-12 text-xs">
 
         {/* PEERS */}
+
+         {content}
        
         <div className="px-4 sm:px-8 md:px-12 pb-16">
         <ul role="list" className=" pb-12 grid grid-cols-2 gap-6 md:grid-cols-4 2xl:grid-cols-6">
@@ -104,40 +124,7 @@ const IndexPage: React.FC<Props> = (props) => {
                   <span className="font-jetbrains mt-2 block text-xs text-gray">Configure your Motherbored to run as a consumer peer.</span>
                   </button>
           </li>{/* /#add-peer */}
-          <li className="shadow-md rounded-lg pb-2 pt-4 col-span-1 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
-                  <button
-                  type="button"
-                  onClick={() => Router.push("/newpeer?mode=consumer")}
-                  className="relative block w-full rounded-lg text-boring-black dark:text-boring-white  p-12 text-center  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  >
-                  
-                  <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add <IoLogoApple className="float-left"/> Macintosh Consumer</span>
-                  <span className="font-jetbrains mt-2 block text-xs text-gray">Configure a VPN for OS X</span>
-                  </button>
-          </li>{/* /#add-peer */}
-          <li className="shadow-md rounded-lg pb-2 pt-4 col-span-1 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
-                  <button
-                  type="button"
-                  onClick={() => Router.push("/newpeer?mode=consumer")}
-                  className="relative block w-full rounded-lg text-boring-black dark:text-boring-white  p-12 text-center  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  >
-                  
-                  <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add <IoLogoWindows className="float-left"/> Windows Consumer</span>
-                  <span className="font-jetbrains mt-2 block text-xs text-gray">Configure a VPN for your Windows machine</span>
-                  </button>
-          </li>{/* /#add-peer */}
-          <li className="shadow-md rounded-lg pb-2 pt-4 col-span-1 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
-                  <button
-                  type="button"
-                  onClick={() => Router.push("/newpeer?mode=consumer")}
-                  className="relative block w-full rounded-lg text-boring-black dark:text-boring-white  p-12 text-center  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  >
-                  
-                  <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add  
-                  <VscTerminalLinux className="float-left" /> Linux Consumer</span>
-                  <span className="font-jetbrains mt-2 block text-xs text-gray">Configure a VPN to run on Linux</span>
-                  </button>
-          </li>{/* /#add-peer */}
+
 
           {props.peers.map((peer) => (
             <li key={peer.name} className="shadow-md col-span-2 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
@@ -145,7 +132,7 @@ const IndexPage: React.FC<Props> = (props) => {
             </li>
           ))}     
 
-          <li className="shadow-md rounded-lg pb-2 pt-4 col-span-2 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
+          {/* <li className="shadow-md rounded-lg pb-2 pt-4 col-span-2 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
           <button
                 type="button"
                 onClick={() => Router.push("/newpeer?mode=consumer")}
@@ -169,13 +156,14 @@ const IndexPage: React.FC<Props> = (props) => {
                 <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add Motherbored Consumer</span>
                 <span className="font-jetbrains mt-2 block text-xs text-gray">Configure your Motherbored to run as a consumer peer.</span>
               </button>
-            </li>{/* /#add-peer */}
+            </li> */}
+            {/* /#add-peer */}
 
-            {props.peers.map((peer) => (
+            {/* {props.peers.map((peer) => (
               <li key={peer.name} className="col-span-2 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
                 <Peer peer={peer} />
               </li>
-            ))}
+            ))} */}
 
             <li className="shadow-md rounded-lg pb-2 pt-4 col-span-2 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
               <button
@@ -228,6 +216,41 @@ const IndexPage: React.FC<Props> = (props) => {
                 <span className="font-jetbrains mt-2 block text-xs text-gray">Deploy to a virtual machine offered by any cloud provider (e.g., AWS, DigitalOcean, Hetzner, Google Cloud, Contabo ...)</span>
               </button>
             </li>
+
+            <li className="shadow-md rounded-lg pb-2 pt-4 col-span-1 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
+                  <button
+                  type="button"
+                  onClick={() => Router.push("/newpeer?mode=consumer")}
+                  className="relative block w-full rounded-lg text-boring-black dark:text-boring-white  p-12 text-center  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                  
+                  <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add <IoLogoApple className="float-left"/> Macintosh Consumer</span>
+                  <span className="font-jetbrains mt-2 block text-xs text-gray">Configure a VPN for OS X</span>
+                  </button>
+          </li>{/* /#add-peer */}
+          <li className="shadow-md rounded-lg pb-2 pt-4 col-span-1 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
+                  <button
+                  type="button"
+                  onClick={() => Router.push("/newpeer?mode=consumer")}
+                  className="relative block w-full rounded-lg text-boring-black dark:text-boring-white  p-12 text-center  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                  
+                  <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add <IoLogoWindows className="float-left"/> Windows Consumer</span>
+                  <span className="font-jetbrains mt-2 block text-xs text-gray">Configure a VPN for your Windows machine</span>
+                  </button>
+          </li>{/* /#add-peer */}
+          <li className="shadow-md rounded-lg pb-2 pt-4 col-span-1 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
+                  <button
+                  type="button"
+                  onClick={() => Router.push("/newpeer?mode=consumer")}
+                  className="relative block w-full rounded-lg text-boring-black dark:text-boring-white  p-12 text-center  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                  
+                  <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add  
+                  <VscTerminalLinux className="float-left" /> Linux Consumer</span>
+                  <span className="font-jetbrains mt-2 block text-xs text-gray">Configure a VPN to run on Linux</span>
+                  </button>
+          </li>{/* /#add-peer */}
           </ul>
         </div>
       </div>
