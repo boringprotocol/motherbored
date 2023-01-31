@@ -5,7 +5,7 @@ const Docs = () => {
     return ( 
         <>
         <div className="p-12 border-t border-gray-lightest dark:border-gray-dark">
-                  <div className="container  mx-auto bg-gray-500  relative">
+                  <div className="container mx-auto relative">
                     <PapersArt />
                     <div className="text-sm  absolute top-0">
                       <h2 className="text-sm mb-2">Docs</h2>

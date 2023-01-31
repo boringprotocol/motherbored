@@ -10,6 +10,7 @@ import Head from 'next/head'
 import { IoLogoApple, IoLogoWindows } from 'react-icons/io5'
 import { VscTerminalLinux } from "react-icons/vsc";
 import Waiting from '../components/art/waiting'
+import CheckCircleIcon from '@heroicons/react/24/outline/CheckCircleIcon'
 
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
@@ -77,7 +78,20 @@ const IndexPage: React.FC<Props> = (props) => {
   } else if (props.peers.length >= 2 && props.peers.length < 5) {
     content = <div className="p-12">You have {props.peers.length} peers. nice! </div>;
   } else if (props.peers.length >= 5) {
-    content = <div className="p-12">Whoa dang you have many peers bro! Maybe you want to try you hand and running some of the experimental peer types?</div>;
+    content = <div className="px-4 sm:px-6 md:px-12 pb-4">
+    <div className="rounded-md bg-gray-50 p-4 border border-gray-light dark:border-gray-dark">
+      <div className="flex">
+        <div className="flex-shrink-0">
+          <CheckCircleIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+        </div>
+        <div className="ml-3">
+          <h3 className="text-sm font-medium text-gray-800">Whoa dang!</h3>
+          <div className="mt-2 text-xs text-gray-700">
+            <p>You have many peers bro! Maybe you want to try your hand and running some of the experimental peer types?</p>
+          </div>
+        </div>
+      </div>
+    </div></div>;
   }
 
   return (
@@ -99,72 +113,11 @@ const IndexPage: React.FC<Props> = (props) => {
        
         <div className="px-4 sm:px-8 md:px-12 pb-16">
         <ul role="list" className=" pb-12 grid grid-cols-2 gap-6 md:grid-cols-4 2xl:grid-cols-6">
-          <li className="rounded-md pb-2 pt-4 col-span-1 border border-dashed border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
-                  <button
-                  type="button"
-                  onClick={() => Router.push("/newpeer?mode=consumer")}
-                  className="relative block w-full rounded-lg text-boring-black dark:text-boring-white  p-12 text-center  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  >
-                  <svg
-                    className="mx-auto h-12 w-12 text-gray-400"
-                    xmlns="http://www.w3.org/2000/svg"
-                    stroke="currentColor"
-                    fill="none"
-                    viewBox="0 0 48 48"
-                    aria-hidden="true"
-                    >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1}
-                      d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6"
-                    />
-                  </svg>
-                  <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add Motherbored Consumer</span>
-                  <span className="font-jetbrains mt-2 block text-xs text-gray">Configure your Motherbored to run as a consumer peer.</span>
-                  </button>
-          </li>{/* /#add-peer */}
-
-
           {props.peers.map((peer) => (
             <li key={peer.name} className="shadow-md col-span-2 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
               <Peer peer={peer} />
             </li>
           ))}     
-
-          {/* <li className="shadow-md rounded-lg pb-2 pt-4 col-span-2 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
-          <button
-                type="button"
-                onClick={() => Router.push("/newpeer?mode=consumer")}
-                className="relative block w-full rounded-lg text-boring-black dark:text-boring-white  p-12 text-center  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                <svg
-                  className="mx-auto h-12 w-12 text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  stroke="currentColor"
-                  fill="none"
-                  viewBox="0 0 48 48"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1}
-                    d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6"
-                  />
-                </svg>
-                <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add Motherbored Consumer</span>
-                <span className="font-jetbrains mt-2 block text-xs text-gray">Configure your Motherbored to run as a consumer peer.</span>
-              </button>
-            </li> */}
-            {/* /#add-peer */}
-
-            {/* {props.peers.map((peer) => (
-              <li key={peer.name} className="col-span-2 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
-                <Peer peer={peer} />
-              </li>
-            ))} */}
-
             <li className="shadow-md rounded-lg pb-2 pt-4 col-span-2 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
               <button
                 type="button"
@@ -186,8 +139,8 @@ const IndexPage: React.FC<Props> = (props) => {
                     d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6"
                   />
                 </svg>
-                <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add Motherbored Provider</span>
-                <span className="font-jetbrains mt-2 block text-xs text-gray">Configure your Motherbored to run as provider peer.</span>
+                <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add Motherbored/Pi Provider</span>
+                <span className="font-jetbrains mt-2 block text-xs text-gray">Configure your Motherbored/Pi to run as provider peer.</span>
                 </button>
           </li>
           <li className="shadow-md rounded-lg pb-2 pt-4 col-span-2 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
@@ -216,7 +169,31 @@ const IndexPage: React.FC<Props> = (props) => {
                 <span className="font-jetbrains mt-2 block text-xs text-gray">Deploy to a virtual machine offered by any cloud provider (e.g., AWS, DigitalOcean, Hetzner, Google Cloud, Contabo ...)</span>
               </button>
             </li>
-
+            <li className="rounded-md pb-2 pt-4 col-span-2 border border-dashed border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
+                  <button
+                  type="button"
+                  onClick={() => Router.push("/newpeer?mode=consumer")}
+                  className="relative block w-full rounded-lg text-boring-black dark:text-boring-white  p-12 text-center  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                  <svg
+                    className="mx-auto h-12 w-12 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 48 48"
+                    aria-hidden="true"
+                    >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1}
+                      d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6"
+                    />
+                  </svg>
+                  <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add Motherbored Consumer</span>
+                  <span className="font-jetbrains mt-2 block text-xs text-gray">Configure your Motherbored/Pi to run as a consumer peer.</span>
+                  </button>
+          </li>{/* /#add-peer */}
             <li className="shadow-md rounded-lg pb-2 pt-4 col-span-1 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
                   <button
                   type="button"

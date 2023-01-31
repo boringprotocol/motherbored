@@ -34,7 +34,7 @@ export default function lfg() {
   const [periodAllocation, setPeriodAllocation] = useState(1800000);
 
   // Define the data string
-  // pull from db latest settlement state 
+  // pull from db latest settlements 
   const settlement_state = `account,period_shares,consumer_local,consumer_linux,consumer_windows,consumer_mac,provider_cloud,provider_local,v1_license,v2_license,v3_license,poa
   1523,35,1,2,2,2,3,2,3,1,3,2
   1523,25,1,2,2,2,3,2,3,1,3,2
@@ -103,26 +103,25 @@ export default function lfg() {
 
   }, []); // The empty array
 
-
-
   // lfg
-
 
 
   return (
     <LayoutAuthenticated>
-      <div className="p-12">
-        <p className="text-xs">boring-settlements</p>
+
+<div className="p-12 text-xs"><span className="text-xs text-gray">boring-settlements:</span> function to calulate period shares from a user account's "points".</div>
+      <div className="px-12 text-xs">
+        
         {/* Display the total period shares and row count */}
         <p>Total period Allocation: {periodAllocation}</p>
         <p>Number of accounts: {rowAccounts}</p>
         <p>Total period shares: {totalPeriodShares}</p>
 
         {/* Render the HTML table */}
-        <table className="min-w-full divide-y divide-gray-dark mt-12">
+        <table className="text-xs min-w-full divide-y divide-gray-dark mt-12">
         
   <thead>
-    <tr>
+    <tr className="text-gray">
       <th>Account</th>
       <th>Period Shares</th>
       <th>Percentage of Total</th>
@@ -141,15 +140,9 @@ export default function lfg() {
   </tbody>
 </table>
 
-
-{accountData.map(({ account, periodShares }, index) => (
-      
-        <>{(periodAllocation / 100 * accountShares[index]).toFixed(2)}, </> 
-      
-    ))}
-
-<button onClick={handleDownload}>Download as CSV</button>
-
+<div className="py-12">
+  <button className="border border-gray dark:border-gray-dark px-4 py-3" onClick={handleDownload}>Download as CSV</button>
+</div>
       </div>
     </LayoutAuthenticated>
   );

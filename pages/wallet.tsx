@@ -62,29 +62,11 @@ const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const user = await prisma.user.findFirst({
     where: { wallet: session.user.name }
   })
-
-
-  // wtf is this
-  // if (!user) {
-  //   if (session.user.name) {
-  //     const sessionUser = session.user.name
-  //     const user = await prisma.user.create({
-  //       data: {
-  //         wallet: sessionUser,
-  //       },
-  //     })
-  //   }
-  // }
-
-  // findbop
+  
   const rpcEndpoint = 'https://fluent-dimensional-shadow.solana-mainnet.quiknode.pro/';
   const solanaConnection = new Connection(rpcEndpoint);
   const bopAmount = await getTokenAccounts(session.user.name, solanaConnection);
   const usdcAmmount = await getTokenAccounts(session.user.name, solanaConnection);
-
-  // const peers = await prisma.peer.findMany({
-  //   where: { userId: user?.id },
-  // })
 
   return {
     props: { bop: bopAmount, usdc: usdcAmmount },
@@ -99,7 +81,7 @@ type Props = {
 const IndexPage: React.FC<Props> = (props) => {
 
   // const { data } = useSession(); // do we need this here? 
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   if (!session) {
 
     return (
@@ -123,8 +105,12 @@ const IndexPage: React.FC<Props> = (props) => {
         <link rel="apple-touch-icon" href="/img/favicon.png" />
       </Head>
 
-      <div>
-        bop: {props.bop} | usdc: {props.usdc}
+      <div className='p-12 text-xs'>
+        bop: {props.bop}, usdc: {props.usdc}
+      </div>
+
+      <div className='px-12 text-xs'>
+        get v1, v2, vx  nfts
       </div>
       
     </LayoutAuthenticated>

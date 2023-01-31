@@ -11,7 +11,7 @@ function classNames(...classes: any) {
 const AccountCard = () => {
     return (
 
-        <div className="bg-boring-white dark:bg-boring-black pb-16">
+        <div className="bg-boring-white dark:bg-boring-black border border-gray-lightest dark:border-gray-dark p-2">
             <div className="flex space-x-3">
                 <div className="flex-shrink-0">
                     <img
@@ -22,9 +22,7 @@ const AccountCard = () => {
                 </div>
                 <div className="min-w-0 flex-1">
                     <p className="text-xs truncate">
-
                         oyja18UadrHNEuDxYzUr4mgyLSe81WdN8uBCoyGbK6V
-
                     </p>
                 </div>
                 <div className="flex flex-shrink-0 self-center">
@@ -50,14 +48,14 @@ const AccountCard = () => {
                                     <Menu.Item>
                                         {({ active }) => (
                                             <a
-                                                href="/settings"
+                                                href="/profile"
                                                 className={classNames(
-                                                    active ? 'bg-gray-lightestest dark:bg-gray-dark text-black dark:text-white' : 'text-gray-700',
+                                                    active ? 'bg-gray-lightestest dark:bg-gray-dark text-black dark:text-white' : 'text-gray',
                                                     'flex px-4 py-2 text-xs'
                                                 )}
                                             >
                                                 <IoSettingsOutline className="mr-3 h-4 w-4" aria-hidden="true" />
-                                                <span>Settings</span>
+                                                <span>Profile</span>
                                             </a>
                                         )}
                                     </Menu.Item>
