@@ -1,0 +1,68 @@
+.AsteroidsContainer {
+  padding: 0;
+  margin: 0;
+  font-family: 'JetBrains-Mono-Thin', sans;
+  color: #ffffff;
+}
+.AsteroidsCanvas {
+  display: block;
+  z-index: -1;
+  background-color: #000;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+.current-score {
+  left: 20px;
+}
+.top-score {
+  right: 20px;
+  border-bottom: 1px solid #eee;
+}
+.score {
+  display: block;
+  background-color: #fff;
+  position: relative;
+  top: 15px;
+  z-index: -1;
+  font-size: 12px;
+}
+.controls {
+  display: block;
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: -1;
+  font-size: 10px;
+  text-align: center;
+  line-height: 1.6;
+}
+.endgame{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 16px;
+  z-index: -1;
+  text-align: center;
+}
+.AsteroidsButton{
+  border: 1px solid #ffffff;
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 5px 20px;
+  margin: 10px;
+  font-family: 'PT Mono', serif;
+  cursor: pointer;
+  z-index: -1;
+}
+.AsteroidsButton:hover{
+  background-color: #ffffff;
+  color: #000000;
+}

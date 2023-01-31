@@ -10,20 +10,12 @@ import { ToastContainer, toast } from 'react-toastify'
 import CountryCodes from "../../data/country_codes"
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-// import Identicon from 'react-identicons'
 import Avatar from "boring-avatars"
-// import Jdenticon from 'react-jdenticon'
-// import jdenticon from "jdenticon";
-import { useTheme } from "next-themes"
+import "/node_modules/flag-icons/css/flag-icons.min.css";
+import qrcode from 'qrcode';
 import Link from "next/link"
-import TrafficStats from "../../components/trafficStats"
+// import TrafficStats from "../../components/trafficStats"
 import { GetStatsForPubkey, GetPeersForPubkey } from "../../lib/influx"
-
-
-import { ReactQrCode } from '@devmehq/react-qr-code';
-
-
-
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
@@ -90,7 +82,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req, res 
         },
     })
 
-    // we're a provider, return stats and no target
+    // We're a Provider, return stats and no target
     if (peer.kind == "provider" && peer.pubkey != null) {
         const statsData = await GetStatsForPubkey(peer.pubkey)
         const peerCount5m = await GetPeersForPubkey(peer.pubkey, '5m')
@@ -174,7 +166,7 @@ async function shovePeerConfig(id: string): Promise<void> {
                 toast('We did it! boring.network is configured, rebooting', { containerId: 'PeerSavedNotification' })
             } else {
                 // notify("something went wrong trying to configure boring.network")
-                toast('something went wrong trying to configure boring.network', { containerId: 'PeerSavedNotification' })
+                toast('Something went wrong trying to configure boring.network', { containerId: 'PeerSavedNotification' })
             }
         } catch {
             // notify("ERROR: dns resolution for boring.surf failed")
@@ -188,7 +180,6 @@ async function shovePeerConfig(id: string): Promise<void> {
 
 const ShowPeer: React.FC<Props> = (props) => {
 
-    // generating peer avatoar from the id as opposed to the label
     const peerAvatar = props.peer.id
 
     // here dude - update components/Peer.tsx to make more of these babies
@@ -230,7 +221,7 @@ const ShowPeer: React.FC<Props> = (props) => {
             }
         } catch (error) {
             console.error(error);
-            //       notify("ERROR occured while saving settings!");
+            // notify("ERROR occured while saving settings!");
         }
     };
 
@@ -267,13 +258,6 @@ const ShowPeer: React.FC<Props> = (props) => {
         channelNotNull = channel
     }
 
-
-    const notifyA = () => toast('W0w so easy !', { containerId: 'A' });
-    const notifyB = () => toast('Wow so easy !', { containerId: 'B' });
-
-
-    //const {theme} = useTheme()
-
     return (
         <LayoutAuthenticated>
 
@@ -296,7 +280,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
 
             {/* Design tool shows breakpoints on the rendered page */}
-            <div className="flex items-center m-2 fixed bottom-0 right-0 border border-gray-400 rounded p-2 bg-boring-white text-pink-600 text-sm">
+            <div className="flex items-center m-2 fixed bottom-0 right-0 border border-gray-400 rounded p-2 bg-boring-white text-pink-600 text-sm z-50">
                 Current breakpoint - 
                 <span className="ml-1 sm:hidden md:hidden lg:hidden xl:hidden">default (&lt; 640px)</span>
                 <span className="ml-1 hidden sm:inline md:hidden font-extrabold">sm</span>
@@ -306,24 +290,16 @@ const ShowPeer: React.FC<Props> = (props) => {
                 <span className="ml-1 hidden 2xl:inline font-extrabold">2xl</span>
             </div>
 
-
-
             {/* rows and columns w/ grid */}
-            <div className="p-4"><Link href={"/"}><a className="inline-flex items-center rounded-sm border border-gray-light dark:border-gray-dark text-xs  px-3 py-2 text-gray dark:text-gray-light hover:bg-gray-lightestest dark:hover:bg-gray-dark focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoArrowBack className="mr-2" /> peers </a></Link></div>
+            <div className="p-12"><Link href={"/"}><a className="inline-flex items-center rounded-sm border border-gray-light dark:border-gray-dark text-xs  px-3 py-2 text-gray dark:text-gray-light hover:bg-gray-lightestest dark:hover:bg-gray-dark focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoArrowBack className="mr-2" /> peers </a></Link></div>
 
-            {/* <div className="bg-orange">&nbsp;</div>
-            <div className="bg-yellow">&nbsp;</div>
-            <div className="bg-red">&nbsp;</div>
-            <div className="bg-green">&nbsp;</div>
-            <div className="bg-blue">&nbsp;</div> */}
-
-            <div className="p-8  xl:pt-0 grid overflow-hidden grid-cols-4 md:grid-cols-6 grid-rows-1 sm:gap-2">                
+            <div className="p-12  xl:pt-0 grid overflow-hidden grid-cols-4 md:grid-cols-6 grid-rows-1 sm:gap-2">                
 
                 {props.peer.provider_kind == "cloud" && (<li>provider_kind: {props.peer.provider_kind}</li>)}
 
                 <div className="box row-start-1 col-span-4 md:col-span-6 col-start-2 md:col-start-1">
 
-                    <h1 className="text-2xl sm:text-5xl lg:text-6xl xl:text-7xl pl-6 pt-2 mb-2">{name || ""}</h1>
+                    <h1 className="text-2xl sm:text-5xl lg:text-6xl xl:text-7xl pt-2 mb-8">{name || ""}</h1>
 
                 </div>
 
@@ -350,10 +326,10 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                     {isProvider && (
                         <div className="m-0 md:m-12">
-                            <TrafficStats  {...props} />
+                            {/* <TrafficStats  {...props} /> */}
                         </div>
                     )}
-                    <form className="px-0 md:px-12" onSubmit={submitData}>
+                    <form className="px-0 md:px-10" onSubmit={submitData}>
 
                         {/* Label / Friendly Name */}
                         <div className=" bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
@@ -369,7 +345,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                 placeholder={label || ""}
                             />
                         </div>
-
+                        <p className="py-6 text-xs">Filter by country, find by name (e.g. "annoyed-grizzly-5834")</p>
                         {isConsumer && (
                             <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2  focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
                                 <Listbox value={target} onChange={setTarget}>
@@ -380,13 +356,13 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                                                 <Listbox.Button className="relative w-full cursor-default rounded-sm border border-none dark:text-boring-white bg-boring-white dark:bg-boring-black py-6 pl-0 text-left  focus:border-blue focus:outline-none focus:ring-none  ">
                                                     <span className="text-boring-black dark:text-boring-white border-r border-gray-light dark:border-gray-dark pr-4 ">{target.country_code}</span>
-                                                    <span className="float-left pr-3">
+                                                    {/* <span className="float-left pr-3">
                                                         <Avatar
                                                             size="30"
                                                             name="dude"
                                                             variant="sunset"
                                                         />
-                                                    </span>
+                                                    </span> */}
 
                                                     <span className="pl-2 text-boring-black dark:text-boring-white text-sm">{target.name}</span>
                                                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
@@ -419,13 +395,13 @@ const ShowPeer: React.FC<Props> = (props) => {
                                                                         <span className={classNames(selected ? '' : '', 'block truncate')}>
                                                                             <span className="text-boring-black dark:text-boring-white border-r border-gray-light dark:border-gray-dark pr-4 text-xs">{pp.country_code}</span>
 
-                                                                            <span className="float-left pr-3 ">
+                                                                            {/* <span className="float-left pr-3 ">
                                                                                 <Avatar
                                                                                     size="16"
                                                                                     name="dude"
                                                                                     variant="sunset"
                                                                                 />
-                                                                            </span>
+                                                                            </span> */}
 
                                                                             <span className="pl-2 text-boring-black dark:text-boring-white text-sm">{pp.name}</span>
                                                                         </span>
@@ -481,14 +457,20 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                 <div className="box row-start-4 md:row-start-3 col-start-1 col-span-2 md:col-span-2 ">
                     {/* The small print. Details on the node */}
-                    <div className="col-span-1  mt-12 text-gray">
+                    <div className="col-span-1 mt-12 text-gray">
                         <ul className="text-xs leading-relaxed">
                             <li key={props.peer.id}>Id: {props.peer.id}</li>
                             <li className="capitalize" key={props.peer.kind}>Kind: {props.peer.kind}</li>
+                            <li className="capitalize" key={props.peer.consumer_platform}>Platform: {props.peer.consumer_platform}</li>
                             <li key={props.peer.setupkey}>Boring Setupkey: {props.peer.setupkey}</li>
                             {/* Only show the pubkey if this is a provider node */}
                             {props.peer.kind == "provider" && (<li key={props.peer.pubkey}>Boring Pubkey: {props.peer.pubkey}</li>)}
                         </ul>
+                        {props.peer.country_code}
+                        {/* <span className="fi fi-gr"></span> <span className="fi fi-gr fis"></span> */}
+                        {/* <span className={`fi fi-${props.peer.country_code.toString()}`}></span> */}
+                        {/* <span className={`fi fi-${props.peer.country_code.toString()} fis`}></span> */}
+
                     </div>
                 </div>
 
@@ -658,20 +640,6 @@ const ShowPeer: React.FC<Props> = (props) => {
                             </div>
 
 
-                            {/* <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
-                                <label className="block text-xs text-gray">WiFi Channel</label>
-                                <select
-                                    onChange={(e) => setChannel(e.target.value)}
-                                    id="channel"
-                                    name="channel"
-                                    className="mt-1 block w-full rounded-sm border-gray-light py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none sm:text-sm"
-                                >
-                                    <option key={channelNotNull + "channelidthing"} value={channelNotNull}>{channelNotNull + " selected"}</option>
-                                    {channels24.map(option => (
-                                        <option key={option + "24channel"} value={option}>{option}</option>
-                                    ))}
-                                </select>
-                            </div> */}
 
                             {/* Country Code */}
                             <p className="pl-2 pt-4 text-gray text-xs">Please choose the country from which this peer will {isProvider && (<>provide</>)}{isConsumer && (<>consume</>)}</p>
@@ -753,12 +721,6 @@ const ShowPeer: React.FC<Props> = (props) => {
             </div>
 
 
-
-<p className="text-orange">if local privider, show info about how to change pi to consumer </p>
-
-
-
-
             {/* Destroy Peer */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-6 sm:px-14 pb-12">
 
@@ -766,9 +728,9 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                     <div className="text-boring-black dark:text-boring-white mt-6">
                         <div className="px-4 sm:p-6">
-                            <h3 className="text-lg font-medium ">Destroy Peer</h3>
+                            <h3 className="text-lg font-medium ">Remove Peer</h3>
                             <div className="mt-2 max-w-xl text-xs ">
-                                <p>Once you reset your peer, all data associated with it goes away, forever.</p>
+                                <p>This peer will sit in the bin and be deleted during the next garbage collecting event.</p>
                             </div>
                             <div className="mt-5">
 
@@ -778,7 +740,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                         className="mt-6 flex justify-center rounded-sm border border-gray dark:border-black  text-boring-black dark:text-boring-white dark:bg-black py-2 px-2 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
                                         onClick={() => deletePeer(props.peer.id)}
                                     >
-                                        Destroy
+                                        Remove
                                     </button>
 
                                 </form>

@@ -8,6 +8,7 @@ import {
 } from "@solana/wallet-adapter-react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
+  BackpackWalletAdapter,
   CoinbaseWalletAdapter,
   PhantomWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
@@ -16,17 +17,17 @@ import {
 } from "@solana/wallet-adapter-react-ui";
 import { clusterApiUrl } from "@solana/web3.js";
 
+
 import Router from 'next/router';
 import nProgress from 'nprogress'; //nprogress module
 //import 'nprogress/nprogress.css'; //styles of nprogress
 import '../styles/nprogress.css';
 import '../styles/toast.css';
+// import '../lib/asteroids/style.module.css';
 
-import { useEffect } from 'react';
-import type { NextPage } from 'next';
+import Konami from 'react-konami-code';
 
 //Binding events. 
-
 Router.events.on("routeChangeStart", nProgress.start);
 Router.events.on("routeChangeError", nProgress.done);
 Router.events.on("routeChangeComplete", nProgress.done);
@@ -38,6 +39,7 @@ require('@solana/wallet-adapter-react-ui/styles.css');
 // Use of the <SessionProvider> is mandatory to allow components that call
 // `useSession()` anywhere in your application to access the `session` object.
 export default function App({ Component, pageProps: { session, ...pageProps } }: any) {
+  
   // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
   const network = WalletAdapterNetwork.Mainnet;
 
@@ -58,6 +60,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
       //new SolanaMobileWalletAdapter(),
       new CoinbaseWalletAdapter(),
       new PhantomWalletAdapter(),
+      new BackpackWalletAdapter(),
     ],
     []
   );

@@ -7,13 +7,26 @@ import { GetServerSideProps } from 'next'
 import prisma from '../lib/prisma'
 import Head from 'next/head'
 import { GetPeersForPubkey } from "../lib/influx"
-import PeerPublic, { PeerPublicProps } from '../components/peerPublic'
 // import CountryFilter from '../components/countryFilter'
+
+import memoryCache from '../lib/memory_cache';
 
 // Providers table:
 import { Table } from '../components/providersTable.js'
 
+
+console.log(`Cache before setting: ${memoryCache.getStats()}`);
+// memoryCache.set('peers', peers, 60);
+console.log(`Cache after setting: ${memoryCache.getStats()}`);
+
+console.log(`Cache before getting: ${memoryCache.getStats()}`);
+let peers = memoryCache.get('peers');
+console.log(`Cache after getting: ${memoryCache.getStats()}`);
+
+
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+
+  
 
   const session = await getSession({ req });
   if (!session || !session.user || !session.user.name) {
@@ -36,10 +49,16 @@ const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     }
   }
 
-  const peers = await prisma.peer.findMany({
-    // show all peers
-    where: { pubkey: { not: null } },
-  })
+  let peers = memoryCache.get('peers')
+  if (peers == undefined) {
+    peers = await prisma.peer.findMany({
+      // show all peers
+      where: { pubkey: { not: null } },
+    })
+    memoryCache.set('peers', peers, 60)
+  }
+  
+
 
   let peersWithStats: PeerWithStats[] = []
 
@@ -75,16 +94,14 @@ const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   }
 }
 
+type Props = {
+  peersWithStats: PeerWithStats[],
+}
+
 type PeerWithStats = {
   name: string | null;
   country_code: string | null;
   connected_peers: string | null;
-}
-
-type Props = {
-  peers: PeerPublicProps[],
-  peersWithStats: PeerWithStats[],
-  providers: PeerPublicProps[],
 }
 
 const DirectoryPage: React.FC<Props> = (props) => {
@@ -95,7 +112,7 @@ const DirectoryPage: React.FC<Props> = (props) => {
 
     return (
 
-      // NOT AUTHENTICATED - Home Page Main Panel 🐈
+      // Not Authenticated
       <LayoutDirectory>
         <Head>
           <title>Boring Protocol</title>
@@ -107,7 +124,7 @@ const DirectoryPage: React.FC<Props> = (props) => {
   const columns = [{ accessor: "name", label: "Name" }, { accessor: "country_code", label: "Country" }, { accessor: "connected_peers", label: "Connected" }]
   return (
 
-    // AUTHENTICATED - Home Page Main Panel 🐈
+    // Authenticated
     <LayoutAuthenticated>
       <Head>
         <title>Motherbored</title>
@@ -115,7 +132,6 @@ const DirectoryPage: React.FC<Props> = (props) => {
         <link rel="apple-touch-icon" href="/img/favicon.png" />
       </Head>
 
-      {/* <p className="p-12 text-xs">add avatar column, add country select form field</p> */}
       <Table rows={props.peersWithStats} columns={columns} />
 
     </LayoutAuthenticated>
@@ -125,3 +141,5 @@ const DirectoryPage: React.FC<Props> = (props) => {
 export { getServerSideProps }
 
 export default DirectoryPage
+
+

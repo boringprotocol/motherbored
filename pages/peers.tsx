@@ -81,11 +81,7 @@ const PeerPage: React.FC<Props> = (props) => {
     
       {/* Main content */}
       <div className="main pt-12 text-xs">
-      <p className="px-12">check chain for usdc payment in the last 30 days. count days left until payment due again. this is for consumer unlimited accounts in beta phase.</p>
-      
-      <p className="px-12">VPN: You are using 3 out of your allowed 4 consumer peers on the elon plan (8 dollars</p>
-      <p className="px-12">Mining: </p>
-        <p className="p-12">You are using 3 out of your allowed 4 consumer peers on the elon plan (8 dollars</p>
+
 
         <div className="px-4 sm:px-8 md:px-12 pb-16">
         <div role="list" className="grid-rows-6 pb-12 grid grid-cols-2 gap-6 sm:grid-cols-4 2xl:grid-cols-6">
@@ -93,7 +89,7 @@ const PeerPage: React.FC<Props> = (props) => {
           <div className="shadow-md rounded-lg pb-2 pt-4 col-span-2 row-span-1 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
               <button
               type="button"
-              onClick={() => Router.push("/newpeer?mode=consumer&consumer_kind=local_consumer")}
+              onClick={() => Router.push("/newpeer?mode=consumer&consumer_platform=pi")}
               className="relative block w-full rounded-lg text-boring-black dark:text-boring-white  p-12 text-center  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
               <svg
@@ -111,16 +107,11 @@ const PeerPage: React.FC<Props> = (props) => {
                   d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6"
                 />
               </svg>
-              <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add Motherbored Consumer</span>
-              <span className="font-jetbrains mt-2 block text-xs text-gray">Configure your Motherbored to run as a consumer peer.</span>
+              <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add Motherbored/Pi Consumer</span>
+              <span className="font-jetbrains mt-2 block text-xs text-gray">Configure your Motherbored/Pi to run as a consumer peer.</span>
               </button>
           </div> {/* /#add-peer */}
           <div className="grid grid-cols-2 gap-6 col-span-2 row-span-2">
-            <div className="pb-2 pt-4 col-span-2 row-span-1">
-              <h2>VPN</h2>  
-              <IoLogoWindows />
-              
-            </div>
             <div className="shadow-md rounded-lg pb-2 pt-4 col-span-1 row-span-1 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">
                     <button
                     type="button"
@@ -167,8 +158,8 @@ const PeerPage: React.FC<Props> = (props) => {
                     d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6"
                   />
                 </svg>
-                <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add Motherbored Provider</span>
-                <span className="font-jetbrains mt-2 block text-xs text-gray">Configure your Motherbored to run as provider peer.</span>
+                <span className="font-jetbrains mt-2 block text-sm font-medium text-gray-900">Add Motherbored/Pi Provider</span>
+                <span className="font-jetbrains mt-2 block text-xs text-gray">Configure your Motherbored/Pi to run as provider peer.</span>
                 </button>
           </div> 
           <div className="shadow-md rounded-lg pb-2 pt-4 col-span-2 border border-gray-light dark:border-gray-dark hover:border-gray dark:hover:border-gray">

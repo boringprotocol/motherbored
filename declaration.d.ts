@@ -5,4 +5,5 @@
 //   }
 declare module 'react-identicons';
 declare module 'react-jdenticon';
+declare module 'nostr-chat-widget-react';
 

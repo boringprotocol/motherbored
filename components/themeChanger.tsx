@@ -1,15 +1,30 @@
+import { useState } from 'react';
 import { useTheme } from "next-themes";
 import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 
-// light mode / dark mode
 const ThemeChanger = () => {
-    const { setTheme } = useTheme()
-  
-    return (
-      <div className='mt-12 border rounded-sm  border-gray dark:border-black'>
-        <button className='text-center inline-flex items-center  text-xs bg-white px-3 py-2 text-boring-black hover:bg-gray-lightestest dark:hover:bg-gray-light border-r border-gray dark:border-black  w-1/2' onClick={() => setTheme('light')}><IoSunnyOutline className="float-left mr-2" /> Light Mode</button>
-        <button className='inline-flex items-center text-xs bg-white px-3 py-2 text-boring-black hover:bg-gray-lightestest dark:hover:bg-gray-light w-1/2' onClick={() => setTheme('dark')}><IoMoonOutline className="float-left mr-2" /> Dark Mode</button>
-      </div>
-    )
+  const { setTheme } = useTheme();
+  const [currentTheme, setCurrentTheme] = useState('light');
+
+  const handleClick = () => {
+    if (currentTheme === 'light') {
+      setTheme('dark');
+      setCurrentTheme('dark');
+    } else {
+      setTheme('light');
+      setCurrentTheme('light');
+    }
   }
-  export default ThemeChanger;
+
+  return (
+    <div className='mt-8'>
+      <button
+        className='rounded-sm border border-gray-light dark:border-gray-dark text-center inline-flex items-center text-xs px-3 py-2 text-boring-black dark:text-boring-white hover:bg-gray-lightestest dark:hover:bg-gray-dark'
+        onClick={handleClick}
+      >
+        {currentTheme === 'light' ? <IoSunnyOutline /> : <IoMoonOutline />}
+      </button>
+    </div>
+  )
+}
+export default ThemeChanger;

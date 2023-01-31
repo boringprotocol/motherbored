@@ -9,6 +9,8 @@ export type PeerProps = {
   setupkey: string | null;
   kind: string | null;
   provider_kind: string | null;
+  provider_platform: string | null;
+  consumer_platform: string | null;
   target: string | null;
   pubkey: string | null;
   label: string | null;
@@ -53,13 +55,13 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
 
   return (
 
-    <div className='px-6 py-6'>
+    <div className='px-6 pt-6'>
 
       <a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
 
         <div className="">&nbsp;
-          {isConsumer && (<IoWifiOutline className="float-left mr-2" />)}
-          {isProvider && isLocalProvider && (<IoWifiOutline className="float-left mr-2" />)}
+          {isConsumer && (<IoWifiOutline className="float-left mr-1" />)}
+          {isProvider && isLocalProvider && (<IoWifiOutline className="float-left mr-1" />)}
 
           {isConsumer && (
             <>
