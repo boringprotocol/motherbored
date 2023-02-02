@@ -5,17 +5,15 @@ import Peer, { PeerProps } from "../../components/Peer"
 import LayoutAuthenticated from "../../components/layoutAuthenticated"
 import prisma from "../../lib/prisma"
 import { useSession, getSession } from "next-auth/react"
-import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline, IoServerOutline, IoFileTrayFull, IoBugOutline, IoRefreshOutline, IoArrowBack } from "react-icons/io5"
+import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline, IoServerOutline, IoFileTrayFull, IoBugOutline, IoRefreshOutline } from "react-icons/io5"
 import { ToastContainer, toast } from 'react-toastify'
 import CountryCodes from "../../data/country_codes"
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import Avatar from "boring-avatars"
-import "/node_modules/flag-icons/css/flag-icons.min.css";
-import qrcode from 'qrcode';
-import Link from "next/link"
-// import TrafficStats from "../../components/trafficStats"
+import TrafficStats from "../../components/trafficStats"
 import { GetStatsForPubkey, GetPeersForPubkey } from "../../lib/influx"
+import Breakpoints from "../../components/breakpoints"
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
@@ -181,9 +179,7 @@ async function shovePeerConfig(id: string): Promise<void> {
 const ShowPeer: React.FC<Props> = (props) => {
 
     const peerAvatar = props.peer.id
-
-    // here dude - update components/Peer.tsx to make more of these babies
-    const [name, setName] = useState(props.peer.name);
+    const [name] = useState(props.peer.name);
     const [label, setLabel] = useState(props.peer.label);
     const [ssid, setSSID] = useState(props.peer.ssid);
     const [country_code, setSelectedCountryCode] = useState(props.peer.country_code)
@@ -263,36 +259,17 @@ const ShowPeer: React.FC<Props> = (props) => {
 
             {/* ToastContainers */}
             <div>
-                {/* https://fkhadra.github.io/react-toastify/introduction */}
-                {/* One per each toast with a containerID to use */}
-                <ToastContainer enableMultiContainer containerId={'A'} theme={"light"} draggable hideProgressBar={true} position={toast.POSITION.BOTTOM_LEFT} />
-                <ToastContainer enableMultiContainer containerId={'B'} theme={"dark"} position={toast.POSITION.TOP_RIGHT} />
                 <ToastContainer
                     enableMultiContainer
                     containerId={'PeerSavedNotification'}
-                    theme={"dark"}
+                    theme={"light"}
                     position={toast.POSITION.TOP_CENTER}
                 />
-                {/* Demonstrating the above ToastContainers     */}
-                {/* <button onClick={notifyA}>Notify A !</button>
-            <button onClick={notifyB}>Notify B !</button>   */}
             </div>
 
-
-            {/* Design tool shows breakpoints on the rendered page */}
-            <div className="flex items-center m-2 fixed bottom-0 right-0 border border-gray-400 rounded p-2 bg-boring-white text-pink-600 text-sm z-50">
-                Current breakpoint - 
-                <span className="ml-1 sm:hidden md:hidden lg:hidden xl:hidden">default (&lt; 640px)</span>
-                <span className="ml-1 hidden sm:inline md:hidden font-extrabold">sm</span>
-                <span className="ml-1 hidden md:inline lg:hidden font-extrabold">md</span>
-                <span className="ml-1 hidden lg:inline xl:hidden font-extrabold">lg</span>
-                <span className="ml-1 hidden xl:inline 2xl:hidden font-extrabold">xl</span>
-                <span className="ml-1 hidden 2xl:inline font-extrabold">2xl</span>
-            </div>
+            <Breakpoints />
 
             {/* rows and columns w/ grid */}
-            <div className="p-12"><Link href={"/"}><a className="inline-flex items-center rounded-sm border border-gray-light dark:border-gray-dark text-xs  px-3 py-2 text-gray dark:text-gray-light hover:bg-gray-lightestest dark:hover:bg-gray-dark focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoArrowBack className="mr-2" /> peers </a></Link></div>
-
             <div className="p-12  xl:pt-0 grid overflow-hidden grid-cols-4 md:grid-cols-6 grid-rows-1 sm:gap-2">                
 
                 {props.peer.provider_kind == "cloud" && (<li>provider_kind: {props.peer.provider_kind}</li>)}
@@ -326,7 +303,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                     {isProvider && (
                         <div className="m-0 md:m-12">
-                            {/* <TrafficStats  {...props} /> */}
+                            <TrafficStats  {...props} />
                         </div>
                     )}
                     <form className="px-0 md:px-10" onSubmit={submitData}>
@@ -356,14 +333,6 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                                                 <Listbox.Button className="relative w-full cursor-default rounded-sm border border-none dark:text-boring-white bg-boring-white dark:bg-boring-black py-6 pl-0 text-left  focus:border-blue focus:outline-none focus:ring-none  ">
                                                     <span className="text-boring-black dark:text-boring-white border-r border-gray-light dark:border-gray-dark pr-4 ">{target.country_code}</span>
-                                                    {/* <span className="float-left pr-3">
-                                                        <Avatar
-                                                            size="30"
-                                                            name="dude"
-                                                            variant="sunset"
-                                                        />
-                                                    </span> */}
-
                                                     <span className="pl-2 text-boring-black dark:text-boring-white text-sm">{target.name}</span>
                                                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                                         <ChevronUpDownIcon className="h-5 w-5 text-boring-black dark:text-boring-white" aria-hidden="true" />
@@ -466,17 +435,16 @@ const ShowPeer: React.FC<Props> = (props) => {
                             {/* Only show the pubkey if this is a provider node */}
                             {props.peer.kind == "provider" && (<li key={props.peer.pubkey}>Boring Pubkey: {props.peer.pubkey}</li>)}
                         </ul>
-                        {props.peer.country_code}
-                        {/* <span className="fi fi-gr"></span> <span className="fi fi-gr fis"></span> */}
-                        {/* <span className={`fi fi-${props.peer.country_code.toString()}`}></span> */}
-                        {/* <span className={`fi fi-${props.peer.country_code.toString()} fis`}></span> */}
-
                     </div>
                 </div>
 
 
                 {/* wifi settings / hide for cloud providers */}
-                {isProvider && (
+
+                if local node is a consumer, show wifi settings
+                if local node is a provider, show wifi settings
+
+                {isConsumer && (
                 <>
                     <div className="md:p-12 box row-start-3 col-start-1 md:col-start-3 col-span-6 md:col-span-4">
                         <h2 className="text-gray text-sm mt-8 dark:border-gray-dark">Wifi Settings</h2>
