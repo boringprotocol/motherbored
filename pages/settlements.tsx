@@ -5,14 +5,8 @@ import LayoutAuthenticated from "../components/layoutAuthenticated";
 import React, { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import prisma from "../lib/prisma";
-import Head from "next/head";
-import {
-  Connection,
-  GetProgramAccountsFilter,
-  clusterApiUrl,
-} from "@solana/web3.js";
-import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { GetPeersForPubkey } from "../lib/influx";
+import { publicKeyCombine } from "secp256k1";
 
 export const getServerSideProps: GetServerSideProps = async ({
   params,
@@ -36,18 +30,6 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   const providerPeers = await prisma.peer.findMany({
     where: { kind: "provider", pubkey: { not: null } },
-    select: {
-      name: true,
-      id: true,
-      country_code: true,
-      label: true,
-      userId: true,
-      pubkey: true,
-    },
-  });
-
-  const consumerPeers = await prisma.peer.findMany({
-    where: { kind: "consumer", pubkey: { not: null } },
     select: {
       name: true,
       id: true,
@@ -90,41 +72,12 @@ export const getServerSideProps: GetServerSideProps = async ({
       wallet: pUser?.wallet,
       connected: connected,
       kind: "provider",
+      id: p.id,
+      pubkey: p.pubkey,
     });
   }
 
-  // Add consumers peers to the allPeers array
-  for (let p of consumerPeers) {
-    if (p.userId == null) {
-      res.statusCode = 403;
-      return { props: { peers: {} } };
-    }
-    if (p.pubkey == null) {
-      res.statusCode = 403;
-      return { props: { peers: {} } };
-    }
-
-    const connected = await GetPeersForPubkey(p.pubkey, "30d");
-    console.log(connected);
-    console.log("HELLO");
-    const pUser = await prisma.user.findFirst({
-      where: { id: p.userId },
-    });
-    if (pUser == null) {
-      res.statusCode = 403;
-      return { props: { peers: {} } };
-    }
-    if (p.name == null) {
-      res.statusCode = 403;
-      return { props: { peers: {} } };
-    }
-    allPeers.push({
-      name: p.name,
-      wallet: pUser?.wallet,
-      connected: connected,
-      kind: "consumer",
-    });
-  }
+  
 
   // catchall return, consumers get here
   return {
@@ -137,6 +90,8 @@ type SettlePeer = {
   wallet: string;
   connected: string | unknown;
   kind: string;
+  id: string;
+  pubkey: string;
 };
 
 type Props = {
@@ -153,7 +108,7 @@ const Settlements: React.FC<Props> = (props) => {
 
   const handleDownload = () => {
     // Create an array of rows to be added to the CSV
-    const rows = [];
+    const rows  = [];
 
     props.peers.forEach((peer) => {
       rows.push({
@@ -161,13 +116,15 @@ const Settlements: React.FC<Props> = (props) => {
         wallet: peer.wallet,
         connected: peer.connected,
         kind: peer.kind,
+        id: peer.id,
+        pubkey: peer.pubkey,
       });
     });
 
     // Convert the rows array to a CSV
     let csvContent = "data:text/csv;charset=utf-8,";
     rows.forEach((row) => {
-      csvContent += row.name + "," + row.wallet + "," + row.connected + "," + row.kind + "\r\n";
+      csvContent += row.name + "," + row.wallet + "," + row.connected + "," + row.kind + "," + row.id + "," + row.pubkey + "\r\n";
     });
 
     // Encodes the CSV content string in order to make it usable in a link
@@ -193,13 +150,15 @@ const Settlements: React.FC<Props> = (props) => {
         wallet: peer.wallet,
         connected: peer.connected,
         kind: peer.kind,
+        id: peer.id,
+        pubkey: peer.pubkey,
       });
     });
 
     // Convert the rows array to a CSV
     let csvContent = "";
     rows.forEach((row) => {
-      csvContent += row.name + "," + row.wallet + "," + row.connected + "," + row.kind + "\r\n";
+      csvContent += row.name + "," + row.wallet + "," + row.connected + "," + row.kind + "," + row.id + "," + row.pubkey + "\r\n";
     });
     try {
       const res = await fetch('/api/save-settlements', {
@@ -238,6 +197,8 @@ const Settlements: React.FC<Props> = (props) => {
               <th className="px-12 py-6 text-xs font-medium text-left text-gray-500 tracking-wider">Name</th>
               <th className="px-12 py-6 text-xs font-medium text-left text-gray-500 tracking-wider">Wallet</th>
               <th className="px-12 py-6 text-xs font-medium text-left text-gray-500 tracking-wider">Connected</th>
+              <th className="px-12 py-6 text-xs font-medium text-left text-gray-500 tracking-wider">Id</th>
+              <th className="px-12 py-6 text-xs font-medium text-left text-gray-500 tracking-wider">pubkey</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-lightest dark:divide-gray-dark dark:bg-boring-black">
@@ -246,6 +207,8 @@ const Settlements: React.FC<Props> = (props) => {
                 <td className="px-12 py-2 text-xs whitespace-nowrap">{pp.name}</td>
                 <td className="px-12 py-2 text-xs whitespace-nowrap">{pp.wallet}</td>
                 <td className="px-12 py-2 text-xs whitespace-nowrap">{pp.connected}</td>
+                <td className="px-12 py-2 text-xs whitespace-nowrap">{pp.id}</td>
+                <td className="px-12 py-2 text-xs whitespace-nowrap">{pp.pubkey}</td>
               </tr>
             ))}
           </tbody>
