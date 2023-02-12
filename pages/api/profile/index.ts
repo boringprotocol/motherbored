@@ -2,16 +2,22 @@ import { getSession } from "next-auth/react"; // import the getSession function 
 import { GetServerSideProps } from "next"; // import the GetServerSideProps type from next
 import prisma from "../../../lib/prisma"; // import the prisma client
 
-
-export const updatePublicProfile = async (userId: string, publicProfile: boolean) => {
+export const updatePublicProfile = async (
+  userId: string,
+  publicProfile: boolean
+) => {
   const updatedUser = await prisma.user.update({
-      where: { id: userId },
-      data: { publicProfile },
+    where: { id: userId },
+    data: { publicProfile },
   });
   return updatedUser;
-}
+};
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res, params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  params,
+}) => {
   const session = await getSession({ req }); // get the session from the request
 
   // check if the session exists, if the session contains a user object, and if the user object has a name property
@@ -45,4 +51,3 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, params 
     props: { user, peers },
   };
 };
-

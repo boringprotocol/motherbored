@@ -1,17 +1,17 @@
 :root {
-    --toastify-color-light: #fff;
-    --toastify-color-dark: #171717;
-    --toastify-color-info: #3498db;
-    --toastify-color-success: #07bc0c;
-    --toastify-color-warning: #f1c40f;
-    --toastify-color-error: #e74c3c;
+    --toastify-color-light: #FDFDFD;
+    --toastify-color-dark: #111;
+    --toastify-color-info: #5AB0E2;
+    --toastify-color-success: #85D680;
+    --toastify-color-warning: #F7CF6A;
+    --toastify-color-error: #FF382A;
     --toastify-color-transparent: rgba(255, 255, 255, 0.7);
     --toastify-icon-color-info: var(--toastify-color-info);
     --toastify-icon-color-success: var(--toastify-color-success);
     --toastify-icon-color-warning: var(--toastify-color-warning);
     --toastify-icon-color-error: var(--toastify-color-error);
     --toastify-toast-width: 320px;
-    --toastify-toast-background: #fff;
+    --toastify-toast-background: #FDFDFD;
     --toastify-toast-min-height: 64px;
     --toastify-toast-max-height: 800px;
     --toastify-font-family: 'JetBrains-Mono-Thin', sans-serif;
@@ -24,15 +24,7 @@
     --toastify-text-color-error: #fff;
     --toastify-spinner-color: #616161;
     --toastify-spinner-color-empty-area: #e0e0e0;
-    --toastify-color-progress-light: linear-gradient(
-      to right,
-      #4cd964,
-      #5ac8fa,
-      #007aff,
-      #34aadc,
-      #5856d6,
-      #ff2d55
-    );
+    --toastify-color-progress-light: rgb(34, 143, 221);
     --toastify-color-progress-dark: rgb(34, 143, 221);
     --toastify-color-progress-info: var(--toastify-color-info);
     --toastify-color-progress-success: var(--toastify-color-success);
@@ -102,8 +94,8 @@
     box-sizing: border-box;
     margin-bottom: 1rem;
     padding: 18px;
-    border-radius: 4px;
-    box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);
+    border-radius: 1px;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);
     display: -ms-flexbox;
     display: flex;
     -ms-flex-pack: justify;
@@ -123,7 +115,7 @@
     margin: auto 0;
     -ms-flex: 1 1 auto;
         flex: 1 1 auto;
-    padding: 6px;
+    padding: 0px;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: center;
@@ -136,7 +128,7 @@
   .Toastify__toast-icon {
     -webkit-margin-end: 10px;
             margin-inline-end: 10px;
-    width: 20px;
+    width: 0px;
     -ms-flex-negative: 0;
         flex-shrink: 0;
     display: -ms-flexbox;
@@ -211,10 +203,11 @@
   }
   
   .Toastify__close-button {
+
     color: #fff;
     background: transparent;
     outline: none;
-    border: none;
+    border: 1px solid #eee;
     padding: 0;
     cursor: pointer;
     opacity: 0.7;

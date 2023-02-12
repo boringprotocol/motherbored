@@ -1,68 +1,68 @@
+import { NostrProvider } from "nostr-react";
 import { ThemeProvider } from 'next-themes'
-import '../styles/global.css';
-import { SessionProvider } from "next-auth/react";
-import React, { useMemo } from "react";
-import {
-  ConnectionProvider,
-  WalletProvider,
-} from "@solana/wallet-adapter-react";
-import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import {
-  BackpackWalletAdapter,
-  CoinbaseWalletAdapter,
-  PhantomWalletAdapter,
-} from "@solana/wallet-adapter-wallets";
-import {
-  WalletModalProvider,
-} from "@solana/wallet-adapter-react-ui";
-import { clusterApiUrl } from "@solana/web3.js";
 
+import { SessionProvider } from "next-auth/react";
+import React, { useMemo } from 'react';
+import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+import { BackpackWalletAdapter, CoinbaseWalletAdapter, BraveWalletAdapter } from '@solana/wallet-adapter-wallets';
+import {
+  WalletModalProvider
+} from '@solana/wallet-adapter-react-ui';
+import { clusterApiUrl } from '@solana/web3.js';
 
 import Router from 'next/router';
-import nProgress from 'nprogress'; //nprogress module
-//import 'nprogress/nprogress.css'; //styles of nprogress
+import '../styles/global.css';
+
+// Progress bar
+import nProgress from 'nprogress';
 import '../styles/nprogress.css';
+
+// Notifications
 import '../styles/toast.css';
-// import '../lib/asteroids/style.module.css';
 
-import Konami from 'react-konami-code';
+const relayUrls = [
+  "wss://nostr21.com",
+  "wss://relay.snort.social",
+];
 
-//Binding events. 
+//Progress bar binding events
 Router.events.on("routeChangeStart", nProgress.start);
 Router.events.on("routeChangeError", nProgress.done);
 Router.events.on("routeChangeComplete", nProgress.done);
 
-// Default styles that can be overridden by passing styles to the <WalletMultiButton> component.
 require('@solana/wallet-adapter-react-ui/styles.css');
 
+// development and production URLs
+const motherboredAppDev = 'http://localhost:3001'; // NODE_ENV=development PORT=3001 npm run dev
+const motherboredAppProd = 'https://motherbored.app'; // NODE_ENV=production PORT=3001 npm run dev
+const boringProtocolDev = 'http://localhost:3002'; // NODE_ENV=development PORT=3002 npm run dev
+const boringProtocolProd = 'https://boringprotocol.io'; // NODE_ENV=production PORT=3002 npm run dev
+const motherboredDocsDev = 'http://localhost:3003'; // NODE_ENV=development PORT=3003 npm run dev
+const motherboredDocsProd = 'https://docs.motherbored.app'; // NODE_ENV=production PORT=3003 npm run dev
 
-// Use of the <SessionProvider> is mandatory to allow components that call
-// `useSession()` anywhere in your application to access the `session` object.
-export default function App({ Component, pageProps: { session, ...pageProps } }: any) {
-  
-  // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
+// `useSession()` anywhere to access the `session` object.
+export default function Mothebored({ Component, pageProps: { session, ...pageProps } }: any) {
+
+  // PORT=3001 npm run dev
+  const motherboredApp =
+    process.env.NODE_ENV === 'production' ? motherboredAppProd : motherboredAppDev;
+  // PORT = 3003 npm run dev
+  const boringProtocol =
+    process.env.NODE_ENV === 'production' ? boringProtocolProd : boringProtocolDev;
+  // PORT=3003 npm run dev
+  const motherboredDocs = process.env.NODE_ENV === 'production' ? motherboredDocsProd : motherboredDocsDev;
+
   const network = WalletAdapterNetwork.Mainnet;
-
-  // You can also provide a custom RPC endpoint.
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-
-  // @solana/wallet-adapter-wallets includes all the adapters but supports tree shaking and lazy loading --
-  // Only the wallets you configure here will be compiled into your application, and only the dependencies
-  // of wallets that your users connect to will be loaded.
   const wallets = useMemo(
     () => [
-      //new SolanaMobileWalletAdapter({
-      //  appIdentity: { name: "Solana Wallet Adapter App" },
-      // authorizationResultCache: createDefaultAuthorizationResultCache(),
-      //}),
-
-      // need to update this to pass the proper args for solana mobile wallet to work
-      //new SolanaMobileWalletAdapter(),
-      new CoinbaseWalletAdapter(),
-      new PhantomWalletAdapter(),
       new BackpackWalletAdapter(),
+      new CoinbaseWalletAdapter(),
+      new BraveWalletAdapter(),
     ],
-    []
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [network]
   );
 
   return (
@@ -71,13 +71,20 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
         <WalletModalProvider>
           <SessionProvider session={pageProps.session} refetchInterval={0}>
 
-            <ThemeProvider attribute="class">
-              <Component {...pageProps} />
-            </ThemeProvider>
+            <NostrProvider relayUrls={relayUrls} debug={true}>
+              <ThemeProvider attribute="class">
+                <div className="min-h-screen ">
+                  <Component {...pageProps} motherboredApp={motherboredApp}
+                    boringProtocol={boringProtocol}
+                    motherboredDocs={motherboredDocs} />
+                </div>
+              </ThemeProvider>
+            </NostrProvider>
 
           </SessionProvider>
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
   );
+
 }

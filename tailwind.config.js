@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
+    "./node_modules/flowbite-react/**/*.js",
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
   ],
@@ -23,21 +24,23 @@ module.exports = {
       // => @media (min-width: 1536px) { ... }
     },
     colors: {
-      'white': '#fff',
-      'blue': '#5AB0E2',
-      'pink': '#ff49db',
-      'orange': '#e94d17',
-      'yellow': 'yellow',
-      'green': '#85D680',
-      'red': 'red',
-      'gray-dark': '#262729',
-      'gray': '#8492a6',
-      'gray-light': '#d3dce6',
-      'gray-lightest': '#d3dce6',
-      'gray-lightestest': '#F5F5F5',
+      'white': '#FFFFFF',
+      'boring-white': '#FDFDFD',
+      'gray-lightest': '#EEE',
+      'gray-lighter': '#CCC',
+      'gray-light': '#999',
+      'gray': '#666',
+      'gray-dark': '#444',
+      'gray-darker': '#333',
+      'gray-darkesr': '#222',
+      // 'boring-black': '#1A1B1E',
+      'boring-black': '#111',
       'black': '#000000',
-      'boring-black': '#1A1B1E',
-      'boring-white': '#FDFDFD'
+      'boring-orange': '#e94d17',
+      'boring-red': '#FF382A',
+      'boring-green': '#85D680',
+      'boring-blue': '#5AB0E2',
+      'boring-yellow': '#F7CF6A'
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
@@ -59,5 +62,6 @@ module.exports = {
   plugins: [
     // ...
     require('@tailwindcss/forms'),
+    require("flowbite/plugin"),
   ],
 }

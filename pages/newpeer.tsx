@@ -1,6 +1,3 @@
-// i need to hook up the loading indicator and prevent retards from spamming the create button
-// when the create button is clicked, it should disable the button and show a loading indicator
-
 import React, { useEffect, useState } from "react"
 import LayoutAuthenticated from "../components/layoutAuthenticated"
 import Router, { useRouter } from "next/router"
@@ -12,8 +9,6 @@ import { IoAddOutline, IoRefreshOutline } from "react-icons/io5"
 import { DiAndroid, DiApple, DiLinux, DiWindows } from "react-icons/di"
 import { FaRaspberryPi } from "react-icons/fa"
 import { SiIos } from "react-icons/si"
-
-// radio buttons
 import { RadioGroup } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/20/solid'
 import router from "next/router"
@@ -28,7 +23,6 @@ function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
 
-// https://github.com/boringprotocol/boring-name-generator/
 var generateName = require('boring-name-generator');
 
 const customText = {
@@ -49,17 +43,12 @@ const icons = {
     'Android': <DiAndroid />
 }
 
-//
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req });
     if (!session || !session.user || !session.user.name) {
         res.statusCode = 403;
         return { props: { peers: [] } }
     }
-
-    const user = await prisma.user.findFirst({
-        where: { wallet: session.user.name }
-    })
 
     const peers = await prisma.peer.findMany({
         where: { kind: "provider", pubkey: { not: null } },
@@ -70,14 +59,12 @@ const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     }
 }
 
-//
 type Props = {
     peers: PeerProps[]
 }
 
 const NewPeer: React.FC<Props> = (props) => {
 
-    // const { query } = useRouter();
     const { query } = useRouter();
     const [queryMode, setQueryMode] = useState(query.mode || "consumer");
     const [queryConsumerPlatformMode, setQueryConsumerPlatformMode] = useState(query.consumer_platform || "pi");
@@ -86,14 +73,14 @@ const NewPeer: React.FC<Props> = (props) => {
     useEffect(() => {
         if (queryMode === "consumer") {
             if (queryConsumerPlatformMode !== query.consumer_platform) {
-                setQueryConsumerPlatformMode(query.consumer_platform || "pi");
+                setQueryConsumerPlatformMode(query.consumer_platform || "motherbored");
             }
         } else if (queryMode === "provider") {
             if (queryProviderPlatformMode !== query.provider_platform) {
                 setQueryProviderPlatformMode(query.provider_platform || "local");
             }
         }
-    }, [query.mode, query.consumer_platform, query.provider_platform]);
+    }, [query.mode, query.consumer_platform, query.provider_platform, queryConsumerPlatformMode, queryProviderPlatformMode]);
 
     useEffect(() => {
         if (queryMode === "consumer") {
@@ -128,22 +115,17 @@ const NewPeer: React.FC<Props> = (props) => {
         setSelectedProviderPlatformLists(queryProviderPlatformMode);
     }, [queryProviderPlatformMode]);
 
-    // Form fields state hooks
     const [name, setName] = useState<string>(generateName({ number: true }).dashed);
     const [wifi_preference, setWifiPreference] = useState<string>("2.4Ghz");
     const [channel, setChannel] = useState<string>("7");
     const [ssid, setSSID] = useState<string>("boring");
     const [wpa_passphrase, setWpaPassphrase] = useState<string>('motherbored');
     const [country_code, setCountryCode] = useState<string>("US");
-    //    const [target, setTarget] = useState(props.peers[0].id);
     const [target, setTarget] = useState<string>(props.peers[0].id);
-
-    // Radio buttons state hooks
     const [kind, setKind] = useState(queryMode);
     const [consumer_platform, setConsumerPlatform] = useState(queryConsumerPlatformMode);
     const [provider_platform, setProviderPlatform] = useState(queryProviderPlatformMode);
 
-    // Other state hooks
     const [selectedConsumerPlatformLists, setSelectedConsumerPlatformLists] = useState(queryConsumerPlatformMode)
     const [selectedProviderPlatformLists, setSelectedProviderPlatformLists] = useState(queryProviderPlatformMode)
 
@@ -187,8 +169,6 @@ const NewPeer: React.FC<Props> = (props) => {
         }
     };
 
-
-    
     return (
         <LayoutAuthenticated>
             <div className="container mx-auto relative">
@@ -198,7 +178,7 @@ const NewPeer: React.FC<Props> = (props) => {
                 <div className="absolute top-0 w-3/4 lg:w-1/2">
                     <form className="drop-shadow-xl p-12 " onSubmit={submitData}>
                         <h1 className="uppercase mb-6">New <span>{query.mode}</span> Peer</h1>
-
+                        <p className="text-xs"></p>
                         <div className="d-flex">
                             <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 focus-within:border-blue focus-within:ring-1 focus-within:ring-blue flex-1">
                                 <label htmlFor="name" className="block text-xs text-gray">
@@ -266,7 +246,6 @@ const NewPeer: React.FC<Props> = (props) => {
                                                     key={providerPlatformList}
                                                     value={providerPlatformList}
                                                     onChange={(e) => setQueryProviderPlatformMode(e.target.value)}
-                                                    //defaultValue={query.provider_platform}
                                                     className={({ checked, active }) =>
                                                         classNames(
                                                             'relative flex cursor-pointer rounded-lg border border-gray-light bg-white p-4 shadow-sm focus:outline-none',
@@ -284,7 +263,7 @@ const NewPeer: React.FC<Props> = (props) => {
                                                                         {providerPlatformList}
                                                                     </RadioGroup.Label>
                                                                     <RadioGroup.Description as="span" className="mt-1 flex items-center text-xs text-gray-dark dark:text-gray-light">
-                                                                    {providerPlatformDescriptions[index]}
+                                                                        {providerPlatformDescriptions[index]}
                                                                     </RadioGroup.Description>
                                                                 </span>
                                                             </span>
@@ -310,18 +289,15 @@ const NewPeer: React.FC<Props> = (props) => {
                                 </div>
                             )}
                         </div>
-
-                        {/* hide me and give me default values. we should set defaults another way if we can */}
                         <div className="hidden">
                             <input name="kind" value={query.mode}></input>
                             <input name="ssid" value="boring"></input>
                             <input name="wpa_passphrase" value="motherbored"></input>
-                            {/* state setters for these */}
                             <input name="country_code" value="US"></input>
                             <input name="channel" value="7"></input>
                             <input name="wifi_preference" value="2.4Ghz" ></input>
                         </div>
-                        <button className="cursor-pointer mb-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm  bg-white dark:bg-black px-4 py-3 text-gray-dark dark:text-gray-light hover:bg-boring-white hover:shadow-lg active:opacity-90 shadow-md active:shadow-md" type="submit" value="Create Peer" ><IoAddOutline className="mr-2" /> Create Peer</button>
+                        <button className="cursor-pointer my-6 inline-flex items-center rounded-xs border border-gray dark:border-gray-dark text-xs bg-white dark:bg-black px-4 py-3 text-boring-black dark:text-gray-light hover:bg-boring-white hover:border-white hover:opacity-90 active:opacity-60 shadow-md dark:shadow-sm dark:shadow-black active:shadow-sm" type="submit" value="Create Peer" ><IoAddOutline className="mr-2" /> Create Peer</button>
                     </form>
                 </div>
             </div>
@@ -329,8 +305,6 @@ const NewPeer: React.FC<Props> = (props) => {
     );
 };
 
-//
 export { getServerSideProps }
 
-//
 export default NewPeer;

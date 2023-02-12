@@ -1,5 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
-import { useTheme } from 'next-themes'
+import {  useEffect, useState } from 'react'
 import Waiting from './art/waiting'
 import { IoWalletOutline } from 'react-icons/io5'
 import { getCsrfToken, signIn, useSession } from 'next-auth/react'
@@ -7,11 +6,8 @@ import { SigninMessage } from '../utils/SigninMessage'
 import bs58 from 'bs58'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
-import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
+import { BrowserView, MobileView } from 'react-device-detect';
 
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ')
-}
 
 interface Props {
   children: React.ReactNode;
@@ -19,7 +15,7 @@ interface Props {
 
 export default function LayoutDirectory({ children }: Props) {
 
-  const { data: session, status } = useSession();
+  const { data: status } = useSession();
   const wallet = useWallet();
   const walletModal = useWalletModal();
 
@@ -53,16 +49,14 @@ export default function LayoutDirectory({ children }: Props) {
     }
   };
 
-  useEffect(() => {
-    if (wallet.connected && status === "unauthenticated") {
-      handleSignIn();
-    }
-  }, [wallet.connected, status]);
+  // useEffect(() => {
+  //   if (wallet.connected && status === "unauthenticated") {
+  //     handleSignIn();
+  //   }
+  // }, [wallet.connected, status]);
 
 
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  const [enabled, setEnabled] = useState(false)
+  
 
 
   return (

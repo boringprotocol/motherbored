@@ -1,7 +1,7 @@
 const PapersArt = () => {
     return ( 
         <>
-        <span className="text-black dark:text-gray hover:animate-pulse">
+        <span className="text-gray-light dark:text-gray hover:animate-pulse">
 
         <svg width="100%" viewBox="0 0 479 479" xmlns="http://www.w3.org/2000/svg">
     <g id="Group-copy">

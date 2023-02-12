@@ -107,7 +107,7 @@ export const Table = ({ columns, rows }) => {
         <tbody className="">
           {calculatedRows.map((row) => {
             return (
-              <tr key={row.id} className="hover:bg-gray-lightestest dark:hover:bg-gray-dark cursor-pointer  border-b border-gray-light dark:border-gray-dark">
+              <tr key={row.id} className="hover:bg-gray-lightest dark:hover:bg-gray-dark cursor-pointer  border-b border-gray-light dark:border-gray-dark">
                 {columns.map((column) => {
                   if (column.format) {
                     return <td className="whitespace-nowrap py-0 px-12 pr-3 text-xs sm:pl-6" key={column.accessor}>{column.format(row[column.accessor])}</td>
