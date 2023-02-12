@@ -13,7 +13,7 @@ const Docs = () => {
 
                       <a
                         href="https://github.com/boringprotocol/docs"
-                        className="mb-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-3 py-2 text-boring-black hover:bg-boring-white hover:opacity-70 active:opacity-50 shadow-md active:shadow-sm"
+                        className="my-6 inline-flex items-center rounded-xs border border-gray dark:border-gray-dark text-xs bg-white dark:bg-black px-3 py-2 text-boring-black dark:text-gray-light hover:bg-boring-white hover:border-white hover:opacity-90 active:opacity-60 shadow-md dark:shadow-sm dark:shadow-black active:shadow-sm"
                       ><IoLogoGithub className="mr-2" />GitHub</a>
                       <div>
 

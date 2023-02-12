@@ -1,69 +1,89 @@
-// import NostrChatWidget from 'nostr-chat-widget-react'
-import LayoutAuthenticated from "../components/layoutAuthenticated"
-import React from 'react'
-import SpicolliArt from '../components/art/spicolli'
-import Link from 'next/link'
-import { NostrProvider } from "nostr-react";
+import LayoutAuthenticated from "../components/layoutAuthenticated";
+import React, { useEffect, useRef, useState } from "react";
+import { useNostrEvents, dateToUnix, useProfile } from "nostr-react";
+import NostrNav from "../components/NostrNav";
 
-import NostrFeed from '../components/nostrFeed'
+const GlobalFeed = () => {
+  const [userDataMap, setUserDataMap] = useState<{ [key: string]: any }>({});
+  const now = useRef(new Date());
+  const { events } = useNostrEvents({
+    filter: {
+      since: dateToUnix(now.current),
+      kinds: [1],
+    },
+  });
 
-const relayUrls = [
-  "wss://nostr-pub.wellorder.net",
-  "wss://relay.nostr.ch",
-];
+  useEffect(() => {
+    const fetchUserData = async (pubkey: string) => {
+      const { data: userData } = await useProfile({ pubkey });
+      setUserDataMap((prevUserDataMap) => ({
+        ...prevUserDataMap,
+        [pubkey]: userData,
+      }));
+    };
 
-const nostr = () => {
+    events.forEach((event) => {
+      const { pubkey } = event;
+      if (!userDataMap[pubkey]) {
+        fetchUserData(pubkey);
+      }
+    });
+  }, [events, userDataMap, setUserDataMap]);
 
   return (
     <LayoutAuthenticated>
-      <>
-        <div className="container mx-auto relative">
+      <div className="container mx-auto">
+        <NostrNav />
 
-          <div className='border-b border-gray-lightest dark:border-gray-dark'>
+        <div className="text-xs p-12 w-1/2 text-gray">
+          <ul role="list" className="divide-y divide-gray-lighter dark:divide-gray-dark">
+            {events.map((event) => {
+              const { pubkey } = event;
+              const userData = userDataMap[pubkey];
 
-            <div className=''>
-              <SpicolliArt />
-              <div className='p-12'>
-                <NostrFeed />
-              </div>
+              // images in posts (jpg, jpeg, png, gif)
+              const imageUrl = event.content.match(
+                /https:\/\/nostr\.build\/i\/.*\.(jpg|jpeg|png|gif)/
+              );
+              let content = event.content;
 
-              <br />
+              // hashtags
+              content = content.replace(/#(\S+)/g, '<a href="#" class="text-blue-500 underline">#$1</a>');
 
-              <NostrProvider relayUrls={relayUrls} debug={true}>
-      <App />
-    </NostrProvider>
 
-    
-            </div>
-          </div>
-          
-          <div className="absolute top-0 w-3/4 lg:w-1/2">
-            <div className='p-12'>
-              <p className='text-sm'>Isn't this our time?</p>
-              <p className='text-gray text-xs'>nostr: wss://relay.boring.surf</p>
-              <ul className='leading-6 mt-12 mb-12 pl-4 text-xs list-disc text-gray-dark dark:text-gray-light'>
-                <li>Recieve Lightning Network Payments</li>
-                <li>NIP-05 your-name@boring.surf</li>
-                <li>#boredroom nostr channel feed</li>
-                <li>Global and following feeds</li>
-                <li>Direct Messages</li>
-              </ul>
-              
-              <Link href="/profile" >
-                <span className="bg-gray-dark text-white p-2 rounded-sm mt-4 text-xs">Add nostr</span></Link>
-            </div>
-            
-          </div>
+              if (imageUrl) {
+                content = content.replace(imageUrl[0], "");
+              }
+              return (
+                <li key={event.id} className="py-4">
+                  <div className="flex space-x-3">
+                    <img
+                      className="h-6 w-6 rounded-full"
+                      src={userData?.picture}
+                      alt=""
+                    />
+                    <div className="flex-1 space-y-1">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-sm font-medium">
+                          {userData?.name} ({event.pubkey})
+                        </h3>
+                      </div>
+                      <p
+                        className="text-sm text-gray-500 w-1/2"
+                        dangerouslySetInnerHTML={{ __html: content }}
+                      />
+                      {imageUrl && <img src={imageUrl[0]} className="w-1/2" />}
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
         </div>
-        {/* <NostrChatWidget
-              recipientPk={'npub1zttn0dzm9cjvz70zalvz7sgyswtfxr4ca6qt736kr57y07nqgdyqhdgxvs'}
-              relayUrls={['wss://no.str.cr', 'wss://relay.damus.io', 'wss://nostr.fly.dev', 'wss://nostr.robotechy.com']} 
-          /> */}
-      </>
+      </div>
     </LayoutAuthenticated>
-  )
-}
-
-export default nostr;
+  );
+};
 
 
+export default GlobalFeed;

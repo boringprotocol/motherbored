@@ -1,28 +1,37 @@
-import { useState } from 'react';
-import { useTheme } from "next-themes";
-import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
+import { useState, useEffect } from 'react'
+import { useTheme } from "next-themes"
+import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5"
 
 const ThemeChanger = () => {
-  const { setTheme } = useTheme();
-  const [currentTheme, setCurrentTheme] = useState('light');
+
+  // const [playSound] = typeof window !== 'undefined' ? useSound('/sounds/switch-off.mp3') : [null];
+  const { theme, setTheme } = useTheme();
+  const [currentTheme, setCurrentTheme] = useState<string>(theme || 'light');
+
+  useEffect(() => {
+    setCurrentTheme(theme || 'light');
+  }, [theme]);
+
+  useEffect(() => {
+    setTheme(currentTheme);
+  }, [currentTheme, setTheme]);
+
 
   const handleClick = () => {
     if (currentTheme === 'light') {
-      setTheme('dark');
       setCurrentTheme('dark');
     } else {
-      setTheme('light');
       setCurrentTheme('light');
     }
   }
 
   return (
-    <div className='mt-8'>
+    <div className=''>
       <button
-        className='rounded-sm border border-gray-light dark:border-gray-dark text-center inline-flex items-center text-xs px-3 py-2 text-boring-black dark:text-boring-white hover:bg-gray-lightestest dark:hover:bg-gray-dark'
+        className='rounded-sm border border-gray-light dark:border-gray-dark text-center inline-flex items-center text-xs px-4 py-3 text-boring-black dark:text-boring-white hover:bg-gray-lightest dark:hover:bg-gray-dark'
         onClick={handleClick}
       >
-        {currentTheme === 'light' ? <IoSunnyOutline /> : <IoMoonOutline />}
+        {currentTheme === 'light' ? <IoSunnyOutline className='h-4' /> : <IoMoonOutline className='h-4' />}
       </button>
     </div>
   )

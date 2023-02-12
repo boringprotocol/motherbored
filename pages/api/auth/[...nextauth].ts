@@ -1,9 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { AuthOptions, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getCsrfToken } from "next-auth/react";
 import { SigninMessage } from "../../../utils/SigninMessage";
-import prisma from '../../../lib/prisma';
+
+type CustomSession = Session & {
+  publicKey?: string;
+};
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   const providers = [
@@ -66,15 +69,17 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
       async session({ session, token }) {
-        session.publicKey = token.sub;
-        if (session.user) {
-          session.user.name = token.sub;
-          session.user.image = `https://source.boringavatars.com/marble/40/${token.sub}`;
+        const customSession: CustomSession = {
+          ...session,
+          publicKey: token.sub,
+        };
+
+        if (customSession.user) {
+          customSession.user.name = token.sub;
         }
 
-
-        return session;
+        return customSession;
       },
     },
-  });
+  } as AuthOptions);
 }

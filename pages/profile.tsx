@@ -1,166 +1,152 @@
-import { useSession } from 'next-auth/react'
-import Layout from '../components/layout'
-import LayoutAuthenticated from '../components/layoutAuthenticated'
-import React from 'react'
-import { getServerSideProps } from './api/profile'
-// import { updatePublicProfile } from './api/profile'
-import Head from 'next/head'
-import { useState } from 'react'
-import { Switch } from '@headlessui/react'
-import { BsLightning } from 'react-icons/bs';
+import React from 'react';
+import WtfCat from '../components/art/wtf-cat';
+import SiteMenu from '../components/siteMenu';
+import ThemeChanger from '../components/themeChanger';
 
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ')
-}
-
-
-
-interface Props {
-  user: UserProps,
-  peers: PeerProps[]
-}
-interface UserProps {
-  id: string;
-  wallet: string;
-  name: string;
-  image: string;
-  bio: string;
-  publicProfile: boolean;
-  peers: PeerProps[];
-}
-interface PeerProps {
-  id: string;
-  name: string;
-  setupkey: string;
-  target: string;
-  kind: string;
-  consumer_platform: string;
-  provider_platform: string;
-  userId: string;
-  pubkey: string;
-  label: string;
-  provider_kind: string;
-  wifi_preference: string;
-  hw_mode: string;
-  channel: number;
-  ssid: string;
-  country_code: string;
-  wpa_passphrase: string;
-}
-
-const ProfilePage: React.FC<Props> = ({ user }) => {
-
-  const [enabled, setEnabled] = useState(false)
-
-  const [publicProfile, setPublicProfile] = useState(user.publicProfile);
-
-  const handlePublicProfile = async () => {
-    setPublicProfile(!publicProfile);
-    await updatePublicProfile(user.id, !publicProfile);
-  }
-
-  const consumerPeers = user.peers.filter(peer => peer.kind === 'consumer')
-  const consumerPeersCount = consumerPeers.length;
-  const providerPeers = user.peers.filter(peer => peer.kind === 'provider')
-  const providerPeersCount = providerPeers.length;
-
-  const session = useSession();
-
-  if (!session) {
-
-    return (
-      <Layout>
-        <Head>
-          <title>Boring Protocol</title>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        </Head>
-      </Layout>
-    );
-  }
-
+const Profile = () => {
   return (
-    <LayoutAuthenticated>
-      <Head>
-        <title>Motherbored - Boring Protocol</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="apple-touch-icon" href="/img/favicon.png" />
-      </Head>
+    <div className='top-0 font-jetbrains'>
 
-      <div className="main px-12 text-xs">
+      <header className="fixed top-0 z-30 w-full px-2 py-4 sm:px-4">
+        <div className="flex items-center justify-between mx-auto max-w-7xl">
+          <a href="/">
+            <span className="text-2xl">motherbored.app</span>
+          </a>
+          <div className="flex items-center space-x-1">
+            <ul className="hidden space-x-2 md:inline-flex">
+              <li className="align-middle">
+                <a href="#" className="px-4 py-2 font-semibold text-gray-600 rounded">Docs</a>
+              </li>
+              <li className="align-middle">
+                <a href="#" className="px-4 py-2 font-semibold text-gray-600 rounded">About Us</a>
+              </li>
+              <li className="align-middle">
+                <a href="#" className="px-4 py-2 font-semibold text-gray-600 rounded">Contact Us</a>
+              </li>
+              <li className="align-middle"><ThemeChanger /></li>
+              <li className="align-middle"><SiteMenu /></li>
+            </ul>
+            <div className="inline-flex md:hidden">
+              <button className="flex-none px-2 ">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8h16M4 16h16" />
+                </svg>
+                <span className="sr-only">Open Menu</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
 
-      <div className='pt-12'>
-      <Switch.Group as="div" className="flex items-center justify-between">
-      <span className="flex flex-grow flex-col">
-        <Switch.Label as="span" className="text-sm font-medium text-gray-900" passive>
-          Public Profile
-        </Switch.Label>
-        <Switch.Description as="span" className="text-sm text-gray-500">
-          Show your profile to other users.
-        </Switch.Description>
-      </span>
-      <Switch
-        checked={enabled}
-        onChange={setEnabled}
-        className={classNames(
-          enabled ? 'bg-green text-gray-dark' : 'bg-gray dark:bg-gray text-gray dark:text-gray-dark',
-          'relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-1 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-1 focus:ring-blue focus:ring-offset-1'
-        )}
-      >
-        <span
-          aria-hidden="true"
-          className={classNames(
-            enabled ? 'translate-x-5' : 'translate-x-0',
-            'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-gray-light shadow ring-0 transition duration-200 ease-in-out'
-          )}
-        />
-      </Switch>
-      </Switch.Group>
+      <div className="fixed bottom-0 -z-10 w-full text-gray-dark">
+        <WtfCat />
       </div>
+      <div className="flex h-full flex-col pt-16 pb-12 z-50" style={{ height: '100vh' }}>
+        <main className="mx-auto flex w-full max-w-7xl flex-grow flex-col justify-center px-6 lg:px-8">
+          <div className="flex flex-shrink-0 justify-center">
+            <a href="/" className="inline-flex">
+              <span className="sr-only">Boring Protocol</span>
+            </a>
+          </div>
+          <div className="">
 
+            <section className="bg-blueGray-50">
+              <div className="w-full lg:w-4/12 px-4 mx-auto">
+                <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
+                  <div className="px-6">
+                    <div className="flex flex-wrap justify-center">
+                      <div className="w-full px-4 flex justify-center">
+                        <div className="relative">
+                          <img alt="..." src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg" className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px" />
+                        </div>
+                      </div>
+                      <div className="w-full px-4 text-center mt-20">
+                        <div className="flex justify-center py-4 lg:pt-4 pt-8">
+                          <div className="mr-4 p-3 text-center">
+                            <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
+                              7
+                            </span>
+                            <span className="text-sm text-blueGray-400">Nodes</span>
+                          </div>
+                          <div className="mr-4 p-3 text-center">
+                            <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
+                              3
+                            </span>
+                            <span className="text-sm text-blueGray-400">Countries</span>
+                          </div>
+                          <div className="lg:mr-4 p-3 text-center">
+                            <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
+                              89
+                            </span>
+                            <span className="text-sm text-blueGray-400">Consumers</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-center mt-12">
+                      <h3 className="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+                        Absolute Unit
+                      </h3>
+                      <h2>Connect</h2>
+                      <select>
+                        <option value="red-donkey-2874">red-donkey-2874</option>
+                        <option value="blue-horse-3847">blue-horse-3847</option>
+                        <option value="green-elephant-4938">green-elephant-4938</option>
+                        <option value="yellow-lion-1029">yellow-lion-1029</option>
+                        <option value="purple-giraffe-5748">purple-giraffe-5748</option>
+                        <option value="orange-zebra-6837">orange-zebra-6837</option>
+                        <option value="brown-monkey-7926">brown-monkey-7926</option>
+                      </select>
 
-      <div className="mt-4 w-1/3 rounded-sm border border-gray-light dark:border-gray-dark px-3 py-3 shadow-sm focus-within:border-indigo-600  focus-within:ring-indigo-600">
-      <label htmlFor="name" className="block text-xs font-medium text-gray-900 mb-1">
-       <BsLightning className='float-left mr-1' /> LN Address
-      </label>
-      <input
-        type="text"
-        name="name"
-        id="name"
-        className="block w-full border-0 p-0 text-gray-dark placeholder-gray bg-boring-white dark:bg-boring-black focus:ring-0 sm:text-sm"
-        placeholder="fran@getalby.com"
-      />
+                    </div>
+                    <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
+                      <div className="flex flex-wrap justify-center">
+                        <div className="w-full lg:w-9/12 px-4">
+                          <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
+                            Not a morning person, but I'm a coffee person. So that's basically the same thing, right???
+                            Yo dude!
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <footer className="relative  pt-8 pb-6 mt-8">
+                <div className="container mx-auto px-4">
+                  <div className="flex flex-wrap items-center md:justify-between justify-center">
+                    <div className="w-full md:w-6/12 px-4 mx-auto text-center">
+                      {/* hello         */}
+                    </div>
+                  </div>
+                </div>
+              </footer>
+            </section>
+
+          </div>
+
+        </main>
+        <footer className="mx-auto w-full max-w-7xl flex-shrink-0 px-6 lg:px-8">
+
+          <nav className="flex justify-center space-x-4">
+            <a href="/" className="text-sm">
+              motherbored.app
+            </a>
+            <span className="inline-block border-l border-gray-300" aria-hidden="true" />
+            <a href="#" className="text-sm">
+              Contact Support
+            </a>
+            <span className="inline-block border-l border-gray-300" aria-hidden="true" />
+            <a href="#" className="text-sm">
+              Nostr
+            </a>
+          </nav>
+        </footer>
+      </div>
     </div>
 
-
-        <div className="main pt-12 text-xs">
-          <p>Name: {user.name}</p>
-          <p>Wallet: {user.wallet}</p>
-          <p>Image: {user.image}</p>
-
-          <img src="https://twitter.com/FranTiberious/profile_image?size=original" alt="Profile Image" />
-          <p>Bio: {user.bio}</p>
-          <h2 className='text-sm mt-6'>Consumer Peers:</h2>
-          <p className="mb-2">You have {consumerPeersCount}/10 Consumer Peers</p>
-          <ul className=''>
-            {consumerPeers && consumerPeers.length > 0 ? consumerPeers.map((peer, index) => (
-              <li key={index}><a href={`/consumer/${encodeURIComponent(peer.name)}`}>{peer.name}</a>, {peer.consumer_platform}</li>
-            )) : <p>No Consumer Peers Available</p>}
-          </ul>
-          <h2 className='text-sm mt-6'>Provider Peers:</h2>
-          <p className="mb-2">You have {providerPeersCount}/10 Provider Peers</p>
-          <ul>
-            {providerPeers && providerPeers.length > 0 ? providerPeers.map((peer, index) => (
-              <li key={index}><a href={`/provider/${encodeURIComponent(peer.name)}`}>{peer.name}</a>
-                , {peer.country_code}, {peer.provider_platform}</li>
-            )) : <p>No Provider Peers Available</p>}
-          </ul>
-        </div>
-      </div>
-    </LayoutAuthenticated>
   );
-}
+};
 
-export default ProfilePage
-export { getServerSideProps }
-
+export default Profile;

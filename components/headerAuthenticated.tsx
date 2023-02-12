@@ -58,8 +58,9 @@ export default function Header() {
             <>
               {/* Wallet Address display */}
               <Link href="/">
-              <span className="font-jetbrains text-xs">
-                {session.user.email ?? session.user.name}
+              <span className="font-jetbrains text-xs lg:px-6">
+                {/* {session.user.email ?? session.user.name} */}
+                mothebrored.app
               </span>
               </Link>
               

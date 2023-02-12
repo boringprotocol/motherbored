@@ -1,5 +1,5 @@
 {/* Design tool shows CSS breakpoints on the rendered page */}
-const breakpoints = () => {
+const Breakpoints = () => {
     return ( 
         <>
 
@@ -16,4 +16,4 @@ const breakpoints = () => {
      );
 }
 
-export default breakpoints;
+export default Breakpoints;

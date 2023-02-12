@@ -106,10 +106,6 @@ export async function CreateFalconSetupkey(
   );
   console.log(response);
   const data = (await response.json()) as any;
-
-  console.log(response.status);
-  console.log(response.headers.get("content-type"));
-
   console.log(data);
   const updateit = await prisma.peer.update({
     where: { id: peer_id },
@@ -119,6 +115,42 @@ export async function CreateFalconSetupkey(
   });
   console.log(updateit);
   return updateit;
+}
+
+export async function FalconGetPeer(id: string, accesstoken: string) {
+  console.log("fetching falcon peer");
+  const fetchUrl = "https://boring.dank.earth:33073/api/peers/" + id;
+  const response = await fetch(fetchUrl, {
+    method: "get",
+    headers: {
+      Accept: "application/json",
+      Authorization: accesstoken,
+    },
+  });
+
+  console.log(response);
+  const data = (await response.json()) as any;
+  console.log(data);
+  const firstPeer = data[0];
+
+  if (response.ok) {
+    if (data != null && firstPeer != null && firstPeer.key != null) {
+      const peer = await prisma.peer.update({
+        where: { id: id },
+        data: {
+          pubkey: String(firstPeer.key),
+        },
+      });
+      console.log("updated record for." + id);
+      return true;
+    } else {
+      console.log("data was null");
+      return false;
+    }
+  } else {
+    console.log("falcon got a bad response");
+    return false;
+  }
 }
 
 export async function FalconGetPeers(id: string, accesstoken: string) {

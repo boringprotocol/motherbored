@@ -1,7 +1,87 @@
 import React from 'react'
 import Router from 'next/router'
 import { IoLaptopOutline, IoWifiOutline, IoServerOutline, IoCloudOutline, IoPricetagOutline } from 'react-icons/io5'
-import Avatar from 'boring-avatars'
+// import colors from "tailwindcss/colors";
+// import { ThemeProvider } from 'next-themes';
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+import faker from "faker";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+export const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top' as const,
+      display: false,
+    },
+    title: {
+      display: false,
+    },
+  },
+  axisX: {
+    gridThickness: 0,
+    tickLength: 0,
+    lineThickness: 0,
+  },
+  scales: {
+    y: {
+      grid: {
+        drawBorder: false,
+        display: false
+
+      },
+      ticks: {
+        display: false
+      }
+    },
+    x: {
+      grid: {
+        drawBorder: false,
+        display: false
+      },
+      ticks: {
+        display: false
+      }
+    }
+  }
+};
+
+const labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21'];
+
+export const data = {
+  labels,
+  datasets: [
+    {
+      label: 'Dataset 1',
+      data: labels.map(() => faker.datatype.number({ min: 0, max: 50 })),
+      borderColor: 'colors.white[600]',
+      borderWidth: .1,
+      backgroundColor: 'colors.zinc[200]',
+    },
+  ],
+};
+
 
 export type PeerProps = {
   id: string;
@@ -21,9 +101,8 @@ export type PeerProps = {
   channel: string | null;
 };
 
-// generating peer avatar from the id as opposed to the label
+
 const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
-  const peerAvatar = peer.id
 
   // 
   let providerActive = false
@@ -54,61 +133,34 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
   }
 
   return (
-
-    <div className='px-6 pt-6'>
-
-      <a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
-
-        <div className="">&nbsp;
-          {isConsumer && (<IoWifiOutline className="float-left mr-1" />)}
-          {isProvider && isLocalProvider && (<IoWifiOutline className="float-left mr-1" />)}
-
-          {isConsumer && (
-            <>
-              {peer.ssid}
-            </>
-          )}
-
-          {isLocalProvider && (
-            <>
-              {peer.ssid}
-            </>
-          )}
-        </div>
-
+    <a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
+      <div id="peer" className='px-6 pt-6 relative'>
         <h2 className='text-lg md:text-xl lg:text-2xl px-4 mt-4'>{peer.name}</h2>
-
         <p className="inline-flex items-center font-jetbrains px-4 text-xs text-gray-500 capitalize">
-          {/* {isProvider && (<IoServerOutline className="float-left mr-2" />)} */}
           {isConsumer && (<IoLaptopOutline className="float-left mr-2" />)}
           {isCloudProvider && (<IoCloudOutline className="float-left mr-2" />)}
-          {isLocalProvider && (<IoServerOutline className="float-left mr-2" />)}<span className="capitalize">{peer.provider_kind} {peer.kind}</span>
+          {isLocalProvider && (<IoServerOutline className="float-left mr-2" />)}
+          <span className="capitalize">{peer.provider_kind} {peer.kind}</span>
         </p>
-
-        
-
-        <div className="pt-4 pl-4">
-          <Avatar
-            size={40}
-            name={peerAvatar}
-            variant="sunset"
-            colors={[
-              "#FB6900",
-              "#F63700",
-              "#004853",
-              "#007E80",
-              "#00B9BD"]} 
-          />
-          {/* <Identicon string={peerAvatar} size={40} fg="#666" /> */}
+        <div className=' w-full h-12 top-0 left-0 z-50 flex items-center justify-center'>
+          <div className="">
+            <Line options={options} data={data} />
+          </div>
         </div>
-
-      </a>
-      <div className='pt-4'>
-        <span className="inline-block align-bottom text-xs mt-6 p-4">
-          <IoPricetagOutline className="float-left mr-2" /> {peer.label}
-        </span>
+        <div className='pt-4'>
+          <span className="inline-block align-bottom text-xs mt-6 p-4">
+            <IoPricetagOutline className="float-left mr-2" /> {peer.label}
+          </span>
+          <span className="inline-block align-bottom text-xs mt-6 p-4 float-right">
+            {isConsumer && (<IoWifiOutline className="mr-2" />)}
+            {isProvider && isLocalProvider && (<IoWifiOutline className="float-left mr-2" />)}
+            {isConsumer && (peer.ssid)}
+            {isLocalProvider && (peer.ssid)}
+          </span>
+        </div>
       </div>
-    </div>
+    </a>
+
 
   );
 };
