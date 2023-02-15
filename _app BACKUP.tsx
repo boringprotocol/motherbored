@@ -13,7 +13,7 @@ import { clusterApiUrl } from '@solana/web3.js';
 
 import SolanaProviderWrapper from '../components/SolanaProviderWrapper';
 
-// import { MetaMaskProviderWrapper } from '../components/MetaMaskProviderWrapper';
+import { MetaMaskProviderWrapper } from '../components/MetaMaskProviderWrapper';
 
 
 const endpoint = clusterApiUrl('devnet');
@@ -79,20 +79,22 @@ export default function Mothebored({ Component, pageProps: { session, ...pagePro
 
   return (
 
+    <MetaMaskProviderWrapper>
 
-    <SolanaProviderWrapper endpoint={endpoint} wallets={wallets}>
-      <SessionProvider session={pageProps.session} refetchInterval={0}>
-        <NostrProvider relayUrls={relayUrls} debug={true}>
-          <ThemeProvider attribute="class">
-            <div className="min-h-screen ">
-              <Component {...pageProps} motherboredApp={motherboredApp}
-                boringProtocol={boringProtocol}
-                motherboredDocs={motherboredDocs} />
-            </div>
-          </ThemeProvider>
-        </NostrProvider>
-      </SessionProvider>
-    </SolanaProviderWrapper>
+      <SolanaProviderWrapper endpoint={endpoint} wallets={wallets}>
+        <SessionProvider session={pageProps.session} refetchInterval={0}>
+          <NostrProvider relayUrls={relayUrls} debug={true}>
+            <ThemeProvider attribute="class">
+              <div className="min-h-screen ">
+                <Component {...pageProps} motherboredApp={motherboredApp}
+                  boringProtocol={boringProtocol}
+                  motherboredDocs={motherboredDocs} />
+              </div>
+            </ThemeProvider>
+          </NostrProvider>
+        </SessionProvider>
+      </SolanaProviderWrapper>
+    </MetaMaskProviderWrapper>
   );
 
 }

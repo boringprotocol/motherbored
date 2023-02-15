@@ -44,7 +44,7 @@ type Props = {
 
 const IndexPage: React.FC<Props> = (props) => {
   const { theme } = useTheme();
-  const [showConsumers, setShowConsumers] = useState(false);
+  const [showConsumers, setShowConsumers] = useState(true);
   const [showProviders, setShowProviders] = useState(true);
 
   const { data: session } = useSession();
@@ -78,11 +78,11 @@ const IndexPage: React.FC<Props> = (props) => {
       {/* Main content */}
       <div className="main pt-12 text-xs">
 
-        <PeerInsight peersLength={props.peers.length} />
+        {/* <PeerInsight peersLength={props.peers.length} /> */}
 
         {/* PEERS */}
 
-        <CopyToClipboardButton text='hello' />
+        {/* <CopyToClipboardButton text='hello' /> */}
 
         <div className="px-4 sm:px-8 md:px-12 pb-16">
 
@@ -110,8 +110,8 @@ const IndexPage: React.FC<Props> = (props) => {
 
           {showConsumers && (
             <>
-              <h2 className="text-lg text-boring-black dark:text-boring-white">Consumer Peers</h2>
-              <p className='mb-4 text-xs'>Mobile clients coming soon.</p>
+              <h2 className="text-lg text-boring-black dark:text-boring-white ml-2">Consumer Peers</h2>
+              <p className='mb-4 text-xs ml-2'>Mobile clients coming soon.</p>
               <ul role="list" className=" pb-12 grid grid-cols-2 gap-6 md:grid-cols-8 2xl:grid-cols-6">
                 {props.consumers.map((consumer) => (
                   <li key={consumer.name} className="shadow-md col-span-2 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
@@ -124,7 +124,8 @@ const IndexPage: React.FC<Props> = (props) => {
 
           {showProviders && (
             <>
-              <h2 className="text-lg text-boring-black dark:text-boring-white">Provider Peers</h2>
+              <h2 className="text-lg text-boring-black dark:text-boring-white ml-2">Provider Peers</h2>
+              <p className='mb-4 text-xs ml-2'>Mobile clients coming soon.</p>
               <ul role="list" className=" pb-12 grid grid-cols-2 gap-6 md:grid-cols-4 2xl:grid-cols-6">
                 {props.providers.map((providers) => (
                   <li key={providers.name} className="shadow-md col-span-2 border rounded-sm cursor-pointer hover:border-gray dark:hover:border-gray border-gray-lightest dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
