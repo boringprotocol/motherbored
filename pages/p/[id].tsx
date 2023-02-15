@@ -6,7 +6,7 @@ import { PeerProps } from "../../components/Peer"
 import LayoutAuthenticated from "../../components/layoutAuthenticated"
 import prisma from "../../lib/prisma"
 import { useSession, getSession } from "next-auth/react"
-import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline, IoFileTrayFull, IoBugOutline, IoRefreshOutline, IoPricetagOutline, IoArrowUpOutline, IoSaveOutline } from "react-icons/io5"
+import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline, IoFileTrayFull, IoBugOutline, IoRefreshOutline, IoPricetagOutline, IoArrowUpOutline, IoSaveOutline, IoSkullOutline } from "react-icons/io5"
 import { useTheme } from "next-themes"
 import { ToastContainer, toast } from 'react-toastify'
 import CountryCodes from "../../data/country_codes"
@@ -276,8 +276,10 @@ const ShowPeer: React.FC<Props> = (props) => {
                         <p className="text-sm mt-4">
                             Please <span className="toast-link text-black">"Install Config"</span> for the changes to take effect. </p>
                         <p className="text-sm mt-4">
-                            Be sure you are connected to "{ssid}" WiFi.
+                            Be sure you are connected to your Motherbored/Pi WiFi before proceeding.
                         </p>
+
+                        {/* we can make a last_ssid field in the peer table and check if it matches the current ssid, if it does, we can skip the wifi check and just go ahead and install the config. if it doesn't match, we can show the toast and ask them to connect to the wifi. */}
 
                         <button className="my-6 mr-2 inline-flex items-center rounded-xs border border-gray dark:border-gray-dark text-xs bg-white dark:bg-black px-3 py-2 text-boring-black dark:text-gray-light hover:bg-boring-white hover:opacity-80 active:opacity-60 shadow-md dark:shadow-sm dark:shadow-black active:shadow-sm " onClick={() => shovePeerConfig(props.peer.id)}> Install Config</button>
                         <p className="text-xs">
@@ -539,10 +541,10 @@ const ShowPeer: React.FC<Props> = (props) => {
                             <form>
                                 <button
                                     type="button"
-                                    className="mt-6 flex justify-center rounded-sm border border-gray dark:border-black  text-boring-black dark:text-boring-white dark:bg-black py-2 px-2 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
+                                    className="mt-6 flex justify-center rounded-sm border border-gray dark:border-black  text-boring-black dark:text-boring-white dark:bg-black py-2 px-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
                                     onClick={() => deletePeer(props.peer.id)}
                                 >
-                                    Remove
+                                    <IoSkullOutline className="float-left mr-2" />  Destroy
                                 </button>
 
                             </form>

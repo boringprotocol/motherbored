@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-export default function SiteMenu() {
+export default function SiteMenu({ motherboredApp, boringProtocol, motherboredDocs }: any) {
   const router = useRouter();
   const { pathname } = router;
   const currentPage = pathname.substring(1);
@@ -8,12 +8,15 @@ export default function SiteMenu() {
   const V1_URL = "https://magiceden.io/marketplace/boperator?attributes=%7B%22Boperator%22%3A%5B%22V1%22%5D%7D";
   const V2_URL = "https://magiceden.io/marketplace/boperator?attributes=%7B%22Boperator%22%3A%5B%22V2%22%5D%7D";
   const VX_URL = "https://magiceden.io/marketplace/boperator?attributes=%7B%22Boperator%22%3A%5B%22VX%22%5D%7D";
+  const WEBSITE_URL = `${boringProtocol}`;
+  // need to figure out the best way to handle this link shit
 
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     switch (e.target.value) {
       case V1_URL:
       case V2_URL:
       case VX_URL:
+      case WEBSITE_URL:
         window.open(e.target.value, "_blank");
         break;
       default:
@@ -63,6 +66,7 @@ export default function SiteMenu() {
         <option value="nostr">Nostr</option>
         <option value="404">404</option>
         <option value="asteroids">Asteroids</option>
+        <option value="{WEBSITE_URL}">Website</option>
       </select>
     </div>
   )
