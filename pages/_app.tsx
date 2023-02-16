@@ -2,26 +2,14 @@ import { NostrProvider } from "nostr-react";
 import { ThemeProvider } from 'next-themes'
 import { SessionProvider } from "next-auth/react";
 import React, { useMemo } from 'react';
-import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import { BackpackWalletAdapter, CoinbaseWalletAdapter, BraveWalletAdapter } from '@solana/wallet-adapter-wallets';
-import {
-  WalletModalProvider
-} from '@solana/wallet-adapter-react-ui';
 import { clusterApiUrl } from '@solana/web3.js';
 
 
 import SolanaProviderWrapper from '../components/SolanaProviderWrapper';
 
 // import { MetaMaskProviderWrapper } from '../components/MetaMaskProviderWrapper';
-
-
-const endpoint = clusterApiUrl('devnet');
-const wallets = [
-  new BackpackWalletAdapter(),
-  new CoinbaseWalletAdapter(),
-  new BraveWalletAdapter(),
-];
 
 import Router from 'next/router';
 import '../styles/global.css';
@@ -78,8 +66,6 @@ export default function Mothebored({ Component, pageProps: { session, ...pagePro
   );
 
   return (
-
-
     <SolanaProviderWrapper endpoint={endpoint} wallets={wallets}>
       <SessionProvider session={pageProps.session} refetchInterval={0}>
         <NostrProvider relayUrls={relayUrls} debug={true}>

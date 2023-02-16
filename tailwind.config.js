@@ -32,7 +32,7 @@ module.exports = {
       'gray': '#666',
       'gray-dark': '#444',
       'gray-darker': '#333',
-      'gray-darkesr': '#222',
+      'gray-darkest': '#222',
       // 'boring-black': '#1A1B1E',
       'boring-black': '#111',
       'black': '#000000',

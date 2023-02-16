@@ -30,7 +30,7 @@ export default function NostrNav() {
                 </select>
             </div>
             <div className="hidden sm:block">
-                <div className="border-b border-gray-200 px-12">
+                <div className="border-b border-gray-lighter dark:border-gray-darker px-12">
                     <nav className="-mb-px flex space-x-8" aria-label="Tabs">
                         {tabs.map((tab) => (
                             tab && (

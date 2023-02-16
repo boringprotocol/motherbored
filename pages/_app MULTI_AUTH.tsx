@@ -27,7 +27,6 @@ export default function Mothebored({ Component, pageProps: { session, ...pagePro
 
   return (
 
-
     // <QueryClientProvider client={queryClient}>
     //   <MetamaskProviderWrapper>
     <SolanaProviderWrapper endpoint={endpoint} wallets={wallets}>

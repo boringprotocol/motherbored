@@ -1,8 +1,6 @@
 import React from 'react'
 import Router from 'next/router'
 import { IoLaptopOutline, IoWifiOutline, IoServerOutline, IoCloudOutline, IoPricetagOutline } from 'react-icons/io5'
-// import colors from "tailwindcss/colors";
-// import { ThemeProvider } from 'next-themes';
 
 import {
   Chart as ChartJS,
@@ -14,7 +12,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import { Line, Bar } from 'react-chartjs-2';
 
 import faker from "faker";
 
@@ -134,7 +132,7 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
 
   return (
     <a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
-      <div id="peer" className='px-6 pt-6 relative'>
+      <div id="peer" className='px-4 pt-6 relative'>
         <h2 className='text-lg md:text-xl lg:text-2xl px-4 mt-4'>{peer.name}</h2>
         <p className="inline-flex items-center font-jetbrains px-4 text-xs text-gray-500 capitalize">
           {isConsumer && (<IoLaptopOutline className="float-left mr-2" />)}

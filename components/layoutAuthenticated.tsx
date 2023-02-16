@@ -30,7 +30,7 @@ export default function Layout({ children }: Props) {
       <div className="flex h-screen text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
 
         {/* Narrow sidebar */}
-        <div className="hidden w-12 overflow-y-auto md:block border-r bg-boring-white dark:bg-boring-black border-gray-light dark:border-gray-dark z-10">
+        <div className="hidden w-12 overflow-y-auto md:block border-r bg-boring-white dark:bg-boring-black border-gray-lighter dark:border-gray-darkest z-10">
           <div className="flex w-full flex-col items-center">
             <div className="hover:bg-gray-lightest dark:hover:bg-gray-dark flex flex-shrink-0 items-center">
               <Link href="/">
@@ -45,17 +45,17 @@ export default function Layout({ children }: Props) {
             </div>
 
             {/* Right section on desktop */}
-              <Link href="/directory" className='hello'>
-                <a className="hover:bg-gray-lightest dark:hover:bg-gray-dark py-4 flex flex-shrink-0 items-center border-t border-b border-gray-lightest dark:border-gray-dark" title=
+            <Link href="/directory" className='hello'>
+              <a className="hover:bg-gray-lightest dark:hover:bg-gray-dark py-4 flex flex-shrink-0 items-center border-t border-b border-gray-lighterest dark:border-gray-darkest" title=
                 "Provider Directory">
-                  <IoServerOutline className="w-12 text-1xl" />
-                </a>
-              </Link>
-              <Link href="/peers" className=''>
-                <a className="hover:bg-gray-lightest dark:hover:bg-gray-dark py-4 flex flex-shrink-0 items-center border-b border-gray-lightest dark:border-gray-dark">
-                  <IoAppsOutline className="w-12 text-1xl"  />
-                </a>
-              </Link>     
+                <IoServerOutline className="w-12 text-1xl" />
+              </a>
+            </Link>
+            <Link href="/peers" className=''>
+              <a className="hover:bg-gray-lightest dark:hover:bg-gray-dark py-4 flex flex-shrink-0 items-center border-b border-gray-lighterest dark:border-gray-darkest">
+                <IoAppsOutline className="w-12 text-1xl" />
+              </a>
+            </Link>
           </div>
         </div>
 
@@ -84,7 +84,7 @@ export default function Layout({ children }: Props) {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col pt-5 pb-4 bg-boring-white dark:bg-boring-black border-r border-gray-lightest dark:border-gray-dark">
+                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col pt-5 pb-4 bg-boring-white dark:bg-boring-black border-r border-gray-lighterest dark:border-gray-darkest">
                   <Transition.Child
                     as={Fragment}
                     enter="ease-in-out duration-300"
@@ -105,15 +105,15 @@ export default function Layout({ children }: Props) {
                     </div>
                   </Transition.Child>
                   <div className="flex flex-shrink-0 items-center px-6">
-                  <h1 className="text-xs mt-4 mb-4 font-jetbrains">Boring Protol <span className="text-xs text-gray py-6">pre-beta</span></h1>
+                    <h1 className="text-xs mt-4 mb-4 font-jetbrains">Boring Protol <span className="text-xs text-gray py-6">pre-beta</span></h1>
                   </div>
                   <div className="mt-5 h-0 flex-1 overflow-y-auto px-6">
                     <nav className="flex h-full flex-col">
                       <div className="font-jetbrains space-y-1">
-                        
+
 
                         <AccountCard />
-                        
+
                         <ThemeChanger />
                         <h2 className="text-xs py-4">Boring Protocol dev-preview</h2>
                         <SiteMenu />
@@ -140,10 +140,10 @@ export default function Layout({ children }: Props) {
         {/* Content area */}
         <div className="font-jetbrains flex flex-1 flex-col overflow-hidden dark:bg-boring-black">
           <header className="w-full">
-            <div className="relative z-10 flex h-16 flex-shrink-0 border-b border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black  shadow-sm">
+            <div className="relative z-10 flex h-16 flex-shrink-0 border-b border-gray-lighter dark:border-gray-darkest text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black  shadow-sm">
               <button
                 type="button"
-                className="border-r border-gray-light dark:border-gray-dark px-4 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue lg:hidden"
+                className="border-r border-gray-lighter dark:border-gray-darkest px-4 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue lg:hidden"
                 onClick={() => setMobileMenuOpen(true)}
               >
                 <span className="sr-only">Open sidebar</span>
@@ -171,17 +171,17 @@ export default function Layout({ children }: Props) {
             </main>
 
             {/* Secondary column (hidden on smaller screens) */}
-            <aside className="drop-shadow-2xl z-10 hidden overflow-y-scroll hover:overflow-y-scroll w-96 border-l border-gray-light dark:border-gray-dark text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black lg:block">
+            <aside className="drop-shadow-2xl z-10 hidden overflow-y-scroll hover:overflow-y-scroll w-96 border-l border-gray-lighter dark:border-gray-darkest text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black lg:block">
               <div className="font-jetbrains text-xs py-4">
 
                 <nav className="flex h-full flex-col px-12">
                   <div className="font-jetbrains space-y-1">
-                  <AccountCard />
-                    
+                    <AccountCard />
+
                     <ThemeChanger />
                     <h1 className="text-xs mt-4 mb-4 py-4">Boring Protocol <span className="text-xs text-gray py-6">dev-preview</span></h1>
                     <SiteMenu />
-                    
+
                     <Setup />
                   </div>
                 </nav>

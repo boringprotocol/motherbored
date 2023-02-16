@@ -41,3 +41,12 @@ button > * {font-size: 12px!important;}
     }
   }
   
+
+    #TextCycle {
+      display: none;
+    }
+  
+    a:hover+#TextCycle {
+      display: block;
+    }
+  
