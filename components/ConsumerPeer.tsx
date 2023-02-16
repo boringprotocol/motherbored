@@ -50,26 +50,41 @@ const ConsumerPeer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
     isLocalProvider = true
   }
 
+  let isMotheboredConsumer = false
+  if (peer.consumer_platform == "motherbored") {
+    isMotheboredConsumer = true
+  }
+
   return (
 
-    <div className='px-6 pt-6'>
+
+
+
+
+    <div className='p-6'>
+
+      {/* {isMotheboredConsumer && (<>outline</>)} */}
+
       <a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
-        <div className="inline-flex items-center">
-          {isConsumer && (<IoWifiOutline className="mr-1" />)}
-          {isProvider && isLocalProvider && (<IoWifiOutline className="mr-1" />)}
-          {(isConsumer || isLocalProvider) && <div className="ml-2">{peer.ssid}</div>}
-        </div>
-        <h2 className='text-xs mt-4'>{peer.name}</h2>
-        <p className="inline-flex items-center font-jetbrains text-xs text-gray-500 capitalize">
+        {/* if it's a motherbored show the wifi info */}
+        {isMotheboredConsumer && (<>
+          <div className="inline-flex items-center text-xs text-gray-light">
+            <IoWifiOutline className="mr-1" />{peer.ssid}
+          </div>
+        </>)}
+
+        <h2 className=''>{peer.name}</h2>
+        {/* <p className="inline-flex items-center font-jetbrains text-xs text-gray-500 capitalize">
           {isConsumer && (<IoLaptopOutline className="float-left mr-2" />)}
           {isCloudProvider && (<IoCloudOutline className="float-left mr-2" />)}
           {isLocalProvider && (<IoServerOutline className="float-left mr-2" />)}
           <span className="capitalize">{peer.provider_kind} {peer.kind}</span>
-        </p>
+        </p> */}
       </a>
-      <div className='pt-4'>
+      <div className='py-4'>
         <span className="inline-block align-bottom text-xs">
-          <IoPricetagOutline className="float-left mr-2" /> {peer.label}
+          {peer.consumer_platform}
+          {/* <IoPricetagOutline className="float-left mr-2" /> {peer.label} */}
         </span>
       </div>
     </div>

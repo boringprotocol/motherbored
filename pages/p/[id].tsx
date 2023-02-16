@@ -368,7 +368,7 @@ const ShowPeer: React.FC<Props> = (props) => {
             {/* rows and columns w/ grid */}
             <div className="px-12 mt-12  xl:pt-0 grid overflow-hidden grid-cols-4 md:grid-cols-6 grid-rows-1 sm:gap-2">
 
-                {props.peer.provider_kind == "cloud" && (<li>provider_kind: {props.peer.provider_kind}</li>)}
+                {/* {props.peer.provider_kind == "cloud" && (<li>provider_kind: {props.peer.provider_kind}</li>)} */}
 
                 <div className="box row-start-1 col-span-4 md:col-span-6 col-start-2 md:col-start-1">
 
@@ -376,28 +376,14 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                 </div>
 
-                <div className="box row-start-1 md:row-start-2 col-start-1 col-span-1 md:col-span-2">
-                    <Avatar
-                        size="100%"
-                        name={peerAvatar}
-                        variant="sunset"
-                        colors={[
-                            "#FB6900",
-                            "#F63700",
-                            "#004853",
-                            "#007E80",
-                            "#00B9BD"]}
-                    />
-                </div>
-
-                <div className=" box col-start-1 col-span-4 sm:col-span-4 ">
+                <div className="box col-start-1 col-span-4 sm:col-span-4 ">
 
                     {isProvider && (
                         <div className="m-0 md:m-12">
                             <TrafficStats  {...props} />
                         </div>
                     )}
-                    <form className="px-0 md:px-10" onSubmit={submitData}>
+                    <form className="px-0 md:px-0" onSubmit={submitData}>
 
                         {/* Label / Friendly Name */}
                         <div className=" bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
@@ -558,8 +544,12 @@ const ShowPeer: React.FC<Props> = (props) => {
                     <div className="col-span-1 mt-12 text-gray">
                         <ul className="text-xs leading-relaxed">
                             <li key={props.peer.id}>Id: {props.peer.id}</li>
+                            <li className="capitalize" key={props.peer.target}>Target: {props.peer.target}</li>
+                            <li className="capitalize" key={props.peer.name}>Name: {props.peer.name}</li>
                             <li className="capitalize" key={props.peer.kind}>Kind: {props.peer.kind}</li>
-                            <li className="capitalize" key={props.peer.consumer_platform}>Platform: {props.peer.consumer_platform}</li>
+                            <li className="capitalize" key={props.peer.provider_kind}>Provider Kind: {props.peer.provider_kind}</li>
+                            <li className="capitalize" key={props.peer.consumer_platform}>Consumer Platform: {props.peer.consumer_platform}</li>
+                            <li className="capitalize" key={props.peer.provider_platform}>Provider Platform: {props.peer.provider_platform}</li>
                             <li key={props.peer.setupkey}>Boring Setupkey: {props.peer.setupkey}</li>
                             {/* Only show the pubkey if this is a provider node */}
                             {props.peer.kind == "provider" && (<li key={props.peer.pubkey}>Boring Pubkey: {props.peer.pubkey}</li>)}

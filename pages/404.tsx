@@ -1,10 +1,7 @@
 import React from 'react';
-import Waiting from '../components/art/waiting';
 import WtfCat from '../components/art/wtf-cat';
 import SiteMenu from '../components/siteMenu';
 import ThemeChanger from '../components/themeChanger';
-import ReactPlayer from 'react-player'
-import Prices from '../components/Prices';
 
 const Error404 = () => {
   return (
@@ -13,19 +10,16 @@ const Error404 = () => {
       <header className="fixed top-0 z-30 w-full px-2 py-4 sm:px-4">
         <div className="flex items-center justify-between mx-auto max-w-7xl">
           <a href="#">
-            <span className="text-2xl">mothebored.app</span>
+            <span className="text-2xl">Motherbored.app</span>
           </a>
           <div className="flex items-center space-x-1">
             <ul className="hidden space-x-2 md:inline-flex">
-              <li className="align-middle">
+              <li className="align-middle mt-3">
                 <a href="#" className="px-4 py-2 font-semibold text-gray-600 rounded">Docs</a>
               </li>
-              <li className="align-middle">
-                <a href="#" className="px-4 py-2 font-semibold text-gray-600 rounded">About Us</a>
-              </li>
-              <li className="align-middle">
+              {/* <li className="align-middle mt-3">
                 <a href="#" className="px-4 py-2 font-semibold text-gray-600 rounded">Contact Us</a>
-              </li>
+              </li> */}
               <li className="align-middle"><ThemeChanger /></li>
               <li className="align-middle"><SiteMenu /></li>
             </ul>
@@ -58,17 +52,8 @@ const Error404 = () => {
           <div className="py-16">
             <div className="text-center">
               <p className="">404</p>
-              <h1 className="mt-2 text-4xl sm:text-3xl">Moon not found.</h1>
-              <p className="mt-2 text-base text-gray-500">Sorry, we couldn’t find the moon you’re looking for.</p>
-              <div className="mt-6">
-                <Prices />
-                <div className="w-12">
-
-
-                  {/* <ReactPlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U' /> */}
-
-                </div>
-              </div>
+              <h1 className="mt-2 text-4xl sm:text-3xl">Page not found.</h1>
+              <p className="mt-2 text-base text-gray-500">Sorry, we couldn’t find the page you’re looking for.</p>
             </div>
           </div>
 
