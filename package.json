@@ -11,8 +11,7 @@
     "peer-social-cards": "node scripts/peer-social-cards/generate-peer-social-cards.js"
   },
   "engines": {
-    "npm": ">=7.21.1",
-    "node": ">=16.15.0"
+    "npm": ">=7.21.1"
   },
   "dependencies": {
     "@devmehq/react-qr-code": "^1.0.6",
