@@ -18,19 +18,19 @@ const options = {
             type: 'category',
             title: {
                 display: true,
-                text: '10-Year Timeline'
-            }
+                text: '10-Year Timeline',
+            },
         },
         y: {
             title: {
                 display: true,
-                text: 'Epoch Sum'
-            }
-        }
-    }
+                text: 'Epoch Sum',
+            },
+        },
+    },
 };
 
-const MyChart = () => (
+const MyChart: React.FC = () => (
     <Line data={data} options={options} />
 );
 

@@ -2,7 +2,6 @@ import LayoutAuthenticated from '../../components/layoutAuthenticated';
 import React from 'react';
 import EpochDisplay from '../../components/epoch';
 import EpochsUpdated from '../../components/EpochsUpdated';
-import EpochsChart from '../../components/EpochsChart';
 
 
 export default function Epoch() {
@@ -10,9 +9,6 @@ export default function Epoch() {
 
     <LayoutAuthenticated>
       <div>
-        {/* <div className='p-12'>
-          <EpochsChart />
-        </div> */}
         <div className='p-12'>
           $BOP: 126,500,000 | 10 Years | Distributed to date:[] | Remaining:[]<br />
           <p>Era 1: 1st 5 Years | Era 2: 2nd 5 Years</p>

@@ -7,7 +7,6 @@ import Head from 'next/head'
 import { Connection, GetProgramAccountsFilter, PublicKey } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token"
 import Prices from '../components/Prices'
-import Tokenomics from '../components/Tokenomics'
 
 async function getSolBalance(walletPublicKey: PublicKey, solanaConnection: Connection) {
   return solanaConnection.getBalance(walletPublicKey);
@@ -112,7 +111,6 @@ const WalletPage: React.FC<Props> = (props) => {
       <div className='p-12 text-xs'>
 
 
-        <Tokenomics />
         <Prices />
 
         {/* <h1 className='text-2xl font-bold mb-12'>Wallet: {session.user.name}</h1> */}
