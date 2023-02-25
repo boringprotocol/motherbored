@@ -36,7 +36,7 @@ export default function lfg() {
 
   // Define the data string
   // pull from db latest settlements 
-  const settlement_state = `account,period_shares,consumer_local,consumer_linux,consumer_windows,consumer_mac,provider_cloud,provider_local,v1_license,v2_license,v3_license,poa
+  const settlement_state = `account,period_shares,consumer_local,consumer_linux,consumer_windows,consumer_mac,provider_cloud,provider_local,v1_license,v2_license,vx_license,poa
   1523,35,1,2,2,2,3,2,3,1,3,2
   1524,25,1,2,2,2,3,2,3,1,3,2
   1525,25,1,2,2,2,3,2,3,1,3,2

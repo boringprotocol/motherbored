@@ -49,6 +49,9 @@ export default function SiteMenu({ motherboredApp, boringProtocol, motherboredDo
         <option value="admin/rewards-table">
           Rewards Table
         </option>
+        <option value="admin/accounts-records">
+          Accounts Records
+        </option>
         <option value="admin/settlements">
           Settlements
         </option>

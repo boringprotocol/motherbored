@@ -12,6 +12,8 @@ import Link from 'next/link'
 import { IoMdEyeOff, IoMdEye } from 'react-icons/io'
 import Greetings from '../components/Greetings';
 import StackedBarChart from '../components/StackedBarChart';
+import PeerInsight from '../components/PeerInsight';
+import CopyToClipboardButton from '../components/CopyToClipboardButton';
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -60,11 +62,11 @@ const Dashboard: React.FC<Props> = (props) => {
     [35, 45, 55],
     [40, 50, 60]
   ];
-  console.log("data", data)
+  // console.log("data", data)
 
 
   const labels = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 7', 'Day 7', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 7', 'Day 7', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 7', 'Day 7', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 7', 'Day 7', 'Day 7', 'Day 7', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 7', 'Day 7', 'Day 7', 'Day 7', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 7', 'Day 7', 'Day 7', 'Day 7', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 7', 'Day 7'];
-  console.log("labels", labels)
+  // console.log("labels", labels)
 
 
   if (!session) {
@@ -96,7 +98,7 @@ const Dashboard: React.FC<Props> = (props) => {
       {/* Main content */}
       <div className="main pt-12 text-xs">
 
-        {/* <PeerInsight peersLength={props.peers.length} /> */}
+        <PeerInsight peersLength={props.peers.length} />
 
         {/* PEERS */}
 

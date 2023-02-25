@@ -1,4 +1,4 @@
-import { NostrProvider } from "nostr-react";
+// import { NostrProvider } from "nostr-react";
 import { ThemeProvider } from 'next-themes'
 import { SessionProvider } from "next-auth/react";
 import React, { useMemo } from 'react';
@@ -11,6 +11,8 @@ import SolanaProviderWrapper from '../components/SolanaProviderWrapper';
 
 // import { MetaMaskProviderWrapper } from '../components/MetaMaskProviderWrapper';
 
+// import { UniversalPrivateKeyProviderWrapper } from '../components/UniversalPrivateKeyProviderWrapper';
+
 import Router from 'next/router';
 import '../styles/global.css';
 
@@ -21,10 +23,10 @@ import '../styles/nprogress.css';
 // Notifications
 import '../styles/toast.css';
 
-const relayUrls = [
-  "wss://nostr21.com",
-  "wss://relay.snort.social",
-];
+// const relayUrls = [
+//   "wss://nostr21.com",
+//   "wss://relay.snort.social",
+// ];
 
 //Progress bar binding events
 Router.events.on("routeChangeStart", nProgress.start);
@@ -66,19 +68,21 @@ export default function Mothebored({ Component, pageProps: { session, ...pagePro
   );
 
   return (
+
     <SolanaProviderWrapper endpoint={endpoint} wallets={wallets}>
       <SessionProvider session={pageProps.session} refetchInterval={0}>
-        <NostrProvider relayUrls={relayUrls} debug={true}>
-          <ThemeProvider attribute="class">
-            <div className="min-h-screen ">
-              <Component {...pageProps} motherboredApp={motherboredApp}
-                boringProtocol={boringProtocol}
-                motherboredDocs={motherboredDocs} />
-            </div>
-          </ThemeProvider>
-        </NostrProvider>
+        {/* <NostrProvider relayUrls={relayUrls} debug={true}> */}
+        <ThemeProvider attribute="class">
+          <div className="min-h-screen ">
+            <Component {...pageProps} motherboredApp={motherboredApp}
+              boringProtocol={boringProtocol}
+              motherboredDocs={motherboredDocs} />
+          </div>
+        </ThemeProvider>
+        {/* </NostrProvider> */}
       </SessionProvider>
     </SolanaProviderWrapper>
+
   );
 
 }
