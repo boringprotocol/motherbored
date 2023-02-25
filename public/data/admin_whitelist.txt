@@ -1,0 +1,2 @@
+// put whitelisted wallet addys in here to we can 
+// show them the admin panel stuffs

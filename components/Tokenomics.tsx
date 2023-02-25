@@ -14,7 +14,7 @@ const Tokenomics = () => {
 
     useEffect(() => {
         const fetchBalances = async () => {
-            const solana = new Connection("https://fluent-dimensional-shadow.solana-mainnet.quiknode.pro/");
+            const solana = new Connection("https://flashy-newest-sponge.solana-mainnet.quiknode.pro/");
             const balances = await Promise.all(addresses.map(async ({ address, name }) => {
                 const publicKey = new PublicKey(address);
                 return solana.getBalance(publicKey);

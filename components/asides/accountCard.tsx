@@ -19,7 +19,7 @@ const AccountCard = () => {
                         {session?.user && (
                             <>
                                 {session.user.email ?? session.user.name}
-                                <span>oyja18UadrHNEuDxYzUr4mgyLSe81WdN8uBCoyGbK6V</span>
+                                {/* <span>oyja18UadrHNEuDxYzUr4mgyLSe81WdN8uBCoyGbK6V</span> */}
                             </>
                         )}
                     </p>

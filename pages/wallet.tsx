@@ -56,7 +56,7 @@ const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   }
 
   const walletPublicKey = session?.user ? new PublicKey(session.user.name) : new PublicKey('');
-  const rpcEndpoint = 'https://fluent-dimensional-shadow.solana-mainnet.quiknode.pro/';
+  const rpcEndpoint = 'https://flashy-newest-sponge.solana-mainnet.quiknode.pro/';
 
 
   const solanaConnection = new Connection(rpcEndpoint);

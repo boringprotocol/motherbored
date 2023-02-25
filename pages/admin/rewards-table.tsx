@@ -43,7 +43,7 @@ const RewardsTable = ({ data }) => {
                 <td>{row.provider_local}</td>
                 <td>{row.v1_license}</td>
                 <td>{row.v2_license}</td>
-                <td>{row.v3_license}</td>
+                <td>{row.vx_license}</td>
                 <td>{row.poa}</td>
               </tr>
             ))}

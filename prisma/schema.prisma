@@ -34,19 +34,55 @@ model Peer {
 }
 
 model User {
-  id             String  @id @default(cuid())
-  wallet         String  @unique
+  id             String           @id @default(cuid())
+  wallet         String           @unique
   polygon_wallet String?
   ln_address     String?
   name           String?
   bio            String?
   image          String?
-  publicProfile  Boolean @default(false)
+  publicProfile  Boolean          @default(false)
   peers          Peer[]
+  accountHistory AccountHistory[]
+  Claim          Claim[]
 }
 
 model FalconToken {
   id         String   @id @default(cuid())
   token      String   @db.VarChar(4096)
   expires_at DateTime
+}
+
+model AccountHistory {
+  id               String   @id @default(cuid())
+  account          User     @relation(fields: [accountId], references: [id])
+  accountId        String
+  timestamp        DateTime
+  snapshot         String?
+  wallet           String?
+  consumer_local   Float?
+  consumer_linux   Float?
+  consumer_windows Float?
+  consumer_mac     Float?
+  provider_cloud   Float?
+  provider_local   Float?
+  v1_license       Float?
+  v2_license       Float?
+  vx_license       Float?
+  soft_stake       Float?
+  poa              Float?
+
+  @@index([accountId])
+}
+
+model Claim {
+  id        String   @id @default(cuid())
+  amount    Float
+  claimed   Boolean  @default(false)
+  wallet    String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
+
+  @@index([userId])
 }
