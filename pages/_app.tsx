@@ -22,6 +22,8 @@ import '../styles/nprogress.css';
 
 // Notifications
 import '../styles/toast.css';
+import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
+import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
 
 // const relayUrls = [
 //   "wss://nostr21.com",
@@ -69,19 +71,24 @@ export default function Mothebored({ Component, pageProps: { session, ...pagePro
 
   return (
 
-    <SolanaProviderWrapper endpoint={endpoint} wallets={wallets}>
-      <SessionProvider session={pageProps.session} refetchInterval={0}>
-        {/* <NostrProvider relayUrls={relayUrls} debug={true}> */}
-        <ThemeProvider attribute="class">
-          <div className="min-h-screen ">
-            <Component {...pageProps} motherboredApp={motherboredApp}
-              boringProtocol={boringProtocol}
-              motherboredDocs={motherboredDocs} />
-          </div>
-        </ThemeProvider>
-        {/* </NostrProvider> */}
-      </SessionProvider>
-    </SolanaProviderWrapper>
+    <ConnectionProvider endpoint={endpoint}>
+      <WalletProvider wallets={wallets} autoConnect>
+        <WalletModalProvider>
+          <SessionProvider session={pageProps.session} refetchInterval={0}>
+            {/* <NostrProvider relayUrls={relayUrls} debug={true}> */}
+            <ThemeProvider attribute="class">
+              <div className="min-h-screen ">
+                <Component {...pageProps} motherboredApp={motherboredApp}
+                  boringProtocol={boringProtocol}
+                  motherboredDocs={motherboredDocs} />
+              </div>
+            </ThemeProvider>
+            {/* </NostrProvider> */}
+          </SessionProvider>
+        </WalletModalProvider>
+      </WalletProvider>
+    </ConnectionProvider>
+
 
   );
 
