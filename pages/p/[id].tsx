@@ -15,7 +15,7 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import Avatar from "boring-avatars"
 import TrafficStats from "../../components/trafficStats"
 import { GetStatsForPubkey, GetPeersForPubkey } from "../../lib/influx"
-import Breakpoints from "../../components/breakpoints"
+import Breakpoints from "../../components/Breakpoints"
 import { theme } from "@nextui-org/react"
 import { Switch } from '@headlessui/react'
 import Waiting from "../../components/art/waiting"
