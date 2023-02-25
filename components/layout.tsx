@@ -3,7 +3,14 @@ import { SigninMessage } from '../utils/SigninMessage';
 import bs58 from 'bs58';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { MetaMaskInpageProvider } from "@metamask/providers";
 import TextCycle from './TextCycle';
+
+declare global {
+  interface Window {
+    ethereum?: MetaMaskInpageProvider
+  }
+}
 
 export default function Layout() {
   const { status } = useSession();
@@ -40,7 +47,31 @@ export default function Layout() {
     }
   };
 
+  const handleMetamaskSignIn = async () => {
+    try {
+      if (!window.ethereum) {
+        console.log('Metamask not found');
+        return;
+      }
 
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+
+      if (!accounts || !accounts.length) {
+        console.log('No accounts found');
+        return;
+      }
+
+      const address = accounts[0];
+
+      signIn('metamask', {
+        address,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -52,10 +83,12 @@ export default function Layout() {
           <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">Motherbored.app</h1>
           <p className="my-6 text-base leading-7 text-gray-600">Launch Nodes or set-up a <a href="" className="border-b border-dotted">Boring VPN</a> client. </p>
 
-          <a className="border border-gray p-3" href="#" onClick={handleSolanaSignIn}>
+          <button className="border border-gray p-3" onClick={handleSolanaSignIn}>
             Connect Solana Wallet
+          </button>
+          <a className="border border-gray p-3" href="#" onClick={handleMetamaskSignIn}>
+            Connect EVM Wallet
           </a>
-
 
           <div id="TextCycle" className="">
             <TextCycle />
