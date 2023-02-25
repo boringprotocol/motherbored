@@ -12,7 +12,7 @@ const PeerInsight: React.FC<PeerInsightProps> = ({ peersLength }) => {
             <div className="p-12">
                 You don't have any peers setup yet. If you want to mine, setup up a
                 provider. If you want to browser the internet through a our dVPN choose a consumer.
-                <Waiting />
+
             </div>
         );
     } else if (peersLength === 1) {

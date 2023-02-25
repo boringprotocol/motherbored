@@ -6,3 +6,5 @@ declare module "@faker-js/faker";
 declare module "chartjs-adapter-luxon";
 declare module "@faker-js/faker";
 declare module "react-table";
+declare module "d3";
+declare module "topojson-client";
