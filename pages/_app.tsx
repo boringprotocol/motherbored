@@ -1,4 +1,3 @@
-// import { NostrProvider } from "nostr-react";
 import { ThemeProvider } from 'next-themes'
 import { SessionProvider } from "next-auth/react";
 import React, { useMemo } from 'react';
@@ -24,11 +23,6 @@ import '../styles/nprogress.css';
 import '../styles/toast.css';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
-
-// const relayUrls = [
-//   "wss://nostr21.com",
-//   "wss://relay.snort.social",
-// ];
 
 //Progress bar binding events
 Router.events.on("routeChangeStart", nProgress.start);
@@ -75,7 +69,6 @@ export default function Mothebored({ Component, pageProps: { session, ...pagePro
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
           <SessionProvider session={pageProps.session} refetchInterval={0}>
-            {/* <NostrProvider relayUrls={relayUrls} debug={true}> */}
             <ThemeProvider attribute="class">
               <div className="min-h-screen ">
                 <Component {...pageProps} motherboredApp={motherboredApp}
@@ -83,7 +76,6 @@ export default function Mothebored({ Component, pageProps: { session, ...pagePro
                   motherboredDocs={motherboredDocs} />
               </div>
             </ThemeProvider>
-            {/* </NostrProvider> */}
           </SessionProvider>
         </WalletModalProvider>
       </WalletProvider>
