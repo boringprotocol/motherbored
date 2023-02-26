@@ -66,7 +66,6 @@ export default function SiteMenu({ motherboredApp, boringProtocol, motherboredDo
         <option value="{VX_URL}">VX</option>
         <option value="newpeer?mode=consumer&consumer_platform=Motherbored">New Consumer Peer</option>
         <option value="newpeer?mode=provider">New Provider Peer</option>
-        <option value="nostr">Nostr</option>
         <option value="404">404</option>
         <option value="asteroids">Asteroids</option>
         <option value="{WEBSITE_URL}">Website</option>
