@@ -13,7 +13,6 @@ import { IoMdEyeOff, IoMdEye } from 'react-icons/io'
 import Greetings from '../components/Greetings';
 import StackedBarChart from '../components/StackedBarChart';
 import PeerInsight from '../components/PeerInsight';
-import CopyToClipboardButton from '../components/CopyToClipboardButton';
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
