@@ -15,6 +15,8 @@ import StackedBarChart from '../components/StackedBarChart';
 import PeerInsight from '../components/PeerInsight';
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+
+
   const session = await getSession({ req });
   if (!session || !session.user || !session.user.name) {
     res.statusCode = 403;
@@ -24,6 +26,17 @@ const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const user = await prisma.user.findFirst({
     where: { wallet: session.user.name }
   })
+
+  if (user == null) {
+    if (session.user.name) {
+      const sessionUser = session.user.name
+      const user = await prisma.user.create({
+        data: {
+          wallet: sessionUser,
+        },
+      })
+    }
+  }
 
   const [peers, providers, consumers] = await Promise.all([
     prisma.peer.findMany({ where: { userId: user?.id } }),
