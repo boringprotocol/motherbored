@@ -47,31 +47,31 @@ export default function Layout() {
     }
   };
 
-  const handleMetamaskSignIn = async () => {
-    try {
-      if (!window.ethereum) {
-        console.log('Metamask not found');
-        return;
-      }
+  // const handleMetamaskSignIn = async () => {
+  //   try {
+  //     if (!window.ethereum) {
+  //       console.log('Metamask not found');
+  //       return;
+  //     }
 
-      const accounts = await window.ethereum.request({
-        method: 'eth_requestAccounts',
-      });
+  //     const accounts = await window.ethereum.request({
+  //       method: 'eth_requestAccounts',
+  //     });
 
-      if (!accounts || !accounts.length) {
-        console.log('No accounts found');
-        return;
-      }
+  //     if (!accounts || !accounts.length) {
+  //       console.log('No accounts found');
+  //       return;
+  //     }
 
-      const address = accounts[0];
+  //     const address = accounts[0];
 
-      signIn('metamask', {
-        address,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     signIn('metamask', {
+  //       address,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <>
@@ -86,9 +86,9 @@ export default function Layout() {
           <button className="border border-gray p-3" onClick={handleSolanaSignIn}>
             Connect Solana Wallet
           </button>
-          <a className="border border-gray p-3" href="#" onClick={handleMetamaskSignIn}>
+          {/* <a className="border border-gray p-3" href="#" onClick={handleMetamaskSignIn}>
             Connect EVM Wallet
-          </a>
+          </a> */}
 
           <div id="TextCycle" className="">
             <TextCycle />
