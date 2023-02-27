@@ -94,7 +94,7 @@ export async function CreateFalconSetupkey(
     user_id_override: target_id,
   };
   const response = await fetch(
-    "https://boring.dank.earth:33073/api/setup-keys",
+    "https://netbird.boring.surf:33073/api/setup-keys",
     {
       method: "post",
       body: JSON.stringify(body),
@@ -119,7 +119,7 @@ export async function CreateFalconSetupkey(
 
 export async function FalconGetPeer(id: string, accesstoken: string) {
   console.log("fetching falcon peer");
-  const fetchUrl = "https://boring.dank.earth:33073/api/peers/" + id;
+  const fetchUrl = "https://netbird.boring.surf:33073/api/peers/" + id;
   const response = await fetch(fetchUrl, {
     method: "get",
     headers: {
@@ -156,7 +156,7 @@ export async function FalconGetPeer(id: string, accesstoken: string) {
 export async function FalconGetPeers(id: string, accesstoken: string) {
   console.log("fetching falcon peers");
   const fetchUrl =
-    "https://boring.dank.earth:33073/api/peers?user_id_override=" + id;
+    "https://netbird.boring.surf:33073/api/peers?user_id_override=" + id;
   const response = await fetch(fetchUrl, {
     method: "get",
     headers: {
