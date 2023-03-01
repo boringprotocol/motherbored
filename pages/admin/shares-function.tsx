@@ -113,9 +113,6 @@ export default function lfg() {
       <div className="p-12 text-xs"><span className="text-xs text-gray">boring-settlements:</span> function to calulate period shares from a user account's "points".</div>
 
 
-      <div className="p-12">
-        {/* <EpochDisplay /> */}
-      </div>
 
 
       <div className="px-12 text-xs">
@@ -152,6 +149,13 @@ export default function lfg() {
           <button className="border border-gray dark:border-gray-dark px-4 py-3" onClick={handleDownload}>Download as CSV</button>
         </div>
       </div>
+
+      <div className="p-12">
+        <EpochDisplay />
+      </div>
+
+
+
     </LayoutAuthenticated>
   );
 }

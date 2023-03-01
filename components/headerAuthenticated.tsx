@@ -52,18 +52,18 @@ export default function Header() {
   return (
     <header>
       <div className="py-5">
-      <p className="">
-        
+        <p className="">
+
           {session?.user && (
             <>
               {/* Wallet Address display */}
               <Link href="/">
-              <span className="font-jetbrains text-xs lg:px-6">
-                {/* {session.user.email ?? session.user.name} */}
-                mothebrored.app
-              </span>
+                <span className="font-jetbrains text-xs lg:px-6">
+                  {/* {session.user.email ?? session.user.name} */}
+                  motherbored.app
+                </span>
               </Link>
-              
+
 
             </>
           )}
