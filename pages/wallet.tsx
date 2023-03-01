@@ -7,6 +7,7 @@ import Head from 'next/head'
 import { Connection, GetProgramAccountsFilter, PublicKey } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token"
 import Prices from '../components/Prices'
+import GetClaims from '../components/GetClaims'
 
 async function getSolBalance(walletPublicKey: PublicKey, solanaConnection: Connection) {
   return solanaConnection.getBalance(walletPublicKey);
@@ -111,7 +112,8 @@ const WalletPage: React.FC<Props> = (props) => {
       <div className='p-12 text-xs'>
 
 
-        <Prices />
+        {/* <Prices /> */}
+        <GetClaims />
 
         {/* <h1 className='text-2xl font-bold mb-12'>Wallet: {session.user.name}</h1> */}
         <div className='p-2 mt-4'>
@@ -154,15 +156,6 @@ const WalletPage: React.FC<Props> = (props) => {
             );
           })}
         </div>
-
-        <div className='p-2 mt-4'>
-          <h2 className='text-xl font-bold mb-2'>Transactions</h2>
-        </div>
-
-        <div className='p-2 mt-4'>
-          <h2 className='text-xl font-bold mb-2'>Send</h2>
-        </div>
-
 
       </div>
     </LayoutAuthenticated>

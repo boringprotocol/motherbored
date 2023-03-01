@@ -1,1 +1,15 @@
-[{"consumer_local":1,"consumer_linux":3,"consumer_windows":1,"consumer_mac":1,"provider_cloud":11,"provider_local":1,"v1_license":3,"v2_license":1,"vx_license":1,"poa":1}]
+[
+  {
+    "consumer_local": 7,
+    "consumer_linux": 4,
+    "consumer_windows": 4,
+    "consumer_mac": 4,
+    "provider_cloud": 16,
+    "provider_local": 11,
+    "v1_license": 4,
+    "v2_license": 3,
+    "vx_license": 2,
+    "bop_balance": 1,
+    "poa": 3
+  }
+]

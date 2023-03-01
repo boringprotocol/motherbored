@@ -13,6 +13,7 @@ import { IoMdEyeOff, IoMdEye } from 'react-icons/io'
 import Greetings from '../components/Greetings';
 import StackedBarChart from '../components/StackedBarChart';
 import PeerInsight from '../components/PeerInsight';
+import GetClaims from '../components/GetClaims';
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
@@ -110,7 +111,7 @@ const Dashboard: React.FC<Props> = (props) => {
       {/* Main content */}
       <div className="main pt-12 text-xs">
 
-        <PeerInsight peersLength={props.peers.length} />
+        {/* <PeerInsight peersLength={props.peers.length} /> */}
 
         {/* PEERS */}
 
@@ -138,10 +139,32 @@ const Dashboard: React.FC<Props> = (props) => {
               </a>
             </Link>
           </nav>
+          {/* <StackedBarChart data={data} labels={labels} /> */}
+          <GetClaims />
 
+          {/* 
+          
+          with session user get wallet row form rewards-
+          
+          */}
           <div className="border border-gray-lighter dark:border-gray-darker p-6 mb-12">
+            last snapshot date:
 
-            {/* <StackedBarChart data={data} labels={labels} /> */}
+            component that selects from AccountHistory last snapshot date
+          </div>
+          <div className="border border-gray-lighter dark:border-gray-darker p-6 mb-12">
+            account-rewards-averages
+
+            component that selects from AccountHistory authorized users account averages
+          </div>
+          <div className="border border-gray-lighter dark:border-gray-darker p-6 mb-12">
+            account-rewards-averages
+
+            component that selects from AccountHistory authorized users account averages
+          </div>
+
+          {/* <div className="border border-gray-lighter dark:border-gray-darker p-6 mb-12">
+
 
             <p className="text-sm mb-2"><Greetings />. You have 2 Nodes and 3 VPN clients configured.</p>
 
@@ -151,7 +174,7 @@ const Dashboard: React.FC<Props> = (props) => {
 
             <button className="bg-boring-black text-boring-white rounded-sm px-4 py-2 mt-4">Claim Rewards</button>
 
-          </div>
+          </div> */}
 
 
           {showConsumers && (
@@ -160,7 +183,7 @@ const Dashboard: React.FC<Props> = (props) => {
 
               <ul role="list" className=" pb-12 grid grid-cols-2 gap-6 md:grid-cols-8 2xl:grid-cols-6">
                 {props.consumers.map((consumer) => (
-                  <li key={consumer.name} className="shadow-md col-span-2 border rounded-sm cursor-pointer hover:border-gray-lighter dark:hover:border-gray-dark border-gray-lightest dark:border-gray-darker text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
+                  <li key={consumer.name} className="shadow-md col-span-1 md:col-span-2 border rounded-sm cursor-pointer hover:border-gray-lighter dark:hover:border-gray-dark border-gray-lightest dark:border-gray-darker text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
                     <ConsumerPeer peer={consumer} />
                   </li>
                 ))}

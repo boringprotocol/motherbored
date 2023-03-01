@@ -1,16 +1,21 @@
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 interface ShellData {
   [key: string]: any;
 }
 
 export default function ShellButton() {
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<ShellData | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleClick = async () => {
-    setStatus("loading");
     try {
+      setIsLoading(true);
+      setError(null);
+
       // Trigger the API route for the shell script
       const res = await fetch("/api/accounts-records/nft-mint-list");
 
@@ -34,26 +39,36 @@ export default function ShellButton() {
       });
 
       setData(allData);
-      setStatus("success");
+      setIsLoading(false);
     } catch (e) {
       console.error(e);
-      setStatus("error");
+      setIsLoading(false);
+      setError(() => "Failed to execute the shell script");
     }
   };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md mt-4">
-      <h2 className="text-md">Get NFT Mint List</h2>
-      <p className="text-xs mt-4">Sanitize the "/data/nft-snapshot/combined.csv" by hand before running GetAccountNftLicensesSnapshot in the next step.</p>
+      <h2 className="text-md">Get  NFT Mint List</h2>
 
       <button
         className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={handleClick} disabled={status === "loading"}>
-        {status === "loading" ? "Loading..." : "GetAccountNftMintList"}
+        onClick={handleClick}
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <>
+            Loading...
+            <FontAwesomeIcon icon={faSpinner} spin />
+          </>
+        ) : (
+          "GetAccountNftMintList"
+        )}
       </button>
 
-      {status === "error" && <p>Failed to execute the shell script</p>}
-      {status === "success" && (
+      {error && <p>{error}</p>}
+
+      {data && (
         <pre>
           <code>{JSON.stringify(data, null, 2)}</code>
         </pre>
