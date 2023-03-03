@@ -5,21 +5,17 @@ import Peer, { PeerProps } from "../../components/Peer"
 import LayoutAuthenticated from "../../components/layoutAuthenticated"
 import prisma from "../../lib/prisma"
 import { useSession, getSession } from "next-auth/react"
-import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline, IoCloudUploadOutline, IoServerOutline, IoText, IoFileTrayFull, IoBugOutline, IoRefreshOutline, IoArrowBack } from "react-icons/io5"
-import Image from 'next/image'
+import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline, IoServerOutline, IoFileTrayFull, IoBugOutline, IoRefreshOutline, IoArrowBack } from "react-icons/io5"
 import { ToastContainer, toast } from 'react-toastify'
 import CountryCodes from "../../data/country_codes"
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-
 import Avatar from "boring-avatars"
-import { useTheme } from "next-themes"
 import Link from "next/link"
 import TrafficStats from "../../components/trafficStats"
 import { GetStatsForPubkey, GetPeersForPubkey } from "../../lib/influx"
 
 
-// this old thing seems to want to live on every page
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
@@ -304,7 +300,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
 
             {/* rows and columns w/ grid */}
-            <div className="p-4"><Link href={"/"}><a className="inline-flex items-center rounded-sm border border-gray-light dark:border-gray-dark text-xs  px-3 py-2 text-gray dark:text-gray-light hover:bg-gray-lightestest dark:hover:bg-gray-dark focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoArrowBack className="mr-2" /> peers </a></Link></div>
+            <div className="p-4"><Link href={"/"}><a className="inline-flex items-center rounded-sm border border-gray-light dark:border-gray-dark text-xs  px-3 py-2 text-gray dark:text-gray-light hover:bg-gray-lightestest dark:hover:bg-gray-dark focus:ring-1 focus:ring-boring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoArrowBack className="mr-2" /> peers </a></Link></div>
 
 
             <div className="p-8  xl:pt-0 grid overflow-hidden grid-cols-4 md:grid-cols-6 grid-rows-1 sm:gap-2">
@@ -333,11 +329,11 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                 <div className=" box col-start-1 col-span-4 sm:col-span-4 ">
 
-                    {isProvider && (
+                    {/* {isProvider && (
                         <div className="m-0 md:m-12">
                             <TrafficStats  {...props} />
                         </div>
-                    )}
+                    )} */}
                     <form className="px-0 md:px-12" onSubmit={submitData}>
 
                         {/* Label / Friendly Name */}
@@ -440,7 +436,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                         <button
                             type="submit"
-                            className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2"
+                            className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-boring-blue mr-2"
                         >
                             Save Changes
                         </button>
@@ -448,17 +444,17 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                         {isProvider && !providerActive && (
 
-                            <button className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue" onClick={() => activatePeer(props.peer.id)}>Activate</button>
+                            <button className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-boring-blue" onClick={() => activatePeer(props.peer.id)}>Activate</button>
 
                         )}
-                        <button className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue" onClick={() => shovePeerConfig(props.peer.id)}>Install Config</button>
+                        <button className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-boring-blue" onClick={() => shovePeerConfig(props.peer.id)}>Install Config</button>
 
 
                         {/* Advanced Configuration / Settings */}
                         <div className="mt-6 py-6 border-t border-b border-gray-lightest dark:border-gray-dark">
                             <h2 className="text-xs">Advanced / Helpers (Dev Mode):</h2>
-                            <a className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoRefreshOutline className="mr-2" /> Reboot </a><a className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf/" target="_blank" rel="noreferrer"><IoBugOutline className="mr-2" /> Debug </a><a className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" href="https://unconfigured.insecure.boring.surf:19531/browse" target="_blank" rel="noreferrer"> <IoFileTrayFull className="mr-2" /> Logs</a>
-                            <button className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
+                            <a className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-boring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoRefreshOutline className="mr-2" /> Reboot </a><a className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-boring-blue mr-2" href="https://unconfigured.insecure.boring.surf/" target="_blank" rel="noreferrer"><IoBugOutline className="mr-2" /> Debug </a><a className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-boring-blue mr-2" href="https://unconfigured.insecure.boring.surf:19531/browse" target="_blank" rel="noreferrer"> <IoFileTrayFull className="mr-2" /> Logs</a>
+                            <button className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-boring-blue mr-2" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
                         </div>
 
                     </form>
@@ -556,7 +552,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                                                     {selected ? (
                                                                         <span
                                                                             className={classNames(
-                                                                                active ? 'text-white' : 'text-indigo-600',
+                                                                                active ? 'text-white' : 'text-boring-blue',
                                                                                 'absolute inset-y-0 right-0 flex items-center pr-4 text-gray-dark dark:text-gray-lightest'
                                                                             )}
                                                                         >
@@ -645,7 +641,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                 onChange={(e) => setChannel(e.target.value)}
                                 id="channel"
                                 name="channel"
-                                className="mt-1 block w-full rounded-sm border-gray-light py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none sm:text-sm"
+                                className="mt-1 block w-full rounded-sm border-gray-light py-2 pl-3 pr-10 text-base focus:border-boring-blue focus:outline-none sm:text-sm"
                             >
                                 <option key={channelNotNull + "channelidthing"} value={channelNotNull}>{channelNotNull + " selected"}</option>
                                 {channels24.map(option => (
@@ -721,7 +717,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                         <button
                             type="submit"
-                            className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-blue mr-2"
+                            className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-boring-blue mr-2"
                         >
                             Save Changes
                         </button>
@@ -759,7 +755,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                 <form>
                                     <button
                                         type="button"
-                                        className="mt-6 flex justify-center rounded-sm border border-gray dark:border-black  text-boring-black dark:text-boring-white dark:bg-black py-2 px-2 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-40"
+                                        className="mt-6 flex justify-center rounded-sm border border-gray dark:border-black  text-boring-black dark:text-boring-white dark:bg-black py-2 px-2 text-sm shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-boring-blue focus:ring-offset-2 w-40"
                                         onClick={() => deletePeer(props.peer.id)}
                                     >
                                         Destroy

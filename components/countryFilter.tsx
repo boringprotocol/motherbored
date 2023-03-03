@@ -11,7 +11,7 @@ const countryFilter = () => {
     <>
       <Menu as="div" className="float-right relative inline-block ">
         <div>
-          <Menu.Button className="inline-flex w-full justify-center bg-boring-white dark:bg-boring-black px-4 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 focus:ring-offset-gray-100">
+          <Menu.Button className="inline-flex w-full justify-center bg-boring-white dark:bg-boring-black px-4 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-boring-blue focus:ring-offset-2 focus:ring-offset-gray-100">
             <IoMapOutline />
           </Menu.Button>
         </div>

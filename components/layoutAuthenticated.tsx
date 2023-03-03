@@ -45,7 +45,7 @@ export default function Layout({ children }: Props) {
             </div>
 
             {/* Right section on desktop */}
-            <Link href="/directory" className='hello'>
+            {/* <Link href="/directory" className='hello'>
               <a className="hover:bg-gray-lightest dark:hover:bg-gray-dark py-4 flex flex-shrink-0 items-center border-t border-b border-gray-lighterest dark:border-gray-darkest" title=
                 "Provider Directory">
                 <IoServerOutline className="w-12 text-1xl" />
@@ -55,7 +55,7 @@ export default function Layout({ children }: Props) {
               <a className="hover:bg-gray-lightest dark:hover:bg-gray-dark py-4 flex flex-shrink-0 items-center border-b border-gray-lighterest dark:border-gray-darkest">
                 <IoAppsOutline className="w-12 text-1xl" />
               </a>
-            </Link>
+            </Link> */}
           </div>
         </div>
 
@@ -97,7 +97,7 @@ export default function Layout({ children }: Props) {
                     <div className="absolute top-0 right-0  bg-boring-white dark:bg-boring-black border-none">
                       <button
                         type="button"
-                        className="flex h-12 w-12 items-center justify-center  focus:outline-none focus:ring-2 focus:ring-blue"
+                        className="flex h-12 w-12 items-center justify-center  focus:outline-none focus:ring-2 focus:ring-boring-blue"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <XMarkIcon className="h-6 w-6 text-boring-black dark:text-boring-white" aria-hidden="true" />
@@ -143,7 +143,7 @@ export default function Layout({ children }: Props) {
             <div className="relative z-10 flex h-16 flex-shrink-0 border-b border-gray-lighter dark:border-gray-darkest text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black  shadow-sm">
               <button
                 type="button"
-                className="border-r border-gray-lighter dark:border-gray-darkest px-4 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue lg:hidden"
+                className="border-r border-gray-lighter dark:border-gray-darkest px-4 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-boring-blue lg:hidden"
                 onClick={() => setMobileMenuOpen(true)}
               >
                 <span className="sr-only">Open sidebar</span>

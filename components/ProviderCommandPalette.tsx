@@ -83,7 +83,7 @@ export default function ProviderCommandPalette() {
                         key={person.id}
                         value={person}
                         className={({ active }) =>
-                          classNames('cursor-default select-none px-4 py-2', active && 'bg-indigo-600 text-white')
+                          classNames('cursor-default select-none px-4 py-2', active && 'bg-boring-blue text-white')
                         }
                       >
                         {person.name}

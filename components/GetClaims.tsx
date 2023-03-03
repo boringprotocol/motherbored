@@ -77,12 +77,12 @@ function Claims(props: Props) {
 
   return (
     <div>
-      <h1 className="text-xl font-bold mb-2">Rewards</h1>
+      <h1 className="text-sm mb-2 text-gray-light">Platform Incentive Rewards</h1>
 
       <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
         {claims.map((claim: Claim) => (
-          <li key={claim.id} className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
+          <li key={claim.id} className="col-span-1 divide-y divide-gray-lighter dark:border dark:border-gray-dark dark:divide-gray-dark rounded-lg bg-white dark:bg-boring-black shadow">
             {/* <p>ID: {claim.id}</p> */}
             {/* <p>$BOP: {claim.amount}</p> */}
             <p className="p-1">Issued: {claim.claimed ? "Yes" : "No"}</p>
@@ -92,7 +92,7 @@ function Claims(props: Props) {
                 <div className="flex w-full items-center justify-between space-x-6 p-6">
                   <div className="flex-1 truncate">
                     <div className="flex items-center space-x-3">
-                      <h3 className="truncate text-sm font-medium text-gray-900">Epoch()</h3>
+                      <h3 className="truncate text-sm font-medium text-gray-dark">Epoch()</h3>
                     </div>
                     <p className="mt-1 truncate text-sm text-gray-500">{claim.amount} $BOP</p>
                   </div>
@@ -102,7 +102,7 @@ function Claims(props: Props) {
                 </div>
 
                 <div>
-                  <div className="-mt-px flex divide-x divide-gray-200 text-xs">
+                  <div className="-mt-px flex divide-x divide-gray-lighter dark:divide-gray-dark text-xs">
                     <div className="flex w-0 flex-1">
                       <a
                         href=""

@@ -34,7 +34,7 @@ module.exports = {
       'gray-darker': '#333',
       'gray-darkest': '#222',
       // 'boring-black': '#1A1B1E',
-      'boring-black': '#111',
+      'boring-black': '#1A1B1E',
       'black': '#000000',
       'boring-orange': '#e94d17',
       'boring-red': '#FF382A',

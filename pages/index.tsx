@@ -14,6 +14,7 @@ import Greetings from '../components/Greetings';
 import StackedBarChart from '../components/StackedBarChart';
 import PeerInsight from '../components/PeerInsight';
 import GetClaims from '../components/GetClaims';
+import ProviderSelector from '../components/ProviderSelector';
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
@@ -111,6 +112,10 @@ const Dashboard: React.FC<Props> = (props) => {
       {/* Main content */}
       <div className="main pt-12 text-xs">
 
+        {/* <div className='p-12'>
+          <ProviderSelector />
+        </div> */}
+
         {/* <PeerInsight peersLength={props.peers.length} /> */}
 
         {/* PEERS */}
@@ -121,33 +126,28 @@ const Dashboard: React.FC<Props> = (props) => {
 
           <nav className='mb-4'>
             <button
-              className={`mr-2 rounded-sm border border-gray-light ${theme === 'dark' ? 'dark:border-gray-dark' : ''} text-center inline-flex items-center text-xs px-4 py-3 text-boring-black ${theme === 'dark' ? 'dark:text-boring-white' : ''} hover:bg-gray-lightest ${theme === 'dark' ? 'dark:hover:bg-gray-dark' : ''}`}
+              className={`mr-2 rounded-sm border border-gray-lighter ${theme === 'dark' ? 'dark:border-gray-dark' : ''} text-center inline-flex items-center text-xs px-4 py-3 text-boring-black ${theme === 'dark' ? 'dark:text-boring-white' : ''} hover:bg-gray-lightest ${theme === 'dark' ? 'dark:hover:bg-gray-dark' : ''}`}
               onClick={() => setShowConsumers(!showConsumers)}
             >
               {showConsumers ? <IoMdEye className='mr-2' /> : <IoMdEyeOff className='mr-2' />} Clients
             </button>
 
             <button
-              className={`mr-2 rounded-sm border border-gray-light ${theme === 'dark' ? 'dark:border-gray-dark' : ''} text-center inline-flex items-center text-xs px-4 py-3 text-boring-black ${theme === 'dark' ? 'dark:text-boring-white' : ''} hover:bg-gray-lightest ${theme === 'dark' ? 'dark:hover:bg-gray-dark' : ''}`}
+              className={`mr-2 rounded-sm border border-gray-lighter ${theme === 'dark' ? 'dark:border-gray-dark' : ''} text-center inline-flex items-center text-xs px-4 py-3 text-boring-black ${theme === 'dark' ? 'dark:text-boring-white' : ''} hover:bg-gray-lightest ${theme === 'dark' ? 'dark:hover:bg-gray-dark' : ''}`}
               onClick={() => setShowProviders(!showProviders)}
             >
               {showProviders ? <IoMdEye className='mr-2' /> : <IoMdEyeOff className='mr-2' />} Nodes
             </button>
-            <Link href='/newpeer?mode=consumer&consumer_kind=pi'>
-              <a className={`rounded-sm border border-gray-light ${theme === 'dark' ? 'dark:border-gray-dark' : ''} text-center inline-flex items-center text-xs px-4 py-3 text-boring-black ${theme === 'dark' ? 'dark:text-boring-white' : ''} hover:bg-gray-lightest ${theme === 'dark' ? 'dark:hover:bg-gray-dark' : ''}`}>
-                ADD
-              </a>
-            </Link>
           </nav>
-          {/* <StackedBarChart data={data} labels={labels} /> */}
-          <GetClaims />
+          <StackedBarChart data={data} labels={labels} />
+          {/* <GetClaims /> */}
 
           {/* 
           
           with session user get wallet row form rewards-
           
           */}
-          <div className="border border-gray-lighter dark:border-gray-darker p-6 mb-12">
+          {/* <div className="border border-gray-lighter dark:border-gray-darker p-6 mb-12">
             last snapshot date:
 
             component that selects from AccountHistory last snapshot date
@@ -161,7 +161,7 @@ const Dashboard: React.FC<Props> = (props) => {
             account-rewards-averages
 
             component that selects from AccountHistory authorized users account averages
-          </div>
+          </div> */}
 
           {/* <div className="border border-gray-lighter dark:border-gray-darker p-6 mb-12">
 

@@ -35,7 +35,7 @@ function ToolTipSteps() {
                                 </div>
                                 <div className="flex items-center">
                                     <span className="text-xs text-gray-600 underline mr-2 cursor-pointer">Skip Tour</span>
-                                    <button className="focus:outline-none bg-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 rounded text-boring-black dark:text-boring-white px-5 py-1 text-xs">Next</button>
+                                    <button className="focus:outline-none bg-indigo-700 transition duration-150 ease-in-out hover:bg-boring-blue rounded text-boring-black dark:text-boring-white px-5 py-1 text-xs">Next</button>
                                 </div>
                             </div>
                         </div>
