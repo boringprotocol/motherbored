@@ -212,7 +212,7 @@ const NewPeer: React.FC<Props> = (props) => {
                                         id="conusmer"
                                         value={queryConsumerPlatformMode}
                                         onChange={(e) => setQueryConsumerPlatformMode(e.target.value)}
-                                        className="cursor-pointer mt-1 block w-full rounded-sm bg-boring-white dark:bg-boring-black border-gray-light dark:border-gray-dark py-3 pl-3 pr-10 text-sm focus:border-blue focus:outline-none focus:ring-indigo-500"
+                                        className="cursor-pointer mt-1 block w-full rounded-sm bg-boring-white dark:bg-boring-black border-gray-light dark:border-gray-dark py-3 pl-3 pr-10 text-sm focus:border-blue focus:outline-none focus:ring-boring-blue"
                                     >
 
                                         {consumerPlatformLists.map((consumerPlatformList) => (

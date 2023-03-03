@@ -79,7 +79,7 @@ export default function Layout() {
       <div className="font-jetbrains flex min-h-full flex-col">
 
         <main className="mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center px-6 py-24 sm:py-64 lg:px-8">
-          <p className="text-base font-semibold leading-8 text-indigo-600">BORING PROTOCOL</p>
+          <p className="text-base font-semibold leading-8 text-boring-blue">BORING PROTOCOL</p>
           <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">Motherbored.app</h1>
           <p className="my-6 text-base leading-7 text-gray-600">Launch Nodes or set-up a <a href="" className="border-b border-dotted">Boring VPN</a> client. </p>
 
@@ -97,7 +97,7 @@ export default function Layout() {
 
 
           <div className="mt-10">
-            <a href="http://localhost:3002" className="text-sm font-semibold leading-7 text-indigo-600">
+            <a href="http://localhost:3002" className="text-sm font-semibold leading-7 text-boring-blue">
               <span aria-hidden="true">&larr;</span> Back to home
             </a>
           </div>

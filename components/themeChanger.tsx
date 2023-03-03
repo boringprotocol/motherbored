@@ -28,7 +28,7 @@ const ThemeChanger = () => {
   return (
     <div className=''>
       <button
-        className='rounded-sm border border-gray-light dark:border-gray-dark text-center inline-flex items-center text-xs px-4 py-3 text-boring-black dark:text-boring-white hover:bg-gray-lightest dark:hover:bg-gray-dark'
+        className='rounded-sm border border-gray-lighter dark:border-gray-dark text-center inline-flex items-center text-xs px-4 py-3 text-boring-black dark:text-boring-white hover:bg-gray-lightest dark:hover:bg-gray-dark'
         onClick={handleClick}
       >
         {currentTheme === 'light' ? <IoSunnyOutline className='h-4' /> : <IoMoonOutline className='h-4' />}

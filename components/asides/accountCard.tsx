@@ -39,8 +39,8 @@ const AccountCard = () => {
                                 <Menu.Item>
                                     {({ active }) => (
                                         <a
-                                            href="/profile"
-                                            target="_blank"
+                                            href="/profile/edit"
+                                            // target="_blank"
                                             className={classNames(
                                                 active ? 'bg-gray-lightest dark:bg-gray-dark text-black dark:text-white' : 'text-boring-black dark:text-boring-white',
                                                 'flex px-4 py-2 text-xs'
@@ -48,7 +48,7 @@ const AccountCard = () => {
                                         >
                                             {/* <IoSettingsOutline className="mr-3 h-4 w-4" aria-hidden="true" /> */}
                                             <IoPersonOutline className="mr-3 h-4 w-4" aria-hidden="true" />
-                                            <span>View Profile</span>
+                                            <span>Edit Profile</span>
                                         </a>
                                     )}
                                 </Menu.Item>

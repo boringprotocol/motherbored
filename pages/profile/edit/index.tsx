@@ -6,7 +6,8 @@ import { getServerSideProps } from '../../api/profile'
 import Head from 'next/head'
 import { useState } from 'react'
 import EditProfile from '../../../components/editProfile'
-import Breakpoints from '../../../components/Breakpoints'
+import ProviderSelector from '../../../components/ProviderSelector'
+import Link from 'next/link'
 
 
 interface Props {
@@ -79,9 +80,14 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
 
             <div className="main px-4 sm:px-12 text-xs">
 
-                <Breakpoints />
+                <Link href={`/a/${user.id}`}>
+                    <a className="btn btn-primary">View Profile</a>
+                </Link>
 
-                <div className="grid grid-cols-7">
+
+                {/* <Breakpoints /> */}
+
+                {/* <div className="grid grid-cols-7">
                     <div className="bg-boring-yellow p-1 text-black"></div>
                     <div className="bg-boring-orange p-1 text-black"></div>
                     <div className="bg-boring-red p-1 text-black"></div>
@@ -89,12 +95,14 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
                     <div className="bg-boring-green p-1 text-black"></div>
                     <div className="bg-boring-white p-1 text-black"></div>
                     <div className="bg-black text-boring-white p-1"></div>
-                </div>
+                </div> */}
 
 
                 <EditProfile />
 
+
                 <div className="main pt-12 text-xs">
+
                     <h2 className='text-sm mt-6'>Consumer Peers:</h2>
                     <p className="mb-2">You have {consumerPeersCount}/10 Consumer Peers</p>
                     <ul className=''>
@@ -102,6 +110,9 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
                             <li key={index}><a href={`/consumer/${encodeURIComponent(peer.name)}`}>{peer.name}</a>, {peer.consumer_platform}</li>
                         )) : <p>No Consumer Peers Available</p>}
                     </ul>
+
+
+
                     <h2 className='text-sm mt-6'>Provider Peers:</h2>
                     <p className="mb-2">You have {providerPeersCount}/10 Provider Peers</p>
                     <ul>

@@ -106,7 +106,7 @@ const EditProfile = () => {
             <div className="font-jetbrains">
                 <h1 className="mt-6 text-md">Update Profile - {wallet}</h1>
                 <form onSubmit={handleSubmit}>
-                    <div className="mt-4 w-100 sm:w-2/3 md:w-1/2 xl:w-1/2 rounded-sm border border-gray-light dark:border-gray-dark px-3 py-3 shadow-sm focus-within:border-indigo-600 focus-within:ring-indigo-600">
+                    <div className="mt-4 w-100 sm:w-2/3 md:w-1/2 xl:w-1/2 rounded-sm border border-gray-light dark:border-gray-dark px-3 py-3 shadow-sm focus-within:border-boring-blue focus-within:ring-boring-blue">
                         <label htmlFor="name" className="block text-xs  text-gray-light mb-1">
                             <IoPersonOutline className='float-left mr-1' /> Display Name
                         </label>
@@ -119,7 +119,7 @@ const EditProfile = () => {
                             onChange={(e) => setName(e.target.value)}
                         />
                     </div>
-                    <div className="mt-4 w-100 sm:w-2/3 md:w-3/5 lg:w-2/3  xl:w-1/2 rounded-sm border border-gray-light dark:border-gray-dark px-3 py-3 shadow-sm focus-within:border-indigo-600 focus-within:ring-indigo-600">
+                    <div className="mt-4 w-100 sm:w-2/3 md:w-3/5 lg:w-2/3  xl:w-1/2 rounded-sm border border-gray-light dark:border-gray-dark px-3 py-3 shadow-sm focus-within:border-boring-blue focus-within:ring-boring-blue">
                         <label htmlFor="bio" className="block text-xs  text-gray-light mb-1">
                             <IoPencilOutline className='float-left mr-1' /> Bio
                         </label>
@@ -131,7 +131,7 @@ const EditProfile = () => {
                             onChange={(e) => setBio(e.target.value)}
                         />
                     </div>
-                    <div className="mt-4 w-100 sm:w-2/3 md:w-1/2 xl:w-1/3  rounded-sm border border-gray-light dark:border-gray-dark px-3 py-3 shadow-sm focus-within:border-indigo-600 focus-within:ring-indigo-600">
+                    <div className="mt-4 w-100 sm:w-2/3 md:w-1/2 xl:w-1/3  rounded-sm border border-gray-light dark:border-gray-dark px-3 py-3 shadow-sm focus-within:border-boring-blue focus-within:ring-boring-blue">
                         <label htmlFor="image" className="block text-xs  text-gray-light mb-1">
                             <IoImageOutline className='float-left mr-1' /> Profile Image
                         </label>
@@ -144,7 +144,7 @@ const EditProfile = () => {
                             onChange={(e) => setImage(e.target.value)}
                         />
                     </div>
-                    <div className="mt-4 w-100 sm:w-2/3 md:w-1/2 xl:w-1/3  rounded-sm border border-gray-light dark:border-gray-dark px-3 py-3 shadow-sm focus-within:border-indigo-600  focus-within:ring-indigo-600">
+                    <div className="mt-4 w-100 sm:w-2/3 md:w-1/2 xl:w-1/3  rounded-sm border border-gray-light dark:border-gray-dark px-3 py-3 shadow-sm focus-within:border-boring-blue  focus-within:ring-boring-blue">
                         <label htmlFor="name" className="block text-xs  text-gray-light mb-1">
                             <BsLightning className='float-left mr-1' /> LN Address
                         </label>
@@ -157,7 +157,7 @@ const EditProfile = () => {
                         />
                     </div>
 
-                    <div className="mt-4 w-100 sm:w-2/3 md:w-3/5 lg:w-2/3  xl:w-1/2  rounded-sm border border-gray-light dark:border-gray-dark px-3 py-3 shadow-sm focus-within:border-indigo-600  focus-within:ring-indigo-600">
+                    <div className="mt-4 w-100 sm:w-2/3 md:w-3/5 lg:w-2/3  xl:w-1/2  rounded-sm border border-gray-light dark:border-gray-dark px-3 py-3 shadow-sm focus-within:border-boring-blue  focus-within:ring-boring-blue">
                         <label htmlFor="name" className="block text-xs  text-gray-light mb-1">
                             <IoNavigateOutline className='float-left mr-1' /> NIP-05
                         </label>
