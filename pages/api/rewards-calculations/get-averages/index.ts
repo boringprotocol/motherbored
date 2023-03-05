@@ -82,12 +82,7 @@ export default async function handler(
   };
 
   // Write the JSON file to disk
-  const folderPath = join(
-    process.cwd(),
-    "public",
-    "data",
-    "rewards-calculations"
-  );
+  const folderPath = join(process.cwd(), "tmp", "rewards-calculations");
   if (!fs.existsSync(folderPath)) {
     fs.mkdirSync(folderPath, { recursive: true });
   }

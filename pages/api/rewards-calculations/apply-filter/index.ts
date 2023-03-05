@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const averagesFilePath = path.join(
   process.cwd(),
-  "public/data/rewards-calculations/applied-req-stake-filter.json"
+  "tmp/rewards-calculations/applied-req-stake-filter.json"
 );
 
 interface Wallet {
@@ -97,7 +97,7 @@ export default async function handler(
   // Write the filtered data to a file
   const outputPath = path.join(
     process.cwd(),
-    "public/data/rewards-calculations/applied-filters.json"
+    "tmp/rewards-calculations/applied-filters.json"
   );
   fs.writeFile(outputPath, JSON.stringify(filteredData, null, 2), (err) => {
     if (err) {

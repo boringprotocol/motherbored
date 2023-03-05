@@ -18,7 +18,7 @@ export default async function handler(
 ) {
   const averagesFilePath = path.join(
     process.cwd(),
-    "public/data/rewards-calculations/averages.json"
+    "tmp/rewards-calculations/averages.json"
   );
   const wallets: Wallets = JSON.parse(
     fs.readFileSync(averagesFilePath, { encoding: "utf-8" })
@@ -43,7 +43,7 @@ export default async function handler(
   // Write the updated data to a file
   const outputPath = path.join(
     process.cwd(),
-    "public/data/rewards-calculations/applied-req-stake-filter.json"
+    "tmp/rewards-calculations/applied-req-stake-filter.json"
   );
   fs.writeFile(outputPath, JSON.stringify({ wallets }, null, 2), (err) => {
     if (err) {
