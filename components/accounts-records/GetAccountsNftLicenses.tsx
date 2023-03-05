@@ -38,7 +38,7 @@ export const GetAccountsNftLicenses: React.FC<Props> = ({ snapshot }) => {
         <p className="text-xs mt-4">Update Account Record with name given above, and add all NFT License data. </p>
 
         <div>
-          <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          <button className="my-6 inline-flex items-center rounded-xs border border-gray dark:border-gray-dark text-xs bg-white dark:bg-black px-3 py-2 text-boring-black dark:text-gray-lightest hover:bg-boring-white hover:opacity-80 active:opacity-60 shadow-md dark:shadow-sm dark:shadow-black active:shadow-sm"
             type="submit">GetAccountNftLicensesSnapshot</button>
           {status === "loading" && <p>Loading...</p>}
           {status === "success" && <p>Data updated successfully!</p>}

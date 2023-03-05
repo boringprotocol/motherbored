@@ -33,19 +33,19 @@ const CreateCsvButton: React.FC<Props> = () => {
         <h2 className="mb-4 text-md">GetAverages</h2>
         <div>
           <button
-            className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="my-6 inline-flex items-center rounded-xs border border-gray dark:border-gray-dark text-xs bg-white dark:bg-black px-3 py-2 text-boring-black dark:text-gray-lightest hover:bg-boring-white hover:opacity-80 active:opacity-60 shadow-md dark:shadow-sm dark:shadow-black active:shadow-sm"
             onClick={handleClick}
             disabled={isCreatingCsv || isCsvCreated}
           >
             {isCreatingCsv ? (
               <FontAwesomeIcon icon={faSpinner} spin />
             ) : (
-              "Create CSV"
+              "Create JSON"
             )}
           </button>
           {isCsvCreated && (
             <div className="mt-4 text-green-600">
-              CSV file created successfully.
+              JSON file created successfully.
             </div>
           )}
         </div>

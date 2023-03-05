@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
 import path from "path";
-import csvParser from "csv-parser";
 
 interface Points {
   [key: string]: number;
@@ -33,45 +32,48 @@ export default async function handler(
   _req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const csvFilePath = path.join(
+  const jsonFilePath = path.join(
     process.cwd(),
     "public",
     "data",
     "rewards-calculations",
-    "averages.csv"
+    "applied-filters.json"
   );
   const wallets: Wallets = {};
 
-  fs.createReadStream(csvFilePath)
-    .pipe(csvParser({ headers: false }))
-    .on("data", (data) => {
-      const wallet = data[0];
+  try {
+    const jsonData = JSON.parse(fs.readFileSync(jsonFilePath, "utf-8"));
+
+    Object.keys(jsonData.wallets).forEach((wallet) => {
       wallets[wallet] = {};
-      for (let i = 1; i < Object.keys(data).length; i++) {
-        const key = Object.keys(points)[i - 1];
-        const value = Number(data[i]);
+      const walletData = jsonData.wallets[wallet];
+      Object.keys(walletData).forEach((key) => {
+        const value = Number(walletData[key]);
         const pointsValue = points[key];
         const multipliedValue = value * pointsValue;
         wallets[wallet][key] = multipliedValue.toFixed(9);
-      }
-    })
-    .on("end", () => {
-      const outputFilePath = path.join(
-        process.cwd(),
-        "public",
-        "data",
-        "rewards-calculations",
-        "applied-points.json"
-      );
-      const transformedJson = JSON.stringify({ wallets });
-
-      fs.writeFile(outputFilePath, transformedJson, (err) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send("Error multiplying averages.csv");
-        } else {
-          res.status(200).send("Multiplied averages.csv created successfully!");
-        }
       });
     });
+
+    const outputFilePath = path.join(
+      process.cwd(),
+      "public",
+      "data",
+      "rewards-calculations",
+      "applied-points.json"
+    );
+    const transformedJson = JSON.stringify({ wallets });
+
+    fs.writeFile(outputFilePath, transformedJson, (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error multiplying averages.json");
+      } else {
+        res.status(200).send("Multiplied averages.json created successfully!");
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error reading averages.json");
+  }
 }

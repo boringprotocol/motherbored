@@ -12,7 +12,6 @@ export default function points() {
 
       <div className="p-12">
 
-
         <DisplayRewardsPoints />
         <EditRewardsPoints />
       </div>
