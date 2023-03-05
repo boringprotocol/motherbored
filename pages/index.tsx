@@ -139,7 +139,7 @@ const Dashboard: React.FC<Props> = (props) => {
               {showProviders ? <IoMdEye className='mr-2' /> : <IoMdEyeOff className='mr-2' />} Nodes
             </button>
           </nav>
-          <StackedBarChart data={data} labels={labels} />
+          {/* <StackedBarChart data={data} labels={labels} /> */}
           {/* <GetClaims /> */}
 
           {/* 

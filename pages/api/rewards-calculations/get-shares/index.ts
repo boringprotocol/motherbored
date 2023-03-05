@@ -13,6 +13,7 @@ interface Wallets {
 interface AccountShare {
   shares: number;
   percentage: number;
+  bop: number;
 }
 
 interface AccountShares {
@@ -21,49 +22,35 @@ interface AccountShares {
 
 const calculateAccountShares = (wallets: Wallets): AccountShares => {
   // Define the list of ignored fields
-  const ignoredFields = ["bop_balance"];
+  const ignoredFields = ["soft_stake"];
 
   // Calculate the sum of each property
-  const sum: AccountShare = {
-    consumer_local: 0,
-    consumer_linux: 0,
-    consumer_windows: 0,
-    consumer_mac: 0,
-    provider_cloud: 0,
-    provider_local: 0,
-    v1_license: 0,
-    v2_license: 0,
-    vx_license: 0,
-    poa: 0,
-  };
+  const sum: Wallet = {};
   for (const wallet of Object.values(wallets)) {
     for (const [key, value] of Object.entries(wallet)) {
       if (!ignoredFields.includes(key)) {
-        sum[key] += Number(value);
+        sum[key] = (sum[key] ?? 0) + value;
       }
     }
   }
 
   // Calculate the percentage of each wallet's share
+  const totalTokens = 180000;
   const allAccountShares: number = Object.values(sum).reduce(
     (acc, cur) => acc + cur,
     0
   );
   const accountShares: AccountShares = {};
   for (const [walletAddress, wallet] of Object.entries(wallets)) {
-    const share: AccountShare = {};
-    let walletSum = 0;
+    const share: AccountShare = { shares: 0, percentage: 0, bop: 0 };
     for (const [key, value] of Object.entries(wallet)) {
       if (!ignoredFields.includes(key)) {
-        const fieldValue = Number(value);
-        walletSum += fieldValue;
-        share[key] = (fieldValue / allAccountShares) * 1000;
+        share.shares += value;
       }
     }
-    accountShares[walletAddress] = {
-      shares: walletSum,
-      percentage: (walletSum / allAccountShares) * 100,
-    };
+    share.percentage = (share.shares / allAccountShares) * 100;
+    share.bop = (share.percentage / 100) * totalTokens;
+    accountShares[walletAddress] = share;
   }
 
   return accountShares;
@@ -78,13 +65,13 @@ export default async function handler(
     "public",
     "data",
     "rewards-calculations",
-    "applied-points.json"
+    "applied-req-stake-filter.json"
   );
 
   fs.readFile(jsonFilePath, "utf-8", (err, data) => {
     if (err) {
       console.error(err);
-      res.status(500).send("Error reading applied-points.json");
+      res.status(500).send("Error reading applied-req-stake-filter.json");
       return;
     }
 

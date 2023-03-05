@@ -61,24 +61,27 @@ export default async function handler(
 
   const walletNames = Object.keys(walletAverages);
 
-  // Generate the CSV data
-  const csvData = walletNames.map((wallet) => {
-    const row: (number | string)[] = [];
-    row.push(wallet);
-    Object.keys(walletAverages[wallet]).forEach((key) => {
-      row.push(
-        walletAverages[wallet][
-          key as keyof (typeof walletAverages)[typeof wallet]
-        ] /
-          accountHistories.filter(
-            (accountHistory) => accountHistory.wallet === wallet
-          ).length
+  // Generate the JSON data
+  const jsonData = {
+    wallets: walletNames.reduce((wallets, wallet) => {
+      wallets[wallet] = Object.keys(walletAverages[wallet]).reduce(
+        (averages, key) => {
+          averages[key] =
+            walletAverages[wallet][
+              key as keyof (typeof walletAverages)[typeof wallet]
+            ] /
+            accountHistories.filter(
+              (accountHistory) => accountHistory.wallet === wallet
+            ).length;
+          return averages;
+        },
+        {}
       );
-    });
-    return row.join(",");
-  });
+      return wallets;
+    }, {}),
+  };
 
-  // Write the CSV file to disk
+  // Write the JSON file to disk
   const folderPath = join(
     process.cwd(),
     "public",
@@ -88,8 +91,8 @@ export default async function handler(
   if (!fs.existsSync(folderPath)) {
     fs.mkdirSync(folderPath, { recursive: true });
   }
-  const filePath = join(folderPath, "averages.csv");
-  fs.writeFileSync(filePath, csvData.join("\n"), { flag: "w" });
+  const filePath = join(folderPath, "averages.json");
+  fs.writeFileSync(filePath, JSON.stringify(jsonData), { flag: "w" });
 
-  res.status(200).json(walletAverages);
+  res.status(200).json(jsonData);
 }
