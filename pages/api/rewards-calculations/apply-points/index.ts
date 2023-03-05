@@ -34,8 +34,7 @@ export default async function handler(
 ) {
   const jsonFilePath = path.join(
     process.cwd(),
-    "public",
-    "data",
+    "tmp",
     "rewards-calculations",
     "applied-filters.json"
   );
@@ -57,8 +56,7 @@ export default async function handler(
 
     const outputFilePath = path.join(
       process.cwd(),
-      "public",
-      "data",
+      "tmp",
       "rewards-calculations",
       "applied-points.json"
     );
