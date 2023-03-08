@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { createHash } from "crypto";
-import { Wallet } from "@solana/wallet-adapter-wallets";
-import { sendTransaction } from "../../utils/solana";
-import prisma from "../../utils/prisma";
+// import { Wallet } from "@solana/wallet-adapter-wallets";
+// import { sendTransaction } from "../../utils/solana";
+// import prisma from "../../utils/prisma";
 
 async function handleClaim(req: NextApiRequest, res: NextApiResponse) {
   const { walletAddress, amount, claimToken } = req.body;
