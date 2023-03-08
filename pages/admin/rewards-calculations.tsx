@@ -17,8 +17,6 @@ export default function RewardsCalculations() {
         <ApplyReqStakeFilter />
         <ApplyFilters />
         <ApplyPointsButton />
-
-
         <GetSharesButton />
       </div>
 

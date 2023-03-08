@@ -1,114 +1,90 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { useSession } from "next-auth/react";
-import { PrismaClient } from "@prisma/client";
-import { TokenInstructions, TOKEN_PROGRAM_ID, Token } from "@solana/spl-token";
-import {
-  Connection,
-  PublicKey,
-  Transaction,
-  sendAndConfirmTransaction,
-  Keypair,
-} from "@solana/web3.js";
+import { createHash } from "crypto";
+import { Wallet } from "@solana/wallet-adapter-wallets";
+import { sendTransaction } from "../../utils/solana";
+import prisma from "../../utils/prisma";
 
-const prisma = new PrismaClient();
+async function handleClaim(req: NextApiRequest, res: NextApiResponse) {
+  const { walletAddress, amount, claimToken } = req.body;
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
+  try {
+    // Check that all required fields are present
+    if (!walletAddress || !amount || !claimToken) {
+      return res
+        .status(400)
+        .json({ error: "Invalid claim request: missing required fields" });
+    }
 
-  const session = await useSession({ req });
-
-  if (!session?.user?.email && !session?.user?.name) {
-    return res.status(400).json({ error: "Wallet address not found" });
-  }
-
-  const walletAddress = session.user.email ?? session.user.name;
-  const claimantPublicKey = walletAddress && new PublicKey(walletAddress);
-
-  const bopMintAddress = process.env.BOP_MINT_ADDRESS;
-  if (!bopMintAddress) {
-    return res.status(400).json({ error: "BOP mint address not found" });
-  }
-  const tokenMintPublicKey = new PublicKey(bopMintAddress);
-
-  const claim = await prisma.claim.findFirst({
-    where: {
-      user: {
-        wallet: walletAddress,
+    // Verify the claim token against the database
+    const claim = await prisma.claim.findUnique({
+      where: {
+        claimTokenHash: createHash("sha256").update(claimToken).digest("hex"),
       },
-      claimed: false,
-    },
-  });
+    });
+    if (
+      !claim ||
+      claim.isClaimed ||
+      claim.amount !== amount ||
+      claim.walletAddress !== walletAddress
+    ) {
+      return res.status(400).json({
+        error:
+          "Invalid claim request: claim token is not valid or has already been used",
+      });
+    }
 
-  if (!claim) {
-    return res.status(404).json({ error: "Claim not found" });
+    // Get the wallet containing the BOP tokens
+    const wallet = new Wallet({
+      publicKey: process.env.SENDER_PUBLIC_KEY,
+      signAllTransactions: async (transaction) => {
+        transaction.partialSign(await wallet.sign(transaction));
+        return transaction;
+      },
+    });
+
+    let txid;
+    let retries = 0;
+    const maxRetries = 3;
+
+    // Retry sending the transaction up to `maxRetries` times
+    while (retries < maxRetries) {
+      try {
+        // Send the transaction to transfer the BOP tokens to the user's wallet address
+        txid = await sendTransaction(
+          wallet,
+          [
+            {
+              pubkey: new Wallet(walletAddress).publicKey,
+              isSigner: false,
+              isWritable: true,
+            },
+          ],
+          amount
+        );
+
+        // If the transaction was successful, update the database to mark the claim as processed
+        await prisma.claim.update({
+          where: { id: claim.id },
+          data: { isClaimed: true },
+        });
+
+        return res.status(200).json({ success: true, txid });
+      } catch (err) {
+        // If the transaction failed, log the error and retry
+        console.error(`Transaction failed with error: ${err.message}`);
+        retries++;
+      }
+    }
+
+    // If all retries fail, return an error response
+    return res
+      .status(500)
+      .json({ error: "Failed to process claim after maximum retries" });
+  } catch (err) {
+    // If an error occurs during claim processing, return a 500 Internal Server Error
+    console.error(`Error processing claim: ${err.message}`);
+    return res.status(500).json({ error: "Failed to process claim" });
   }
-
-  const tokenAmount = claim.amount;
-
-  const privateKey = process.env.PRIVATE_KEY;
-  if (!privateKey) {
-    return res.status(400).json({ error: "Private key not found" });
-  }
-
-  const payerSecretKey = Uint8Array.from(JSON.parse(privateKey));
-  const payerPublicKeyStr = process.env.PAYER_PUBLIC_KEY;
-  if (!payerPublicKeyStr) {
-    return res.status(400).json({ error: "Payer public key not found" });
-  }
-  const payerPublicKey = new PublicKey(payerPublicKeyStr);
-
-  const payerKeypair = Keypair.fromSecretKey(payerSecretKey);
-
-  const solanaEndpoint = process.env.SOLANA_ENDPOINT;
-  if (!solanaEndpoint) {
-    return res.status(400).json({ error: "Solana endpoint not found" });
-  }
-  const connection = new Connection(solanaEndpoint);
-
-  const decimals = (
-    await Token.getAssociatedTokenAddressInfo(
-      claimantPublicKey,
-      tokenMintPublicKey
-    )
-  ).decimals;
-
-  const token = new Token(
-    connection,
-    tokenMintPublicKey,
-    TOKEN_PROGRAM_ID,
-    payerKeypair
-  );
-
-  const tokenAmountWithDecimals = token.toDecimal(tokenAmount, decimals);
-
-  const destinationAddress = claimantPublicKey.toBuffer();
-  const instruction = TokenInstructions.transfer(
-    TOKEN_PROGRAM_ID,
-    payerPublicKey,
-    destinationAddress,
-    tokenAmountWithDecimals
-  );
-
-  const transaction = new Transaction().add(instruction);
-
-  const signature = await sendAndConfirmTransaction(connection, transaction, [
-    payerKeypair,
-  ]);
-
-  await prisma.claim.update({
-    where: {
-      id: claim.id,
-    },
-
-    data: {
-      claimed: true,
-    },
-  });
-
-  return res.status(200).json({ message: `Transaction ${signature} sent` });
 }
+
+export default handleClaim;

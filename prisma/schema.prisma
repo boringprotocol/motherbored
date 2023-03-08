@@ -53,6 +53,18 @@ model FalconToken {
   expires_at DateTime
 }
 
+model Claim {
+  id        String   @id @default(cuid())
+  amount    Float
+  claimed   Boolean  @default(false)
+  wallet    String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
 model AccountHistory {
   id               String   @id @default(cuid())
   account          User     @relation(fields: [accountId], references: [id])
@@ -75,14 +87,19 @@ model AccountHistory {
   @@index([accountId])
 }
 
-model Claim {
-  id        String   @id @default(cuid())
-  amount    Float
-  claimed   Boolean  @default(false)
-  wallet    String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  createdAt DateTime @default(now())
-
-  @@index([userId])
+model AccountRecordsAverages {
+  id               Int      @id @default(autoincrement())
+  wallet           String
+  consumer_local   Float
+  consumer_linux   Float
+  consumer_windows Float
+  consumer_mac     Float
+  provider_cloud   Float
+  provider_local   Float
+  v1_license       Float
+  v2_license       Float
+  vx_license       Float
+  soft_stake       Float
+  poa              Float
+  timestamp        DateTime @default(now())
 }

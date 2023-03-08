@@ -1,17 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
-import parse from "csv-parse/lib/sync";
-import fs from "fs";
-import path from "path";
+import fetch from "node-fetch";
 
 const prisma = new PrismaClient();
-
-interface CsvRow {
-  wallet: string;
-  v1_license: number;
-  v2_license: number;
-  vx_license: number;
-}
 
 export default async function handler(
   req: NextApiRequest,
@@ -23,24 +14,26 @@ export default async function handler(
 
   const { snapshot } = req.body;
 
-  const csvData = fs.readFileSync(
-    path.join(process.cwd(), "data/nft-snapshot/combined.csv"),
-    "utf-8"
-  );
+  interface NftHolder {
+    owner_wallet: string;
+    v1: number;
+    v2: number;
+    vx: number;
+  }
 
-  const rows: CsvRow[] = parse(csvData, {
-    columns: ["wallet", "v1_license", "v2_license", "vx_license"],
-    skip_empty_lines: true,
-  });
+  const data = await fetch(
+    "https://metaboss-public-results.s3.amazonaws.com/nft-holders.json"
+  );
+  const rows = (await data.json()) as NftHolder[];
 
   const promises = rows.map(async (row) => {
-    const { wallet, v1_license, v2_license, vx_license } = row;
+    const { owner_wallet, v1, v2, vx } = row;
     const updateResult = await prisma.accountHistory.updateMany({
-      where: { wallet, snapshot },
+      where: { wallet: owner_wallet, snapshot },
       data: {
-        v1_license: Number(v1_license),
-        v2_license: Number(v2_license),
-        vx_license: Number(vx_license),
+        v1_license: Number(v1),
+        v2_license: Number(v2),
+        vx_license: Number(vx),
       },
     });
     return updateResult.count;

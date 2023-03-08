@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
-import fs from "fs";
-import { join } from "path";
 
 const prisma = new PrismaClient();
 
@@ -59,35 +57,22 @@ export default async function handler(
     });
   });
 
-  const walletNames = Object.keys(walletAverages);
+  const data = Object.keys(walletAverages).map((wallet) => {
+    const count = accountHistories.filter((h) => h.wallet === wallet).length;
+    const averageValues: Record<string, number> = {};
 
-  // Generate the JSON data
-  const jsonData = {
-    wallets: walletNames.reduce((wallets, wallet) => {
-      wallets[wallet] = Object.keys(walletAverages[wallet]).reduce(
-        (averages, key) => {
-          averages[key] =
-            walletAverages[wallet][
-              key as keyof (typeof walletAverages)[typeof wallet]
-            ] /
-            accountHistories.filter(
-              (accountHistory) => accountHistory.wallet === wallet
-            ).length;
-          return averages;
-        },
-        {}
-      );
-      return wallets;
-    }, {}),
-  };
+    Object.keys(walletAverages[wallet]).forEach((key) => {
+      averageValues[key] = walletAverages[wallet][key] / count;
+    });
 
-  // Write the JSON file to disk
-  const folderPath = join(process.cwd(), "tmp", "rewards-calculations");
-  if (!fs.existsSync(folderPath)) {
-    fs.mkdirSync(folderPath, { recursive: true });
-  }
-  const filePath = join(folderPath, "averages.json");
-  fs.writeFileSync(filePath, JSON.stringify(jsonData), { flag: "w" });
+    return {
+      wallet,
+      ...averageValues,
+    };
+  });
 
-  res.status(200).json(jsonData);
+  await prisma.$executeRaw`DELETE FROM AccountRecordsAverages`;
+  await prisma.accountRecordsAverages.createMany({ data });
+
+  res.status(200).json({ success: true });
 }

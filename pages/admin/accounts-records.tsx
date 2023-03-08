@@ -24,7 +24,8 @@ export default function AccountRecords() {
         </div>
         <GetAccountsPeersSnapshot snapshot={snapshotName} />
         <GetAccountsSoftStakeSnapshot snapshot={snapshotName} />
-        <GetAccountsNftMintList />
+        {/* <GetAccountsNftMintList /> */}
+        <p className='text-xs mt-4 p-6'>cron running metaboss and jq on ec2 creating https://metaboss-public-results.s3.amazonaws.com/nft-holders.json in metaboss-public-results s2 bucket</p>
         <GetAccountsNftLicenses snapshot={snapshotName} />
       </div>
     </LayoutAuthenticated>
