@@ -4,23 +4,33 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const RunAllAccountsRecords: React.FC = () => {
   const [isUpdating, setIsUpdating] = useState(false);
-  const [isPeersFinished, setIsPeersFinished] = useState(false);
-  const [isSoftStakeFinished, setIsSoftStakeFinished] = useState(false);
-  const [isNFTLicensesFinished, setIsNFTLicensesFinished] = useState(false);
+
+  const [endpointStatus, setEndpointStatus] = useState([
+    { name: "Create snapshot...", status: "pending" },
+    { name: "Gather Peer counts...", status: "pending" },
+    { name: "Apply soft stake...", status: "pending" },
+    { name: "Apply NFT licenses...", status: "pending" },
+  ]);
 
   const handleClick = async () => {
     setIsUpdating(true);
-    setIsPeersFinished(false);
-    setIsSoftStakeFinished(false);
-    setIsNFTLicensesFinished(false);
+    setEndpointStatus([
+      { name: "Snapshot created", status: "in progress" },
+      { name: "Peer records gathered", status: "in progress" },
+      { name: "Soft stake applied", status: "in progress" },
+      { name: "NFT licenses applied", status: "in progress" },
+    ]);
     try {
       const response = await fetch("/api/accounts-records/run-all", {
         method: "POST",
       });
       if (response.ok) {
-        setIsPeersFinished(true);
-        setIsSoftStakeFinished(true);
-        setIsNFTLicensesFinished(true);
+        setEndpointStatus([
+          { name: "Snapshot created", status: "success" },
+          { name: "Peer records gathered", status: "success" },
+          { name: "Soft stake applied", status: "success" },
+          { name: "NFT licenses applied", status: "success" },
+        ]);
         alert("All endpoints completed successfully");
       } else {
         alert("Update failed");
@@ -32,29 +42,39 @@ const RunAllAccountsRecords: React.FC = () => {
     setIsUpdating(false);
   };
 
+
   return (
-    <button
-      className="my-6 inline-flex items-center rounded-xs border border-gray dark:border-gray-dark text-xs bg-white dark:bg-black px-3 py-2 text-boring-black dark:text-gray-lightest hover:bg-boring-white hover:opacity-80 active:opacity-60 shadow-md dark:shadow-sm dark:shadow-black active:shadow-sm"
-      onClick={handleClick}
-      disabled={isUpdating}
-    >
-      {isUpdating ? (
-        <FontAwesomeIcon icon={faSpinner} spin />
-      ) : (
-        "Run All Accounts Records"
-      )}
-      <div className="flex space-x-2 ml-2">
-        {isPeersFinished ? (
-          <FontAwesomeIcon icon={faCheck} className="text-green-500" />
-        ) : null}
-        {isSoftStakeFinished ? (
-          <FontAwesomeIcon icon={faCheck} className="text-green-500" />
-        ) : null}
-        {isNFTLicensesFinished ? (
-          <FontAwesomeIcon icon={faCheck} className="text-green-500" />
-        ) : null}
-      </div>
-    </button>
+    <div className="bg-white p-6 rounded-lg shadow-md mt-4">
+      <h2 className="text-lg">Run All Snapshot Functions</h2>
+      <p className="text-xs my-6">Run everything at once. Snapshot name will be generated in the background. </p>
+
+      <button
+        className="inline-flex items-center rounded-xs border border-gray dark:border-gray-dark text-xs bg-white dark:bg-black px-3 py-2 text-boring-black dark:text-gray-lightest hover:bg-boring-white hover:opacity-80 active:opacity-60 shadow-md dark:shadow-sm dark:shadow-black active:shadow-sm"
+        onClick={handleClick}
+        disabled={isUpdating}
+      >
+        {isUpdating ? (
+          <FontAwesomeIcon icon={faSpinner} spin />
+        ) : (
+          "Run All Accounts Records"
+        )}
+      </button>
+      <ul className="mt-4 list-disc list-inside p-4">
+        {endpointStatus.map((endpoint) => (
+          <li
+            key={endpoint.name}
+            className={`text-sm font-medium ${endpoint.status === "success"
+              ? "text-green-500"
+              : endpoint.status === "in progress"
+                ? "text-yellow-500"
+                : "text-red-500"
+              }`}
+          >
+            {endpoint.name} {endpoint.status === "success" && "✅"}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
