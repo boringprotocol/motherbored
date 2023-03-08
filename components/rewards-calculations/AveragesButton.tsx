@@ -40,7 +40,7 @@ const CreateCsvButton: React.FC<Props> = () => {
             {isCreatingCsv ? (
               <FontAwesomeIcon icon={faSpinner} spin />
             ) : (
-              "Create JSON"
+              "Get Averges"
             )}
           </button>
           {isCsvCreated && (
