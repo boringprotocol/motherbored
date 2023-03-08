@@ -21,12 +21,18 @@ export default function AccountRecords() {
         <RunAllAccountsRecords />
 
         <hr />
-        <h2>Manually Run Snapshot Functions</h2>
+        <div className="bg-white p-6 rounded-lg shadow-md mt-4">
+          <h2 className="text-lg">Manually Run Each Snapshot Function</h2>
+          <p className="text-xs mt-6">Generate snapshot name for each of the following functions which must all take the same name and each of the three need to complete for that snapshot to be complete in the db.</p>
 
-        <div className="mb-4">
-          <button className='my-6 inline-flex items-center rounded-xs border border-gray dark:border-gray-dark text-xs bg-white dark:bg-black px-3 py-2 text-boring-black dark:text-gray-lightest hover:bg-boring-white hover:opacity-80 active:opacity-60 shadow-md dark:shadow-sm dark:shadow-black active:shadow-sm' onClick={handleGenerateSnapshotName}>Generate Snapshot Name</button>
-          {snapshotName && <div>Snapshot Name: {snapshotName}</div>}
+          <div className="mb-4">
+            <button className='mt-6 inline-flex items-center rounded-xs border border-gray dark:border-gray-dark text-xs bg-white dark:bg-black px-3 py-2 text-boring-black dark:text-gray-lightest hover:bg-boring-white hover:opacity-80 active:opacity-60 shadow-md dark:shadow-sm dark:shadow-black active:shadow-sm' onClick={handleGenerateSnapshotName}>Generate Snapshot Name</button>
+            {snapshotName && <div>Snapshot Name: {snapshotName}</div>}
+          </div>
+
         </div>
+
+
         <GetAccountsPeersSnapshot snapshot={snapshotName} />
         <GetAccountsSoftStakeSnapshot snapshot={snapshotName} />
 
