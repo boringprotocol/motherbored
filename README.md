@@ -1,6 +1,6 @@
 # motherbored
 
-Oh yeah! 
+Oh yeah!!
 
 https://motherbored.app - dev-preview
 
