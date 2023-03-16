@@ -1,5 +1,4 @@
 // pages/api/claims/process-claim
-// this is the file that will be called when the user clicks the "Claim" button on the frontend.
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 import { transferBop } from "../../../../utils/solanaUtils";
@@ -37,13 +36,18 @@ async function handleClaim(req: NextApiRequest, res: NextApiResponse) {
 
     const payerWalletPublicKey = process.env.PAYER_WALLET_PUBLIC_KEY!;
     const recipientWalletPublicKey = walletAddress;
-    const payerPrivateKey = process.env.PAYER_WALLET_PRIVATE_KEY!;
+    const payerPrivateKey = new Uint8Array(
+      Buffer.from(process.env.PAYER_WALLET_PRIVATE_KEY!, "hex")
+    );
+    console.log("payerPrivateKey length:", payerPrivateKey.length);
 
     // Send the BOP tokens to the user's wallet address
     console.log(
       "PAYER_WALLET_PRIVATE_KEY in handleClaim:",
       process.env.PAYER_WALLET_PRIVATE_KEY
     );
+
+    // console.log("process.env:", process.env);
 
     const signature = await transferBop({
       connection,

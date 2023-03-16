@@ -23,7 +23,7 @@ interface TransferParams {
   payerPrivateKey?: string;
 }
 
-// key is all fucked up.
+// check whether the input privateKey is a valid 64-character hexadecimal string.
 function isValidPrivateKey(privateKey: string): boolean {
   const privateKeyRegex = /^[0-9a-fA-F]{64}$/;
   return privateKeyRegex.test(privateKey);
@@ -36,15 +36,19 @@ export async function transferBop({
   amount,
   payerPrivateKey,
 }: TransferParams): Promise<string> {
-  console.log("Private key:", payerPrivateKey); // Temporary log for debugging purposes
+  console.log("Private key in transferBop:", payerPrivateKey); // Temporary log for debugging purposes
 
   if (!payerPrivateKey || !isValidPrivateKey(payerPrivateKey)) {
     throw new Error("Invalid payer private key.");
   }
 
+  console.log("Input payerPrivateKey:", payerPrivateKey);
+
   const payerAccount = payerPrivateKey
     ? Keypair.fromSecretKey(new Uint8Array(Buffer.from(payerPrivateKey, "hex")))
     : undefined;
+
+  console.log("payerPrivateKey length in transferBop:", payerPrivateKey.length);
 
   if (!payerAccount) {
     throw new Error("Payer private key is required for the transfer.");
