@@ -1,6 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import fs from "fs";
+import { PrismaClient } from "@prisma/client";
 import path from "path";
+import fs from "fs";
+
+const prisma = new PrismaClient();
 
 interface Wallet {
   provider_cloud: number;
@@ -16,13 +19,23 @@ export default async function handler(
   _req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const averagesFilePath = path.join(
-    process.cwd(),
-    "tmp/rewards-calculations/averages.json"
-  );
-  const wallets: Wallets = JSON.parse(
-    fs.readFileSync(averagesFilePath, { encoding: "utf-8" })
-  ).wallets;
+  const wallets: Wallets = {};
+  const accountRecordAverages = await prisma.accountRecordsAverages.findMany({
+    select: {
+      wallet: true,
+      provider_cloud: true,
+      provider_local: true,
+      soft_stake: true,
+    },
+  });
+
+  accountRecordAverages.forEach((average) => {
+    wallets[average.wallet] = {
+      provider_cloud: average.provider_cloud,
+      provider_local: average.provider_local,
+      soft_stake: average.soft_stake,
+    };
+  });
 
   Object.values(wallets).forEach((wallet) => {
     const softStake = Math.floor(wallet.soft_stake / 6250);

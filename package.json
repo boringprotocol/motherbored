@@ -41,6 +41,7 @@
     "@web3-react/core": "^6.1.9",
     "@zeit/next-typescript": "^1.1.1",
     "animate.css": "^4.1.1",
+    "bn.js": "^5.2.1",
     "boring-avatars": "^1.7.0",
     "boring-name-generator": "^1.0.2",
     "bs58": "^5.0.0",
