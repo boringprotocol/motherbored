@@ -1,27 +1,47 @@
-// pages/api/claims/process-claim
+// api/claims/process-claim/index.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 import { transferBop } from "../../../../utils/solanaUtils";
-import { Connection } from "@solana/web3.js";
+import { Connection, PublicKey } from "@solana/web3.js";
+import bs58 from "bs58";
+import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
+
+const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID: PublicKey = new PublicKey(
+  "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+);
+
+function base58ToUint8Array(base58String: string): Uint8Array {
+  return new Uint8Array(bs58.decode(base58String));
+}
 
 const prisma = new PrismaClient();
 
-async function handleClaim(req: NextApiRequest, res: NextApiResponse) {
-  const { walletAddress, amount } = req.body;
+async function findAssociatedTokenAddress(
+  walletAddress: PublicKey,
+  tokenMintAddress: PublicKey
+): Promise<PublicKey> {
+  return (
+    await PublicKey.findProgramAddress(
+      [
+        walletAddress.toBuffer(),
+        TOKEN_PROGRAM_ID.toBuffer(),
+        tokenMintAddress.toBuffer(),
+      ],
+      SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
+    )
+  )[0];
+}
 
-  console.log("req.body: ", req.body);
-  console.log("wallet: ", walletAddress);
+async function handleClaim(req: NextApiRequest, res: NextApiResponse) {
+  const { walletAddress } = req.body;
 
   try {
-    // Verify the claim against the database
     const claim = await prisma.claim.findFirst({
       where: {
         wallet: walletAddress,
         claimed: false,
       },
     });
-
-    console.log("claim:", claim);
 
     if (!claim) {
       return res.status(400).json({
@@ -30,39 +50,51 @@ async function handleClaim(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const connection = new Connection(
-      process.env.SOLANA_RPC_HOST!,
+      process.env.SOLANA_ENDPOINT!,
       "confirmed"
     );
 
     const payerWalletPublicKey = process.env.PAYER_WALLET_PUBLIC_KEY!;
     const recipientWalletPublicKey = walletAddress;
-    const payerPrivateKey = new Uint8Array(
-      Buffer.from(process.env.PAYER_WALLET_PRIVATE_KEY!, "hex")
-    );
-    console.log("payerPrivateKey length:", payerPrivateKey.length);
-
-    // Send the BOP tokens to the user's wallet address
-    console.log(
-      "PAYER_WALLET_PRIVATE_KEY in handleClaim:",
-      process.env.PAYER_WALLET_PRIVATE_KEY
+    const payerPrivateKey = base58ToUint8Array(
+      process.env.PAYER_WALLET_PRIVATE_KEY!
     );
 
-    // console.log("process.env:", process.env);
+    const tokenMintAddress = new PublicKey(
+      process.env.BOP_TOKEN_ACCOUNT_ADDRESS!
+    );
+
+    const sourceTokenAccount = await findAssociatedTokenAddress(
+      new PublicKey(payerWalletPublicKey),
+      tokenMintAddress
+    );
+    const destinationTokenAccount = await findAssociatedTokenAddress(
+      new PublicKey(recipientWalletPublicKey),
+      tokenMintAddress
+    );
+
+    const amount = claim.amount; // Assuming the amount is stored in the claim object
+    const decimalFactor = 100000000; // 10^8
+    const adjustedAmount = amount * decimalFactor;
+
+    const sourceWalletOwnerPublicKey = new PublicKey(payerWalletPublicKey);
 
     const signature = await transferBop({
       connection,
-      payerWalletPublicKey,
-      recipientWalletPublicKey,
-      amount: claim.amount, // Use the amount from the claim object
+      sourceTokenAccount,
+      destinationWalletPublicKey: new PublicKey(recipientWalletPublicKey),
+      destinationTokenAccount,
+      amount: adjustedAmount, // Use the adjusted amount here
       payerPrivateKey,
+      tokenMintAddress,
+      sourceWalletOwnerPublicKey,
     });
 
-    // If the transaction was successful, update the database to mark the claim as processed
     await prisma.claim.update({
       where: {
         id: claim.id,
       },
-      data: { claimed: true },
+      data: { claimed: true, signature: signature },
     });
 
     return res.status(200).json({ success: true, signature });

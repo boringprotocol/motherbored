@@ -1,89 +1,52 @@
-// utils/solanaUtils/index.ts
-// this is the file that contains the transferBop function which will be called from the process-claim/index.ts file. it is responsible for sending the BOP tokens to the user's wallet address. it is also responsible for updating the database to mark the claim as processed.
-
-import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import {
   Connection,
-  Keypair,
   PublicKey,
-  Transaction,
-  TransactionInstruction,
-  sendAndConfirmTransaction,
+  Keypair,
+  SignatureResult,
+  Context,
 } from "@solana/web3.js";
-import BN from "bn.js";
+import { transfer } from "@solana/spl-token";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-interface TransferParams {
+export interface TransferParams {
   connection: Connection;
-  payerWalletPublicKey: string;
-  recipientWalletPublicKey: string;
+  sourceTokenAccount: PublicKey;
+  destinationWalletPublicKey: PublicKey;
+  destinationTokenAccount: PublicKey;
   amount: number;
-  payerPrivateKey?: string;
+  payerPrivateKey: Uint8Array;
+  tokenMintAddress: PublicKey;
+  sourceWalletOwnerPublicKey: PublicKey;
 }
 
-// check whether the input privateKey is a valid 64-character hexadecimal string.
-function isValidPrivateKey(privateKey: string): boolean {
-  const privateKeyRegex = /^[0-9a-fA-F]{64}$/;
-  return privateKeyRegex.test(privateKey);
-}
-
-export async function transferBop({
+export const transferBop = async ({
   connection,
-  payerWalletPublicKey,
-  recipientWalletPublicKey,
+  sourceTokenAccount,
+  destinationTokenAccount,
   amount,
   payerPrivateKey,
-}: TransferParams): Promise<string> {
-  console.log("Private key in transferBop:", payerPrivateKey); // Temporary log for debugging purposes
+  sourceWalletOwnerPublicKey,
+}: TransferParams): Promise<string> => {
+  const payerAccount = Keypair.fromSecretKey(payerPrivateKey);
 
-  if (!payerPrivateKey || !isValidPrivateKey(payerPrivateKey)) {
-    throw new Error("Invalid payer private key.");
-  }
-
-  console.log("Input payerPrivateKey:", payerPrivateKey);
-
-  const payerAccount = payerPrivateKey
-    ? Keypair.fromSecretKey(new Uint8Array(Buffer.from(payerPrivateKey, "hex")))
-    : undefined;
-
-  console.log("payerPrivateKey length in transferBop:", payerPrivateKey.length);
-
-  if (!payerAccount) {
-    throw new Error("Payer private key is required for the transfer.");
-  }
-
-  const payerPublicKey = new PublicKey(payerWalletPublicKey);
-  const recipientPublicKey = new PublicKey(recipientWalletPublicKey);
-  const bopTokenMintAddress = new PublicKey(
-    process.env.BOP_TOKEN_ACCOUNT_ADDRESS!
-  );
-
-  const sourceTokenAccount = new PublicKey(
-    process.env.PAYER_WALLET_PUBLIC_KEY!
-  );
-
-  const transferInstruction = new TransactionInstruction({
-    keys: [
-      { pubkey: sourceTokenAccount, isSigner: false, isWritable: true },
-      { pubkey: recipientPublicKey, isSigner: false, isWritable: true },
-      { pubkey: bopTokenMintAddress, isSigner: false, isWritable: false },
-      { pubkey: payerPublicKey, isSigner: true, isWritable: false },
-    ],
-    programId: TOKEN_PROGRAM_ID,
-    data: Buffer.from([1, ...new BN(amount).toArray("le", 8)]),
-  });
-
-  const transaction = new Transaction().add(transferInstruction);
-  const signature = await sendAndConfirmTransaction(
+  const signature = await transfer(
     connection,
-    transaction,
-    [payerAccount],
-    {
-      commitment: "singleGossip",
-    }
+    payerAccount,
+    sourceTokenAccount,
+    destinationTokenAccount,
+    sourceWalletOwnerPublicKey,
+    amount,
+    [],
+    { commitment: "confirmed" }
   );
+
+  connection.onSignature(signature, onSignature, "confirmed");
 
   return signature;
-}
+};
+
+const onSignature = (signatureResult: SignatureResult, context: Context) => {
+  console.log("Transaction status update:", signatureResult, context);
+};

@@ -110,19 +110,23 @@ const WalletPage: React.FC<Props> = (props) => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link rel="apple-touch-icon" href="/img/favicon.png" />
       </Head>
-      <div className='p-12 text-xs'>
+      <div className='px-12 text-xs'>
+        <h3 className="text-sm mt-6 mb-2">Balances</h3>
+        <div className='mt-4 border border-gray-lightest p-4 dark:border-gray-darker'>
+
+
+          {/* <h2 className='text-xl font-bold mb-2'>Balances</h2> */}
+          <p>$SOL: {toSol(props.solBalance)}</p>
+          <p>$BOP: {BopTokenMint.reduce((acc, account) => acc + account.balance, 0)}</p>
+          <p>$USDC: {UsdcTokenMint.reduce((acc, account) => acc + account.balance, 0)}</p>
+        </div>
 
         {/* <SendSolanaSplTokens /> */}
         {/* <Prices /> */}
         <GetClaims amount={0} claimToken={''} />
 
         {/* <h1 className='text-2xl font-bold mb-12'>Wallet: {session.user.name}</h1> */}
-        <div className='p-2 mt-4'>
-          <h2 className='text-xl font-bold mb-2'>Balances</h2>
-          <p>$SOL: {toSol(props.solBalance)}</p>
-          <p>$BOP: {BopTokenMint.reduce((acc, account) => acc + account.balance, 0)}</p>
-          <p>$USDC: {UsdcTokenMint.reduce((acc, account) => acc + account.balance, 0)}</p>
-        </div>
+
 
         {/* we need to know the decimal places of the other tokens to convert 
             it to a human readable number. like we did with lamports for the 
@@ -135,7 +139,7 @@ const WalletPage: React.FC<Props> = (props) => {
             lol co-pilot comments 
          */}
 
-        <div className='p-2 mt-4'>
+        {/* <div className='p-2 mt-4'>
           {props.tokenAccounts.filter(account => account.mintAddress !== BopTokenMint[0].mintAddress && account.mintAddress !== UsdcTokenMint[0].mintAddress).map((account, index) => {
             let tokenName;
             let balance;
@@ -156,9 +160,10 @@ const WalletPage: React.FC<Props> = (props) => {
               </div>
             );
           })}
-        </div>
+        </div> */}
 
       </div>
+
     </LayoutAuthenticated>
   );
 }
