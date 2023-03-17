@@ -50,3 +50,40 @@ button > * {font-size: 12px!important;}
       display: block;
     }
   
+
+
+/* transitions */
+
+.transition-initial {
+  opacity: 1;
+}
+
+.transition-enter-active,
+.transition-exit-active {
+  transition: opacity 1s cubic-bezier(0.68, -0.55, 0.27, 1.55), background-color 0.3s ease;
+}
+
+.transition-enter,
+.transition-exit {
+  opacity: 0;
+}
+
+.transition-enter-active {
+  opacity: 1;
+  background-color: #edebeb;
+  /* Flash color for light mode */
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  .transition-enter-active {
+    /* background-color: #8e44ad; */
+    /* Flash color for dark mode */
+  }
+
+  .transition-exit-active {
+    opacity: 0;
+    background-color: #333;
+    /* Change this value to the desired flash color for dark mode */
+  }
+}

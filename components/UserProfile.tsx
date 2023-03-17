@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { User } from '../types';
 import Image from 'next/image';
+import HiBadgeCheck from 'react-icons/hi';
 import { BsLightning } from 'react-icons/bs';
 
 interface Props {
@@ -33,34 +34,51 @@ const UserProfile = ({ user }: Props) => {
   }
 
   return (
-    <div className="font-jetbrains">
+    <>
+      <div className="font-jetbrains">
 
-      <div className="bg-white">
-        <div className="py-24 px-6 sm:px-6 sm:py-32 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-xl font-bold tracking-tight text-gray-900">
-              {user.name}
-              <br />
-              {user.image}
-            </h2>
-            <p className="mx-auto mt-6 max-w-xl text-sm leading-8 text-gray-600">
-              {user.bio}
-            </p>
+        <section className="pt-16">
+          <div className="w-full lg:w-4/12 px-4 mx-auto">
+            <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-md rounded-sm mt-16">
+              <div className="px-6">
+                <div className="flex flex-wrap justify-center">
+                  <div className="w-full px-4 flex justify-center">
+                    <div className="relative">
+                      <img alt="..." src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg" className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px" />
+                    </div>
+                  </div>
 
-            <p><span className="float-left"><BsLightning /></span>{user.ln_address}</p>
+                </div>
+                <div className="text-center mt-12">
+                  <h3 className="text-xl font-semibold leading-normal mb-2 text-blueGray-700">
+                    {user.name}
+                  </h3>
+                  {user.image}
+                  {/* <HiBadgeCheck /> */}
+
+                </div>
+                <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
+                  <div className="flex flex-wrap justify-center">
+                    <div className="w-full lg:w-9/12 px-4">
+                      <p className="mb-4 text-xs">
+                        {user.bio}
+                      </p>
+                      <p className="mb-4 text-xs text-left"><span className="float-left mr-2"><BsLightning /></span>{user.ln_address}</p>
+                    </div>
+                    <p className="text-xs">{user.wallet}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
+
+
+        {/* <p>{user.polygon_wallet}</p> */}
+
+        {/* <p>{user.publicProfile ? 'Public Profile' : 'Private Profile'}</p> */}
       </div>
-
-      <h1></h1>
-      <img src={user.image} alt={user.name} />
-      <p></p>
-      <Image src={user.image} alt={user.name} width={200} height={200} />
-      <p>{user.wallet}</p>
-      <p>{user.polygon_wallet}</p>
-
-      <p>{user.publicProfile ? 'Public Profile' : 'Private Profile'}</p>
-    </div>
+    </>
   );
 };
 
