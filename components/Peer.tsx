@@ -131,8 +131,8 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
   }
 
   return (
-    <a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
-      <div id="peer" className='px-4 pt-6 relative'>
+    <a className="" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
+      <div id="peer" className='px-4 pt-6 relative card-bordered'>
         <h2 className='text-lg md:text-xl lg:text-2xl px-4 mt-4'>{peer.name}</h2>
         <p className="inline-flex items-center font-jetbrains px-4 text-xs text-gray-500 capitalize">
           {isConsumer && (<IoLaptopOutline className="float-left mr-2" />)}
@@ -142,7 +142,7 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
         </p>
         <div className=' w-full h-12 top-0 left-0 z-50 flex items-center justify-center'>
           <div className="">
-            <Line options={options} data={data} />
+            {/* <Line options={options} data={data} /> */}
           </div>
         </div>
         <div className='pt-4'>

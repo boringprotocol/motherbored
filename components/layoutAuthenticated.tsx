@@ -4,13 +4,11 @@ import { Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import HeaderAuthenticated from './headerAuthenticated'
 import Link from 'next/link'
 import Docs from './asides/docs'
-import { IoAppsOutline, IoServerOutline } from 'react-icons/io5'
 import SiteMenu from './siteMenu'
 import Setup from './asides/setup'
 import ThemeChanger from './themeChanger'
-import JupterAgg from './asides/jupiterAgg'
-import GenesysGo from './asides/genesys'
 import AccountCard from './asides/accountCard'
+import AdminMenu from './AdminMenu'
 
 <ThemeChanger />
 
@@ -27,10 +25,10 @@ export default function Layout({ children }: Props) {
 
   return (
     <>
-      <div className="flex h-screen text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
+      <div className="flex h-screen">
 
         {/* Narrow sidebar */}
-        <div className="hidden w-12 overflow-y-auto md:block border-r bg-boring-white dark:bg-boring-black border-gray-lighter dark:border-gray-darkest z-10">
+        <div className="hidden w-12 overflow-y-auto md:block border-r border-base-200 z-10">
           <div className="flex w-full flex-col items-center">
             <div className="hover:bg-gray-lightest dark:hover:bg-gray-dark flex flex-shrink-0 items-center">
               <Link href="/">
@@ -43,19 +41,6 @@ export default function Layout({ children }: Props) {
                 </a>
               </Link>
             </div>
-
-            {/* Right section on desktop */}
-            {/* <Link href="/directory" className='hello'>
-              <a className="hover:bg-gray-lightest dark:hover:bg-gray-dark py-4 flex flex-shrink-0 items-center border-t border-b border-gray-lighterest dark:border-gray-darkest" title=
-                "Provider Directory">
-                <IoServerOutline className="w-12 text-1xl" />
-              </a>
-            </Link>
-            <Link href="/peers" className=''>
-              <a className="hover:bg-gray-lightest dark:hover:bg-gray-dark py-4 flex flex-shrink-0 items-center border-b border-gray-lighterest dark:border-gray-darkest">
-                <IoAppsOutline className="w-12 text-1xl" />
-              </a>
-            </Link> */}
           </div>
         </div>
 
@@ -107,7 +92,7 @@ export default function Layout({ children }: Props) {
                   <div className="flex flex-shrink-0 items-center px-6">
                     <h1 className="text-xs mt-4 mb-4 font-jetbrains">Boring Protol <span className="text-xs text-gray py-6">pre-beta</span></h1>
                   </div>
-                  <div className="mt-5 h-0 flex-1 overflow-y-auto px-6">
+                  <div className="mt-5 h-0 flex-1 overflow-y-auto px-4 outline">
                     <nav className="flex h-full flex-col">
                       <div className="font-jetbrains space-y-1">
 
@@ -116,13 +101,14 @@ export default function Layout({ children }: Props) {
 
                         <ThemeChanger />
                         <h2 className="text-xs py-4">Boring Protocol dev-preview</h2>
-                        <SiteMenu />
-
-                        {/* <Setup /> */}
 
 
+                        <div className="flex justify-end space-x-4">
+                          <SiteMenu />
+                        </div>
 
-
+                        <AdminMenu />
+                        <Setup />
                       </div>
                     </nav>
 
@@ -140,7 +126,7 @@ export default function Layout({ children }: Props) {
         {/* Content area */}
         <div className="font-jetbrains flex flex-1 flex-col overflow-hidden dark:bg-boring-black">
           <header className="w-full">
-            <div className="relative z-10 flex h-16 flex-shrink-0 border-b border-gray-lighter dark:border-gray-darkest text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black  shadow-sm">
+            <div className="relative z-10 flex h-16 flex-shrink-0 border-b border-base-200">
               <button
                 type="button"
                 className="border-r border-gray-lighter dark:border-gray-darkest px-4 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-boring-blue lg:hidden"
@@ -171,24 +157,28 @@ export default function Layout({ children }: Props) {
             </main>
 
             {/* Secondary column (hidden on smaller screens) */}
-            <aside className="drop-shadow-2xl z-10 hidden overflow-y-scroll hover:overflow-y-scroll w-96 border-l border-gray-lighter dark:border-gray-darkest text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black lg:block">
+            <aside className="drop-shadow-2xl z-10 hidden overflow-y-scroll hover:overflow-y-scroll w-96 border-l border-base-200 lg:block">
               <div className="font-jetbrains text-xs py-4">
 
-                <nav className="flex h-full flex-col px-12">
+                <nav className="flex h-full flex-col px-8">
                   <div className="font-jetbrains space-y-1">
-                    <AccountCard />
 
-                    <ThemeChanger />
+                    <div className="card card-bordered p-2">
+                      <AccountCard />
+                    </div>
+
+                    <div className="flex justify-end space-x-2">
+                      <SiteMenu /><AdminMenu />  <ThemeChanger />
+                    </div>
+
                     <h1 className="text-xs mt-4 mb-4 py-4">Boring Protocol <span className="text-xs text-gray py-6">dev-preview</span></h1>
-                    <SiteMenu />
 
-                    <Setup />
+
+
                   </div>
                 </nav>
-
+                <Setup />
                 <Docs />
-                <GenesysGo />
-                <JupterAgg />
 
               </div>
 

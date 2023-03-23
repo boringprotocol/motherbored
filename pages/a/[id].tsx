@@ -1,3 +1,4 @@
+// /pages/a/[id].tsx
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
 import UserProfile from '../../components/UserProfile';
@@ -5,7 +6,7 @@ import { User } from '../../types';
 import { useRouter } from 'next/router';
 
 interface ServerSideProps {
-  user: User | null;
+  user: User | { error: string };
 }
 
 export const getServerSideProps: GetServerSideProps<ServerSideProps> = async ({ params }) => {
@@ -29,22 +30,21 @@ export const getServerSideProps: GetServerSideProps<ServerSideProps> = async ({ 
   }
 };
 
-
 const UserProfilePage = ({ user }: ServerSideProps) => {
   const router = useRouter();
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
 
-  if (!user) {
-    return (
-      <div>User not found.</div>
-    )
+  if ('error' in user) {
+    return <div>{user.error}</div>;
   }
 
-  return (
-    <UserProfile user={user} />
-  );
+  if (!user) {
+    return <div>User not found.</div>;
+  }
+
+  return <UserProfile user={user} />;
 };
 
 export default UserProfilePage;

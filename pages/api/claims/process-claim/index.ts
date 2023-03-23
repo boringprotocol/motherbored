@@ -33,13 +33,12 @@ async function findAssociatedTokenAddress(
 }
 
 async function handleClaim(req: NextApiRequest, res: NextApiResponse) {
-  const { walletAddress } = req.body;
+  const { walletAddress, tokenMintAddress, id } = req.body;
 
   try {
     const claim = await prisma.claim.findFirst({
       where: {
-        wallet: walletAddress,
-        claimed: false,
+        id: id,
       },
     });
 
@@ -60,22 +59,20 @@ async function handleClaim(req: NextApiRequest, res: NextApiResponse) {
       process.env.PAYER_WALLET_PRIVATE_KEY!
     );
 
-    const tokenMintAddress = new PublicKey(
-      process.env.BOP_TOKEN_ACCOUNT_ADDRESS!
-    );
+    const tokenMintAddressPublicKey = new PublicKey(tokenMintAddress);
 
     const sourceTokenAccount = await findAssociatedTokenAddress(
       new PublicKey(payerWalletPublicKey),
-      tokenMintAddress
+      tokenMintAddressPublicKey
     );
     const destinationTokenAccount = await findAssociatedTokenAddress(
       new PublicKey(recipientWalletPublicKey),
-      tokenMintAddress
+      tokenMintAddressPublicKey
     );
 
-    const amount = claim.amount; // Assuming the amount is stored in the claim object
+    // const amount = claim.amount; // Assuming the amount is stored in the claim object
     const decimalFactor = 100000000; // 10^8
-    const adjustedAmount = amount * decimalFactor;
+    const adjustedAmount = claim.amount * decimalFactor;
 
     const sourceWalletOwnerPublicKey = new PublicKey(payerWalletPublicKey);
 
@@ -86,7 +83,7 @@ async function handleClaim(req: NextApiRequest, res: NextApiResponse) {
       destinationTokenAccount,
       amount: adjustedAmount, // Use the adjusted amount here
       payerPrivateKey,
-      tokenMintAddress,
+      tokenMintAddress: tokenMintAddressPublicKey,
       sourceWalletOwnerPublicKey,
     });
 

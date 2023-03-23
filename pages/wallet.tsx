@@ -6,9 +6,10 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { Connection, GetProgramAccountsFilter, PublicKey } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token"
-import Prices from '../components/Prices'
 import GetClaims from '../components/GetClaims'
-import SendSolanaSplTokens from '../components/sendUSDC'
+import WalletInsights from '../components/WalletInsights'
+import Image from 'next/image'
+import AccountStats from '../components/AccountStats'
 
 async function getSolBalance(walletPublicKey: PublicKey, solanaConnection: Connection) {
   return solanaConnection.getBalance(walletPublicKey);
@@ -111,15 +112,36 @@ const WalletPage: React.FC<Props> = (props) => {
         <link rel="apple-touch-icon" href="/img/favicon.png" />
       </Head>
       <div className='px-12 text-xs'>
-        <h3 className="text-sm mt-6 mb-2">Balances</h3>
-        <div className='mt-4 border border-gray-lightest p-4 dark:border-gray-darker'>
 
+        {/* <WalletInsights user={session?.user} /> */}
 
-          {/* <h2 className='text-xl font-bold mb-2'>Balances</h2> */}
-          <p>$SOL: {toSol(props.solBalance)}</p>
-          <p>$BOP: {BopTokenMint.reduce((acc, account) => acc + account.balance, 0)}</p>
-          <p>$USDC: {UsdcTokenMint.reduce((acc, account) => acc + account.balance, 0)}</p>
+        <div className='mt-8'>
+
+          <div className="avatar mr-4">
+            <div className="w-4 rounded-full mr-1">
+              <img src="/logos/bop.webp" />
+            </div>
+            <p>$BOP: {BopTokenMint.reduce((acc, account) => acc + account.balance, 0)}</p>
+
+          </div>
+          <div className="avatar mr-4">
+            <div className="w-4 rounded-full mr-1">
+              <img src="/logos/sol.webp" />
+            </div>
+            <p>$SOL: {toSol(props.solBalance)}</p>
+
+          </div>
+          <div className="avatar">
+            <div className="w-4 rounded-full mr-1">
+              <img src="/logos/usdc.webp" />
+            </div>
+            <p>$USDC: {UsdcTokenMint.reduce((acc, account) => acc + account.balance, 0)}</p>
+
+          </div>
         </div>
+
+
+
 
         {/* <SendSolanaSplTokens /> */}
         {/* <Prices /> */}

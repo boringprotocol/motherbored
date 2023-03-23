@@ -1,3 +1,4 @@
+// types.ts
 export type User = {
   id: string;
   wallet: string;

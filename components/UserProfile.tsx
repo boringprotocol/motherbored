@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { User } from '../types';
-import Image from 'next/image';
-import HiBadgeCheck from 'react-icons/hi';
 import { BsLightning } from 'react-icons/bs';
 
 interface Props {
@@ -39,7 +37,7 @@ const UserProfile = ({ user }: Props) => {
 
         <section className="pt-16">
           <div className="w-full lg:w-4/12 px-4 mx-auto">
-            <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-md rounded-sm mt-16">
+            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-md rounded-sm mt-16">
               <div className="px-6">
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full px-4 flex justify-center">
@@ -53,10 +51,15 @@ const UserProfile = ({ user }: Props) => {
                   <h3 className="text-xl font-semibold leading-normal mb-2 text-blueGray-700">
                     {user.name}
                   </h3>
-                  {user.image}
-                  {/* <HiBadgeCheck /> */}
+
+                  <div className="avatar">
+                    <div className="w-24 rounded-full">
+                      <img src={user.image} alt={user.name} />
+                    </div>
+                  </div>
 
                 </div>
+
                 <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
                   <div className="flex flex-wrap justify-center">
                     <div className="w-full lg:w-9/12 px-4">
@@ -73,10 +76,6 @@ const UserProfile = ({ user }: Props) => {
           </div>
         </section>
 
-
-        {/* <p>{user.polygon_wallet}</p> */}
-
-        {/* <p>{user.publicProfile ? 'Public Profile' : 'Private Profile'}</p> */}
       </div>
     </>
   );

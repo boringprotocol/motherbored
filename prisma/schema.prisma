@@ -32,6 +32,12 @@ model Peer {
   @@index([userId])
 }
 
+model FalconToken {
+  id         String   @id @default(cuid())
+  token      String   @db.VarChar(4096)
+  expires_at DateTime
+}
+
 model User {
   id             String           @id @default(cuid())
   wallet         String           @unique
@@ -46,22 +52,21 @@ model User {
   Claim          Claim[]
 }
 
-model FalconToken {
-  id         String   @id @default(cuid())
-  token      String   @db.VarChar(4096)
-  expires_at DateTime
-}
-
 model Claim {
-  id        String    @id @default(cuid())
-  amount    Float
-  claimed   Boolean   @default(false)
-  signature String?
-  wallet    String
-  user      User      @relation(fields: [userId], references: [id])
-  userId    String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+  id               String    @id @default(cuid())
+  token            String?
+  tokenMintAddress String?
+  amount           Float
+  claimed          Boolean   @default(false)
+  pending          Boolean   @default(false)
+  signature        String?
+  wallet           String
+  label            String?
+  description      String?
+  user             User      @relation(fields: [userId], references: [id])
+  userId           String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime? @updatedAt
 
   @@index([userId])
 }
