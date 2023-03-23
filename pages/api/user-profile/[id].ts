@@ -1,3 +1,4 @@
+// /api/user-profile/[id].ts
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
 import { User } from "../../../types";
@@ -7,8 +8,6 @@ export default async function handle(
   res: NextApiResponse<User | { error: string }>
 ) {
   const { id } = req.query;
-  console.log(id);
-
   const user = await prisma.user.findUnique({
     where: {
       id: id as string,

@@ -1,17 +1,25 @@
 // /components/GetClaims.tsx
+// todo: refactored to use ClaimContext w/ UnclaimedClaims.tsx and ClaimedClaims.tsx
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaExternalLinkAlt } from "react-icons/fa";
+
 import classNames from "classnames";
-import BopLogo from "./art/bopLogo";
+import { useClaimContext } from "../contexts/ClaimContext";
 
 interface Claim {
   updatedAt: string;
   signature: string;
   id: string;
+  token: string;
+  pending: boolean;
   amount: number;
+  label: string;
+  createdAt: Date;
   claimed: boolean;
+  tokenMintAddress: string;
 }
 
 // Define a new type for the appearingClaims and disappearingClaims state properties
@@ -20,12 +28,15 @@ type TransitionState = {
 };
 
 function GetClaims() {
+
+  const { claimUpdated, setClaimUpdated } = useClaimContext();
+
   const [state, setState] = useState<{
     claims: Claim[];
     loadingClaims: { [claimId: string]: boolean };
     error: string | null;
     signature: string | null;
-    signatures: { [claimId: string]: string | null }; // Add this line
+    signatures: { [claimId: string]: string | null };
     disappearingClaims: TransitionState;
     appearingClaims: TransitionState;
 
@@ -34,9 +45,9 @@ function GetClaims() {
     loadingClaims: {},
     error: null,
     signature: null,
-    signatures: {}, // Add this line
-    disappearingClaims: {}, // Add this line
-    appearingClaims: {}, // Add this line
+    signatures: {},
+    disappearingClaims: {},
+    appearingClaims: {},
   });
 
   const { data: session, status } = useSession();
@@ -82,7 +93,7 @@ function GetClaims() {
                 appearingClaims: initialAppearingClaims,
                 disappearingClaims: initialDisappearingClaims,
               }));
-            }, 100); // Adjust this value if necessary
+            }, 100);
           },
           (error) => {
             setState((prevState) => ({
@@ -93,10 +104,12 @@ function GetClaims() {
           }
         );
     }
-  }, [session, status]);
+  }, [session, status, claimUpdated]);
 
 
   async function handleProcessClaim(id: string) {
+    console.log("Processing claim with ID:", id);
+
     try {
       setState((prevState) => ({
         ...prevState,
@@ -104,6 +117,10 @@ function GetClaims() {
       }));
 
       const claim = state.claims?.find((c) => c.id === id);
+      console.log('Processing claim:', claim); // Add this line
+
+
+
       if (!claim) {
         throw new Error("Claim not found");
       }
@@ -122,6 +139,8 @@ function GetClaims() {
         body: JSON.stringify({
           walletAddress: userWallet,
           amount: claim.amount,
+          tokenMintAddress: claim.tokenMintAddress, // Add this line
+          id: claim.id, // Add this line
         }),
       });
 
@@ -135,6 +154,10 @@ function GetClaims() {
 
 
       if (result.success) {
+
+        // Set claimUpdated to true
+        setClaimUpdated(true);
+
         setState((prevState) => ({
           ...prevState,
           disappearingClaims: { ...prevState.disappearingClaims, [id]: true },
@@ -160,8 +183,6 @@ function GetClaims() {
           }));
         }, 3100);
       }
-
-
 
     } catch (error) {
       if (error instanceof Error) {
@@ -197,103 +218,142 @@ function GetClaims() {
 
   return (
     <div>
-      <h3 className="text-sm mt-6 mb-2">Platform Incentive Rewards</h3>
+      {/* <h3 className="text-sm mt-6 mb-2">Unclaimed Rewards</h3> */}
 
-      {state.claims
-        .filter((claim: Claim) => !claim.claimed)
-        .map((claim: Claim) => (
-          <div
-            className={classNames(
-              "border p-4 mb-4 border-gray-lightest",
-              state.disappearingClaims[claim.id] ? "opacity-0" : "opacity-100",
-              "transition-opacity duration-1000",
-              "dark:border-gray-darker"
-            )}
-            key={claim.id}
-            style={{
-              backgroundColor: state.disappearingClaims[claim.id]
-                ? "#edebeb" // Light mode flash color
-                : "inherit",
-            }}>
-            <>
-              <p className="mt-1 truncate text-sm text-gray dark:text-gray">
+      <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {state.claims
+          .filter((claim: Claim) => !claim.claimed)
+          .map((claim: Claim) => {
+            console.log("Creating button for claim ID:", claim.id);
 
-                {/* <span className="h-5 w-5 float-left">
-                <BopLogo />
-              </span> */}
+            return (
 
-                {claim.amount} $BOP</p>
-
-              <button
-                className="mt-4 inline-flex items-center rounded-xs border border-gray dark:border-gray-dark text-xs bg-white dark:bg-black px-3 py-2 text-boring-black dark:text-gray-lightest hover:bg-boring-white hover:opacity-80 active:opacity-60 shadow-md dark:shadow-sm dark:shadow-black active:shadow-sm"
-                onClick={() => handleProcessClaim(claim.id)}
-                disabled={state.loadingClaims[claim.id]}
-              >
-                {state.loadingClaims[claim.id] ? (
-                  <>
-                    <span className="float-left pr-2">
-                      <FontAwesomeIcon icon={faSpinner} spin /></span> Claiming...
-                  </>
-                ) : (
-                  "Claim"
-                )}
-              </button>
-
-            </>
-
-            {state.signatures[claim.id] && (
-              <p>
-                <a
-                  href={`https://solscan.io/tx/${state.signatures[claim.id]}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View transaction on Solscan
-                </a>
-              </p>
-            )}
-
-          </div>
-        ))}
-
-      <div>
-        <h3 className="text-sm mt-6 mb-2">Claimed Rewards</h3>
-
-        <div className="text-xs">
-          {state.claims
-            .filter((claim: Claim) => claim.claimed)
-            .map((claim: Claim) => (
               <div
                 className={classNames(
-                  "border p-4 mb-4",
-                  state.appearingClaims[claim.id] ? "opacity-100" : "opacity-0",
-                  "transition-opacity duration-1000",
-                  "dark:border-gray-darker"
+                  "card card-bordered shadow-xl prose",
+                  state.disappearingClaims[claim.id] ? "opacity-0" : "opacity-100",
+                  "transition-opacity duration-1000"
                 )}
                 key={claim.id}
                 style={{
-                  backgroundColor: state.appearingClaims[claim.id]
-                    ? "transparent" // Dark mode flash color
+                  backgroundColor: state.disappearingClaims[claim.id]
+                    ? "#edebeb" // Light mode flash color
                     : "inherit",
-                }}>
-                <p className="py-2 truncate text-xs text-gray dark:text-gray">
-                  {claim.updatedAt}<br />
-                  {claim.amount} $BOP&nbsp;
-                  <a
-                    href={`https://solscan.io/tx/${claim.signature}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {claim.signature}
-                  </a>
-                </p>
-              </div>
-            ))}
-        </div>
+                }}
+              >
+                <div className="card-body">
+                  <h2 className="text-xs mt-0">
+                    {claim.label}
+                  </h2>
 
+                  {claim.pending ? <span className="text-xs badge badge-outline">pending</span> : ""}
+
+
+                  <p className="text-xs">
+                    Issued at: {claim.createdAt}
+                  </p>
+
+                  <p className="text-xs uppercase">
+                    {claim.amount} ${claim.token}
+                  </p>
+
+                  <button
+                    className="btn btn-xs btn-outline"
+                    onClick={() => {
+                      console.log("Clicked claim button with ID:", claim.id);
+                      handleProcessClaim(claim.id);
+                    }}
+                    disabled={state.loadingClaims[claim.id] || claim.pending}
+                  >
+                    {state.loadingClaims[claim.id] ? (
+                      <>
+                        <span className="float-left pr-2">
+                          <FontAwesomeIcon icon={faSpinner} spin />
+                        </span>
+                        Claiming...
+                      </>
+                    ) : (
+                      "Claim"
+                    )}
+                  </button>
+
+
+                  {state.signatures[claim.id] && (
+                    <p>
+                      <a
+                        href={`https://solscan.io/tx/${state.signatures[claim.id]}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        View transaction on Solscan
+                      </a>
+                    </p>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+      </div>
+
+      <h3 className="text-sm mt-6 mb-2">Claimed Rewards</h3>
+      <div className="overflow-x-auto mb-8">
+
+        <table className="table table-compact w-full">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Token</th>
+              <th>Amount</th>
+              <th>Signature</th>
+            </tr>
+          </thead>
+          <tbody>
+            {state.claims
+              .filter((claim: Claim) => claim.claimed)
+              .map((claim: Claim) => (
+                <tr
+                  className={classNames(
+                    state.appearingClaims[claim.id] ? "opacity-100" : "opacity-0",
+                    "transition-opacity duration-1000"
+                  )}
+                  key={claim.id}
+                  style={{
+                    backgroundColor: state.appearingClaims[claim.id]
+                      ? "transparent" // Dark mode flash color
+                      : "inherit",
+                  }}
+                >
+                  <td className="py-2 truncate text-xs text-gray dark:text-gray">
+                    {claim.updatedAt}
+                  </td>
+                  <td className="py-2 truncate text-xs text-gray dark:text-gray uppercase">
+                    ${claim.token}
+                  </td>
+                  <td className="py-2 truncate text-xs text-gray dark:text-gray">
+                    {claim.amount}
+                  </td>
+                  <td className="py-2 truncate text-xs text-gray dark:text-gray">
+                    <a
+                      href={`https://solscan.io/tx/${claim.signature}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaExternalLinkAlt className="inline-block align-middle text-gray-500 mr-2" />
+                      {claim.signature}{" "}
+
+                    </a>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
 
     </div>
+
+
+
+
   );
 }
 

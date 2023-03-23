@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <mask id="a">
+    <circle cx="256" cy="256" r="256" fill="#fff"/>
+  </mask>
+  <g>
+    <path fill="none" d="M0 0v332l150.9-138.5L225.2 0z" stroke="currentColor" stroke-width="1"/>
+    <path fill="none" d="M273.1 253.3 512 0H225.2L0 332v80.2z" stroke="currentColor" stroke-width="1"/>
+    <path fill="none" d="M512 0 0 412.2v50.4L277.9 390 512 256z" stroke="currentColor" stroke-width="1"/>
+    <path fill="none" d="M0 462.6 512 256v133.5l-223.9 78.8L0 488.4z" stroke="currentColor" stroke-width="1"/>
+    <path fill="none" d="m512 389.5-512 99V512h512z" stroke="currentColor" stroke-width="1"/>
+  </g>
+</svg>

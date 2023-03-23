@@ -15,6 +15,10 @@ import StackedBarChart from '../components/StackedBarChart';
 import PeerInsight from '../components/PeerInsight';
 import GetClaims from '../components/GetClaims';
 import ProviderSelector from '../components/ProviderSelector';
+import NewRewardsAlert from '../components/NewRewardsAlert';
+import Waiting from '../components/art/waiting';
+import AccountStats from '../components/AccountStats';
+
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
@@ -51,8 +55,8 @@ const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   }
 }
 
-
 type Props = {
+  user: any;
   peers: PeerProps[],
   consumers: ConsumerPeerProps[],
   providers: PeerProps[],
@@ -66,6 +70,7 @@ const Dashboard: React.FC<Props> = (props) => {
   const { theme } = useTheme();
   const [showConsumers, setShowConsumers] = useState(true);
   const [showProviders, setShowProviders] = useState(true);
+  const [showClaims, setShowClaims] = useState(true);
 
   const data = [
     [10, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76,],
@@ -110,7 +115,10 @@ const Dashboard: React.FC<Props> = (props) => {
       </Head>
 
       {/* Main content */}
-      <div className="main pt-12 text-xs">
+      <div className="main pt-4 text-xs relative">
+        <div className="absolute top-0 left-0 right-0 bottom-0 -z-50 opacity-20">
+          <Waiting />
+        </div>
 
         {/* <div className='p-12'>
           <ProviderSelector />
@@ -123,24 +131,50 @@ const Dashboard: React.FC<Props> = (props) => {
         {/* <CopyToClipboardButton text='hello' /> */}
 
         <div className="px-4 sm:px-8 md:px-12 pb-16">
-
           <nav className='mb-4'>
             <button
-              className={`mr-2 rounded-sm border border-gray-lighter ${theme === 'dark' ? 'dark:border-gray-dark' : ''} text-center inline-flex items-center text-xs px-4 py-3 text-boring-black ${theme === 'dark' ? 'dark:text-boring-white' : ''} hover:bg-gray-lightest ${theme === 'dark' ? 'dark:hover:bg-gray-dark' : ''}`}
+              className={`btn btn-outline btn-sm mr-2 ${theme === 'dark' ? 'dark:text-boring-white' : 'text-boring-black'} inline-flex items-center text-xs`}
               onClick={() => setShowConsumers(!showConsumers)}
             >
               {showConsumers ? <IoMdEye className='mr-2' /> : <IoMdEyeOff className='mr-2' />} Clients
             </button>
 
             <button
-              className={`mr-2 rounded-sm border border-gray-lighter ${theme === 'dark' ? 'dark:border-gray-dark' : ''} text-center inline-flex items-center text-xs px-4 py-3 text-boring-black ${theme === 'dark' ? 'dark:text-boring-white' : ''} hover:bg-gray-lightest ${theme === 'dark' ? 'dark:hover:bg-gray-dark' : ''}`}
+              className={`btn btn-outline btn-sm mr-2 ${theme === 'dark' ? 'dark:text-boring-white' : 'text-boring-black'} inline-flex items-center text-xs `}
               onClick={() => setShowProviders(!showProviders)}
             >
               {showProviders ? <IoMdEye className='mr-2' /> : <IoMdEyeOff className='mr-2' />} Nodes
             </button>
+
+            <button
+              className={`btn btn-outline btn-sm mr-2 ${theme === 'dark' ? 'dark:text-boring-white' : 'text-boring-black'} inline-flex items-center text-xs `}
+              onClick={() => setShowClaims(!showClaims)}
+            >
+              {showClaims ? <IoMdEye className='mr-2' /> : <IoMdEyeOff className='mr-2' />} Claims
+            </button>
+
+
           </nav>
+
+
+          <div className='mb-4'>
+            <NewRewardsAlert walletAddress={''} />
+          </div>
+
+
+          {/* <AccountStats /> */}
+
+
+
+
+
           {/* <StackedBarChart data={data} labels={labels} /> */}
-          {/* <GetClaims /> */}
+
+          {showClaims && (
+            <>
+              <GetClaims />
+            </>
+          )}
 
           {/* 
           
@@ -179,25 +213,31 @@ const Dashboard: React.FC<Props> = (props) => {
 
           {showConsumers && (
             <>
-              <h2 className="mb-2 text-sm text-gray-light dark:text-gray ml-2">Boring VPN Clients</h2>
+              <h2 className="mb-2 text-sm">Boring VPN Clients</h2>
 
-              <ul role="list" className=" pb-12 grid grid-cols-2 gap-6 md:grid-cols-8 2xl:grid-cols-6">
+              <ul role="list" className="pb-12 grid grid-cols-2 gap-6 md:grid-cols-4 2xl:grid-cols-6">
                 {props.consumers.map((consumer) => (
-                  <li key={consumer.name} className="shadow-md col-span-1 md:col-span-2 border rounded-sm cursor-pointer hover:border-gray-lighter dark:hover:border-gray-dark border-gray-lightest dark:border-gray-darker text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
+                  <li key={consumer.name}>
                     <ConsumerPeer peer={consumer} />
                   </li>
                 ))}
+
+                {/* {props.consumers.map((consumer) => (
+                  <li key={consumer.name} className="shadow-md col-span-1 md:col-span-2 border rounded-sm cursor-pointer hover:border-gray-lighter dark:hover:border-gray-dark border-gray-lightest dark:border-gray-darker text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
+                    <ConsumerPeer peer={consumer} />
+                  </li>
+                ))} */}
               </ul>
             </>
           )}
 
           {showProviders && (
             <>
-              <h2 className="mb-2 text-sm text-gray-light dark:text-gray ml-2">Network Nodes</h2>
+              <h2 className="mb-2 text-sm">Network Nodes</h2>
               {/*  */}
-              <ul role="list" className=" pb-12 grid grid-cols-2 gap-6 md:grid-cols-4 2xl:grid-cols-6">
+              <ul role="list" className=" pb-12 grid grid-cols-2 gap-6 md:grid-cols-2 2xl:grid-cols-6">
                 {props.providers.map((providers) => (
-                  <li key={providers.name} className="shadow-md col-span-2 border rounded-sm cursor-pointer hover:border-gray-lighter dark:hover:border-gray-dark border-gray-lightest dark:border-gray-darker text-boring-black dark:text-boring-white bg-boring-white dark:bg-boring-black ">
+                  <li key={providers.name} className="">
                     <Peer peer={providers} />
                   </li>
                 ))}

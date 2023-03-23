@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <mask id="a">
+    <circle cx="256" cy="256" r="256" fill="#fff"/>
+  </mask>
+  <g>
+    <path fill="none" d="M64 0 0 64v160l32 32-32 32v224l256-32 256 32V288l-32-32 32-32V64L448 0H288l-32 32-32-32H64z" stroke="currentColor" stroke-width="1"/>
+    <path fill="none" d="M256 256 0 512h512z" stroke="currentColor" stroke-width="1"/>
+    <path fill="none" d="M0 224v64l512-64v64z" stroke="currentColor" stroke-width="1"/>
+    <path fill="none" d="M256 256 0 64V0h64zm0 0L448 0h64v64zm0 0L224 0h64z" stroke="currentColor" stroke-width="1"/>
+  </g>
+</svg>

@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @layer base {
     @font-face {
@@ -75,15 +75,70 @@ button > * {font-size: 12px!important;}
 }
 
 /* Dark mode styles */
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   .transition-enter-active {
-    /* background-color: #8e44ad; */
-    /* Flash color for dark mode */
-  }
+    background-color: #8e44ad;
+  } */
 
   .transition-exit-active {
     opacity: 0;
     background-color: #333;
     /* Change this value to the desired flash color for dark mode */
   }
+
+
+
+  input, textarea, .card-bordered, .btn, .dropdown, .dropdown-content {border-radius: 3px!important;}
+
+
+    :root {
+      --primary-color: var(--color-primary);
+      --base-100-color: var(--color-base-100);
+    }
+  
+
+
+                .text-primary .flag-image {
+                  stroke: currentColor;
+                }
+        
+
+
+
+.bounce {
+  animation: bounce 0.3s ease;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.number {
+  transition: opacity 0.3s ease;
+}
+
+.number-enter {
+  opacity: 0;
+}
+
+.number-enter-active {
+  opacity: 1;
+}
+
+.number-exit {
+  opacity: 1;
+}
+
+.number-exit-active {
+  opacity: 0;
 }

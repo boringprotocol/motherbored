@@ -1,6 +1,6 @@
 import React from 'react'
 import Router from 'next/router'
-import { IoLaptopOutline, IoWifiOutline, IoServerOutline, IoCloudOutline, IoPricetagOutline } from 'react-icons/io5'
+import { IoLaptopOutline, IoWifiOutline, IoServerOutline, IoCloudOutline } from 'react-icons/io5'
 
 export type PeerProps = {
   id: string;
@@ -56,39 +56,31 @@ const ConsumerPeer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
   }
 
   return (
-
-
-
-
-
-    <div className='p-6'>
-
-      {/* {isMotheboredConsumer && (<>outline</>)} */}
-
-      <a className="border-boring-black hover:border-gray" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
-        {/* if it's a motherbored show the wifi info */}
-        {isMotheboredConsumer && (<>
-          <div className="inline-flex items-center text-xs text-gray-light">
-            <IoWifiOutline className="mr-1" />{peer.ssid}
+    <div
+      className='card card-bordered cursor-pointer shadow-md  hover:shadow-lg active:shadow-md'
+      onClick={() => Router.push("/c/[id]", `/c/${peer.id}`)}
+    >
+      <div className="card-body">
+        {isMotheboredConsumer && (
+          <div className="inline-flex items-center text-xs mb-2">
+            <IoWifiOutline className="mr-1" />
+            {peer.ssid}
           </div>
-        </>)}
-
-        <h2 className=''>{peer.name}</h2>
-        {/* <p className="inline-flex items-center font-jetbrains text-xs text-gray-500 capitalize">
-          {isConsumer && (<IoLaptopOutline className="float-left mr-2" />)}
-          {isCloudProvider && (<IoCloudOutline className="float-left mr-2" />)}
-          {isLocalProvider && (<IoServerOutline className="float-left mr-2" />)}
+        )}
+        <h2 className='mb-2'>{peer.name}</h2>
+        <p className="inline-flex items-center font-jetbrains text-xs capitalize mb-4">
+          {isConsumer && <IoLaptopOutline className="mr-2" />}
+          {isCloudProvider && <IoCloudOutline className="mr-2" />}
+          {isLocalProvider && <IoServerOutline className="mr-2" />}
           <span className="capitalize">{peer.provider_kind} {peer.kind}</span>
-        </p> */}
-      </a>
-      <div className='py-4'>
-        <span className="inline-block align-bottom text-xs">
-          {peer.consumer_platform}
-          {/* <IoPricetagOutline className="float-left mr-2" /> {peer.label} */}
-        </span>
+        </p>
+        <div className='py-4'>
+          <span className="inline-block align-bottom text-xs">
+            {peer.consumer_platform}
+          </span>
+        </div>
       </div>
     </div>
-
   );
 };
 

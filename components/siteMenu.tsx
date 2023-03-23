@@ -1,77 +1,71 @@
 import { useRouter } from "next/router";
 
-export default function SiteMenu({ motherboredApp, boringProtocol, motherboredDocs }: any) {
+export default function SiteMenu({ boringProtocol }: any) {
   const router = useRouter();
   const { pathname } = router;
   const currentPage = pathname.substring(1);
 
-  const WEBSITE_URL = `${boringProtocol}`;
-  // need to figure out the best way to handle this link shit
-
-  function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    switch (e.target.value) {
-      case WEBSITE_URL:
-        window.open(e.target.value, "_blank");
+  function handleChange(value: string) {
+    switch (value) {
+      case boringProtocol:
+        window.open(value, "_blank");
         break;
       default:
-        router.push(`/${e.target.value}`);
+        router.push(`/${value}`);
     }
   }
 
   return (
-    <>
-      <div>
-        <select
-          value={currentPage}
-          onChange={(e) => handleChange(e)}
-          className="block w-full rounded-sm bg-boring-white dark:bg-boring-black border-gray-lighter dark:border-gray-dark py-3 pl-3 pr-10  focus:border-blue focus:outline-none focus:ring-boring-blue text-xs"
-        >
-          <option value="">
+    <div className="dropdown">
+      {/* {currentPage} */}
+      <button className="btn btn-outline btn-xs gap-2">
+        Site Menu
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      <ul tabIndex="0" className="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52">
+        <li>
+          <a href="#" className="dropdown-item" onClick={() => handleChange("")}>
             Dashboard
-          </option>
-          <option value="profile/edit">
+          </a>
+        </li>
+        <li>
+          <a href="#" className="dropdown-item" onClick={() => handleChange("profile/edit")}>
             Edit Profile
-          </option>
-          <option value="profile">
+          </a>
+        </li>
+        <li>
+          <a href="#" className="dropdown-item" onClick={() => handleChange("profile")}>
             Profile
-          </option>
-          <option value="wallet">
+          </a>
+        </li>
+        <li>
+          <a href="#" className="dropdown-item" onClick={() => handleChange("wallet")}>
             Wallet
-          </option>
-          <option value="newpeer?mode=consumer&consumer_platform=Motherbored">New VPN Client</option>
-          <option value="newpeer?mode=provider">New Provider Peer</option>
-          <option value="404">404</option>
-          <option value="{WEBSITE_URL}">Website</option>
-        </select>
-      </div>
-
-
-      <div>
-        <select
-          value={currentPage}
-          onChange={(e) => handleChange(e)}
-          className="block w-full rounded-sm bg-boring-white dark:bg-boring-black border-gray-lighter dark:border-gray-dark py-3 pl-3 pr-10  focus:border-blue focus:outline-none focus:ring-boring-blue text-xs"
-        >
-          <option value="admin/accounts-records">
-            Accounts Records
-          </option>
-          <option value="admin/rewards-calculations">
-            Rewards Calculations
-          </option>
-          <option value="admin/shares-function">
-            Shares Function
-          </option>
-          <option value="admin/rewards-table">
-            Rewards Table
-          </option>
-          <option value="admin/settlements">
-            Settlements
-          </option>
-          <option value="admin/epochs">
-            Epochs
-          </option>
-        </select>
-      </div>
-    </>
-  )
+          </a>
+        </li>
+        <li>
+          <a href="#" className="dropdown-item" onClick={() => handleChange("newpeer?mode=consumer&consumer_platform=Motherbored")}>
+            New VPN Client
+          </a>
+        </li>
+        <li>
+          <a href="#" className="dropdown-item" onClick={() => handleChange("newpeer?mode=provider")}>
+            New Provider Peer
+          </a>
+        </li>
+        <li>
+          <a href="#" className="dropdown-item" onClick={() => handleChange("404")}>
+            404
+          </a>
+        </li>
+        <li>
+          <a href="#" className="dropdown-item" onClick={() => handleChange(boringProtocol)}>
+            Website
+          </a>
+        </li>
+      </ul>
+    </div>
+  );
 }

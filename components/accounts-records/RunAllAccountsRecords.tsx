@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { faSpinner, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const RunAllAccountsRecords: React.FC = () => {
@@ -44,36 +44,38 @@ const RunAllAccountsRecords: React.FC = () => {
 
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md mt-4">
-      <h2 className="text-lg">Run All Snapshot Functions</h2>
-      <p className="text-xs my-6">Run everything at once. Snapshot name will be generated in the background. </p>
+    <div className="card-bordered my-4">
+      <div className="card-body prose text-xs">
+        <h2 className="">Run All Snapshot Functions</h2>
+        <p className="">Run everything at once. Snapshot name will be generated in the background. </p>
 
-      <button
-        className="inline-flex items-center rounded-xs border border-gray dark:border-gray-dark text-xs bg-white dark:bg-black px-3 py-2 text-boring-black dark:text-gray-lightest hover:bg-boring-white hover:opacity-80 active:opacity-60 shadow-md dark:shadow-sm dark:shadow-black active:shadow-sm"
-        onClick={handleClick}
-        disabled={isUpdating}
-      >
-        {isUpdating ? (
-          <FontAwesomeIcon icon={faSpinner} spin />
-        ) : (
-          "Run All Accounts Records"
-        )}
-      </button>
-      <ul className="mt-4 list-disc list-inside p-4">
-        {endpointStatus.map((endpoint) => (
-          <li
-            key={endpoint.name}
-            className={`text-sm font-medium ${endpoint.status === "success"
-              ? "text-green-500"
-              : endpoint.status === "in progress"
-                ? "text-yellow-500"
-                : "text-red-500"
-              }`}
-          >
-            {endpoint.name} {endpoint.status === "success" && "✅"}
-          </li>
-        ))}
-      </ul>
+        <button
+          className="btn btn-outline btn-sm w-auto"
+          onClick={handleClick}
+          disabled={isUpdating}
+        >
+          {isUpdating ? (
+            <FontAwesomeIcon icon={faSpinner} spin />
+          ) : (
+            "Run All Accounts Records"
+          )}
+        </button>
+        <ul className="mt-4 list-disc list-inside p-4">
+          {endpointStatus.map((endpoint) => (
+            <li
+              key={endpoint.name}
+              className={`text-sm font-medium ${endpoint.status === "success"
+                ? "text-green-500"
+                : endpoint.status === "in progress"
+                  ? "text-yellow-500"
+                  : "text-red-500"
+                }`}
+            >
+              {endpoint.name} {endpoint.status === "success" && "✅"}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

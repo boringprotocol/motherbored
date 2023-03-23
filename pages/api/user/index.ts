@@ -1,3 +1,4 @@
+// /api/user/index.ts
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 

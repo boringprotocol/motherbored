@@ -1,98 +1,57 @@
 import { signOut, useSession } from "next-auth/react";
-import { IoLogOutOutline, IoPersonOutline, IoSettingsOutline, IoWalletOutline } from "react-icons/io5";
-import { Menu } from '@headlessui/react'
-import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
-
-function classNames(...classes: any) {
-    return classes.filter(Boolean).join(' ')
-}
+import { IoArrowDownOutline, IoChevronDownOutline, IoEllipsisVerticalOutline, IoLogOutOutline, IoPersonOutline, IoWalletOutline } from "react-icons/io5";
 
 const AccountCard = () => {
     const { data: session } = useSession();
 
+    const handleSignOut = (e: React.MouseEvent) => {
+        e.preventDefault();
+        signOut();
+    };
+
     return (
+        <div className="">
+            <div className="flex justify-between items-center">
+                <p className="text-xs text-boring-black dark:text-boring-white truncate">
+                    {session?.user && (
+                        <>
+                            {session.user.email ?? session.user.name}
+                            {/* <span>oyja18UadrHNEuDxYzUr4mgyLSe81WdN8uBCoyGbK6V</span> */}
+                        </>
+                    )}
+                </p>
+                <div className="dropdown dropdown-end">
+                    <button className="btn btn-ghost btn-sm gap-2">
+                        <span className="sr-only">Open options</span>
+                        <IoEllipsisVerticalOutline className="h-4 w-4" aria-hidden="true" />
 
-        <div className="bg-boring-white dark:bg-boring-black border border-gray-lightest dark:border-gray-dark p-2">
-            <div className="flex space-x-3">
-                <div className="min-w-0 flex-1">
-                    <p className="text-xs text-boring-black dark:text-boring-white truncate p-2">
-                        {session?.user && (
-                            <>
-                                {session.user.email ?? session.user.name}
-                                {/* <span>oyja18UadrHNEuDxYzUr4mgyLSe81WdN8uBCoyGbK6V</span> */}
-                            </>
-                        )}
-                    </p>
-                </div>
-                <div className="flex flex-shrink-0 self-center">
-                    <Menu as="div" className="relative inline-block text-left">
-                        <div>
-                            <Menu.Button className="-m-2 flex items-center rounded-full p-2 text-boring-black dark:text-boring-white hover:text-gray">
-                                <span className="sr-only">Open options</span>
-                                <EllipsisVerticalIcon className="h-4 w-4" aria-hidden="true" />
-                            </Menu.Button>
-                        </div>
 
-                        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-sm bg-boring-white dark:bg-boring-black shadow-lg ring-1 ring-gray-light dark:ring-gray-dark focus:outline-none">
 
-                            <div className="py-1">
-                                <Menu.Item>
-                                    {({ active }) => (
-                                        <a
-                                            href="/profile/edit"
-                                            // target="_blank"
-                                            className={classNames(
-                                                active ? 'bg-gray-lightest dark:bg-gray-dark text-black dark:text-white' : 'text-boring-black dark:text-boring-white',
-                                                'flex px-4 py-2 text-xs'
-                                            )}
-                                        >
-                                            {/* <IoSettingsOutline className="mr-3 h-4 w-4" aria-hidden="true" /> */}
-                                            <IoPersonOutline className="mr-3 h-4 w-4" aria-hidden="true" />
-                                            <span>Edit Profile</span>
-                                        </a>
-                                    )}
-                                </Menu.Item>
-                                <Menu.Item>
-                                    {({ active }) => (
-                                        <a
-                                            href="/wallet"
-                                            className={classNames(
-                                                active ? 'bg-gray-lightest dark:bg-gray-dark text-black dark:text-white' : 'text-boring-black dark:text-boring-white',
-                                                'flex px-4 py-2 text-xs'
-                                            )}
-                                        >
-                                            <IoWalletOutline className="mr-3 h-4 w-4" aria-hidden="true" />
-                                            <span>Wallet</span>
-                                        </a>
-                                    )}
-                                </Menu.Item>
-                                <Menu.Item>
-                                    {({ active }) => (
-                                        <a
-                                            href="#"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                signOut();
-                                            }}
-                                            className={classNames(
-                                                active ? 'bg-gray-lightest dark:bg-gray-dark text-black dark:text-white' : 'text-boring-black dark:text-boring-white',
-                                                'flex px-4 py-2 text-xs'
-                                            )}
-                                        >
-                                            <IoLogOutOutline className="mr-3 h-4 w-4" aria-hidden="true" />
-                                            <span>Sign Out</span>
-                                        </a>
-                                    )}
-                                </Menu.Item>
-                            </div>
-                        </Menu.Items>
-
-                    </Menu>
+                    </button>
+                    <ul tabIndex="0" className="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52">
+                        <li>
+                            <a href="/profile/edit" className="dropdown-item">
+                                <IoPersonOutline className="mr-3 h-4 w-4" aria-hidden="true" />
+                                Edit Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/wallet" className="dropdown-item">
+                                <IoWalletOutline className="mr-3 h-4 w-4" aria-hidden="true" />
+                                Wallet
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onClick={handleSignOut} className="dropdown-item">
+                                <IoLogOutOutline className="mr-3 h-4 w-4" aria-hidden="true" />
+                                Sign Out
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-
     );
-}
+};
 
-export default AccountCard
+export default AccountCard;

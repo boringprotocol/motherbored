@@ -1,12 +1,12 @@
-import { ThemeProvider } from 'next-themes'
 import { SessionProvider } from "next-auth/react";
 import React, { useMemo } from 'react';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import { BackpackWalletAdapter, CoinbaseWalletAdapter, BraveWalletAdapter } from '@solana/wallet-adapter-wallets';
 import { clusterApiUrl } from '@solana/web3.js';
+import { ThemeContextProvider } from "../Themes/themeContext";
+import { ClaimContextProvider } from "../contexts/ClaimContext";
 
-
-import SolanaProviderWrapper from '../components/SolanaProviderWrapper';
+// import SolanaProviderWrapper from '../components/SolanaProviderWrapper';
 
 // import { MetaMaskProviderWrapper } from '../components/MetaMaskProviderWrapper';
 
@@ -29,7 +29,7 @@ Router.events.on("routeChangeStart", nProgress.start);
 Router.events.on("routeChangeError", nProgress.done);
 Router.events.on("routeChangeComplete", nProgress.done);
 
-require('@solana/wallet-adapter-react-ui/styles.css');
+// require('@solana/wallet-adapter-react-ui/styles.css');
 
 // development and production URLs
 const motherboredAppDev = 'http://localhost:3001'; // NODE_ENV=development PORT=3001 npm run dev
@@ -69,13 +69,18 @@ export default function Mothebored({ Component, pageProps: { session, ...pagePro
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
           <SessionProvider session={pageProps.session} refetchInterval={0}>
-            <ThemeProvider attribute="class">
-              <div className="min-h-screen ">
-                <Component {...pageProps} motherboredApp={motherboredApp}
-                  boringProtocol={boringProtocol}
-                  motherboredDocs={motherboredDocs} />
-              </div>
-            </ThemeProvider>
+            <ThemeContextProvider>
+              <ClaimContextProvider>
+                <div className="min-h-screen">
+                  <Component
+                    {...pageProps}
+                    motherboredApp={motherboredApp}
+                    boringProtocol={boringProtocol}
+                    motherboredDocs={motherboredDocs}
+                  />
+                </div>
+              </ClaimContextProvider>
+            </ThemeContextProvider>
           </SessionProvider>
         </WalletModalProvider>
       </WalletProvider>

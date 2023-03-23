@@ -1,25 +1,30 @@
-import { IoDownloadOutline } from "react-icons/io5";
-import Waiting from "../art/waiting";
+import { IoDownloadOutline } from "react-icons/io5"
+import Waiting from "../art/waiting"
 
 const Setup = () => {
   return (
     <>
-      <div className="pt-12">
-        <div className="container  mx-auto  relative">
+
+      <div className="card border-t border-base-200 pt-12">
+        <div className="card-body relative p-8">
           <Waiting />
-          <div className="text-sm  absolute top-0">
-            <h2 className="text-sm mb-2 text-boring-black dark:text-boring-white">Set-up</h2>
-            <p className="text-xs mb-2 text-gray-light dark:text-gray">Flash image to Pi. Join &quot;boring&quot; WiFi network. Create peer. </p>
+          <div className="prose text-xs absolute top-0">
+            <h2 className="card-title text-base">Set-up</h2>
+            <p className="text-xs">Download image and flash to your Raspberry Pi SD card. Join &quot;boring&quot; WiFi network. Create peer. </p>
             <a
               href="https://s3.us-east-2.amazonaws.com/boringfiles.dank.earth/2022-10-26-boring-lite.zip"
-              className="my-6 inline-flex items-center rounded-xs border border-gray dark:border-gray-dark text-xs bg-white dark:bg-black px-3 py-2 text-boring-black dark:text-gray-lightest hover:bg-boring-white hover:opacity-80 active:opacity-60 shadow-md dark:shadow-sm dark:shadow-black active:shadow-sm"
+              className="btn btn-outline btn-outline-bla"
             ><IoDownloadOutline className="mr-2" />Image</a>
             <div>
-              <a className='p-2 text-xs text-gray underline hover:opacity-70 active:opacity-50' href="https://www.raspberrypi.com/software/" target="_blank" rel="noreferrer">Raspberry Pi Imager</a>
+
             </div>
+            <p className='mt-4'>
+              <a href="https://www.raspberrypi.com/software/" target="_blank" rel="noreferrer">Raspberry Pi Imager</a>
+            </p>
           </div>
         </div>
       </div>
+
     </>
   );
 }
