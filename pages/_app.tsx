@@ -1,3 +1,4 @@
+// /pages/_app.tsx
 import { SessionProvider } from "next-auth/react";
 import React, { useMemo } from 'react';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
@@ -5,12 +6,6 @@ import { BackpackWalletAdapter, CoinbaseWalletAdapter, BraveWalletAdapter } from
 import { clusterApiUrl } from '@solana/web3.js';
 import { ThemeContextProvider } from "../Themes/themeContext";
 import { ClaimContextProvider } from "../contexts/ClaimContext";
-
-// import SolanaProviderWrapper from '../components/SolanaProviderWrapper';
-
-// import { MetaMaskProviderWrapper } from '../components/MetaMaskProviderWrapper';
-
-// import { UniversalPrivateKeyProviderWrapper } from '../components/UniversalPrivateKeyProviderWrapper';
 
 import Router from 'next/router';
 import '../styles/global.css';
