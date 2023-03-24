@@ -18,6 +18,8 @@ import ProviderSelector from '../components/ProviderSelector';
 import NewRewardsAlert from '../components/NewRewardsAlert';
 import Waiting from '../components/art/waiting';
 import AccountStats from '../components/AccountStats';
+import CopyToClipboardButton from 'components/CopyToClipboardButton';
+import WomanCanPhone from 'components/art/woman-can-phone';
 
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
@@ -116,8 +118,9 @@ const Dashboard: React.FC<Props> = (props) => {
 
       {/* Main content */}
       <div className="main pt-4 text-xs relative">
-        <div className="absolute top-0 left-0 right-0 bottom-0 -z-50 opacity-20">
-          <Waiting />
+        <div className="absolute top-0 left-0 right-0 bottom-0 -z-50 opacity-50">
+          <WomanCanPhone />
+          {/* <Waiting /> */}
         </div>
 
         {/* <div className='p-12'>
@@ -146,12 +149,12 @@ const Dashboard: React.FC<Props> = (props) => {
               {showProviders ? <IoMdEye className='mr-2' /> : <IoMdEyeOff className='mr-2' />} Nodes
             </button>
 
-            <button
+            {/* <button
               className={`btn btn-outline btn-sm mr-2 ${theme === 'dark' ? 'dark:text-boring-white' : 'text-boring-black'} inline-flex items-center text-xs `}
               onClick={() => setShowClaims(!showClaims)}
             >
               {showClaims ? <IoMdEye className='mr-2' /> : <IoMdEyeOff className='mr-2' />} Claims
-            </button>
+            </button> */}
 
 
           </nav>
@@ -170,11 +173,11 @@ const Dashboard: React.FC<Props> = (props) => {
 
           {/* <StackedBarChart data={data} labels={labels} /> */}
 
-          {showClaims && (
+          {/* {showClaims && (
             <>
               <GetClaims />
             </>
-          )}
+          )} */}
 
           {/* 
           
