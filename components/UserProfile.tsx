@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { User } from '../types';
+import { User } from 'types';
 import { BsLightning } from 'react-icons/bs';
 
 interface Props {

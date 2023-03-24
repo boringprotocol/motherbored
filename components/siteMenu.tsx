@@ -31,6 +31,11 @@ export default function SiteMenu({ boringProtocol }: any) {
           </a>
         </li>
         <li>
+          <a href="/airdrip" className="dropdown-item" onClick={() => handleChange("")}>
+            Airdrip
+          </a>
+        </li>
+        <li>
           <a href="#" className="dropdown-item" onClick={() => handleChange("profile/edit")}>
             Edit Profile
           </a>
