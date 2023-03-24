@@ -1,16 +1,12 @@
+// /components/layout.tsx
 import { getCsrfToken, signIn, useSession } from 'next-auth/react';
 import { SigninMessage } from '../utils/SigninMessage';
 import bs58 from 'bs58';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { MetaMaskInpageProvider } from "@metamask/providers";
-import TextCycle from './TextCycle';
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
-declare global {
-  interface Window {
-    ethereum?: MetaMaskInpageProvider
-  }
-}
+
 
 export default function Layout() {
   const { status } = useSession();
@@ -19,12 +15,21 @@ export default function Layout() {
 
   const handleSolanaSignIn = async () => {
     try {
+      console.log("handleSolanaSignIn called");
       if (!wallet.connected) {
+        console.log("Wallet not connected, opening modal");
         walletModal.setVisible(true);
+      } else {
+        console.log("Wallet connected");
       }
 
       const csrf = await getCsrfToken();
-      if (!wallet.publicKey || !csrf || !wallet.signMessage) return;
+      console.log("CSRF token:", csrf);
+
+      if (!wallet.publicKey || !csrf || !wallet.signMessage) {
+        console.log("Missing required values for signing");
+        return;
+      }
 
       const message = new SigninMessage({
         domain: window.location.host,
@@ -37,41 +42,17 @@ export default function Layout() {
       const signature = await wallet.signMessage(data);
       const serializedSignature = bs58.encode(signature);
 
-      signIn('credentials', {
+      await signIn('credentials', {
         message: JSON.stringify(message),
         redirect: true,
         signature: serializedSignature,
       });
+
+
     } catch (error) {
       console.log(error);
     }
   };
-
-  // const handleMetamaskSignIn = async () => {
-  //   try {
-  //     if (!window.ethereum) {
-  //       console.log('Metamask not found');
-  //       return;
-  //     }
-
-  //     const accounts = await window.ethereum.request({
-  //       method: 'eth_requestAccounts',
-  //     });
-
-  //     if (!accounts || !accounts.length) {
-  //       console.log('No accounts found');
-  //       return;
-  //     }
-
-  //     const address = accounts[0];
-
-  //     signIn('metamask', {
-  //       address,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   return (
     <>
@@ -86,21 +67,9 @@ export default function Layout() {
           <button className="border border-gray p-3" onClick={handleSolanaSignIn}>
             Connect Solana Wallet
           </button>
-          {/* <a className="border border-gray p-3" href="#" onClick={handleMetamaskSignIn}>
-            Connect EVM Wallet
-          </a> */}
 
-          <div id="TextCycle" className="">
-            <TextCycle />
-          </div>
+          {/* <WalletMultiButton /> */}
 
-
-
-          <div className="mt-10">
-            <a href="http://localhost:3002" className="text-sm font-semibold leading-7 text-boring-blue">
-              <span aria-hidden="true">&larr;</span> Back to home
-            </a>
-          </div>
         </main>
 
       </div>
