@@ -1,35 +1,36 @@
-// /components/layout.tsx
-import { getCsrfToken, signIn, useSession } from 'next-auth/react';
-import { SigninMessage } from '../utils/SigninMessage';
-import bs58 from 'bs58';
-import { useWalletModal } from '@solana/wallet-adapter-react-ui';
-import { useWallet } from '@solana/wallet-adapter-react';
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { Fragment, useEffect, useState } from 'react'
+import { useTheme } from 'next-themes'
+import Waiting from './art/waiting'
+import { IoWalletOutline } from 'react-icons/io5'
+import { getCsrfToken, signIn, useSession } from 'next-auth/react'
+import { SigninMessage } from '../utils/SigninMessage'
+import bs58 from 'bs58'
+import { useWalletModal } from '@solana/wallet-adapter-react-ui'
+import { useWallet } from '@solana/wallet-adapter-react'
+import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 
+function classNames(...classes: any) {
+  return classes.filter(Boolean).join(' ')
+}
 
+interface Props {
+  children: React.ReactNode;
+}
 
-export default function Layout() {
-  const { status } = useSession();
+export default function Layout({ children }: Props) {
+
+  const { data: session, status } = useSession();
   const wallet = useWallet();
   const walletModal = useWalletModal();
 
-  const handleSolanaSignIn = async () => {
+  const handleSignIn = async () => {
     try {
-      console.log("handleSolanaSignIn called");
       if (!wallet.connected) {
-        console.log("Wallet not connected, opening modal");
         walletModal.setVisible(true);
-      } else {
-        console.log("Wallet connected");
       }
 
       const csrf = await getCsrfToken();
-      console.log("CSRF token:", csrf);
-
-      if (!wallet.publicKey || !csrf || !wallet.signMessage) {
-        console.log("Missing required values for signing");
-        return;
-      }
+      if (!wallet.publicKey || !csrf || !wallet.signMessage) return;
 
       const message = new SigninMessage({
         domain: window.location.host,
@@ -42,39 +43,63 @@ export default function Layout() {
       const signature = await wallet.signMessage(data);
       const serializedSignature = bs58.encode(signature);
 
-      await signIn('credentials', {
+      signIn("credentials", {
         message: JSON.stringify(message),
         redirect: true,
         signature: serializedSignature,
       });
-
-
     } catch (error) {
       console.log(error);
     }
   };
 
+  useEffect(() => {
+    if (wallet.connected && status === "unauthenticated") {
+      handleSignIn();
+    }
+  }, [wallet.connected, status]);
+
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const [enabled, setEnabled] = useState(false)
+
+
   return (
+
     <>
 
-      <div className="font-jetbrains flex min-h-full flex-col">
 
-        <main className="mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center px-6 py-24 sm:py-64 lg:px-8">
-          <p className="text-base font-semibold leading-8 text-boring-blue">BORING PROTOCOL</p>
-          <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">Motherbored.app</h1>
-          <p className="my-6 text-base leading-7 text-gray-600">Launch Nodes or set-up a <a href="" className="border-b border-dotted">Boring VPN</a> client. </p>
+      <div className="flex items-center justify-center h-screen text-white">
+        <div className="p-4">
+          <div className='font-jetbrains '>
+            {/* <div className='p-2 text-sm '>Boring Protocol</div> */}
+            {/* <div className='p-2 text-xs'>A Private Path</div> */}
+            <Waiting />
+          </div>
 
-          <button className="border border-gray p-3" onClick={handleSolanaSignIn}>
-            Connect Solana Wallet
-          </button>
+          <BrowserView>
+            <a href="#" className="m-4 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={handleSignIn}>
+              <IoWalletOutline className="mr-2" /> Connect Wallet
+            </a>
+          </BrowserView>
 
-          {/* <WalletMultiButton /> */}
+          <MobileView>
+            <a href="#" className="m-4 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={handleSignIn}>
+              <IoWalletOutline className="mr-2" /> Connect Wallet
+            </a>
+            {/* <a className="m-4 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" href="https://phantom.app/ul/browse/https%3A%2F%2Fboring-falcon.netlify.app"><IoWalletOutline className="mr-2" />Connect Phantom</a> */}
+          </MobileView>
 
-        </main>
 
+          <p className="p-4 text-xs text-boring-black dark:text-gray">iOS and Android users should be able to use the Phantom wallet in-app browser to access this Motherbored GUI.  </p>
+          <div className=''>
+          </div>
+
+          <p className="text-xs text-gray"></p>
+        </div>
       </div>
-
-
     </>
+
   );
 }

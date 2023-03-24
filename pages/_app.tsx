@@ -2,7 +2,9 @@
 import { SessionProvider } from "next-auth/react";
 import React, { useMemo } from 'react';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { BackpackWalletAdapter, CoinbaseWalletAdapter, BraveWalletAdapter } from '@solana/wallet-adapter-wallets';
+import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
+import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+import { CoinbaseWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets';
 import { clusterApiUrl } from '@solana/web3.js';
 import { ThemeContextProvider } from "../Themes/themeContext";
 import { ClaimContextProvider } from "../contexts/ClaimContext";
@@ -16,8 +18,6 @@ import '../styles/nprogress.css';
 
 // Notifications
 import '../styles/toast.css';
-import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
-import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
 
 //Progress bar binding events
 Router.events.on("routeChangeStart", nProgress.start);
@@ -50,16 +50,12 @@ export default function Mothebored({ Component, pageProps: { session, ...pagePro
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
   const wallets = useMemo(
     () => [
-      new BackpackWalletAdapter(),
       new CoinbaseWalletAdapter(),
-      new BraveWalletAdapter(),
+      new PhantomWalletAdapter(),
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [network]
+    []
   );
-
   return (
-
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
@@ -80,8 +76,5 @@ export default function Mothebored({ Component, pageProps: { session, ...pagePro
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
-
-
   );
-
 }
