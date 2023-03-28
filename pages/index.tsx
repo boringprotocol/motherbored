@@ -64,8 +64,6 @@ type Props = {
   providers: PeerProps[],
 }
 
-
-
 const Dashboard: React.FC<Props> = (props) => {
 
   const { data: session } = useSession();

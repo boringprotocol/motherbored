@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "peer-social-cards": "node scripts/peer-social-cards/generate-peer-social-cards.js"
+    "peer-social-cards": "node scripts/peer-social-cards/generate-peer-social-cards.js",
+    "update-users": "ts-node scripts/update-users.ts"
   },
   "engines": {
     "npm": ">=7.21.1"
@@ -25,6 +26,7 @@
     "@metamask/providers": "^10.2.1",
     "@metaplex-foundation/js": "^0.15.0",
     "@metaplex/js": "^4.12.0",
+    "@next-auth/prisma-adapter": "^1.0.5",
     "@nextui-org/react": "^1.0.0-beta.10",
     "@notionhq/client": "^2.2.1",
     "@prisma/client": "^4.3.1",
