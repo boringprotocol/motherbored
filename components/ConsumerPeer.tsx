@@ -57,7 +57,7 @@ const ConsumerPeer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
 
   return (
     <div
-      className='card card-bordered cursor-pointer shadow-md  hover:shadow-lg active:shadow-md'
+      className='card card-bordered cursor-pointer shadow-md  hover:shadow-lg active:shadow-md bg-base-100'
       onClick={() => Router.push("/c/[id]", `/c/${peer.id}`)}
     >
       <div className="card-body">

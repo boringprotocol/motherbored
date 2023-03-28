@@ -1,11 +1,11 @@
+// /components/editProfile.tsx
 import { useSession } from 'next-auth/react'
+import { Session } from 'next-auth/core/types';
 import React, { useRef, useState, useEffect } from 'react'
 import { toast } from 'react-toastify';
 import Toast from './Toast';
 import UploadImage from '../components/UploadImage';
-
 import { IoImageOutline, IoPencilOutline, IoPersonOutline } from 'react-icons/io5';
-import { Session } from 'next-auth';
 
 const EditProfile = () => {
 
@@ -20,7 +20,7 @@ const EditProfile = () => {
     const [id, setId] = useState<string>('')
     const [name, setName] = useState<string>('')
     const [bio, setBio] = useState<string>('')
-    const [image, setImage] = useState<string>('')
+    const [image, setImage] = useState<string | null>(null);
     const [publicProfile, setPublicProfile] = useState<boolean>(false);
 
     useEffect(() => {
@@ -44,7 +44,6 @@ const EditProfile = () => {
         fetchUserData()
     }, [wallet])
 
-
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -66,14 +65,19 @@ const EditProfile = () => {
 
             toast.success(
                 <div className="p-4 prose text-sm">
-                    <strong>💃 Success!</strong> Your profile has been updated. <p><a href={`/a/${id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <a>View Public Profile</a>
-                    </a></p>
+                    <strong>💃 Success!</strong> Your profile has been updated.
+                    <p>
+                        {publicProfile ? (
+                            <a href={`/a/${id}`} target="_blank" rel="noopener noreferrer">
+                                View Public Profile
+                            </a>
+                        ) : (
+                            <em className="text-xs">Your profile is set to private"</em>
+                        )}
+                    </p>
                 </div>
             );
+
         } catch (error) {
             console.error(error);
         }
@@ -90,8 +94,8 @@ const EditProfile = () => {
                     <div className="md:grid md:grid-cols-3 md:gap-6">
                         <div className="md:col-span-1">
                             <div className="px-4 sm:px-0">
-                                <h3 className="text-base font-semibold leading-6 text-gray-900">Profile</h3>
-                                <p className="mt-1 text-sm text-gray-600">
+                                <h3 className="">Profile</h3>
+                                <p className="mt-1 text-xs">
                                     This information will be displayed publicly so be careful what you share.
                                 </p>
                                 <a href={`/a/${id}`}
@@ -142,19 +146,18 @@ const EditProfile = () => {
                                         <UploadImage setImage={setImage} wallet={wallet} />
                                     </div>
 
-                                    <div className="flex items-center space-x-2">
-                                        <label htmlFor="publicProfile">Show Public Profile:</label>
-                                        <input
-                                            type="checkbox"
-                                            id="publicProfile"
-                                            checked={publicProfile}
-                                            onChange={(e) => setPublicProfile(e.target.checked ? true : false)}
-                                        />
-                                        <a href="#" className="text-xs text-gray-light">
-                                            What is this?
-                                        </a>
-                                        Your profile will be visible to anyone on the internet.
+                                    <div className="form-control">
+                                        <label className="label cursor-pointer">
+                                            <span className="label-text">Make Profile Public</span>
+                                            <input
+                                                type="checkbox"
+                                                id="publicProfile"
+                                                checked={publicProfile}
+                                                onChange={(e) => setPublicProfile(e.target.checked ? true : false)}
+                                                className="checkbox" />
+                                        </label>
                                     </div>
+
                                 </div>
                                 <div className="px-4 py-3 text-right sm:px-6">
                                     <button

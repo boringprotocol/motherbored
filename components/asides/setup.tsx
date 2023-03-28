@@ -12,7 +12,7 @@ const Setup = () => {
             <h2 className="card-title text-base">Set-up</h2>
             <p className="text-xs">Download image and flash to your Raspberry Pi SD card. Join &quot;boring&quot; WiFi network. Create peer. </p>
             <a
-              href="https://s3.us-east-2.amazonaws.com/boringfiles.dank.earth/2022-10-26-boring-lite.zip"
+              href="https://s3.us-east-2.amazonaws.com/boringfiles.dank.earth/2023-03-24-boring-lite.zip"
               className="btn btn-outline btn-outline-bla"
             ><IoDownloadOutline className="mr-2" />Image</a>
             <div>

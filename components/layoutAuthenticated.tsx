@@ -46,7 +46,7 @@ export default function Layout({ children }: Props) {
 
         {/* Mobile menu */}
         <Transition.Root show={mobileMenuOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-20 lg:hidden " onClose={setMobileMenuOpen}>
+          <Dialog as="div" className="relative z-20 lg:hidden" onClose={setMobileMenuOpen}>
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -59,7 +59,7 @@ export default function Layout({ children }: Props) {
               <div className="fixed inset-0 bg-gray bg-opacity-5" />
             </Transition.Child>
 
-            <div className="fixed inset-0 z-40 flex">
+            <div className="fixed inset-0 z-40 flex ">
               <Transition.Child
                 as={Fragment}
                 enter="transition ease-in-out duration-300 transform"
@@ -69,7 +69,7 @@ export default function Layout({ children }: Props) {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col pt-5 pb-4 bg-boring-white dark:bg-boring-black border-r border-gray-lighterest dark:border-gray-darkest">
+                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col pt-5 pb-4  dark:bg-boring-black border-r border-gray-lighterest dark:border-gray-darkest">
                   <Transition.Child
                     as={Fragment}
                     enter="ease-in-out duration-300"
@@ -85,23 +85,18 @@ export default function Layout({ children }: Props) {
                         className="flex h-12 w-12 items-center justify-center  focus:outline-none focus:ring-2 focus:ring-boring-blue"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        <XMarkIcon className="h-6 w-6 text-boring-black dark:text-boring-white" aria-hidden="true" />
+                        <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                       </button>
                     </div>
                   </Transition.Child>
-                  <div className="flex flex-shrink-0 items-center px-6">
-                    <h1 className="text-xs mt-4 mb-4 font-jetbrains">Boring Protol <span className="text-xs text-gray py-6">pre-beta</span></h1>
-                  </div>
-                  <div className="mt-5 h-0 flex-1 overflow-y-auto px-4 outline">
+                  <div className="mt-11 h-0 flex-1 overflow-y-auto px-4 bg-base-100 border-r border-base-200">
                     <nav className="flex h-full flex-col">
-                      <div className="font-jetbrains space-y-1">
-
+                      <div className="pt-6 font-jetbrains space-y-1">
 
                         <AccountCard />
 
                         <ThemeChanger />
                         <h2 className="text-xs py-4">Boring Protocol dev-preview</h2>
-
 
                         <div className="flex justify-end space-x-4">
                           <SiteMenu />

@@ -1,19 +1,16 @@
 import React, { useState, Fragment } from "react"
 import { GetServerSideProps } from "next"
 import Router from "next/router"
-import Peer, { PeerProps } from "../../components/Peer"
+import { PeerProps } from "../../components/Peer"
 import LayoutAuthenticated from "../../components/layoutAuthenticated"
 import prisma from "../../lib/prisma"
 import { useSession, getSession } from "next-auth/react"
-import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline, IoServerOutline, IoFileTrayFull, IoBugOutline, IoRefreshOutline, IoArrowBack } from "react-icons/io5"
-import { ToastContainer, toast } from 'react-toastify'
+import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline, IoServerOutline, IoFileTrayFull, IoBugOutline, IoRefreshOutline } from "react-icons/io5"
+import { toast } from 'react-toastify'
+import Toast from '../../components/Toast';
 import CountryCodes from "../../data/country_codes"
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import Avatar from "boring-avatars"
-import Link from "next/link"
-import TrafficStats from "../../components/trafficStats"
-import { GetStatsForPubkey, GetPeersForPubkey } from "../../lib/influx"
 
 
 function classNames(...classes: any) {
@@ -81,16 +78,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req, res 
         },
     })
 
-    // we're a provider, return stats and no target
-    if (peer.kind == "provider" && peer.pubkey != null) {
-        const statsData = await GetStatsForPubkey(peer.pubkey)
-        const peerCount5m = await GetPeersForPubkey(peer.pubkey, '5m')
-        const peerCount7d = await GetPeersForPubkey(peer.pubkey, '7d')
-
-        //console.log(statsData)
-        return { props: { peer: peer, stats: statsData, providerPeers: providerPeers, peerCount5m: peerCount5m, peerCount7d: peerCount7d } }
-    }
-
     // somehow we are a consumer with no target, return early w/no target
     if (targetPeer == null || targetPeer.name == null) {
         return { props: { peer: peer, providerPeers: providerPeers } }
@@ -117,10 +104,10 @@ async function deletePeer(id: string): Promise<void> {
         body: JSON.stringify(body),
     });
     if (result.ok) {
-        toast('Peer Deleted', { containerId: 'PeerSavedNotification' })
+        toast.success('Peer Deleted')
     } else {
         // notify("Oh no! We couldn't delete this peer. Try again.");
-        toast('Oh no! We couldnt delete this peer. Try again', { containerId: 'PeerSavedNotification' })
+        toast.error('Oh no! We couldnt delete this peer. Try again')
     }
     await Router.push(`/`);
 }
@@ -131,11 +118,11 @@ async function activatePeer(id: string): Promise<void> {
         method: "PUT",
     });
     if (result.ok) {
-        toast('Great news. Successfully activated!', { containerId: 'PeerSavedNotification' })
+        toast.success('Great news. Successfully activated!')
     } else {
-        toast('Activation failed', { containerId: 'PeerSavedNotification' })
+        toast.error('Activation failed')
     }
-    //await Router.push(`/p/${id}`);
+    //await Router.push(`/c/${id}`);
 }
 
 // download boring.env config file
@@ -162,18 +149,18 @@ async function shovePeerConfig(id: string): Promise<void> {
             if (sendIt.ok) {
                 // notify("We did it! boring.network is configured, please reboot")
 
-                toast('We did it! boring.network is configured, rebooting', { containerId: 'PeerSavedNotification' })
+                toast.success('We did it! boring.network is configured, rebooting')
             } else {
                 // notify("something went wrong trying to configure boring.network")
-                toast('something went wrong trying to configure boring.network', { containerId: 'PeerSavedNotification' })
+                toast.warning('something went wrong trying to configure boring.network')
             }
         } catch {
             // notify("ERROR: dns resolution for boring.surf failed")
-            toast('ERROR: dns resolution for boring.surf failed, are you SURE you connected to boring WiFi?', { containerId: 'PeerSavedNotification' })
+            toast.error('ERROR: dns resolution for boring.surf failed, are you SURE you connected to boring WiFi?')
         }
     } else {
         //notify("ERROR: results were NOT OK")
-        toast('ERROR: results were NOT OK', { containerId: 'PeerSavedNotification' })
+        toast.error('ERROR: results were NOT OK')
     }
 }
 
@@ -195,7 +182,6 @@ const ShowPeer: React.FC<Props> = (props) => {
     }
     const [channel, setChannel] = useState(props.peer.channel);
     const id = props.peer.id;
-
     const wifi_preferences = ["2.4Ghz"] // future support:, "5Ghz"]
     const channels24 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
 
@@ -210,11 +196,11 @@ const ShowPeer: React.FC<Props> = (props) => {
             });
 
             //Peer Saved
-            if (response.ok) { toast('Changes Saved.  Install Config to activate', { containerId: 'PeerSavedNotification' }) }
+            if (response.ok) { toast.success('Changes Saved.  Install Config to activate') }
 
             const resultData = await (response.json()) as any;
             if (response.ok) {
-                await Router.push(`/p/${resultData.id}`);
+                await Router.push(`/c/${resultData.id}`);
 
             } else {
                 await Router.push("/")
@@ -235,16 +221,6 @@ const ShowPeer: React.FC<Props> = (props) => {
         return <div>no session</div>;
     }
 
-    let providerActive = false
-    if (props.peer.pubkey != null) {
-        providerActive = true
-    }
-
-    let isProvider = false
-    if (props.peer.kind == "provider") {
-        isProvider = true
-    }
-
     let isConsumer = false
     if (props.peer.kind == "consumer") {
         isConsumer = true
@@ -259,53 +235,12 @@ const ShowPeer: React.FC<Props> = (props) => {
     }
 
 
-    const notifyA = () => toast('W0w so easy !', { containerId: 'A' });
-    const notifyB = () => toast('Wow so easy !', { containerId: 'B' });
-
-
-    //const {theme} = useTheme()
-
     return (
         <LayoutAuthenticated>
 
-            {/* ToastContainers */}
-            <div>
-                {/* https://fkhadra.github.io/react-toastify/introduction */}
-                {/* One per each toast with a containerID to use */}
-                <ToastContainer enableMultiContainer containerId={'A'} theme={"light"} draggable hideProgressBar={true} position={toast.POSITION.BOTTOM_LEFT} />
-                <ToastContainer enableMultiContainer containerId={'B'} theme={"dark"} position={toast.POSITION.TOP_RIGHT} />
-                <ToastContainer
-                    enableMultiContainer
-                    containerId={'PeerSavedNotification'}
-                    theme={"dark"}
-                    position={toast.POSITION.TOP_CENTER}
-                />
-                {/* Demonstrating the above ToastContainers     */}
-                {/* <button onClick={notifyA}>Notify A !</button>
-            <button onClick={notifyB}>Notify B !</button>   */}
-            </div>
-
-
-            {/* Design tool shows breakpoints on the rendered page */}
-            {/* <div className="flex items-center m-2 fixed bottom-0 right-0 border border-gray-400 rounded p-2 bg-gray-300 text-pink-600 text-sm">
-    Current breakpoint - 
-    <span className="ml-1 sm:hidden md:hidden lg:hidden xl:hidden">default (&lt; 640px)</span>
-    <span className="ml-1 hidden sm:inline md:hidden font-extrabold">sm</span>
-    <span className="ml-1 hidden md:inline lg:hidden font-extrabold">md</span>
-    <span className="ml-1 hidden lg:inline xl:hidden font-extrabold">lg</span>
-    <span className="ml-1 hidden xl:inline 2xl:hidden font-extrabold">xl</span>
-    <span className="ml-1 hidden 2xl:inline font-extrabold">2xl</span>
-</div> */}
-
-
-
-            {/* rows and columns w/ grid */}
-            <div className="p-4"><Link href={"/"}><a className="inline-flex items-center rounded-sm border border-gray-light dark:border-gray-dark text-xs  px-3 py-2 text-gray dark:text-gray-light hover:bg-gray-lightestest dark:hover:bg-gray-dark focus:ring-1 focus:ring-boring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoArrowBack className="mr-2" /> peers </a></Link></div>
-
+            <Toast />
 
             <div className="p-8  xl:pt-0 grid overflow-hidden grid-cols-4 md:grid-cols-6 grid-rows-1 sm:gap-2">
-
-                {/* {props.peer.provider_kind == "cloud" && (<li>provider_kind: {props.peer.provider_kind}</li>)} */}
 
                 <div className="box row-start-1 col-span-4 md:col-span-6 col-start-2 md:col-start-1">
 
@@ -313,29 +248,9 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                 </div>
 
-                <div className="box row-start-1 md:row-start-2 col-start-1 col-span-1 md:col-span-2">
-                    <Avatar
-                        size="100%"
-                        name={peerAvatar}
-                        variant="sunset"
-                        colors={[
-                            "#FB6900",
-                            "#F63700",
-                            "#004853",
-                            "#007E80",
-                            "#00B9BD"]}
-                    />
-                </div>
 
                 <div className=" box col-start-1 col-span-4 sm:col-span-4 ">
-
-                    {/* {isProvider && (
-                        <div className="m-0 md:m-12">
-                            <TrafficStats  {...props} />
-                        </div>
-                    )} */}
                     <form className="px-0 md:px-12" onSubmit={submitData}>
-
                         {/* Label / Friendly Name */}
                         <div className=" bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                             <label htmlFor="name" className="block text-xs text-gray ">
@@ -360,16 +275,10 @@ const ShowPeer: React.FC<Props> = (props) => {
                                             <div className="relative mt-1">
 
                                                 <Listbox.Button className="relative w-full cursor-default rounded-sm border border-none dark:text-boring-white bg-boring-white dark:bg-boring-black py-6 pl-0 text-left  focus:border-blue focus:outline-none focus:ring-none  ">
-                                                    <span className="text-boring-black dark:text-boring-white border-r border-gray-light dark:border-gray-dark pr-4 ">{target.country_code}</span>
-                                                    <span className="float-left pr-3">
-                                                        <Avatar
-                                                            size="30"
-                                                            name={peerAvatar}
-                                                            variant="sunset"
-                                                        />
-                                                    </span>
+
 
                                                     <span className="pl-2 text-boring-black dark:text-boring-white text-sm">{target.name}</span>
+                                                    <span className="text-boring-black dark:text-boring-white border-l border-gray-light dark:border-gray-dark pr-4 ">{target.country_code}</span>
                                                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                                         <ChevronUpDownIcon className="h-5 w-5 text-boring-black dark:text-boring-white" aria-hidden="true" />
                                                     </span>
@@ -382,7 +291,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                                     leaveFrom="opacity-100"
                                                     leaveTo="opacity-0"
                                                 >
-                                                    <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-sm bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                                    <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-sm bg-base-100 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                                         {props.providerPeers.map((pp) => (
                                                             <Listbox.Option
                                                                 key={pp.id}
@@ -398,17 +307,9 @@ const ShowPeer: React.FC<Props> = (props) => {
                                                                 {({ selected, active }) => (
                                                                     <>
                                                                         <span className={classNames(selected ? '' : '', 'block truncate')}>
-                                                                            <span className="text-boring-black dark:text-boring-white border-r border-gray-light dark:border-gray-dark pr-4 text-xs">{pp.country_code}</span>
-
-                                                                            <span className="float-left pr-3 ">
-                                                                                <Avatar
-                                                                                    size="16"
-                                                                                    name={peerAvatar}
-                                                                                    variant="sunset"
-                                                                                />
-                                                                            </span>
 
                                                                             <span className="pl-2 text-boring-black dark:text-boring-white text-sm">{pp.name}</span>
+
                                                                         </span>
 
                                                                         {selected ? (
@@ -442,11 +343,6 @@ const ShowPeer: React.FC<Props> = (props) => {
                         </button>
                         {/* If Provider is active or not yet, show relavant buttons */}
 
-                        {isProvider && !providerActive && (
-
-                            <button className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-boring-blue" onClick={() => activatePeer(props.peer.id)}>Activate</button>
-
-                        )}
                         <button className="mt-4 inline-flex items-center rounded-sm border border-gray dark:border-black text-sm bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-boring-blue" onClick={() => shovePeerConfig(props.peer.id)}>Install Config</button>
 
 
@@ -467,8 +363,6 @@ const ShowPeer: React.FC<Props> = (props) => {
                             <li key={props.peer.id}>Id: {props.peer.id}</li>
                             <li className="capitalize" key={props.peer.kind}>Kind: {props.peer.kind}</li>
                             <li key={props.peer.setupkey}>Boring Setupkey: {props.peer.setupkey}</li>
-                            {/* Only show the pubkey if this is a provider node */}
-                            {props.peer.kind == "provider" && (<li key={props.peer.pubkey}>Boring Pubkey: {props.peer.pubkey}</li>)}
                         </ul>
                     </div>
                 </div>
@@ -634,24 +528,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                             </Listbox>
                         </div>
 
-
-                        {/* <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
-                            <label className="block text-xs text-gray">WiFi Channel</label>
-                            <select
-                                onChange={(e) => setChannel(e.target.value)}
-                                id="channel"
-                                name="channel"
-                                className="mt-1 block w-full rounded-sm border-gray-light py-2 pl-3 pr-10 text-base focus:border-boring-blue focus:outline-none sm:text-sm"
-                            >
-                                <option key={channelNotNull + "channelidthing"} value={channelNotNull}>{channelNotNull + " selected"}</option>
-                                {channels24.map(option => (
-                                    <option key={option + "24channel"} value={option}>{option}</option>
-                                ))}
-                            </select>
-                        </div> */}
-
                         {/* Country Code */}
-                        <p className="pl-2 pt-4 text-gray text-xs">Please choose the country from which this peer will {isProvider && (<>provide</>)}{isConsumer && (<>consume</>)}</p>
                         <div className="bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white border border-gray-lightest dark:border-gray-dark rounded-sm px-3 py-2  focus-within:border-blue focus-within:ring-1 focus-within:ring-blue mt-4">
 
                             <Listbox value={country_code} onChange={setSelectedCountryCode}>

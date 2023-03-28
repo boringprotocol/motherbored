@@ -7,8 +7,6 @@ interface StackedBarChartProps {
   labels: string[];
 }
 
-
-
 const StackedBarChart: React.FC<StackedBarChartProps> = ({ data, labels }) => {
   const chartRef = React.useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
