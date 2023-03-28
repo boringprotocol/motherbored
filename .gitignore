@@ -115,3 +115,6 @@ docs/vultr.md
 
 # Local Netlify folder
 .netlify
+
+# Put shit here that doesn't belong in this project
+shit/*
