@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Waiting from './art/waiting'
 import { IoWalletOutline } from 'react-icons/io5'
 import { getCsrfToken, signIn, useSession } from 'next-auth/react'
@@ -6,7 +6,7 @@ import { SigninMessage } from '../utils/SigninMessage'
 import bs58 from 'bs58'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
-import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
+import { BrowserView, MobileView } from 'react-device-detect';
 import ThemeChanger from './themeChanger'
 
 interface Props {
@@ -31,7 +31,7 @@ export default function Layout({ children }: Props) {
       const message = new SigninMessage({
         domain: window.location.host,
         publicKey: wallet.publicKey?.toBase58(),
-        statement: `Sign this message.`,
+        statement: `Sign this message to access the Motherbored.`,
         nonce: csrf,
       });
 
@@ -57,10 +57,7 @@ export default function Layout({ children }: Props) {
 
 
   return (
-
     <>
-
-
       <div className="flex items-center justify-center h-screen text-base-content">
         <div className="p-4">
           <div className='font-jetbrains '>
@@ -84,6 +81,5 @@ export default function Layout({ children }: Props) {
         </div>
       </div>
     </>
-
   );
 }
