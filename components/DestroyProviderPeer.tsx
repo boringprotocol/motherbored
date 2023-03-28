@@ -17,10 +17,10 @@ const DestroyProviderPeer: React.FC<DestroyProviderPeerProps> = ({ peerId }) => 
       body: JSON.stringify(body),
     });
     if (result.ok) {
-      toast('Peer Deleted', { containerId: 'PeerSavedNotification' })
+      toast.success('Peer Deleted')
     } else {
       // notify("Oh no! We couldn't delete this peer. Try again.");
-      toast('Oh no! We couldnt delete this peer. Try again', { containerId: 'PeerSavedNotification' })
+      toast.error('Oh no! We couldnt delete this peer. Try again')
     }
     await Router.push(`/`);
   }
@@ -30,7 +30,7 @@ const DestroyProviderPeer: React.FC<DestroyProviderPeerProps> = ({ peerId }) => 
       {/* Destroy Peer */}
       <div className="p-8">
 
-        <div className="alert alert-warning">
+        <div className="alert">
 
           <div className="text-boring-black dark:text-boring-white mt-6">
             <div className="px-4 sm:p-6">

@@ -12,19 +12,6 @@
     }
 }
 
-button > * {font-size: 12px!important;}
-/* .wallet-adapter-modal-wrapper > * {font-size: 12px!important;}
-.wallet-adapter-modal-title {font-size: 12px!important;}
-.wallet-adapter-button {font-family: 'JetBrains-Mono-Thin'!important; color: #eee!important;}
-.wallet-adapter-modal-button-close {border: 1px solid #262729!important; background-color: #000!important;}
-.wallet-adapter-modal-wrapper {
-    border: 1px solid #18181a; 
-    background-color: #060607!important;
-    border-radius:2px!important;
-    font-family: 'JetBrains-Mono-Thin'!important;
-} */
-
-
 #eyes {
     animation: flicker 1s infinite;
   }
@@ -41,17 +28,6 @@ button > * {font-size: 12px!important;}
     }
   }
   
-
-    #TextCycle {
-      display: none;
-    }
-  
-    a:hover+#TextCycle {
-      display: block;
-    }
-  
-
-
 /* transitions */
 
 .transition-initial {
@@ -86,23 +62,14 @@ button > * {font-size: 12px!important;}
     /* Change this value to the desired flash color for dark mode */
   }
 
+  :root {
+    --primary-color: var(--color-primary);
+    --base-100-color: var(--color-base-100);
+  }
 
-
-  input, textarea, .card-bordered, .btn, .dropdown, .dropdown-content {border-radius: 3px!important;}
-
-
-    :root {
-      --primary-color: var(--color-primary);
-      --base-100-color: var(--color-base-100);
-    }
-  
-
-
-                .text-primary .flag-image {
-                  stroke: currentColor;
-                }
-        
-
+  .text-primary .flag-image {
+    stroke: currentColor;
+  }
 
 
 .bounce {

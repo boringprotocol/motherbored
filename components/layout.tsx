@@ -1,5 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
-import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
 import Waiting from './art/waiting'
 import { IoWalletOutline } from 'react-icons/io5'
 import { getCsrfToken, signIn, useSession } from 'next-auth/react'
@@ -8,10 +7,7 @@ import bs58 from 'bs58'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ')
-}
+import ThemeChanger from './themeChanger'
 
 interface Props {
   children: React.ReactNode;
@@ -60,26 +56,19 @@ export default function Layout({ children }: Props) {
   }, [wallet.connected, status]);
 
 
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  const [enabled, setEnabled] = useState(false)
-
-
   return (
 
     <>
 
 
-      <div className="flex items-center justify-center h-screen text-white">
+      <div className="flex items-center justify-center h-screen text-base-content">
         <div className="p-4">
           <div className='font-jetbrains '>
-            {/* <div className='p-2 text-sm '>Boring Protocol</div> */}
-            {/* <div className='p-2 text-xs'>A Private Path</div> */}
             <Waiting />
           </div>
-
+          <ThemeChanger />
           <BrowserView>
-            <a href="#" className="m-4 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={handleSignIn}>
+            <a href="#" className="btn btn-outline btn-lg" onClick={handleSignIn}>
               <IoWalletOutline className="mr-2" /> Connect Wallet
             </a>
           </BrowserView>
@@ -88,15 +77,10 @@ export default function Layout({ children }: Props) {
             <a href="#" className="m-4 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" onClick={handleSignIn}>
               <IoWalletOutline className="mr-2" /> Connect Wallet
             </a>
-            {/* <a className="m-4 inline-flex items-center rounded-sm border border-transparent text-xs bg-white px-3 py-2 text-boring-black shadow hover:bg-boring-white" href="https://phantom.app/ul/browse/https%3A%2F%2Fboring-falcon.netlify.app"><IoWalletOutline className="mr-2" />Connect Phantom</a> */}
           </MobileView>
 
+          <p className="p-4 text-xs text-boring-black dark:text-gray">iOS and Android users should be able to use the Phantom wallet in-app browser.</p>
 
-          <p className="p-4 text-xs text-boring-black dark:text-gray">iOS and Android users should be able to use the Phantom wallet in-app browser to access this Motherbored GUI.  </p>
-          <div className=''>
-          </div>
-
-          <p className="text-xs text-gray"></p>
         </div>
       </div>
     </>

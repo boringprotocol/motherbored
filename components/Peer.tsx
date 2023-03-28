@@ -131,8 +131,11 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
   }
 
   return (
-    <a className="" onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}>
-      <div id="peer" className='px-4 pt-6 relative card-bordered'>
+    <div
+      className='card card-bordered cursor-pointer shadow-md  hover:shadow-lg active:shadow-md bg-base-100'
+      onClick={() => Router.push("/p/[id]", `/p/${peer.id}`)}
+    >
+      <div className="card-body">
         <h2 className='text-lg md:text-xl lg:text-2xl px-4 mt-4'>{peer.name}</h2>
         <p className="inline-flex items-center font-jetbrains px-4 text-xs text-gray-500 capitalize">
           {isConsumer && (<IoLaptopOutline className="float-left mr-2" />)}
@@ -157,8 +160,7 @@ const Peer: React.FC<{ peer: PeerProps }> = ({ peer }) => {
           </span>
         </div>
       </div>
-    </a>
-
+    </div>
 
   );
 };

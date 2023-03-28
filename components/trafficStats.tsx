@@ -1,9 +1,8 @@
-import Chart, { ChartDataset, ChartOptions } from 'chart.js/auto';
-import { DateTime } from 'luxon';
-import { TimeSeriesScale } from 'chartjs-adapter-luxon';
+import 'chartjs-adapter-luxon';
+const Moment = require('moment')
 import prettyBytes from 'pretty-bytes';
+import { ChartDataset, ChartOptions } from 'chart.js/auto';
 
-Chart.register(TimeSeriesScale, DateTime);
 
 // import our custom configuration for our chart
 const Config: ChartOptions = {
@@ -13,13 +12,13 @@ const Config: ChartOptions = {
         },
         tooltip: {
             titleFont: {
-                family: 'Jetbrains-Mono-Thin'
+                family: "Jetbrains-Mono-Thin"
             },
             bodyFont: {
-                family: 'Jetbrains-Mono-Thin'
+                family: "Jetbrains-Mono-Thin"
             },
-            cornerRadius: 2
-        }
+            cornerRadius: 2,
+        },
     },
     scales: {
         x: {
@@ -28,8 +27,8 @@ const Config: ChartOptions = {
                 text: 'datetime (UTC)',
                 font: {
                     size: 12,
-                    family: 'JetBrains-Mono-Thin'
-                }
+                    family: "JetBrains-Mono-Thin",
+                },
             },
             adapters: {
                 date: {
@@ -39,12 +38,15 @@ const Config: ChartOptions = {
             stacked: true,
             type: 'time',
             time: {
-                unit: 'day'
+                //displayFormats: {
+                //    day: "D",
+                //},
+                unit: 'day',
             },
             ticks: {
                 font: {
                     size: 12,
-                    family: 'JetBrains-Mono-Thin'
+                    family: "JetBrains-Mono-Thin",
                 }
             }
         },
@@ -54,32 +56,21 @@ const Config: ChartOptions = {
                 text: 'bytes transfered',
                 font: {
                     size: 12,
-                    family: 'JetBrains-Mono-Thin'
-                }
+                    family: "JetBrains-Mono-Thin",
+                },
             },
             stacked: true,
             ticks: {
                 font: {
                     size: 12,
-                    family: 'JetBrains-Mono-Thin'
+                    family: "JetBrains-Mono-Thin",
                 },
                 callback: function (value: any) {
-                    return prettyBytes(value);
+                    return prettyBytes(value)
                 }
-            }
+            },
+
         }
-    },
-    type: 'bar',
-    data: {
-        datasets: [
-            {
-                label: '',
-                data: [],
-                backgroundColor: [],
-                borderColor: [],
-                borderWidth: 1
-            }
-        ]
     }
 };
 
@@ -97,6 +88,7 @@ const TrafficStats = (props: any) => {
         )
     }
 
+    // this was a breakdown by consumer (for sorting):
     props.stats.map((el: any) => {
         if (testdata.has(el.public_key)) {
             testdata.get(el.public_key).values.push({ x: el._time, y: el._value })
@@ -104,6 +96,7 @@ const TrafficStats = (props: any) => {
             testdata.set(el.public_key, { field: el._field, values: [{ x: el._time, y: el._value }] })
         }
     })
+
 
     const datasets: ChartDataset[] = []
 
@@ -119,21 +112,39 @@ const TrafficStats = (props: any) => {
         var borderColor = "#" + pal[counter % pal.length];
         counter += 1
 
+
         const sorted = value.values
 
         datasets.push(
             {
+                // label for our chart (pubkey?)
                 label: "",
                 fill: true,
                 data: sorted,
+                // color of the line chart
                 borderColor: borderColor,
+                // Examples of other values you could use here
+                // partially transparent part below our line graph
                 backgroundColor: borderColor,
+                //borderWidth: 1,
+                //pointRadius: props.pointRadius,
+                //pointHoverRadius: 5,
+                //borderCapStyle: 'butt',
+                //pointHoverBackgroundColor: 'rgba(59, 130, 246, 1)',
+                //pointHoverBorderColor: 'rgba(59, 130, 246, 1)',
+                //pointHoverBorderWidth: 2
                 barThickness: 20,
 
             }
 
         )
     })
+
+    //testdata.forEach((value, key, map) => {
+    //    console.log(key, value.field)
+    //})
+
+    //console.log("datasets", datasets.length)
 
     const data = { datasets: datasets };
 
@@ -145,43 +156,31 @@ const TrafficStats = (props: any) => {
     }
 
     if (props.peerCount5m.length != 0 && props.peerCount5m[0]._value != null) {
-        m5 = props.peerCount7d[0]._value
+        m5 = props.peerCount5m[0]._value
     }
 
+    //   and finally lets return a chart component with our api data and
+    //   config
     return (
         <div>
+
             <div className="chart-container w-full h-full p-2">
-                <Chart type="bar" data={data} options={Config}></Chart>
+                {/* <Chart type='bar' data={data} options={Config} /> */}
             </div>
             <div className="grid">
                 <dl className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-3">
-                    <div
-                        key="connected-peers"
-                        className="overflow-hidden  px-4 py-5 sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white"
-                    >
-                        <dt className="truncate text-xs bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">
-                            Consumers (last 7 days)
-                        </dt>
-                        <dd className="mt-1 text-3xl font-semibold tracking-tight bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">
-                            {d7}
-                        </dd>
+                    <div key="connected-peers" className="overflow-hidden  px-4 py-5 sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white">
+                        <dt className="truncate text-xs bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">Consumers (last 7 days)</dt>
+                        <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">{d7}</dd>
                     </div>
-                    <div
-                        key="connected-peers5"
-                        className="overflow-hidden  px-4 py-5 sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white"
-                    >
-                        <dt className="truncate text-xs bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">
-                            Consumers (now)
-                        </dt>
-                        <dd className="mt-1 text-3xl font-semibold tracking-tight bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">
-                            {m5}
-                        </dd>
+                    <div key="connected-peers5" className="overflow-hidden  px-4 py-5 sm:p-6 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white placeholder-boring-black dark:placeholder-boring-white">
+                        <dt className="truncate text-xs bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">Consumers (now)</dt>
+                        <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 bg-boring-white dark:bg-boring-black text-boring-black dark:text-boring-white">{m5}</dd>
                     </div>
                 </dl>
-            </div>
-        </div>
+            </div >
+        </div >
     );
-
 };
 
 export default TrafficStats;

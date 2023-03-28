@@ -32,26 +32,10 @@ export default function UploadImage({ setImage, wallet }: UploadImageProps) {
     fetchImageUrl();
   }, [wallet, imageUploaded]);
 
-  useEffect(() => {
-    if (imageUploaded) {
-      const fetchNewImageUrl = async () => {
-        try {
-          const res = await fetch(`/api/profile-image-url?wallet=${wallet}`);
-          if (res.ok) {
-            const { url } = await res.json();
-            setImageUrl(url);
-          }
-        } catch (error) {
-          console.error("Error fetching new image URL:", error);
-        }
-      };
-
-      fetchNewImageUrl();
-    }
-  }, [imageUploaded, wallet]);
-
-
   const uploadPhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Set imageUploaded to false when the upload process starts
+    setImageUploaded(false);
+
     const file = e.target.files?.[0]!;
     const fileExtension = file.name.split(".").pop() || "";
     const fileName = `${wallet}.${fileExtension}`;
@@ -111,13 +95,22 @@ export default function UploadImage({ setImage, wallet }: UploadImageProps) {
           <div className="avatar">
             <div className="w-24 rounded-full">
               <img src={imageUrl || "/default-avatar.png"} alt="Profile" />
-
             </div>
           </div>
         </div>
-
       )}
-      <input onChange={uploadPhoto} type="file" accept="image/*" />
+      <div className="form-control w-full max-w-xs">
+        <label className="label">
+          <span className="label-text">Pick an Image</span>
+        </label>
+        <input
+          type="file"
+          className="file-input file-input-bordered w-full max-w-xs"
+          onChange={uploadPhoto}
+          accept="image/*"
+        />
+        <label className="label"></label>
+      </div>
     </>
   );
 }

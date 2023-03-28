@@ -5,8 +5,8 @@ import { PeerProps } from "../../components/Peer"
 import LayoutAuthenticated from "../../components/layoutAuthenticated"
 import prisma from "../../lib/prisma"
 import { useSession, getSession } from "next-auth/react"
-import { IoMapOutline, IoKey, IoDownloadOutline, IoWifiOutline, IoFileTrayFull, IoBugOutline, IoRefreshOutline } from "react-icons/io5"
-import { ToastContainer, toast } from 'react-toastify'
+import { IoKey, IoDownloadOutline, IoWifiOutline, IoFileTrayFull, IoBugOutline, IoRefreshOutline, IoPricetagOutline } from "react-icons/io5"
+import { toast } from 'react-toastify'
 import Toast from '../../components/Toast';
 import CountryCodes from "../../data/country_codes"
 import { Listbox, Transition } from '@headlessui/react'
@@ -15,10 +15,6 @@ import { GetStatsForPubkey, GetPeersForPubkey } from "../../lib/influx"
 import DestroyProviderPeer from "../../components/DestroyProviderPeer"
 import { useQRCode } from 'next-qrcode';
 import useColorQR from "../../helpers/useColorQR"
-import StackedBarChart from "../../components/StackedBarChart"
-import ProviderPeerSetupProgress from "../../components/ProviderPeerSetupProgress"
-
-
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
@@ -181,8 +177,51 @@ const ShowPeer: React.FC<Props> = (props) => {
                 body: JSON.stringify(body),
             });
 
+            // New Config Saved
+            if (response.ok) {
+                toast.success(
+                    <div className="prose text-sm">
+                        <strong>💃 Success!</strong> {props.peer.country_code} Install Config to activate <p><a href={`/a/${id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <button className="btn btn-outline" onClick={() => shovePeerConfig(props.peer.id)}>Install Config</button>
+                        </a></p>
+                    </div>
+                )
+            }
+
+
+            const resultData = await (response.json()) as any;
+            if (response.ok) {
+                await Router.push(`/p/${resultData.id}`);
+
+            } else {
+                await Router.push("/")
+            }
+        } catch (error) {
+            console.error(error);
+            //       notify("ERROR occured while saving settings!");
+        }
+    };
+
+
+    const submitDataEditLabel = async (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        try {
+            const body = { id: id, name: name, label: label, ssid: ssid, country_code: country_code, wifi_preference: wifi_preference, wpa_passphrase: wpa_passphrase, target: target.id, channel: channel };
+            const response = await fetch(`/api/peer/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+            });
+
             //Peer Saved
-            if (response.ok) { toast('Changes Saved.  Install Config to activate', { containerId: 'PeerSavedNotification' }) }
+            if (response.ok) {
+                toast.success(
+                    <><p>Label changed to {props.peer.label}. No need to install a new configuration.</p></>
+                )
+            }
 
             const resultData = await (response.json()) as any;
             if (response.ok) {
@@ -228,23 +267,20 @@ const ShowPeer: React.FC<Props> = (props) => {
         <LayoutAuthenticated>
             <div>
                 <Toast />
-                {/* <div className="px-8">
-                    <ProviderPeerSetupProgress />
-                </div> */}
-                {/* Not activated alert */}
+
                 {isProvider && !providerActive && (
                     <>
                         <div className="p-8">
                             <div className="alert shadow-lg">
                                 <div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-info flex-shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-base-content flex-shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                     <div>
                                         <h3 className="font-bold">Peer Activation</h3>
-                                        <div className="text-xs">Brah, this peer is not avtivated on the network yet.</div>
+                                        <div className="text-xs">This peer is not avtivated on the network yet. You must be connected to "{props.peer.ssid}" Wifi </div>
                                     </div>
                                 </div>
                                 <div className="flex-none">
-                                    <button className="btn btn-sm" onClick={() => activatePeer(props.peer.id)}>Activate</button>
+                                    <button className="btn btn-sm btn-outline" onClick={() => activatePeer(props.peer.id)}>Activate</button>
                                 </div>
                             </div>
                         </div>
@@ -258,16 +294,17 @@ const ShowPeer: React.FC<Props> = (props) => {
                         <h1 className="text-2xl sm:text-5xl lg:text-6xl xl:text-7xl">{name || ""}</h1>
                     </div>
 
-                    {/* Avatar   */}
                     <div className="card row-start-1 md:row-start-2 col-start-1 col-span-1 md:col-span-2">
 
+                        {/* QR   */}
                         <div className="bg-base-100 card card-bordered">
                             <div className="">
                                 <Canvas
                                     text={'https://phantom.app/ul/motherbored.app'}
                                     options={{
                                         level: 'H',
-                                        margin: 4,
+                                        margin: 0,
+                                        width: 250,
                                         color: {
                                             dark: primaryColor,
                                             light: 'ffffff00',
@@ -279,11 +316,9 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                         {/* Install Config / The small print. Details on the node */}
                         <div className="mt-4 prose box row-start-4 md:row-start-3 col-start-1 col-span-2 md:col-span-2">
-                            <h2 className="text-sm">Configuration</h2>
-                            <p className="text-xs">If you have a new configuration to install please be sure you are connected to your device's '{props.peer.ssid}' wifi channel and proceed.</p>
                             <button className="btn btn-outline" onClick={() => shovePeerConfig(props.peer.id)}>Install Config</button>
-                            <div className="col-span-1  mt-12 text-gray">
-                                <ul className="text-xs leading-relaxed">
+                            <div className="col-span-1 mt-12 text-gray">
+                                <ul className="text-xs leading-relaxed list-none p-0">
                                     <li key={props.peer.id}>Id: {props.peer.id}</li>
                                     <li className="capitalize" key={props.peer.kind}>Kind: {props.peer.kind}</li>
                                     <li key={props.peer.setupkey}>Boring Setupkey: {props.peer.setupkey}</li>
@@ -293,45 +328,40 @@ const ShowPeer: React.FC<Props> = (props) => {
                             </div>
                         </div>
 
-
                         {/* Advanced Configuration / Settings */}
-                        <div className="mt-6 py-6 border-t border-b border-gray-lightest dark:border-gray-dark">
+                        <div className="mt-6 py-6">
                             <h2 className="text-xs">Advanced / Helpers (Dev Mode):</h2>
-                            <a className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-boring-blue mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoRefreshOutline className="mr-2" /> Reboot </a><a className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-boring-blue mr-2" href="https://unconfigured.insecure.boring.surf/" target="_blank" rel="noreferrer"><IoBugOutline className="mr-2" /> Debug </a><a className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-boring-blue mr-2" href="https://unconfigured.insecure.boring.surf:19531/browse" target="_blank" rel="noreferrer"> <IoFileTrayFull className="mr-2" /> Logs</a>
-                            <button className="mt-2 inline-flex items-center rounded-sm border border-gray dark:border-black text-xs bg-white px-2 py-1 text-boring-black shadow hover:bg-boring-white focus:ring-1 focus:ring-boring-blue mr-2" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
+                            <a className="btn btn-xs btn-info inline-flex items-center mr-2" href="https://unconfigured.insecure.boring.surf/api/reboot"><IoRefreshOutline className="mr-2" /> Reboot </a><a className="btn btn-xs btn-info inline-flex items-center mr-2" href="https://unconfigured.insecure.boring.surf/" target="_blank" rel="noreferrer"><IoBugOutline className="mr-2" /> Debug </a><a className="btn btn-xs btn-info inline-flex items-center mr-2" href="https://unconfigured.insecure.boring.surf:19531/browse" target="_blank" rel="noreferrer"> <IoFileTrayFull className="mr-2" /> Logs</a>
+                            <button className="btn btn-xs btn-info inline-flex items-center mr-2" onClick={() => downloadPeerConfig(props.peer.id)}><IoDownloadOutline className="mr-2" /> boring.env</button>
                         </div>
-
-
 
                     </div>
 
                     {/* Main */}
                     <div className="card card-bordered col-start-1 col-span-4 sm:col-span-4 p-4 shadow-sm">
 
-
-
-
-
-                        <form className="form" onSubmit={submitData}>
+                        <form className="form" onSubmit={submitDataEditLabel}>
                             <div className="form-control">
                                 <label htmlFor="name" className="label text-xs">
                                     Label
+                                    <IoPricetagOutline className="float-right" />
                                 </label>
-                                <input
-                                    type="text"
-                                    name="label"
-                                    id="label"
-                                    onChange={(e) => setLabel(e.target.value)}
-                                    className="input input-bordered"
-                                    placeholder={label || ""}
-                                />
+                                <div className="input-group">
+                                    <input
+                                        type="text"
+                                        name="label"
+                                        id="label"
+                                        onChange={(e) => setLabel(e.target.value)}
+                                        className="input input-bordered w-full max-w-100"
+                                        placeholder={label || ""}
+                                    />
+                                    <button
+                                        type="submit"
+                                        className="btn btn-square btn-outline">
+                                        Save
+                                    </button>
+                                </div>
                             </div>
-                            <button
-                                type="submit"
-                                className="btn btn-outline btn-sm"
-                            >
-                                Save
-                            </button>
                         </form>
 
                         {/* Wifi Settings */}
@@ -501,15 +531,7 @@ const ShowPeer: React.FC<Props> = (props) => {
 
                     </div>
 
-
-
-
-
                 </div>
-
-                {/* <div className="text-base-200 opacity-10 absolute top-24 -z-50 w-full">
-                    <Flag countryCode={props.peer.country_code} />
-                </div> */}
 
                 <DestroyProviderPeer peerId={props.peer.id} />
 
