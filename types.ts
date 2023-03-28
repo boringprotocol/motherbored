@@ -6,6 +6,7 @@ export type User = {
   ln_address?: string;
   name?: string;
   bio?: string;
+  role?: string;
   image?: string;
   publicProfile: boolean;
   peers: Peer[];

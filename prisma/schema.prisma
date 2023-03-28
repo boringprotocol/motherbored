@@ -44,6 +44,7 @@ model User {
   polygon_wallet String?
   ln_address     String?
   name           String?
+  role           String? // New column
   bio            String?
   image          String?
   publicProfile  Boolean          @default(false)
