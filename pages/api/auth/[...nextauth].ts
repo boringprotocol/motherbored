@@ -102,7 +102,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     },
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
-      async jwt({ token, user }) {
+      async jwt({ token, user }: { token: any; user: any }) {
         console.log("JWT callback");
         if (user) {
           console.log("Adding user info to token");
@@ -111,7 +111,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         }
         return token;
       },
-      async session({ session, token }) {
+      async session({ session, token }: { session: any; token: any }) {
         console.log("Session callback");
         session.publicKey = token.sub;
         if (session.user) {
