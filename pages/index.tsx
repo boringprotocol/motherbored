@@ -72,7 +72,6 @@ const Dashboard: React.FC<Props> = (props) => {
   const { theme } = useTheme();
   const [showConsumers, setShowConsumers] = useState(true);
   const [showProviders, setShowProviders] = useState(true);
-  const [showClaims, setShowClaims] = useState(true);
 
   const data = [
     [10, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76,],
