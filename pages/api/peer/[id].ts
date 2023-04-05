@@ -1,3 +1,4 @@
+// page/api/peer/[id].ts
 import { getSession } from "next-auth/react";
 import prisma from "../../../lib/prisma";
 import { CreateFalconSetupkey, GetFalconToken } from "../../../lib/falcon";

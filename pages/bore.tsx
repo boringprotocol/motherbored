@@ -111,29 +111,12 @@ const WalletPage: React.FC<Props> = (props) => {
 
         {/* <WalletInsights user={session?.user} /> */}
 
-        <div className='mt-8'>
 
-          <div className="avatar mr-4">
-            <div className="w-4 rounded-full mr-1">
-              <img src="/logos/bop.webp" />
-            </div>
-            <p>$BOP: {BopTokenMint.reduce((acc, account) => acc + account.balance, 0)}</p>
-          </div>
-          <div className="avatar mr-4">
-            <div className="w-4 rounded-full mr-1">
-              <img src="/logos/sol.webp" />
-            </div>
-            <p>$SOL: {toSol(props.solBalance)}</p>
-          </div>
-          <div className="avatar">
-            <div className="w-4 rounded-full mr-1">
-              <img src="/logos/usdc.webp" />
-            </div>
-            <p>$USDC: {UsdcTokenMint.reduce((acc, account) => acc + account.balance, 0)}</p>
-          </div>
+        <div className="mt-12 prose">
+          <h1>$BORE</h1>
+          <p className="text-xs mt-12">$BORE is a zero-utility token. We have no plans to support any development of $BORE. It exists simply as a test token that allows us to expirement with our drips and claims distribution systems. We will periodically distribute them to different groups on the Solana chain until all 100,000 are gone. You are free to do whatever you like with these tokens. </p>
         </div>
-        <p>Bore a hole into the limitless reaches of the internet. </p>
-        <SendSolanaSplTokens />
+        {/* <SendSolanaSplTokens /> */}
       </div>
 
     </LayoutAuthenticated>

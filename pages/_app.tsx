@@ -1,4 +1,4 @@
-// /shit/_app.tsx
+// /pages/_app.tsx
 import '../styles/global.css';
 import { SessionProvider } from "next-auth/react";
 import React, { useMemo } from "react";
@@ -12,6 +12,10 @@ import { ClaimContextProvider } from 'contexts/ClaimContext';
 import Router from 'next/router';
 import nProgress from 'nprogress';
 import '../styles/nprogress.css';
+
+import '../styles/toast.css';
+import Breakpoints from 'components/Breakpoints';
+
 
 //Binding events. 
 Router.events.on("routeChangeStart", nProgress.start);

@@ -44,13 +44,38 @@ model User {
   polygon_wallet String?
   ln_address     String?
   name           String?
-  role           String? // New column
-  bio            String?
+  website        String?
+  roleId         Int?
+  role           Role?            @relation(fields: [roleId], references: [id])
+  subscriptionId Int?
+  subscription   Subscription?    @relation(fields: [subscriptionId], references: [id])
+  bio            String?          @db.VarChar(1000)
   image          String?
   publicProfile  Boolean          @default(false)
   peers          Peer[]
   accountHistory AccountHistory[]
   Claim          Claim[]
+  drips          Drip[]
+
+  @@index([roleId])
+  @@index([subscriptionId])
+}
+
+model Drip {
+  id               String    @id @default(cuid())
+  name             String
+  description      String?   @db.VarChar(500)
+  tokenMintAddress String
+  tokenDecimals    Int
+  approved         Boolean   @default(false)
+  startDate        DateTime
+  endDate          DateTime
+  user             User      @relation(fields: [userId], references: [id])
+  userId           String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime? @updatedAt
+
+  @@index([userId])
 }
 
 model Claim {
@@ -109,4 +134,28 @@ model AccountRecordsAverages {
   soft_stake       Float
   poa              Float
   timestamp        DateTime @default(now())
+}
+
+///
+
+model Subscription {
+  id           Int    @id @default(autoincrement())
+  name         String
+  price        Float
+  billingCycle String
+  roles        Role[]
+  users        User[]
+}
+
+model Role {
+  id             Int           @id @default(autoincrement())
+  name           String
+  max_peers      Int
+  max_claims     Int
+  max_drips      Int
+  subscriptionId Int?
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
+  users          User[]
+
+  @@index([subscriptionId])
 }

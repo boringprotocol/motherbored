@@ -12,10 +12,12 @@ const CopyToClipboardButton: React.FC<{ text: string }> = ({ text }) => {
         }, 2000);
     };
 
+
+
     return (
-        <button onClick={handleCopy} title="Copy to Clipboard">
+        <button className="" onClick={handleCopy} title="Copy to Clipboard">
+            <span className="text-xs fixed ml-6">{copied ? 'Copied!' : ''}</span>
             <IoClipboardOutline />
-            {copied ? 'Copied!' : 'Copy to Clipboard'}
         </button>
     );
 };

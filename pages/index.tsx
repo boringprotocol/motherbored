@@ -20,6 +20,7 @@ import Waiting from '../components/art/waiting';
 import AccountStats from '../components/AccountStats';
 import CopyToClipboardButton from 'components/CopyToClipboardButton';
 import WomanCanPhone from 'components/art/woman-can-phone';
+import { PlusIcon } from '@heroicons/react/24/outline';
 
 
 const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
@@ -115,7 +116,7 @@ const Dashboard: React.FC<Props> = (props) => {
 
       {/* Main content */}
       <div className="main pt-4 text-xs relative">
-        <div className="absolute top-0 left-0 right-0 bottom-0 -z-50 opacity-50">
+        <div className="absolute top-0 left-0 right-0 bottom-0 -z-50 opacity-90">
           <WomanCanPhone />
           {/* <Waiting /> */}
         </div>
@@ -131,19 +132,27 @@ const Dashboard: React.FC<Props> = (props) => {
         {/* <CopyToClipboardButton text='hello' /> */}
 
         <div className="px-4 sm:px-8 md:px-12 pb-16">
+
+
+          <div className='my-8'>
+            <NewRewardsAlert walletAddress={''} />
+          </div>
+
           <nav className='mb-4'>
-            <button
-              className={`btn btn-outline btn-sm mr-2 ${theme === 'dark' ? 'dark:text-boring-white' : 'text-boring-black'} inline-flex items-center text-xs`}
-              onClick={() => setShowConsumers(!showConsumers)}
-            >
-              {showConsumers ? <IoMdEye className='mr-2' /> : <IoMdEyeOff className='mr-2' />} Clients
-            </button>
+
 
             <button
-              className={`btn btn-outline btn-sm mr-2 ${theme === 'dark' ? 'dark:text-boring-white' : 'text-boring-black'} inline-flex items-center text-xs `}
+              className={`btn btn-outline btn-sm mr-2 inline-flex items-center text-xs `}
               onClick={() => setShowProviders(!showProviders)}
             >
               {showProviders ? <IoMdEye className='mr-2' /> : <IoMdEyeOff className='mr-2' />} Nodes
+            </button>
+
+            <button
+              className={`btn btn-outline btn-sm mr-2 inline-flex items-center text-xs`}
+              onClick={() => setShowConsumers(!showConsumers)}
+            >
+              {showConsumers ? <IoMdEye className='mr-2' /> : <IoMdEyeOff className='mr-2' />} Clients
             </button>
 
             {/* <button
@@ -157,9 +166,6 @@ const Dashboard: React.FC<Props> = (props) => {
           </nav>
 
 
-          <div className='mb-4'>
-            <NewRewardsAlert walletAddress={''} />
-          </div>
 
 
           {/* <AccountStats /> */}
@@ -211,11 +217,50 @@ const Dashboard: React.FC<Props> = (props) => {
           </div> */}
 
 
+
+
+          {showProviders && (
+            <>
+              <h2 className="mb-2 text-sm">Network Nodes</h2>
+              {/*  */}
+              <ul role="list" className=" pb-12 grid grid-cols-1 gap-6 md:grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2">
+                {props.providers.map((providers) => (
+                  <li key={providers.name} className="">
+                    <Peer peer={providers} />
+                  </li>
+                ))}
+                <li>
+                  <button
+                    type="button"
+                    className="relative block w-full rounded-md border border-dotted border-base-300 p-12 text-center "
+                  >
+                    <svg
+                      className="mx-auto h-12 w-12 text-base-content"
+                      stroke="currentColor"
+                      fill="none"
+                      viewBox="0 0 48 48"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6"
+                      />
+                    </svg>
+                    <span className="mt-2 block text-sm font-semibold text-gray-900">Create a new Node</span>
+                  </button>
+                </li>
+              </ul>
+            </>
+          )}
+
+
           {showConsumers && (
             <>
               <h2 className="mb-2 text-sm">Boring VPN Clients</h2>
 
-              <ul role="list" className="pb-12 grid grid-cols-2 gap-6 md:grid-cols-4 2xl:grid-cols-6">
+              <ul role="list" className="pb-12 grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-4">
                 {props.consumers.map((consumer) => (
                   <li key={consumer.name}>
                     <ConsumerPeer peer={consumer} />
@@ -227,20 +272,6 @@ const Dashboard: React.FC<Props> = (props) => {
                     <ConsumerPeer peer={consumer} />
                   </li>
                 ))} */}
-              </ul>
-            </>
-          )}
-
-          {showProviders && (
-            <>
-              <h2 className="mb-2 text-sm">Network Nodes</h2>
-              {/*  */}
-              <ul role="list" className=" pb-12 grid grid-cols-2 gap-6 md:grid-cols-2 2xl:grid-cols-6">
-                {props.providers.map((providers) => (
-                  <li key={providers.name} className="">
-                    <Peer peer={providers} />
-                  </li>
-                ))}
               </ul>
             </>
           )}

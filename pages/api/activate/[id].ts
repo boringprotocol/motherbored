@@ -1,3 +1,4 @@
+// page/api/activity/[id].ts
 import { getSession } from "next-auth/react";
 import { FalconGetPeers, GetFalconToken } from "../../../lib/falcon";
 import prisma from "../../../lib/prisma";

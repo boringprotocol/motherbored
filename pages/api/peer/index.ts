@@ -1,3 +1,4 @@
+// page/api/peer/index.ts
 import { getSession } from "next-auth/react";
 import prisma from "../../../lib/prisma";
 import fetch from "node-fetch";

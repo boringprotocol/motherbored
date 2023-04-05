@@ -6,8 +6,13 @@ import { toast } from 'react-toastify';
 import Toast from './Toast';
 import UploadImage from '../components/UploadImage';
 import { IoImageOutline, IoPencilOutline, IoPersonOutline } from 'react-icons/io5';
+import { MarkdownPreview } from './MarkdownPreview';
+import { BsFillQuestionCircleFill } from 'react-icons/bs';
+import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 const EditProfile = () => {
+
+    const charLimit = 500;
 
     const saveButton = useRef<HTMLButtonElement>(null);
 
@@ -22,6 +27,7 @@ const EditProfile = () => {
     const [bio, setBio] = useState<string>('')
     const [image, setImage] = useState<string | null>(null);
     const [publicProfile, setPublicProfile] = useState<boolean>(false);
+    const [showMarkdownPreview, setMarkdownPreview] = useState(false);
 
     useEffect(() => {
         async function fetchUserData() {
@@ -43,6 +49,13 @@ const EditProfile = () => {
 
         fetchUserData()
     }, [wallet])
+
+    useEffect(() => {
+        if (bio.length > charLimit) {
+            setBio((prevBio) => prevBio.slice(0, charLimit));
+        }
+    }, [bio]);
+
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -68,7 +81,7 @@ const EditProfile = () => {
                     <strong>💃 Success!</strong> Your profile has been updated.
                     <p>
                         {publicProfile ? (
-                            <a href={`/a/${id}`} target="_blank" rel="noopener noreferrer">
+                            <a className="link" href={`/a/${id}`} target="_blank" rel="noopener noreferrer">
                                 View Public Profile
                             </a>
                         ) : (
@@ -94,24 +107,43 @@ const EditProfile = () => {
                     <div className="md:grid md:grid-cols-3 md:gap-6">
                         <div className="md:col-span-1">
                             <div className="px-4 sm:px-0">
-                                <h3 className="">Profile</h3>
-                                <p className="mt-1 text-xs">
-                                    This information will be displayed publicly so be careful what you share.
-                                </p>
+
+
+
+                                < div >
+
+                                    <UploadImage setImage={setImage} wallet={wallet} />
+                                </div>
+
+
                                 <a href={`/a/${id}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    <a>View Public Profile</a>
+                                    <a className="link">View Public Profile</a>
                                 </a>
+
+                                <div className="form-control">
+                                    <label className="label cursor-pointer">
+                                        <span className="label-text">Make Profile Public</span>
+                                        <input
+                                            type="checkbox"
+                                            id="publicProfile"
+                                            checked={publicProfile}
+                                            onChange={(e) => setPublicProfile(e.target.checked ? true : false)}
+                                            className="checkbox checkbox-xs" />
+                                    </label>
+                                </div>
                             </div>
+
+
                         </div>
                         <div className="mt-5 md:col-span-2 md:mt-0">
                             <div className="shadow sm:overflow-hidden sm:rounded-md">
                                 <div className="space-y-6 px-4 py-5 sm:p-6">
                                     <div className="grid grid-cols-3 gap-6">
                                         <div className="col-span-3 sm:col-span-2">
-                                            <label htmlFor="name" className="block text-xs">
+                                            <label htmlFor="name" className="block text-xs mb-2">
                                                 <IoPersonOutline className="inline-block mr-1" /> Display Name
                                             </label>
                                             <input
@@ -125,40 +157,61 @@ const EditProfile = () => {
                                         </div>
                                     </div>
 
-                                    <div>
-                                        <label htmlFor="bio" className="block text-xs">
+                                    <div className="divider"></div>
+                                    <div className=''>
+
+
+
+
+                                    </div>
+
+                                    <div className='form-control'>
+                                        {/* <label htmlFor="bio" className="block text-xs">
                                             <IoPencilOutline className="inline-block mr-1" /> Bio
                                         </label>
+                                        <label htmlFor="bio" className="block text-xs">
+                                            <IoPencilOutline className="inline-block mr-1" /> Bio
+                                        </label> */}
+                                        <label className="label text-xs">
+                                            <span className="label-text text-xs"><IoPencilOutline className="inline-block" /> Bio</span>
+                                            <span className="label-text-alt">Markdown Support <label htmlFor="my-modal-6" className='btn btn-xs btn-ghost btn-circle'><BsFillQuestionCircleFill /></label></span>
+                                        </label>
+
                                         <textarea
                                             id="bio"
-                                            className="textarea textarea-bordered w-full h-32 text-xs"
+                                            className="textarea textarea-bordered w-full h-32 text-sm"
                                             placeholder="Your Bio"
                                             value={bio}
+                                            maxLength={charLimit}
                                             onChange={(e) => setBio(e.target.value)}
                                         />
+                                        <div className="text-right text-xs text-base-300 my-2">
+                                            {bio.length}/{charLimit} Chars
+                                        </div>
+                                        <a
+                                            className={`btn btn-xs btn-outline`}
+                                            onClick={() => setMarkdownPreview(!showMarkdownPreview)}
+                                        >
+                                            {showMarkdownPreview ? <IoMdEye className='mr-2' /> : <IoMdEyeOff className='mr-2' />} Preview
+                                        </a>
                                     </div>
 
 
-                                    <div>
-                                        <label htmlFor="image" className="block text-xs">
-                                            <IoImageOutline className="inline-block mr-1" /> Profile Image
-                                        </label>
-                                        <UploadImage setImage={setImage} wallet={wallet} />
-                                    </div>
 
-                                    <div className="form-control">
-                                        <label className="label cursor-pointer">
-                                            <span className="label-text">Make Profile Public</span>
-                                            <input
-                                                type="checkbox"
-                                                id="publicProfile"
-                                                checked={publicProfile}
-                                                onChange={(e) => setPublicProfile(e.target.checked ? true : false)}
-                                                className="checkbox" />
-                                        </label>
-                                    </div>
+                                    {showMarkdownPreview && (
+
+                                        <><div className="mt-24 card card-bordered p-4">
+                                            <h3 className='text-left mb-2 text-base-300'>Markdown Preview</h3>
+                                            <MarkdownPreview value={bio} />
+                                        </div>
+                                        </>
+
+                                    )}
 
                                 </div>
+
+
+
                                 <div className="px-4 py-3 text-right sm:px-6">
                                     <button
                                         className="btn btn-md btn-outline hover:scale-105 transition-transform duration-200 cursor-pointer"
@@ -167,12 +220,36 @@ const EditProfile = () => {
                                     >
                                         Save
                                     </button>
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
+            </div >
+
+            {/* Put this part before </body> tag */}
+            < input type="checkbox" id="my-modal-6" className="modal-toggle" />
+            <div className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg">Markdown Support</h3>
+                    <p className="py-4">The <span className="font-extrabold">strong</span> dog was <a className="link" href="https://youtube.com/shorts/ammQh9u-c9E?feature=share">cathandled</a> by a <em>dangerous</em> animal. </p>
+                    <ul className="py-4">
+                        <li>**bold text**</li>
+                        <li>_italicised text_</li>
+                        <li>Link: [Link Name](https://example.com)</li>
+                        <li>etc...</li>
+                    </ul>
+                    <a className="link" href="https://github.com/tchapi/markdown-cheatsheet">Markdown Cheatsheet</a>
+
+                    <div className="modal-action">
+                        <label htmlFor="my-modal-6" className="btn">Ok</label>
+                    </div>
+                </div>
             </div>
+
+
         </>
     );
 

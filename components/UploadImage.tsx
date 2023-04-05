@@ -1,5 +1,6 @@
 // /components/UploadImage.tsx
 import React, { useState, useEffect } from "react";
+import { IoImageOutline } from "react-icons/io5";
 
 interface UploadImageProps {
   setImage: (url: string) => void;
@@ -100,12 +101,12 @@ export default function UploadImage({ setImage, wallet }: UploadImageProps) {
         </div>
       )}
       <div className="form-control w-full max-w-xs">
-        <label className="label">
-          <span className="label-text">Pick an Image</span>
+        <label htmlFor="image" className="block text-xs">
+          <IoImageOutline className="inline-block mr-1" /> Profile Image
         </label>
         <input
           type="file"
-          className="file-input file-input-bordered w-full max-w-xs"
+          className="file-input file-input-bordered file-input-sm w-full max-w-xs"
           onChange={uploadPhoto}
           accept="image/*"
         />

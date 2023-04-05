@@ -11,7 +11,6 @@ module.exports = {
 
 
   theme: {
-
     extend: {
       fontFamily: {
         jetbrains: 'JetBrains-Mono-Thin'

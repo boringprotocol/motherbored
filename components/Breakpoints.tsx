@@ -1,10 +1,10 @@
-{/* Design tool shows CSS breakpoints on the rendered page */}
+{/* Design tool shows CSS breakpoints on the rendered page */ }
 const Breakpoints = () => {
-    return ( 
+    return (
         <>
 
-         <div className="flex items-center m-2 fixed bottom-0 right-0 border border-gray-400 rounded p-2 bg-boring-white text-pink-600 text-sm z-50">
-                Current breakpoint - 
+            <div className="flex items-center m-2 fixed bottom-0 right-0 border border-gray-400 rounded p-2 bg-boring-white text-pink-600 text-sm z-50">
+                Current breakpoint -
                 <span className="ml-1 sm:hidden md:hidden lg:hidden xl:hidden">default (&lt; 640px)</span>
                 <span className="ml-1 hidden sm:inline md:hidden font-extrabold">sm</span>
                 <span className="ml-1 hidden md:inline lg:hidden font-extrabold">md</span>
@@ -13,7 +13,7 @@ const Breakpoints = () => {
                 <span className="ml-1 hidden 2xl:inline font-extrabold">2xl</span>
             </div>
         </>
-     );
+    );
 }
 
 export default Breakpoints;

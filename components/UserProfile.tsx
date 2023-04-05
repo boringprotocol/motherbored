@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { User } from 'types';
+import { User, Drip, Claim, Peer } from 'types';
 import { BsLightning } from 'react-icons/bs';
+import Link from 'next/link';
+import CopyToClipboardButton from './CopyToClipboardButton';
 
 interface Props {
   user: User;
@@ -31,6 +33,8 @@ const UserProfile = ({ user }: Props) => {
     return <div>This user's profile is not public</div>;
   }
 
+  console.log(user);
+
   return (
     <>
       <div className="font-jetbrains">
@@ -39,14 +43,7 @@ const UserProfile = ({ user }: Props) => {
           <div className="w-full lg:w-4/12 px-4 mx-auto">
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-md rounded-sm mt-16">
               <div className="px-6">
-                <div className="flex flex-wrap justify-center">
-                  <div className="w-full px-4 flex justify-center">
-                    <div className="relative">
-                      <img alt="..." src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg" className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px" />
-                    </div>
-                  </div>
 
-                </div>
                 <div className="text-center mt-12">
                   <h3 className="text-xl font-semibold leading-normal mb-2 text-blueGray-700">
                     {user.name}
@@ -60,7 +57,7 @@ const UserProfile = ({ user }: Props) => {
 
                 </div>
 
-                <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
+                <div className="mt-10 py-10">
                   <div className="flex flex-wrap justify-center">
                     <div className="w-full lg:w-9/12 px-4">
                       <p className="mb-4 text-xs">
@@ -69,7 +66,45 @@ const UserProfile = ({ user }: Props) => {
                       <p className="mb-4 text-xs text-left"><span className="float-left mr-2"><BsLightning /></span>{user.ln_address}</p>
                     </div>
                     <p className="text-xs">{user.wallet}</p>
+                    <CopyToClipboardButton text={user.wallet} />
+                    <p className="text-xs">{user.website}</p>
                   </div>
+
+
+                  <div className="w-full px-4 mx-auto">
+
+                    <h2 className="text-sm mb-4">Nodes</h2>
+                    {user.peers && user.peers.length > 0 ? (
+                      user.peers
+                        .filter((peer: Peer) => peer.kind === 'provider')
+                        .map((peer: Peer) => (
+                          <div key={peer.id} className="mb-4 text-xs">
+                            <Link href={`/peer/${peer.id}`}>{peer.name}</Link>
+                            {peer.country_code}
+                          </div>
+                        ))
+                    ) : (
+                      <p>No peers available.</p>
+                    )}
+
+
+                    <h2 className="text-sm mb-4">Drips</h2>
+                    {user.drips && user.drips.length > 0 ? (
+                      user.drips
+                        .filter((drip: Drip) => drip.approved === true)
+                        .map((drip: Drip) => (
+                          <div key={drip.id} className="mb-4 text-xs">
+                            <Link href={`/drip/${drip.id}`}>{drip.name}</Link>
+                          </div>
+                        ))
+                    ) : (
+                      <p>No drips available.</p>
+
+                    )}
+
+                  </div>
+
+
                 </div>
               </div>
             </div>
@@ -80,6 +115,5 @@ const UserProfile = ({ user }: Props) => {
     </>
   );
 };
-
 
 export default UserProfile;

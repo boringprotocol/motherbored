@@ -32,7 +32,7 @@ async function getTokenAccounts(wallet: string, solanaConnection: Connection) {
 
   );
 
-  console.log(`Found ${accounts.length} token account(s) for wallet ${wallet}.`);
+  // console.log(`Found ${accounts.length} token account(s) for wallet ${wallet}.`);
 
   return accounts.map((account) => {
     //Parse the account data
@@ -41,9 +41,10 @@ async function getTokenAccounts(wallet: string, solanaConnection: Connection) {
     const balance: number = parsedAccountInfo["parsed"]["info"]["tokenAmount"]["uiAmount"];
 
     //Log results
-    console.log(`Token Account: ${account.pubkey.toString()}`);
-    console.log(`--Token Mint: ${mintAddress}`);
-    console.log(`--Token Balance: ${balance}`);
+    // console.log(`Token Account: ${account.pubkey.toString()}`);
+    // console.log(`--Token Mint: ${mintAddress}`);
+    // console.log(`--Token Balance: ${balance}`);
+    console.log('this the wallet page dawg')
 
     return { pubkey: account.pubkey.toString(), mintAddress, balance };
   });
@@ -56,6 +57,8 @@ const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     res.statusCode = 403;
     return { props: { tokenAccounts: [], solBalance: 0 } }
   }
+
+  console.log('session', session.user.name)
 
   const walletPublicKey = session?.user ? new PublicKey(session.user.name) : new PublicKey('');
   const rpcEndpoint = 'https://flashy-newest-sponge.solana-mainnet.quiknode.pro/';

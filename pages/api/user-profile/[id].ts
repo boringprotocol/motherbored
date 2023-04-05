@@ -1,4 +1,3 @@
-// /api/user-profile/[id].ts
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
 import { User } from "../../../types";
@@ -11,6 +10,11 @@ export default async function handle(
   const user = await prisma.user.findUnique({
     where: {
       id: id as string,
+    },
+    include: {
+      drips: true, // Include the related drips for the user
+      Claim: true, // Include the related Claims for the user
+      peers: true, // Include the related peers for the user
     },
   });
 

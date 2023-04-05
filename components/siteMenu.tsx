@@ -18,7 +18,7 @@ export default function SiteMenu({ boringProtocol }: any) {
   return (
     <div className="dropdown">
       {/* {currentPage} */}
-      <button className="btn btn-outline btn-xs gap-2">
+      <button className="btn btn-ghost btn-xs gap-2">
         Site Menu
         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
@@ -38,11 +38,6 @@ export default function SiteMenu({ boringProtocol }: any) {
         <li>
           <a href="#" className="dropdown-item" onClick={() => handleChange("profile/edit")}>
             Edit Profile
-          </a>
-        </li>
-        <li>
-          <a href="#" className="dropdown-item" onClick={() => handleChange("profile")}>
-            Profile
           </a>
         </li>
         <li>
