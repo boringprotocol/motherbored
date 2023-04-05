@@ -8,3 +8,4 @@ declare module "@faker-js/faker";
 declare module "react-table";
 declare module "d3";
 declare module "topojson-client";
+declare module "react-rain-animation";

@@ -13,8 +13,11 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { GetStatsForPubkey, GetPeersForPubkey } from "../../lib/influx"
 import DestroyProviderPeer from "../../components/DestroyProviderPeer"
-import { useQRCode } from 'next-qrcode';
 import useColorQR from "../../helpers/useColorQR"
+import { BsFillQuestionCircleFill } from "react-icons/bs"
+import StackedBarChart from "components/StackedBarChart"
+
+
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
@@ -150,8 +153,21 @@ async function shovePeerConfig(id: string): Promise<void> {
 
 const ShowPeer: React.FC<Props> = (props) => {
 
-    const { primaryColor, bgColor } = useColorQR();
-    const { Canvas } = useQRCode();
+    const data = [
+        [10, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76,],
+        [15, 25, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 20, 30, 10, 20, 35, 20, 30, 56, 67, 76, 10, 20, 30, 10, 20, 30, 56, 67, 76, 20, 30, 10, 20,],
+        [20, 30, 40],
+        [25, 35, 45],
+        [30, 40, 50],
+        [35, 45, 55],
+        [40, 50, 60]
+    ];
+    // console.log("data", data)
+
+
+    const labels = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 7', 'Day 7', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 7', 'Day 7', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 7', 'Day 7', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 7', 'Day 7', 'Day 7', 'Day 7', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 7', 'Day 7', 'Day 7', 'Day 7', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 7', 'Day 7', 'Day 7', 'Day 7', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 7', 'Day 7'];
+    // console.log("labels", labels)
+
     const [name] = useState(props.peer.name);
     const [label, setLabel] = useState(props.peer.label);
     const [ssid, setSSID] = useState(props.peer.ssid);
@@ -287,17 +303,25 @@ const ShowPeer: React.FC<Props> = (props) => {
                     </>
                 )}
 
+
+
+
                 <div className="p-8 xl:pt-0 grid overflow-hidden grid-cols-4 md:grid-cols-6 grid-rows-1 sm:gap-2">
 
                     {/* Name */}
                     <div className="row-start-1 col-span-4 md:col-span-6 col-start-2 md:col-start-1 py-8">
                         <h1 className="text-2xl sm:text-5xl lg:text-6xl xl:text-7xl">{name || ""}</h1>
+
+                        <StackedBarChart data={data} labels={labels} />
+
                     </div>
+
+
 
                     <div className="card row-start-1 md:row-start-2 col-start-1 col-span-1 md:col-span-2">
 
                         {/* QR   */}
-                        <div className="bg-base-100 card card-bordered">
+                        {/* <div className="bg-base-100 card card-bordered">
                             <div className="">
                                 <Canvas
                                     text={'https://phantom.app/ul/motherbored.app'}
@@ -312,7 +336,7 @@ const ShowPeer: React.FC<Props> = (props) => {
                                     }}
                                 />
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Install Config / The small print. Details on the node */}
                         <div className="mt-4 prose box row-start-4 md:row-start-3 col-start-1 col-span-2 md:col-span-2">
@@ -363,6 +387,32 @@ const ShowPeer: React.FC<Props> = (props) => {
                                 </div>
                             </div>
                         </form>
+
+
+                        {/* The button to open modal */}
+                        <label htmlFor="my-modal-6" className="btn btn-sm btn-ghost btn-circle"><BsFillQuestionCircleFill /></label>
+
+                        {/* Put this part before </body> tag */}
+                        <input type="checkbox" id="my-modal-6" className="modal-toggle" />
+                        <div className="modal modal-bottom sm:modal-middle">
+                            <div className="modal-box">
+                                <h3 className="text-md">Exclude from <a className="link" href="https://boringprotocol.io/directory">Public Directory</a></h3>
+                                <a className="link">I'm a simple link</a>
+                                <p className="py-4 text-sm">Your node will not be listed in the public directory and also will not be included in the default list of providers on the consumer connection page. </p>
+                                <p className="py-4 text-sm">It will remain accessible however, to those who know the name and enter into the search. In the near future it will be possible to completely shut off access accept to a whitelist you can manage yourself, making it possible to manage your own private network.</p>
+                                <p>Meanwhile you may wish to attempt to lessen the traffic for whatever reason. Note, that peers excluded from the public directory are not receiving Platform Incentive Rewards. </p>
+                                <div className="modal-action">
+                                    <label htmlFor="my-modal-6" className="btn">Ok</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="form-control">
+                            <label className="label cursor-pointer">
+                                <span className="label-text">Exclude from Public Directory</span>
+                                <input type="checkbox" className="toggle" />
+                            </label>
+                        </div>
 
                         {/* Wifi Settings */}
                         <div className="card card-bordered mt-12 p-4">

@@ -1,4 +1,5 @@
 // /pages/a/[id].tsx
+import Layout from 'components/layout';
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
 import UserProfile from '../../components/UserProfile';
@@ -44,7 +45,12 @@ const UserProfilePage = ({ user }: ServerSideProps) => {
     return <div>User not found.</div>;
   }
 
-  return <UserProfile user={user} />;
+  return (
+    <Layout>
+      <UserProfile user={user} />
+    </Layout>
+  );
+
 };
 
 export default UserProfilePage;

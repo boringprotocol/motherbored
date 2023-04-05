@@ -6,7 +6,7 @@ import React from 'react'
 import Head from 'next/head'
 import EditProfile from '../../../components/editProfile'
 
-const ProfilePage: React.FC<Props> = ({ user }) => {
+const ProfilePage: React.FC = () => {
 
     const session = useSession();
 

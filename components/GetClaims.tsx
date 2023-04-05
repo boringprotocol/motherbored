@@ -220,7 +220,7 @@ function GetClaims() {
     <div>
       {/* <h3 className="text-sm mt-6 mb-2">Unclaimed Rewards</h3> */}
 
-      <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4">
         {state.claims
           .filter((claim: Claim) => !claim.claimed)
           .map((claim: Claim) => {
@@ -258,7 +258,7 @@ function GetClaims() {
                   </p>
 
                   <button
-                    className="btn btn-xs btn-outline"
+                    className="btn btn-xs btn-secondary btn-outline"
                     onClick={() => {
                       console.log("Clicked claim button with ID:", claim.id);
                       handleProcessClaim(claim.id);
