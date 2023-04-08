@@ -48,7 +48,7 @@
     "CojKKtJMg94Gx75NG4sPpVLngZDtLG9KHNfrg2Liqzu3": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 923.8381817057145
+      "soft_stake": 107.1430179628571
     },
     "oyja18UadrHNEuDxYzUr4mgyLSe81WdN8uBCoyGbK6V": {
       "provider_cloud": 0,
@@ -153,12 +153,12 @@
     "DDpEfL9tVAAihYcM6TsLzgJ8dpnd1HJ67HcY9G3XKrTe": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 209000.0000927001
+      "soft_stake": 214114.0246718315
     },
     "EPkq5QsPJsthJtCpuusD6ktxZZJsYuwQsFgpP7ywE8CK": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 300503.5129940243
+      "soft_stake": 267717.7987083099
     },
     "2XFE7JNBCfQovBAR6dzssmzwg6ExrZgvbaRtvDJ6h84p": {
       "provider_cloud": 0,
@@ -183,7 +183,7 @@
     "A8Va3CthQSt6LmKC6StxkTqDwak7oXxfzf2udeW2UWu1": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 0.00009624000000000003
+      "soft_stake": 0.0001067328571428572
     },
     "CVjwPVFAa5NzwMR28rMwUxMkzeLerUB4bWkg77q21DUe": {
       "provider_cloud": 0,
@@ -203,7 +203,7 @@
     "AAVZ7mL4t7TuvXE88jecMT5om5bfXGNUiJDE97utrzM3": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 44525.75001649
+      "soft_stake": 44202.48215816928
     },
     "4JNP8nkGtXnMSoMFUfL5ZK6eFR2tqscdGk6gn2rM23HB": {
       "provider_cloud": 0,
@@ -318,12 +318,12 @@
     "2xJWZPfJHtqWkecJ7WYFJwd6M8iYrZV59a8SttaatEwG": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 6263.193849972144
+      "soft_stake": 6382.000893810001
     },
     "2AiasqiJDhdeYManD21fqKop1mhE6kDWCCW6LKGgLqBc": {
       "provider_cloud": 0,
-      "provider_local": 1,
-      "soft_stake": 8589
+      "provider_local": 0,
+      "soft_stake": 0.00002464999999999999
     },
     "9UWKnBW7DeJkgeGrEYbmnVXcZZfNUei6HabqNZRNQiTT": {
       "provider_cloud": 0,
@@ -341,7 +341,7 @@
       "soft_stake": 9650
     },
     "BYELTX7WWU4ra4PdA3CBy6NbHNFcttjQCs3Nr7LmduYM": {
-      "provider_cloud": 7,
+      "provider_cloud": 4.5,
       "provider_local": 2,
       "soft_stake": 163757.19965905
     },
@@ -408,12 +408,12 @@
     "BRLpvQCoqWjH4osrueoeQk4gofTT7kmJVgBoPg1aKApx": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 10769.81522857429
+      "soft_stake": 9983.391654508569
     },
     "HrHjoFS4JutzPPKS5FD751vDktdEesg37mPBjR4BdoaK": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 43411.16788644856
+      "soft_stake": 43440.71739567572
     },
     "FP86A2sihChyu11nboDN3T98jEsnkEh2tjHAxUW77iPX": {
       "provider_cloud": 0,
@@ -436,14 +436,14 @@
       "soft_stake": 0
     },
     "doR3rqkVdcNgLAKJ6kjAwkpgFipnz7hvzyxV1k8QNqW": {
-      "provider_cloud": 1,
-      "provider_local": 0,
-      "soft_stake": 6677.458478424998
+      "provider_cloud": 0.2857142857142857,
+      "provider_local": 0.9285714285714286,
+      "soft_stake": 7622.954608538571
     },
     "7ovucZSjasiVQNkeLntg2dhGW3ee2aKJL3uhceemYpJg": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 92292.591660345
+      "soft_stake": 71783.126846935
     },
     "4yHwPgyjzqLV9adEeMpJ3SJXmdzyZgbsufijkwHzcjUT": {
       "provider_cloud": 0,
@@ -468,7 +468,7 @@
     "MwBVyy7nW6x4DLG1hvwVLh73vYzBi7vesLi1GRkBV1i": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 0.0001178214285714286
+      "soft_stake": 0.00007970000000000001
     },
     "Gmc26GMnhE3AWwdAQpxxsQPo6UYaob4wPRxUpmDsujoX": {
       "provider_cloud": 0,
@@ -488,7 +488,7 @@
     "37GD9pNBrcK8qrLNNu4xLr91VMNSsrvt9hJzoF8gdZWf": {
       "provider_cloud": 0,
       "provider_local": 8,
-      "soft_stake": 325699.207964855
+      "soft_stake": 337060.41490359
     },
     "GZqe5L6bgmnKdbHWiPBGSW5nUQkg5yf1pnLMyYuPMaYU": {
       "provider_cloud": 0,
@@ -508,12 +508,12 @@
     "3czTuJdy6QGq5tFWW8jPxd3Y7D5S11ExMgzyU8uZFqvA": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 617879.17548363
+      "soft_stake": 719911.14647538
     },
     "G7NvViiFbzCdQ6btPMuPQUFHtEKc8AZaNernznPWGJMK": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 211249.3879164628
+      "soft_stake": 200000.24505932
     },
     "FLKtZc6C7dqv4SZC8geLuZkUS25xjqVgcA92hcAH9h8K": {
       "provider_cloud": 0,
@@ -623,7 +623,7 @@
     "CPotPYLokuuuPouoUHokgUqQJQqbkpaXFtiK1kJfdbTf": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 6464.80633851
+      "soft_stake": 7215.018684235002
     },
     "WGmmJvcVDVvCbBDBqS7Z6Xj8V7yDCJp5HH67EiV37bW": {
       "provider_cloud": 0,
@@ -658,7 +658,7 @@
     "6meZoGk7gm9x44Z6VsBDpQDmp3snCW1AHL3z6SYvRY8b": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 7569.515491180001
+      "soft_stake": 6250.51549118
     },
     "6VdsnjfFuBBRwdzyGGuStiNTjVRBq5sFXKfGmJUXERWq": {
       "provider_cloud": 0,
@@ -693,7 +693,7 @@
     "3LmG65dDCgFS4Kd6sdmRwhFFe84fVYeoNFBWCm1dYLJ8": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 8024.382081740002
+      "soft_stake": 14080.60438924
     },
     "9WaoqAPbvbfg9DwkRQ5RFuuMKZAJ3PRt4AdiV7egJVzR": {
       "provider_cloud": 0,
@@ -756,9 +756,9 @@
       "soft_stake": 3517
     },
     "D7zVqGRapG2wHWk291r9RAe83YZVtBFeQpgNarBTv4o6": {
-      "provider_cloud": 1,
+      "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 8541.077142869999
+      "soft_stake": 5041.077142870001
     },
     "381vy3GPXjPGrRhAHFWbn6uveT7bhEsBN9NSPQn1vHni": {
       "provider_cloud": 0,
@@ -848,7 +848,7 @@
     "DKcKC4wm1fYYdvemTeZxCw55uTSc9PRm3VSEGJpByEo8": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 5242.944953612857
+      "soft_stake": 7385.802096469998
     },
     "5RffKTbmRUg4wNFAt8dsf1y2ayRoaoiCHfyAJ14JC7KL": {
       "provider_cloud": 0,
@@ -1023,7 +1023,7 @@
     "7wYiunrUqP2M2qrPveipFVZsbV6L4Eqo5vQDqxwgBJUT": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 14338.29084871571
+      "soft_stake": 15417.33508455143
     },
     "J3bTiiEn2NvgF55xv3mDYv52SPnZonCyTE4Nyhmk9CNy": {
       "provider_cloud": 3,
@@ -1043,7 +1043,7 @@
     "2yj8aiwjGYZsF1fRTnoTDcKHYgaKbs4d9BfjYCVzH1W4": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 28109.47057722143
+      "soft_stake": 36045.36133639001
     },
     "HU96ies5ihpcZUDBMbjyjsVxgPJWJZgwmnyi6vnShXBj": {
       "provider_cloud": 0,
@@ -1053,12 +1053,12 @@
     "GuhK9c2PUT7ZmmKLoNPgmyvYSdKH49LXGXoephjdFYxr": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 6.265856154285714
+      "soft_stake": 0
     },
     "FeANgtMybxW68yz1v1tK7JZsqz2Gry5W1iJXfckGM2ZC": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 623
+      "soft_stake": 0
     },
     "9FV9z8Dw5wKSsC3mpt9tkawfRzStg8tMbLqKCe2wcPUF": {
       "provider_cloud": 0,
@@ -1093,7 +1093,7 @@
     "9ZkRbTR6X1fNfc2DhivcXibyAZVw1UB6kjMi26EgxmTq": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 131279.24254529
+      "soft_stake": 0
     },
     "AcyWCmdWZD6ccics1FJCRfkrE7Yk9QT7Bzk1XarKkSG5": {
       "provider_cloud": 0,
@@ -1303,7 +1303,7 @@
     "F6eWf774EuxARdmgq3ZLbKGfnaensmvGcsrJJZEkBkGJ": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 1155.81131164
+      "soft_stake": 0
     },
     "33kAJNjuY6GXNbTB5ngAxfc2kNFeKv36QkagXVugPJrA": {
       "provider_cloud": 0,
@@ -1322,11 +1322,11 @@
     },
     "GpC9NZpcjA2qqqbbW1SVpuzkFfq5TNWwxVUTztRQ3WYA": {
       "provider_cloud": 0,
-      "provider_local": 0.1428571428571428,
+      "provider_local": 1,
       "soft_stake": 12039.91272011
     },
     "Ewjfe6dFv562ytEhBpX273XhyrEXZmwanNk4yBX4QV7U": {
-      "provider_cloud": 6.857142857142857,
+      "provider_cloud": 9,
       "provider_local": 4,
       "soft_stake": 103528.05387826
     },
@@ -1338,7 +1338,7 @@
     "4Uuay8hqDH9j9rNu9dRscDckQfXvJHCxJ1e11bjbvk1m": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 7111.845234657143
+      "soft_stake": 7846.441237294288
     },
     "6ojEggXN5Rgo2AhH86o8W6ydcHujnufYoUbcNA5nU9ex": {
       "provider_cloud": 0,
@@ -1361,9 +1361,9 @@
       "soft_stake": 34765.83494883001
     },
     "4jR1n8KpnPvfM3AHZxrcivsGwdDGhEXEsPHTxGNBg6K2": {
-      "provider_cloud": 1,
-      "provider_local": 1,
-      "soft_stake": 21032.42335562143
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
     },
     "42CdqB81irQt5hvhtdcQZm5wTfu4rhbLUJdwHybgAqgF": {
       "provider_cloud": 0,
@@ -1378,7 +1378,7 @@
     "F5J3izt5bBvDf5TpDun18qWaHLaTb65gc7uFKMEt2UKB": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 0
+      "soft_stake": 19450.94366789429
     },
     "4ZPToRMKQ16KGQMG3yQp4UfmwDa9JeFvw8S9uJMQ5wV3": {
       "provider_cloud": 0,
@@ -1453,7 +1453,7 @@
     "5bt4wxnowyB5ZvHypfxwqJnBxAfKcHgkeRJfshBmnKad": {
       "provider_cloud": 0,
       "provider_local": 4,
-      "soft_stake": 25261.75205712
+      "soft_stake": 32479.39550201143
     },
     "4Xpd4KMiVpegFDkut9HywxxPNT8zZrhokyrFLKFnhkP4": {
       "provider_cloud": 0,
@@ -1603,7 +1603,7 @@
     "EUpEVmFVJZZKogtu476mTqJt2i1iwhY1YyKm8JyUwu46": {
       "provider_cloud": 0,
       "provider_local": 2,
-      "soft_stake": 555095.03117208
+      "soft_stake": 330095.03117208
     },
     "7MLUFSFhNzk4H6HeZ8eNh3sDKgkTCdfjvzV4iGJf6sT": {
       "provider_cloud": 0,
@@ -1732,8 +1732,8 @@
     },
     "4bMmMBGr9vPBgYsr9P7WMezaW2oVmFTjFpPhJ32n75qk": {
       "provider_cloud": 0,
-      "provider_local": 4,
-      "soft_stake": 41397.11260021857
+      "provider_local": 0,
+      "soft_stake": 18256.39098525
     },
     "EApi4YMU6mzXNXPet1rGMFcNdikDsit7eNdijikihRmT": {
       "provider_cloud": 0,
@@ -1743,12 +1743,12 @@
     "8MVHcYK27Hyco8u4Dcxc4ZAfMnXMATeUECZT8QvHkoBT": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 11125.91838619642
+      "soft_stake": 11901.10338162
     },
     "A1BpfZLMkhcDEh1W1sgbrXv8smuWamNNR2p7MfAgwXfp": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 6421.740209030001
+      "soft_stake": 6673.060581030003
     },
     "8cdetK3YLcRikKdTSTf6SwtWZKg9s1tHjMb1vCaRA68L": {
       "provider_cloud": 0,
@@ -1758,7 +1758,7 @@
     "HT1jyNGDFBDQJ96i5T9avnNRPEbtGRh2MqodSSBtgYZf": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 9582
+      "soft_stake": 9344.000007492858
     },
     "8XaGhipqLkkbtVrvaWA3P6wqX4SGQF6qsrR8g3ecfrAX": {
       "provider_cloud": 0,
@@ -1948,7 +1948,7 @@
     "3tpFCGjSotbiGeMsbfZG1cfi8sReQ8o5AXcSKaL7Prfm": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 4154.517290954284
+      "soft_stake": 0.00014546
     },
     "8ggVwGBgWbRcEe9bK1eWcMJiodoYCCzRkE7pNuPn9Afc": {
       "provider_cloud": 0,
@@ -2063,7 +2063,7 @@
     "4Es6qbGbMLEEW5pej31bmxJ4DgttD2kfEWnvYAPAncq9": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 508.500004815
+      "soft_stake": 653.7857204764285
     },
     "7d93ywB6ZPDfSXrtPZL22oWX3TsooRjv4RrobcE8FfC7": {
       "provider_cloud": 0,
@@ -2083,7 +2083,7 @@
     "99MArpyXXXE8oN8pHbzrQ2qb6iuc2jp5M7MCRS5P48Vs": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 0.0001333114285714286
+      "soft_stake": 0.00015553
     },
     "FSxWHtgQSswYepRJnGmjZddqbS51m3UJX4UY5emU4GFx": {
       "provider_cloud": 1,
@@ -2173,7 +2173,7 @@
     "9hL6rjZqzpRi94uqFzc7uEnyxYETriU6k8yZZ1bcEkZX": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 451.15671096
+      "soft_stake": 0.00016358
     },
     "EtCmFqEv58x55rPofygbiyH6YvEPUhwdcUAT8bPFiQJc": {
       "provider_cloud": 0,
@@ -2223,7 +2223,7 @@
     "6AQ4HUu1hYxA6wY3dsmZJ65fV8rLRQ7qs3NuRNfQzNqs": {
       "provider_cloud": 1,
       "provider_local": 0,
-      "soft_stake": 85574.84748342285
+      "soft_stake": 100000.53585947
     },
     "AG1ft5tVQRWERBKwUcxhBY2RXc1RNe8heXPrvAWPDW9U": {
       "provider_cloud": 0,
@@ -2323,7 +2323,7 @@
     "9CBFrmzd41EeZ6n3FDVmMSuNAKcwH9sStyuUCqVsUyEZ": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 8336.880657467855
+      "soft_stake": 10545.13160841
     },
     "CSxRKgrkjqZwm4crWJptvyJoHjPrte73WFjcGxwKbBgo": {
       "provider_cloud": 0,
@@ -2348,7 +2348,7 @@
     "8S3zbcm2kfhVpBL2RZWrPe82DQqqMmtB3qEUjXpm9fRo": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 44191.03743026716
+      "soft_stake": 46240.73859881
     },
     "5QMpdACaVxp4DPh9CuWixqjZHFiJnEndBWrKfVeR5La6": {
       "provider_cloud": 0,
@@ -2383,7 +2383,7 @@
     "GT8jyAVzdffnSa6PE5YBD2Zu1fuWp2oUvkraALxfrPef": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 0.00001329142857142857
+      "soft_stake": 0.00001661428571428571
     },
     "FpvJT9h9qA31xtH3oqy3exi9M5UoQM3nyKKcASYR1jhu": {
       "provider_cloud": 0,
@@ -2393,7 +2393,7 @@
     "3xtgiH7gfqoR3hCFWWKpF3j2zqAaQVB5W7ZujX7q1eHx": {
       "provider_cloud": 3,
       "provider_local": 0,
-      "soft_stake": 61544.18393136713
+      "soft_stake": 65636.29303150998
     },
     "HGn4NDSQ8x85ym8PWhAgJBccaSqRSxeVWrLuQ3EoZzRz": {
       "provider_cloud": 0,
@@ -2448,7 +2448,7 @@
     "HMT8Nh5qtsaFFWqfeCH4P9hceDtCtPxRiaNVvJcYVtd6": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 7542.868367200002
+      "soft_stake": 6251.8683672
     },
     "A7415fEE5Fqd3iAgcdA6dKYexdF534Q9iWnYLJNvf89L": {
       "provider_cloud": 0,
@@ -2458,7 +2458,7 @@
     "DSoYQQjRXC2Zorse5fkPc8Vk5WweYXV7GAiVsUV68n9b": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 94537.77087413643
+      "soft_stake": 140771.1965977
     },
     "EKRAx8eL4ZCVohSbsSBkkyyQAptwRpyXG8K2GZC1yfj2": {
       "provider_cloud": 0,
@@ -2503,7 +2503,7 @@
     "33tzbTYYP4jNA7uCQhwgYkBmma9vvPJUKFqszU4a1L7z": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 60639.58974890001
+      "soft_stake": 27353.87552633926
     },
     "6UVS2NgnwSB2XXeuPhuzxHXaxQFMRWc7pyipkDh8ftAs": {
       "provider_cloud": 1,
@@ -2523,7 +2523,7 @@
     "Gowd5B6KZ9Xnyr9xnZXeJQCrtQgUMsZPXVmcYVJbLwro": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 333342.8684189629
+      "soft_stake": 330000.8732698601
     },
     "9Ex9qKVRMwV4JC64TyTJKn8uGEidjMLgmScPE7vffgCJ": {
       "provider_cloud": 0,
@@ -2543,7 +2543,7 @@
     "FZ4nMUr58XGeEXeeRzSgRxz2SVbqMnP3cmBTnAKuNx2": {
       "provider_cloud": 0,
       "provider_local": 1,
-      "soft_stake": 47801.66901508428
+      "soft_stake": 50729.84069117
     },
     "DdCvBi6ofgQAyR5AjnTGreaZvYeS6Kx2enb2EGWXUcuU": {
       "provider_cloud": 0,
@@ -2898,7 +2898,7 @@
     "BUk77H7tyL1RPiGpaKNKeCoyPvjZ7hw7Dc4rWmKiRb8Q": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 11934.47724598714
+      "soft_stake": 19021.14458402
     },
     "GMBPaBqLQWjKKjgQY8hZGYPJVzg9uhoX1UiAxzazfAbZ": {
       "provider_cloud": 0,
@@ -2943,7 +2943,7 @@
     "9VGhuJcqamgr9ukknj7CYDNzAw1Sx8VQ1NfrFQgwHjqo": {
       "provider_cloud": 0,
       "provider_local": 0,
-      "soft_stake": 2322263.381753141
+      "soft_stake": 2215116.13792289
     },
     "9qBY8PpmvvL5xFiLyhts1AUUUcEzRRsgKAmPqJVk7bpH": {
       "provider_cloud": 0,
@@ -3391,6 +3391,96 @@
       "soft_stake": 0
     },
     "27myckUHd7ozxBm8Z6BH5y6oasKtTS6kFvQFmZPxptxw": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "C7db2vcdkSrNicZo3YhhTnM5LbQLw3HHw1zkcUk5Un8y": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "CszDr6mhLpbB4jvbgMR66DBap9PNmgK3GCnzSXv8yUMh": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "2tuvjfxGFWwAqDQDvk1o6Ax4tVE6vupUPVLt24JjmLDD": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "BnbP9UGaTFj8XwbG7eUzj2c3eKkBdu1CUdva6365yprm": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "4eQvnqXw82BZ2rx1AhdZ3JdwboA6Q7TNkbL34M4p6oMH": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "boreWMnQHTUaxNyBdysuGxxAx2Z4tRWdQFqtnYiYGT9": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "E5GAn3k4vXQDVVJHvbobmQjeSUSYU3XE4dcNayBvtuHu": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "3gQSXRuzkSb7cLZe6hTyB7q69J5C67gSfj7nPJZcHWVG": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "as8bvUi4v5WuUF9qqG2eVELZ7ThUwfZkEeSThrR3da6": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "9yqGrYJip9HsWE7qh128gz2a3rm8NccyWxaENj2XP4rh": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "5bJ8JtGSxYsBR4dsPf8gXmYqrWigUfNtS7RJEPCASwvt": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "4ie9VTAS3JyBy16bgb5eWyaQM17vej18KasKadpRKxq7": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "8GTC8WWUFA1NmXazxw1HrG57Cmnp9N3pt1NFT3evvkWa": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "AGpeAfKQvtEgj1PJL5dp9EgMsBeZAXoME8kFoCp37gnT": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "5p3AoPCk9BZ1Ei8tQNDYnxr3wsYtaxi37tZEvZC1MMwX": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "2oTnQtH7BYvStaBxP8iWdvC4bTbdiTK1qX39oxWtwzGK": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "DygUacnVT9tiCk2qiwiWFtZhc5QXoG5o8T57NZnRBSXU": {
+      "provider_cloud": 0,
+      "provider_local": 0,
+      "soft_stake": 0
+    },
+    "9nBZjeLehdvaNxC1HsEKe6ioKDS1h7EWYuZ9yGCPumzm": {
       "provider_cloud": 0,
       "provider_local": 0,
       "soft_stake": 0

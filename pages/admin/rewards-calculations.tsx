@@ -4,6 +4,7 @@ import ApplyPointsButton from "../../components/rewards-calculations/ApplyPoints
 import ApplyReqStakeFilter from "../../components/rewards-calculations/ApplyReqStakeFilter";
 import AveragesButton from "../../components/rewards-calculations/AveragesButton";
 import GetSharesButton from "../../components/rewards-calculations/GetSharesButton";
+import AccountRecordsAveragesCsv from "../../components/AccountRecordsAveragesCsv";
 
 export default function RewardsCalculations() {
 
@@ -13,6 +14,7 @@ export default function RewardsCalculations() {
     <LayoutAuthenticated>
 
       <div className="p-12">
+        <AccountRecordsAveragesCsv />
         <AveragesButton />
         <ApplyReqStakeFilter />
         <ApplyFilters />
