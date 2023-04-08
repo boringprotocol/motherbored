@@ -172,7 +172,7 @@ export default function Layout({ children }: Props) {
 
                       <div className="">
                         <SiteMenu />
-                        <Protected role={3} ><AdminMenu /></Protected>  <ThemeChanger />
+                        <Protected role={4} ><AdminMenu /></Protected>  <ThemeChanger />
                       </div>
 
 
