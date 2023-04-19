@@ -3,7 +3,7 @@ import DisplayRewardsPoints from "../../components/DisplayRewardsPoints";
 import EditRewardsPoints from "../../components/EditRewardsPoints";
 import LayoutAuthenticated from "../../components/layoutAuthenticated";
 
-export default function points() {
+export default function Points() {
 
   // points
 

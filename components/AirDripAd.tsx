@@ -17,7 +17,7 @@ const AirdripAd = () => {
 
         <h2 className="text-xs ml-6">from Boring Protocol</h2>
         <p className="mx-2 mt-4 text-xs">We are creating aird.rip to provide a place for projects to distribute spl-tokens.</p>
-        <p className="mx-2 mt-4 text-xs">Create your own project page, access our whitelist tools, and build claims links. <a className="link" href="/airdrip">Learn more</a></p>
+        <p className="mx-2 mt-4 text-xs">Create your own project page, access our whitelist tools, and build claims links. <a className="link" href="#">Coming soon</a></p>
 
       </div>
     </>
