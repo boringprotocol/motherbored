@@ -25,7 +25,8 @@ export default async function handler(
     },
     where: {
       timestamp: {
-        gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+        // from 14 days ago
+        gte: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000),
       },
     },
   });
